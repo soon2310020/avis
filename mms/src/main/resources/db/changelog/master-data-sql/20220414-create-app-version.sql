@@ -1,0 +1,42 @@
+INSERT INTO `MENU` (`ID`, `CREATED_AT`, `UPDATED_AT`, `ADMIN_MENU`, `ENABLED`, `ICON`, `LEVEL`, `MENU_KEY`, `MENU_NAME`, `MENU_URL`, `PARENT_ID`, `POSITION`) VALUES('4139', NULL, NULL, 'Y', 'Y', 'icon-version', '3', '/support/version-history', 'Version History', '/support/version-history', '4100', '2');
+DROP TABLE IF EXISTS APP_VERSION_ITEM;
+DROP TABLE IF EXISTS APP_VERSION;
+
+CREATE TABLE APP_VERSION (
+	 ID bigint not null auto_increment,
+	 
+	 APP_CODE varchar(20),
+	 VERSION varchar(50),
+	 RELEASE_DATE varchar(10),
+	 
+	 ENABLED varchar(1),
+	 
+	 CREATED_BY bigint,
+	 CREATED_AT datetime,
+	 UPDATED_AT datetime,
+	 UPDATED_BY bigint,
+	 
+	 PRIMARY KEY (ID)
+) CHARSET=utf8;
+
+ALTER TABLE APP_VERSION
+	ADD CONSTRAINT UX_APP_VERSION UNIQUE (APP_CODE, VERSION);
+
+CREATE TABLE APP_VERSION_ITEM (
+	ID bigint not null auto_increment,
+	
+	APP_VERSION_ID bigint,
+	
+	POSITION int,
+	DESCRIPTION LONGTEXT,
+	
+	CREATED_BY bigint,
+	CREATED_AT datetime,
+	UPDATED_BY bigint ,
+	UPDATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+);
+
+ALTER TABLE APP_VERSION_ITEM
+	ADD CONSTRAINT FK_APP_VERSION_ITEM FOREIGN KEY (APP_VERSION_ID) REFERENCES APP_VERSION (ID);

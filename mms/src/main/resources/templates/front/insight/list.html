@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head">
+    <link rel="stylesheet" th:href="'/css/insight/style.css?'+${noCacheVer}" />
+    <style type="text/css">
+      /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+      .custom-dropdown-button {
+        height: 36px !important;
+      }
+
+      .cta-style {
+        width: 100%;
+        height: fit-content;
+        border: 0.5px solid #909090;
+        border-radius: 1.7px;
+        background-color: #ffffff;
+        color: #4b4b4b;
+        display: flex;
+        text-decoration: none !important;
+        align-content: space-between;
+        justify-content: space-between;
+      }
+      .cta-style:hover {
+        border: 0.5px solid #4b4b4b;
+        border-radius: 1.7px;
+      }
+
+      .cta-style:focus {
+        border: 1.7px solid #deedff;
+        border-radius: 1.7px;
+      }
+      .wave1 {
+        height: 467px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 18%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+      .wave {
+        height: 121px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 28%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+        visibility: hidden;
+      }
+      .card.wave div,
+      .card.wave1 div {
+        display: none;
+      }
+
+      #myProgress {
+        width: 80%;
+        background-color: white;
+        height: 32px;
+        border: 1px solid #615ea9;
+        border-radius: 24px;
+        margin: 0 auto;
+        margin-top: 10px;
+      }
+
+      #myBar {
+        border-top-left-radius: 24px;
+        border-bottom-left-radius: 24px;
+        width: 1%;
+        height: 24px;
+        background-color: #263163;
+        max-width: 92%;
+        margin-top: 3px;
+        margin-left: 4px;
+      }
+      .parent {
+        margin-right: 1rem;
+        position: relative;
+        display: inline-block;
+      }
+      .popup {
+        display: none;
+        width: 80px;
+        background-color: #fff;
+        color: #4f5258;
+        text-align: center;
+        border-radius: 6px;
+        padding: 3px 3px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        position: absolute;
+        z-index: 1;
+        top: 30px;
+        left: 0;
+        text-transform: lowercase;
+        font-size: 14px;
+      }
+      .popup::first-letter {
+        text-transform: uppercase;
+      }
+      .parent .popup:after {
+        content: "";
+        position: absolute;
+        top: -14px;
+        left: 20px;
+        border-width: 7px;
+        border-style: solid;
+        border-color: transparent transparent #fff;
+      }
+      .parent:hover .popup {
+        display: block !important;
+      }
+      /*.btn-custom {*/
+      /*    width: 100% !important;*/
+      /*    text-align: left !important;*/
+      /*}*/
+      .common-popover {
+        top: 37px !important;
+        left: 8px !important;
+        width: calc(100% - 15px);
+        min-width: unset !important;
+        border-radius: 3px !important;
+        padding: 2px !important;
+      }
+      .dropdown-wrap {
+        top: 0px !important;
+        left: 0px !important;
+        border-radius: 3px !important;
+        padding: 2px !important;
+      }
+
+      .dropdown {
+        /*width: 248% !important;*/
+        width: 100% !important;
+      }
+      .dropdown-icon-custom {
+        float: right;
+      }
+
+      .img-transition {
+        float: right;
+        margin-top: 8px;
+      }
+
+      .dropdown-toggle::after {
+        margin-left: 91%;
+      }
+      .only-height {
+        height: 50px;
+      }
+      .tooltip-label {
+        padding: 6px 8px;
+      }
+    </style>
+  </th:block>
+
+  <th:block layout:fragment="op-content">
+    <div id="app" class="op-insight-list">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card wave">
+            <div class="card-header">
+              <strong th:text="#{end_of_life_cycle}"></strong>
+              <div class="card-header-actions">
+                <span class="card-header-action">
+                  <small class="text-muted"
+                    ><span th:text="#{total}+':'"></span> {{total}}</small
+                  >
+                </span>
+              </div>
+            </div>
+            <div style="overflow-x: unset !important" class="card-body">
+              <input type="hidden" v-model="requestParam.sort" />
+
+              <div class="form-row">
+                <div class="col-md-12 col-12">
+                  <div class="form-row">
+                    <div class="col-md-3 mb-3 mb-md-0 col-12">
+                      <common-searchbar
+                        :placeholder="resources['search_by_tooling_id']"
+                        :request-param="requestParam"
+                        :on-search="search"
+                        class="cta-style"
+                      ></common-searchbar>
+                    </div>
+
+                    <div class="col-md-3 mb-3 mb-md-0">
+                      <common-button
+                        :title="show_Priority"
+                        @click="handlepriorityToggle"
+                        :is-show="showPriority"
+                      >
+                      </common-button>
+                      <common-select-popover
+                        :is-visible="showPriority"
+                        @close="handleclosePriority"
+                      >
+                        <common-select-dropdown
+                          id="show-priority"
+                          :searchbox="false"
+                          :class="{show:showPriority}"
+                          :style="{position:'static'}"
+                          :items="codes.PriorityType"
+                          :checkbox="false"
+                          class="dropdown"
+                          :click-handler="select_priorityType"
+                          :set-result="()=>{}"
+                        ></common-select-dropdown>
+                      </common-select-popover>
+                    </div>
+
+                    <div class="col-md-3 mb-3 mb-md-0">
+                      <common-button
+                        :title="show_Status"
+                        @click="handleStatusToggle"
+                        :is-show="showStatus"
+                      >
+                      </common-button>
+                      <common-select-popover
+                        :is-visible="showStatus"
+                        @close="handlecloseStatus"
+                      >
+                        <common-select-dropdown
+                          id="show-status"
+                          :searchbox="false"
+                          :class="{show:showStatus}"
+                          :style="{position:'static'}"
+                          :items="codes.EndOfLifeCycleStatus"
+                          :checkbox="false"
+                          class="dropdown"
+                          :click-handler="select_showStatus"
+                          :set-result="()=>{}"
+                        ></common-select-dropdown>
+                      </common-select-popover>
+                    </div>
+
+                    <div
+                      class="col-md-3 mb-3 mb-md-0 select-year"
+                      v-click-outside="hideCalendarPicker"
+                    >
+                      <input
+                        type="text"
+                        @input="requestParam.year = $event.target.value"
+                        @keyup="search"
+                        class="form-control cta-style"
+                        @click="visibleCalendar = !visibleCalendar"
+                        v-model="requestParam.year"
+                        th:placeholder="#{search_by_year}"
+                        readonly
+                      />
+                      <div class="calendar-picker">
+                        <img
+                          src="/images/icon/calendar.svg"
+                          alt="calendar"
+                          class="calendar-icon"
+                          @click="visibleCalendar = !visibleCalendar"
+                        />
+                      </div>
+                      <year-picker
+                        :query="selectYear"
+                        :visible="visibleCalendar"
+                        :hide-picker="hideCalendarPicker"
+                        :resources="resources"
+                      ></year-picker>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card wave1">
+            <div class="card-header" style="display: none">
+              <i class="fa fa-align-justify"></i>
+              <span th:text="#{striped_tbl}"></span>
+            </div>
+            <div class="card-body card-overflow-reset">
+              <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                <li
+                  class="nav-item"
+                  v-for="(status, index) in Object.keys(tabs())"
+                  :key="index"
+                >
+                  <a
+                    class="nav-link"
+                    :class="{active: requestParam.endOfLifeCycleStatus === status}"
+                    href="#"
+                    @click.prevent="tab(status)"
+                  >
+                    {{ tabs()[status] }}
+                    <span
+                      class="badge badge-light badge-pill"
+                      v-if="requestParam.endOfLifeCycleStatus === status"
+                      >{{ total }}</span
+                    >
+                  </a>
+                </li>
+
+                <customization-modal
+                  style="position: absolute; right: 20px"
+                  :all-columns-list="allColumnList"
+                  @save="saveSelectedList"
+                  :resources="resources"
+                />
+              </ul>
+              <table
+                style="overflow-x: auto !important"
+                class="table table-responsive-sm table-striped"
+              >
+                <!-- <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+
+                            </colgroup> -->
+                <thead id="thead-actionbar">
+                  <tr class="tr-sort">
+                    <th style="min-width: 40px; max-width: 40px">
+                      <input type="checkbox" v-model="isAll" @change="select" />
+                    </th>
+                    <template
+                      v-for="(item, index) in allColumnList"
+                      v-if="item.enabled"
+                    >
+                      <th
+                        v-if="item.sortField === 'accumulatedShot'"
+                        v-click-outside="closeLastShot"
+                        :class="[{__sort: item.sortable, active: currentSortType === item.sortField}, isDesc ? 'desc': 'asc', index === 0 ? 'text-left': '']"
+                        @click="sortBy(item.sortField)"
+                      >
+                        <span> {{item.label}} </span>
+                        <span v-if="item.sortable" class="__icon-sort"></span>
+                        <last-shot-filter
+                          v-show="lastShotDropdown && item.sortField === 'accumulatedShot'"
+                          :last-shot-data="lastShotData"
+                          @update-variable="updateVariable"
+                        ></last-shot-filter>
+                      </th>
+                      <th
+                        v-else
+                        :class="[{__sort: item.sortable, active: currentSortType === item.sortField}, isDesc ? 'desc': 'asc', index === 0 ? 'text-left': '', item.field === 'action' ? 'text-center' : '']"
+                        @click="sortBy(item.sortField)"
+                      >
+                        <span>{{item.label}}</span>
+                        <span v-if="item.sortable" class="__icon-sort"></span>
+                      </th>
+                    </template>
+                  </tr>
+                </thead>
+                <tbody
+                  v-show="!isLoading"
+                  class="op-list"
+                  style="display: none"
+                >
+                  <tr v-for="(result, index, id) in results" :id="result.id">
+                    <td style="min-width: 40px; max-width: 40px">
+                      <template v-if="listChecked.length >= 0">
+                        <input
+                          @click="check"
+                          :checked="checkSelect(result.id)"
+                          class="checkbox"
+                          type="checkbox"
+                          :value="result.id"
+                        />
+                      </template>
+                    </td>
+                    <template
+                      v-for="column in allColumnList"
+                      v-if="column.enabled"
+                    >
+                      <td v-if="column.field === 'toolingId'" class="text-left">
+                        <a
+                          href="#"
+                          @click.prevent="showToolingChart(result.mold)"
+                          style="color: #1aaa55"
+                          class="mr-1"
+                          ><i class="fa fa-bar-chart"></i
+                        ></a>
+                        <a
+                          href="javascript:void(0)"
+                          @click="showToolingDetail(result.mold)"
+                          >{{result.mold && result.mold.equipmentCode}}</a
+                        >
+                      </td>
+                      <td v-else-if="column.field === 'utilizationRate'">
+                        <div v-if="result.mold.lastShot">
+                          <div class="clearfix">
+                            <div class="float-left">
+                              <strong
+                                >{{formatNumber(result.mold.lastShot)}}</strong
+                              >
+                              <small class="text-muted"
+                                >/
+                                {{formatNumber(result.mold.designedShot)}}</small
+                              >
+                            </div>
+                            <div class="float-right">
+                              <small class="text-muted"
+                                ><strong>{{ratio(result.mold)}}%</strong></small
+                              >
+                            </div>
+                          </div>
+                          <div class="progress progress-xs">
+                            <div
+                              class="progress-bar"
+                              :class="ratioColor(result.mold)"
+                              role="progressbar"
+                              :style="ratioStyle(result.mold)"
+                              :aria-valuenow="ratio(result.mold)"
+                              aria-valuemin="0"
+                              aria-valuemax="100"
+                            ></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else-if="column.field === 'part'"
+                        style="max-width: 600px"
+                      >
+                        <div v-for="(part, index) in result.mold.parts">
+                          <div>
+                            <a
+                              href="#"
+                              @click.prevent="showPartChart(part, result)"
+                              class="small"
+                            >
+                              {{part.partCode}}
+                            </a>
+                          </div>
+                          {{part.partName}}
+                        </div>
+                      </td>
+                      <td
+                        v-else-if="column.field === 'insight'"
+                        class="text-left"
+                      >
+                        <span
+                          v-if="!result.endLifeAtOver && result.reachAfterYears >= 10"
+                          th:text="#{reaches_end_of_life_cycle_after}"
+                        >
+                        </span>
+                        <span
+                          v-else-if="!result.endLifeAtOver"
+                          th:text="#{reach_end_of_life_cycle_on}"
+                        >
+                        </span>
+                        <span v-if="result.endLifeAtOver">
+                          <span v-if="isPassDate(result.endLifeAtDate)"
+                            >Completed end of lifecycle on</span
+                          >
+                          <span
+                            v-else
+                            th:text="#{reach_end_of_life_cycle_on_over}"
+                          ></span>
+                        </span>
+                        <a href="javascript:void(0)" @click="showDetail(result)"
+                          >{{result.reachAfterYears>=10 ? "10 years":
+                          result.endLifeAtDate}}</a
+                        >
+                      </td>
+                      <td v-else-if="column.field === 'priority'">
+                        <span
+                          v-if="result.priority === 'HIGH'"
+                          class="label label-status label-danger"
+                          ><span th:text="#{high}"></span
+                        ></span>
+                        <span
+                          v-if="result.priority === 'MEDIUM'"
+                          class="label label-status label-warning"
+                          th:text="#{medium}"
+                        ></span>
+                        <span
+                          v-if="result.priority === 'LOW'"
+                          class="label label-status label-success"
+                          th:text="#{low}"
+                        ></span>
+                      </td>
+                      <td v-else-if="column.field === 'action'">
+                        <div class="btn-action-group">
+                          <button
+                            class="btn btn-action"
+                            :class="{active: result.status === 'DISMISS'}"
+                            @click="changeLifeCycleStatus(result, 'DISMISS')"
+                            th:text="#{dismiss}"
+                          ></button>
+                          <button
+                            class="btn btn-action"
+                            :class="{active: result.status === 'IN_COMMUNICATION'}"
+                            @click="changeLifeCycleStatus(result, 'IN_COMMUNICATION')"
+                            th:text="#{communication}"
+                          ></button>
+                          <button
+                            class="btn btn-action"
+                            :class="{active: result.status === 'RESOLVE'}"
+                            @click="changeLifeCycleStatus(result, 'RESOLVE')"
+                            th:text="#{resolve}"
+                          ></button>
+                        </div>
+                      </td>
+                      <td v-else-if="column.field === 'company'">
+                        <div class="small text-muted">
+                          {{result.mold.companyTypeText}}
+                        </div>
+                        {{result.mold.companyName}}
+                      </td>
+                      <td v-else-if="column.field === 'location'">
+                        <div v-if="result.mold.locationCode">
+                          <div class="small text-muted">
+                            <a
+                              href="#"
+                              @click.prevent="showLocationHistory(result)"
+                              >{{result.mold.locationCode}}</a
+                            >
+                          </div>
+                          {{result.mold.locationName}}
+                        </div>
+                      </td>
+
+                      <td v-else-if="column.field === 'utilizationRate'">
+                        <div v-if="result.lastShot">
+                          <div class="clearfix">
+                            <div class="float-left">
+                              <strong
+                                >{{formatNumber(result.mold.lastShot)}}</strong
+                              >
+                              <small class="text-muted"
+                                >/
+                                {{formatNumber(result.mold.designedShot)}}</small
+                              >
+                            </div>
+                            <div class="float-right">
+                              <small class="text-muted"
+                                ><strong>{{ratio(result)}}%</strong></small
+                              >
+                            </div>
+                          </div>
+                          <div class="progress progress-xs">
+                            <div
+                              class="progress-bar"
+                              :class="ratioColor(result)"
+                              role="progressbar"
+                              :style="ratioStyle(result)"
+                              :aria-valuenow="ratio(result)"
+                              aria-valuemin="0"
+                              aria-valuemax="100"
+                            ></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td v-else-if="column.field === 'cycleTime'">
+                        {{ result.mold.lastCycleTime?
+                        Math.round((result.mold.lastCycleTime/10 +
+                        Number.EPSILON)*100)/100: 0}}s
+                      </td>
+                      <td
+                        v-else-if="column.field === 'weightedAverageCycleTime'"
+                      >
+                        {{ result.mold.weightedAverageCycleTime?
+                        Math.round((result.mold.weightedAverageCycleTime/10 +
+                        Number.EPSILON)*100)/100: 0}}s
+                      </td>
+                      <td v-else-if="column.field === 'op'">
+                        <span
+                          v-if="result.mold.operatingStatus == 'WORKING' && (result.mold.equipmentStatus == 'INSTALLED' || result.mold.equipmentStatus == 'CHECK' )"
+                          class="op-active label label-success"
+                        ></span>
+                        <span
+                          v-if="result.mold.operatingStatus == 'IDLE' && (result.mold.equipmentStatus == 'INSTALLED' || result.mold.equipmentStatus == 'CHECK' )"
+                          class="op-active label label-warning"
+                        ></span>
+                        <span
+                          v-if="result.mold.operatingStatus == 'NOT_WORKING' && (result.mold.equipmentStatus == 'INSTALLED' || result.mold.equipmentStatus == 'CHECK' )"
+                          class="op-active label label-inactive"
+                        ></span>
+                        <span
+                          v-if="result.mold.operatingStatus == 'DISCONNECTED' && (result.mold.equipmentStatus == 'INSTALLED' || result.mold.equipmentStatus == 'CHECK' )"
+                          class="op-active label label-danger"
+                        ></span>
+                      </td>
+                      <td v-else-if="column.field === 'equipmentStatus'">
+                        {{result.mold.equipmentStatus}}
+                      </td>
+                      <td v-else-if="column.field === 'uptimeTarget'">
+                        {{ result.mold.uptimeTarget ? result.mold.uptimeTarget +
+                        '%' : '' }}
+                      </td>
+                      <td v-else-if="column.field === 'weightOfRunnerSystem'">
+                        {{ result.mold.weightRunner ? (result.mold.weightRunner
+                        + ' ' +result.mold.weightUnitTitle) : ''}}
+                      </td>
+                      <td
+                        class="text-left tooling-status"
+                        v-else-if="column.field === 'toolingStatus'"
+                      >
+                        <mold-status
+                          :mold="result.mold"
+                          :resources="resources"
+                          :rule-op-status="ruleOpStatus"
+                        >
+                        </mold-status>
+                      </td>
+                      <td
+                        class="text-left"
+                        v-else-if="column.field === 'sensorStatus'"
+                      >
+                        <counter-status
+                          :mold="result.mold"
+                          :resources="resources"
+                        >
+                        </counter-status>
+                      </td>
+                      <td v-else-if="column.isCustomField">
+                        {{customFieldValue(result.mold,column.field)}}
+                      </td>
+                      <td v-else>{{result.mold[column.field]}}</td>
+                    </template>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="no-results d-none" th:text="#{no_results}"></div>
+
+              <div v-show="!isLoading" class="row">
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                  <ul class="pagination">
+                    <li
+                      v-for="(data, index) in pagination"
+                      class="page-item"
+                      :class="{active: data.isActive}"
+                    >
+                      <a class="page-link" @click="paging(data.pageNumber)"
+                        >{{data.text}}</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                  <div
+                    class="col-auto ml-auto"
+                    style="display: flex; justify-content: flex-end"
+                    v-if="hasChecked()"
+                  >
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-success"
+                        @click="downloadTooling(EXPORT_TYPE.XLSX)"
+                        type="button"
+                        id="dropdownMenuButton"
+                      >
+                        <span th:text="#{export}"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#exampleModal"
+                id="toggleExportProgressBar"
+                style="display: none"
+              >
+                <span th:text="#{demo_model}"></span>
+              </button>
+
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+                style="top: 30%"
+              >
+                <div class="modal-dialog" role="document" style="width: 350px">
+                  <div class="modal-content" style="border: none">
+                    <div class="modal-header">
+                      <h5
+                        class="modal-title"
+                        id="exampleModalLabel"
+                        style="font-weight: bold"
+                        th:text="#{exporting_data}"
+                      ></h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                        @click="stopExport"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" style="height: 100px">
+                      <div style="text-align: center">
+                        <p
+                          style="color: #615ea9"
+                          th:text="#{loading}+'...'"
+                        ></p>
+                      </div>
+                      <div id="myProgress">
+                        <div id="myBar" style="display: inline-block"></div>
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 24px;
+                            height: 24px;
+                            background: #615ea9;
+                            margin-left: -16px;
+                            border-radius: 50%;
+                          "
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <life-cycle-detail
+        v-if="Object.entries(resources).length"
+        :resources="resources"
+      ></life-cycle-detail>
+      <chart-mold
+        v-if="Object.entries(resources).length"
+        :show-file-previewer="showFilePreviewer"
+        :resources="resources"
+      ></chart-mold>
+      <mold-details
+        v-if="Object.entries(resources).length"
+        :resources="resources"
+      ></mold-details>
+      <file-previewer :back="backToMoldDetail"></file-previewer>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script
+      defer
+      th:src="'/js/chart-mold/container.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/chart-mold/point.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/shape.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/graph-element.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/hourly-chart.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/cycle-time-hourly-chart.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/temperature-hourly-chart.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/cdn/chartjs-plugin-annotation.min.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/js/scripts/front/insight/list.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

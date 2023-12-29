@@ -1,0 +1,2318 @@
+<template>
+  <div class="date-picker-filter">
+    <a-popover v-model="visible" placement="bottomRight" trigger="click" >
+      <a
+          :id="'date-picker-filter-' + id"
+          @click="showAnimation()"
+          href="javascript:void(0)"
+        class="dropdown_button-custom-mold"
+          @mouseover="isHover = true"
+          @mouseleave="isHover = false"
+      >
+        <span :class="{ 'selected-dropdown-text': visible }">{{
+            titleShow
+          }}</span>
+        <div>
+         <span v-if="isHover && !visible">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3491ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </span>
+            <span v-else-if="visible">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3491ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </span>
+            <span v-else>
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </span>
+
+        </div>
+      </a>
+      <div slot="content" style="padding: 8px 6px" class="dropdown-scroll">
+        <div class="content-body" :class="{'custom-range-garp' : isCustomRange}">
+          <div class="custom-modal-body" style="padding: 0;">
+            <template v-if="isCustomRange">
+              <span id="back-btn" @click="hyperLinkAnimation" class="hyper-link-btn">Back</span>
+              <div style="font-size: 14px; color: #4B4B4B; font-weight: bold; margin: 10px 0 12px 0;">
+                Custom Range
+              </div>
+            </template>
+            <div class="custom-select-date-picker" :class="{'row-items' : isCustomRange}">
+              <div v-if="type !== 'CYCLE_TIME_ANALYSIS' && type !== 'TEMPERATURE_ANALYSIS'" class="block-button" :class="{'column-items' : isCustomRange}">
+                <span v-if="isCustomRange" class="btn-group-title">Data Frequency</span>
+                <a
+                    v-if="type !== 'UPTIME' && type != 'NO_HOURLY' && existsHourly"
+                    href="javascript:void(0)"
+                    id="hourly-btn"
+                    class="select-type-button"
+                    :class="{
+                      'selected-button': selectedType == 'HOURLY',
+                    }"
+                    @click="changeRangeType('HOURLY')"
+                >
+                  Hourly
+                </a>
+                <a
+                    v-if="type !== 'CYCLE_TIME_ANALYSIS' && type !== 'TEMPERATURE_ANALYSIS'"
+                    href="javascript:void(0)"
+                    id="daily-btn"
+                    class="select-type-button"
+                    :class="{
+                      'selected-button': selectedType == 'DAILY',
+                    }"
+                    @click="changeRangeType('DAILY')"
+                >
+                  Daily
+                </a>
+                <a
+                    v-if="type !== 'CYCLE_TIME_ANALYSIS' && type !== 'TEMPERATURE_ANALYSIS'"
+                    href="javascript:void(0)"
+                    id="weekly-btn"
+                    class="select-type-button"
+                    :class="{ 'selected-button': selectedType == 'WEEKLY' }"
+                    @click="changeRangeType('WEEKLY')"
+                >
+                  Weekly
+                </a>
+                <a
+                    v-if="type !== 'CYCLE_TIME_ANALYSIS' && type !== 'TEMPERATURE_ANALYSIS'"
+                    href="javascript:void(0)"
+                    id="monthly-btn"
+                    class="select-type-button"
+                    :class="{ 'selected-button': selectedType == 'MONTHLY' }"
+                    @click="changeRangeType('MONTHLY')"
+                >
+                  Monthly
+                </a>
+
+              </div>
+              <div v-if="!isCustomRange && type !== 'CYCLE_TIME_ANALYSIS' && type !== 'TEMPERATURE_ANALYSIS'" class="vc-header-title">
+                <div style="width: 24px;"></div>
+                <span>{{getWarning}}</span>
+                <a-tooltip placement="bottomRight">
+                  <template slot="title">
+                    <span style="font-size: 12px;">Custom Range</span>
+                  </template>
+                  <div id="custom-range-icon" class="custom-range-icon" @mouseover="isHoverCustomIcon = true" @mouseleave="isHoverCustomIcon = false" @click="iconAnimation">
+                    <svg  v-if="isCustomRange || !isHoverCustomIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="22.25" viewBox="0 0 20 22.25">
+                      <g id="date_range_icon" data-name="date range icon" transform="translate(0 0.75)">
+                        <g id="Group_9046" data-name="Group 9046" transform="translate(-7679 -3672.5)">
+                          <g id="Rectangle_16968" data-name="Rectangle 16968" transform="translate(7679 3674)" fill="none" stroke="#3491ff" stroke-width="1.5">
+                            <rect width="20" height="20" rx="2" stroke="none"/>
+                            <rect x="0.75" y="0.75" width="18.5" height="18.5" rx="1.25" fill="none"/>
+                          </g>
+                          <line id="Line_47" data-name="Line 47" x2="19" transform="translate(7679.5 3679.5)" fill="none" stroke="#3491ff" stroke-width="1.5"/>
+                          <line id="Line_48" data-name="Line 48" y2="2" transform="translate(7694.5 3672.5)" fill="none" stroke="#3491ff" stroke-linecap="square" stroke-width="1.5"/>
+                          <line id="Line_49" data-name="Line 49" y2="2" transform="translate(7683.5 3672.5)" fill="none" stroke="#3491ff" stroke-linecap="square" stroke-width="1.5"/>
+                        </g>
+                        <path id="date-span" d="M10.7,12,7.4,15.3l3.3,3.3V16.4h4.4v2.2l3.3-3.3L15.1,12v2.2H10.7Z" transform="translate(-2.9 -1.5)" fill="#3491ff"/>
+                      </g>
+                    </svg>
+                    <svg  v-if="!isCustomRange && isHoverCustomIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="22.25" viewBox="0 0 20 22.25">
+                      <g id="date_range_icon" data-name="date range icon" transform="translate(0 0.75)">
+                        <g id="Group_9046" data-name="Group 9046" transform="translate(-7679 -3672.5)">
+                          <g id="Rectangle_16968" data-name="Rectangle 16968" transform="translate(7679 3674)" fill="none" stroke="#4b83de" stroke-width="1.5">
+                            <rect width="20" height="20" rx="2" stroke="none"/>
+                            <rect x="0.75" y="0.75" width="18.5" height="18.5" rx="1.25" fill="none"/>
+                          </g>
+                          <line id="Line_47" data-name="Line 47" x2="19" transform="translate(7679.5 3679.5)" fill="none" stroke="#4b83de" stroke-width="1.5"/>
+                          <line id="Line_48" data-name="Line 48" y2="2" transform="translate(7694.5 3672.5)" fill="none" stroke="#4b83de" stroke-linecap="square" stroke-width="1.5"/>
+                          <line id="Line_49" data-name="Line 49" y2="2" transform="translate(7683.5 3672.5)" fill="none" stroke="#4b83de" stroke-linecap="square" stroke-width="1.5"/>
+                        </g>
+                        <path id="date-span" d="M10.7,12,7.4,15.3l3.3,3.3V16.4h4.4v2.2l3.3-3.3L15.1,12v2.2H10.7Z" transform="translate(-2.9 -1.5)" fill="#4b83de"/>
+                      </g>
+                    </svg>
+                  </div>
+                </a-tooltip>
+                
+              </div>
+              <div class="container-date-pick">
+                 <div
+                  v-if="isCustomRange"
+                  class="custom-range block"
+                >
+                  <div class="date-range">
+                    <v-date-picker
+                      v-model="range"
+                      locale="us-US"
+                      is-range
+                      :masks="{ title: 'MMMM YYYY', weekdays: 'WWW' }"
+                      :first-day-of-week="2"
+                      :min-date="minDate"
+                      :max-date="maxDate || today"
+                      :key="customKey"
+                      :available-dates="{
+                        start: minDate,
+                        end: maxDate || today,
+                      }"
+                    ></v-date-picker>
+                  </div>
+                  <div class="d-flex">
+                    <div>
+                      <span class="right-title">From</span><br />
+                      <input
+                        type="text"
+                        class="date-bar id-input"
+                        :class="{
+                          'warning-input':
+                            range.startMessage != 'valid' &&
+                            range.startMessage != '',
+                        }"
+                        @input="handleDateFromInput($event)"
+                        placeholder="yyyy-mm-dd"
+                        :value="dateFrom"
+                      /><br />
+                      <p
+                        v-if="
+                          range.startMessage != 'valid' && range.startMessage != ''
+                        "
+                        class="warning-text"
+                      >
+                        {{ range.startMessage }}
+                      </p>
+                    </div>
+                    <div>
+                      <span class="right-title">To</span><br />
+                      <input
+                        type="text"
+                        class="date-bar id-input"
+                        :class="{
+                          'warning-input':
+                            range.endMessage != 'valid' && range.endMessage != '',
+                        }"
+                        @input="handleDateToInput($event)"
+                        placeholder="yyyy-mm-dd"
+                        :value="dateTo"
+                      /><br />
+                      <p
+                        v-if="range.endMessage != 'valid' && range.endMessage != ''"
+                        class="warning-text"
+                      >
+                        {{ range.endMessage }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                    v-if="!isCustomRange && selectedType == 'HOURLY'"
+                    class="block"
+                    style="margin-right: 0"
+                >
+                  <div class="date-single">
+                    <v-date-picker
+                        v-model="singleDate"
+                        locale="us-US"
+                        :masks="{ title: 'MMMM YYYY', weekdays: 'WWW' }"
+                        :first-day-of-week="2"
+                      :min-date="minDate"
+                      :max-date="maxDate || today"
+                        :key="customKey"
+                        @dayclick="submitDate"
+                    ></v-date-picker>
+                  </div>
+                </div>
+                <div v-if="!isCustomRange && selectedType == 'DAILY'" class="monthly block" style="margin-right: 0;">
+                  <div class="header">
+                    <span
+                        class="link-button"
+                        :class="{ disable: currentYearForMonth == 0 }"
+                        @click="currentYearForMonth--"
+                    >&#10094;</span
+                    >
+                    <span class="title" >{{ currentYearForMonth }}</span>
+                    <span
+                        class="link-button"
+                        :class="{
+                        disable: currentYearForMonth == today.getFullYear(),
+                      }"
+                        @click="currentYearForMonth++"
+                    >&#10095;</span
+                    >
+                  </div>
+                  <div
+                    v-if="currentYearForMonth > (maxDate || today).getFullYear()
+                     || (minDate && currentYearForMonth < (minDate).getFullYear())"
+                      class="wrapper-month"
+                  >
+                    <div
+                        v-for="(month, index) in months"
+                        :key="index"
+                        class="month-item"
+                    >
+                      <span class="disable month-text">{{ month }}</span>
+                    </div>
+                  </div>
+                  <div
+                      v-else-if="currentYearForMonth == today.getFullYear()"
+                      class="wrapper-month"
+                  >
+                    <div
+                        v-for="(month, index) in months"
+                        :key="index"
+                        class="month-item"
+                    >
+                      <span
+                        v-if="index > getCurrentMonth || (minDate && minDate.getFullYear() == currentYearForMonth && index<minDate.getMonth()) ||
+index> (maxDate || today).getMonth()"
+                          class="disable month-text"
+                        >{{ month }}</span
+                      >
+                      <span
+                          v-else-if="index == getCurrentMonth"
+                          class="today month-text"
+                          @click="handleSelectMonth(index, currentYearForMonth)"
+                          :class="{
+                          'selected-month':
+                            index == selectedItem.selectedMonth &&
+                            currentYearForMonth == selectedItem.selectedYear,
+                          selected:
+                            index == selectedItem.selectedMonth &&
+                            currentYearForMonth == selectedItem.selectedYear,
+                        }"
+                      >{{ month }}</span
+                      >
+                      <span
+                          v-else
+                          class="month-text"
+                          @click="handleSelectMonth(index, currentYearForMonth)"
+                          :class="{
+                          'selected-month':
+                            index == selectedItem.selectedMonth &&
+                            currentYearForMonth == selectedItem.selectedYear,
+                          selected:
+                            index == selectedItem.selectedMonth &&
+                            currentYearForMonth == selectedItem.selectedYear,
+                        }"
+                      >{{ month }}</span
+                      >
+                    </div>
+                  </div>
+                  <div v-else class="wrapper-month">
+                    <div
+                        v-for="(month, index) in months"
+                        :key="index"
+                        class="month-item"
+                    >
+                      <span
+                           v-if="(minDate && (minDate.getFullYear() > currentYearForMonth || minDate.getFullYear() == currentYearForMonth && index<minDate.getMonth()))
+                        || maxDate && currentYearForMonth == maxDate .getFullYear() && index> maxDate.getMonth()"
+                           class="disable month-text"
+                       >{{ month }}</span>
+                      <span v-else
+                          class="month-text"
+                          @click="handleSelectMonth(index, currentYearForMonth)"
+                          :class="{
+                          'selected-month':
+                            index == selectedItem.selectedMonth &&
+                            currentYearForMonth == selectedItem.selectedYear,
+                          selected:
+                            index == selectedItem.selectedMonth &&
+                            currentYearForMonth == selectedItem.selectedYear,
+                        }"
+                      >{{ month }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div v-if="!isCustomRange && (selectedType == 'WEEKLY' || selectedType == 'MONTHLY')" class="yearly block" style="margin-right: 0;">
+                  <div class="header">
+                <span
+                    class="link-button"
+                  :class="{ disable: yearRange == 0
+                  || minDate && yearRange + 19 < minDate.getFullYear() }"
+                    @click="prevYearRange()"
+                  >&#10094;</span
+                >
+                    <span class="title">{{ yearRange }}-{{ yearRange + 19 }}</span>
+                    <span
+                        class="link-button"
+                        :class="{
+                        disable:
+                          yearRange <= (maxDate || today).getFullYear() &&
+                          yearRange + 19 >= (maxDate || today).getFullYear(),
+                      }"
+                        @click="nextYearRange()"
+                    >&#10095;</span
+                    >
+                  </div>
+              <div v-if="(maxDate || today).getFullYear() < yearRange" class="wrapper-year">
+                    <div v-for="index in 20" :key="index" class="year-item">
+                  <span class="disable year-text">{{
+                      yearRange + index - 1
+                    }}</span>
+                    </div>
+                  </div>
+                  <div
+                v-else-if="
+                  (maxDate || today).getFullYear() <= yearRange + 19 &&
+                  (maxDate || today).getFullYear() >= yearRange
+                "
+                class="wrapper-year"
+              >
+                    <div v-for="index in 20" :key="index" class="year-item">
+                  <span
+                    v-if="yearRange + index - 1 > (maxDate || today).getFullYear()
+                    || minDate && yearRange + index - 1 < minDate.getFullYear()"
+                      class="disable year-text"
+                  >{{ yearRange + index - 1 }}</span
+                  >
+                      <span
+                          v-else-if="yearRange + index - 1 == today.getFullYear()"
+                          class="today year-text"
+                          :class="{
+                      'selected-year':
+                        yearRange + index - 1 == selectedItem.selectedYear,
+                      selected:
+                        yearRange + index - 1 == selectedItem.selectedYear,
+                    }"
+                          @click="handleSelectYear(yearRange + index - 1)"
+                      >{{ yearRange + index - 1 }}</span
+                      >
+                      <span
+                          v-else
+                          class="year-text"
+                          @click="handleSelectYear(yearRange + index - 1)"
+                          :class="{
+                      'selected-year':
+                        yearRange + index - 1 == selectedItem.selectedYear,
+                      selected:
+                        yearRange + index - 1 == selectedItem.selectedYear,
+                    }"
+                      >{{ yearRange + index - 1 }}</span
+                      >
+                    </div>
+                  </div>
+                  <div v-else class="wrapper-year">
+                    <div v-for="index in 20" :key="index" class="year-item">
+                  <span
+                       v-if="minDate && yearRange + index - 1 < minDate.getFullYear()"
+                       class="disable year-text"
+                   >{{ yearRange + index - 1 }}</span>
+                  <span v-else
+                      class="year-text"
+                      @click="handleSelectYear(yearRange + index - 1)"
+                      :class="{
+                      'selected-year':
+                        yearRange + index - 1 == selectedItem.selectedYear,
+                      selected:
+                        yearRange + index - 1 == selectedItem.selectedYear,
+                    }"
+                  >{{ yearRange + index - 1 }}</span
+                  >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="isCustomRange" style="display: flex; justify-content: flex-end; margin-top: 9px">
+              <a
+                @click="submitCustomRangeDate()"
+                style="font-size: 11px"
+                id="btn-update"
+                class="
+                  btn-custom btn-custom-primary btn-custom-date
+                  animationPrimary
+                  animationOutline
+                "
+                :class="{ 'btn-disable': !isEnableSubmitCustomRange }"
+              >
+                <span>Update</span>
+                <!-- Update -->
+              </a>
+        </div>
+          </div>
+        </div>
+      </div>
+    </a-popover>
+  </div>
+</template>
+
+<script>
+module.exports = {
+  props: {
+    resources: Object,
+    id: String,
+    type: String,
+    defaultSelectedDate: String,
+    cancelCalendar: Function,
+    handleSubmit: Function,
+    minDate: Date,
+    maxDate: Date,
+    existsHourly: Boolean,
+  },
+  data() {
+    return {
+      visible: false,
+      timeOptions: {
+        LAST7DAYS: "Last 7 days",
+        LAST30DAYS: "Last 30 days",
+      },
+      displayCaret: false,
+      caretTimeout: null,
+      animationTimeout: null,
+      timeLabel: 0,
+      startDate: null,
+      endDate: null,
+      time: "",
+      calendarShow: false,
+      defaultValue: moment(),
+      errorToDate: false,
+      errorFromDate: false,
+      showDatePickerModal: false,
+      range: {
+        start: null,
+        end: null,
+        startMessage: "",
+        endMessage: "",
+      },
+      today: new Date(),
+      currentYearForWeek: new Date().getFullYear(),
+      currentYearForMonth: new Date().getFullYear(),
+      currentMonth: new Date().getMonth(),
+      yearRange: 2010,
+      months: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      selectedItem: {
+        selectedMonth: null,
+        selectedYear: null,
+        selectedWeek: null,
+      },
+      selectedType: this.defaultSelectedDate,
+      displayDatePicker: "",
+      dateFrom: "",
+      dateTo: "",
+      trigger: 0,
+      debounceTimeOut: null,
+      customKey: 0,
+      inputType: null,
+      textboxKey: 0,
+      tempData: {
+        range: {
+          start: null,
+          end: null,
+          startMessage: "",
+          endMessage: "",
+        },
+        selectedItem: {
+          selectedMonth: null,
+          selectedYear: null,
+          selectedWeek: null,
+        },
+        selectedType: "",
+        dateFrom: "",
+        dateTo: "",
+      },
+      singleDate: new Date(),
+      titleShow: null,
+      visible: false,
+      isHover: false,
+      isHoverCustomIcon: false,
+      isCustomRange: false, 
+      isEnableSubmitCustomRange: false,
+      submitCustomRange: false,
+    };
+  },
+  computed: {
+    getWarning(){
+      switch (this.selectedType) {
+        case 'HOURLY':
+          return 'Click the date to display the hours of that day';
+        case 'DAILY':
+          return 'Click to display days of that month';
+        case 'WEEKLY':
+          return 'Click to display weeks of that year';
+        case 'MONTHLY':
+          return 'Click to display months of that year';
+      }
+    },
+    checkEnable() {
+      let result = false;
+      switch (this.selectedType) {
+        case "HOURLY":
+          if (
+              this.singleDate
+          ) {
+            result = true;
+          }
+          break;
+        case "DAILY":
+          if (
+              this.singleDate
+          ) {
+            result = true;
+          }
+          break;
+        case "WEEKLY":
+          if (
+              this.selectedItem.selectedWeek != null &&
+              this.selectedItem.selectedYear != null
+          ) {
+            result = true;
+          }
+          break;
+        case "MONTHLY":
+          if (
+              this.selectedItem.selectedMonth != null &&
+              this.selectedItem.selectedYear != null
+          ) {
+            result = true;
+          }
+          break;
+        case "YEARLY":
+          if (this.selectedItem.selectedYear != null) {
+            result = true;
+          }
+          break;
+      }
+      return this.dataFrequency && this.dataType && result;
+    },
+    getCurrentWeek() {
+      return this.getCurrentWeekNumber(this.today);
+    },
+    getCurrentMonth() {
+      return this.today.getMonth();
+    },
+    checkEnableDatePicker() {
+      let result = false;
+      switch (this.selectedType) {
+        case "CUSTOM_RANGE":
+          if (
+              this.range.startMessage == "valid" &&
+              this.range.endMessage == "valid"
+          ) {
+            result = true;
+          } else {
+            result = false;
+          }
+          break;
+        case "DAILY":
+          if (this.singleDate) {
+            result = true;
+          } else {
+            result = false;
+          }
+          break;
+        case "HOURLY":
+          if (this.singleDate) {
+            result = true;
+          } else {
+            result = false;
+          }
+          break;
+        case "WEEKLY":
+          if (
+              this.selectedItem.selectedWeek != null &&
+              this.selectedItem.selectedYear != null
+          ) {
+            result = true;
+          }
+          break;
+        case "MONTHLY":
+          if (
+              this.selectedItem.selectedMonth != null &&
+              this.selectedItem.selectedYear != null
+          ) {
+            result = true;
+          }
+          break;
+        case "YEARLY":
+          if (this.selectedItem.selectedYear != null) {
+            result = true;
+          }
+          break;
+      }
+      console.log(this.trigger);
+      console.log(result);
+      return result;
+    },
+  },
+  mounted() {
+    console.log('mount')
+    this.selectedItem.selectedYear = this.singleDate.getFullYear()
+    this.animationPrimary();
+    this.animationOutline();
+    this.getDefaultDate();
+/*
+    this.getTempData();
+*/
+    this.getTitle();
+    this.submitData();
+  },
+  watch: {
+    visible: function () {
+      if (!this.visible) {
+        this.closeAnimation();
+      }
+      this.isCustomRange = this.submitCustomRange
+    },
+    startDate: function (newValue, oldValue) {
+      console.log(newValue, newValue.unix(), "startDatestartDatestartDate");
+      this.errorFromDate = false;
+      this.errorToDate = false;
+      if (!newValue) {
+        return;
+      }
+      if (this.endDate && newValue.unix() > this.endDate.unix()) {
+        this.errorFromDate = true;
+        // this.endDate = newValue;
+      }
+    },
+    endDate: function (newValue, oldValue) {
+      this.errorFromDate = false;
+      this.errorToDate = false;
+      if (!newValue) {
+        return;
+      }
+      if (this.startDate && newValue.unix() < this.startDate.unix()) {
+        this.errorToDate = true;
+        // this.startDate = newValue;
+      }
+    },
+    selectedType: function (newValue) {
+      if (newValue == "CUSTOM_RANGE") {
+        setTimeout(() => {
+          let className = `id-${this.today.getFullYear()}-${
+              this.today.getMonth() < 9
+                  ? "0" + (+this.today.getMonth() + 1)
+                  : +this.today.getMonth() + 1
+          }-${
+              this.today.getDate() < 10
+                  ? "0" + this.today.getDate()
+                  : this.today.getDate()
+          }`;
+          let element = document.getElementsByClassName(className);
+          console.log(element);
+          console.log(element[0]);
+          if (element[0].children[0].tagName == "SPAN") {
+            element[0].children[0].classList.add("today-range");
+          } else {
+            element[0].children[1].classList.add("today-range");
+          }
+        }, 100);
+      }
+    },
+    range: {
+      handler: function (newValue) {
+        console.log(newValue);
+        if (newValue != null) {
+          if (newValue.start != null) {
+            this.dateFrom = `${newValue.start.getFullYear()}-${
+                newValue.start.getMonth() < 9
+                    ? "0" + (+newValue.start.getMonth() + 1)
+                    : +newValue.start.getMonth() + 1
+            }-${
+                newValue.start.getDate() < 10
+                    ? "0" + +newValue.start.getDate()
+                    : newValue.start.getDate()
+            }`;
+            this.range.startMessage = "valid";
+          }
+          if (newValue.end != null) {
+            this.dateTo = `${newValue.end.getFullYear()}-${
+                newValue.end.getMonth() < 9
+                    ? "0" + (+newValue.end.getMonth() + 1)
+                    : +newValue.end.getMonth() + 1
+            }-${
+                newValue.end.getDate() < 10
+                    ? "0" + +newValue.end.getDate()
+                    : newValue.end.getDate()
+            }`;
+            this.range.endMessage = "valid";
+          }
+        }
+      },
+      deep: true,
+    },
+    // singleDate(newValue){
+    //   if (singleDate) {
+    //     this.submitData();
+    //   }
+    // }
+    maxDate: function (newValue, oldValue) {
+        if(oldValue!=newValue){
+          this.singleDate=newValue;
+        }
+    },
+    type: function(){
+     if(Common.needToChangeDate(this.type,this.selectedType)){
+
+      this.isCustomRange = false;
+      this.range = {
+        start: null,
+        end: null,
+        startMessage: "",
+        endMessage: "",
+      },
+/*
+      this.getTempData();
+*/
+      this.getDefaultDate();
+      if (this.type == 'CYCLE_TIME_ANALYSIS' || this.type == 'TEMPERATURE_ANALYSIS') {
+        console.log('type 1', this.type)
+        this.selectedType = 'HOURLY'
+      } else {
+        console.log('type 2', this.type)
+        this.selectedType = 'DAILY'
+      }
+     }
+      console.log('watch type', this.type, this.selectedType)
+      this.submitData();
+      this.getTitle();
+    },
+    'range.start': function(){
+      this.checkEnableButton();
+    },
+    'range.end': function(){
+      this.checkEnableButton();
+    }
+  },
+  methods: {
+    previous() {
+      if(this.selectedType === "DAILY") {
+        if(this.selectedItem.selectedMonth > 0) {
+          this.selectedItem.selectedMonth--;
+        } else {
+          this.selectedItem.selectedYear--;
+          this.selectedItem.selectedMonth = 11;
+        }
+      } else if(this.selectedType === "HOURLY") {
+        this.singleDate.setDate(this.singleDate.getDate()-1)
+      }
+      console.log('previous', this.selectedItem)
+      this.getTitle();
+      this.submitData();
+    },
+    next() {
+      if(this.selectedType === "DAILY") {
+        if(this.selectedItem.selectedMonth === 11) {
+          this.selectedItem.selectedYear++;
+          this.selectedItem.selectedMonth = 0;
+        } else {
+          this.selectedItem.selectedMonth++;
+        }
+      } else if(this.selectedType === "HOURLY") {
+        this.singleDate.setDate(this.singleDate.getDate()+1)
+      }
+      console.log('next', this.selectedItem)
+      this.getTitle();
+      this.submitData();
+    },
+    getTitle() {
+      if (this.isCustomRange) {
+          let displayTime = ''
+          let start = `${this.range.start.getFullYear()}-${
+                  +this.range.start.getMonth() + 1
+              }-${this.range.start.getDate()}`
+          let end = `${this.range.end.getFullYear()}-${
+                  +this.range.end.getMonth() + 1
+              }-${this.range.end.getDate()}`
+          if (start == end) {
+            displayTime = `${start}`
+          } else {
+            displayTime = `From ${start} to ${end}`
+          }
+          let type = this.selectedType.charAt(0) + this.selectedType.slice(1).toLowerCase()
+          this.titleShow = `${type} - ${displayTime}`
+      } else {
+        switch (this.selectedType) {
+          case "HOURLY":
+            console.log('HOURLY')
+            if (this.singleDate) {
+              this.titleShow = `Hourly - ${this.singleDate.getFullYear()}-${
+                  +this.singleDate.getMonth() + 1
+              }-${this.singleDate.getDate()}`;
+            } else {
+              this.titleShow = `Hourly`;
+            }
+            break;
+          case "DAILY":
+            console.log('DAILY')
+            if (this.singleDate) {
+              this.titleShow = `Daily - ${this.selectedItem.selectedYear}/${
+                  this.selectedItem.selectedMonth + 1
+              }`;
+            } else {
+              this.titleShow = `Daily`;
+            }
+            break;
+          case "WEEKLY":
+            console.log('WEEKLY')
+            this.titleShow = `Weekly - ${this.selectedItem.selectedYear}`;
+            break;
+          case "MONTHLY":
+            console.log('MONTHLY')
+            this.titleShow = `Monthly - ${this.selectedItem.selectedYear}`;
+            break;
+      }
+      
+      }
+      console.log('getTitle', this.selectedType, this.selectedItem, this.titleShow)
+
+    },
+    showAnimation() {
+      const el = document.getElementById("date-picker-filter-" + this.id);
+      if (!this.visible) {
+        setTimeout(() => {
+          el.classList.add("dropdown_button-animation-mold");
+          this.animationTimeout = setTimeout(() => {
+            this.displayCaret = true;
+            el.classList.remove("dropdown_button-animation-mold");
+            el.classList.add("selected-dropdown-text");
+            el.classList.add("selected-dropdown-button");
+          }, 1600);
+        }, 1);
+      } else {
+        this.closeAnimation();
+      }
+    },
+    closeAnimation() {
+      const el = document.getElementById("date-picker-filter-" + this.id);
+      if (this.animationTimeout != null) {
+        console.log("Here");
+        console.log(this.animationTimeout);
+        clearTimeout(this.animationTimeout);
+        this.animationTimeout = null;
+      }
+      if (this.caretTimeout != null) {
+        clearTimeout(this.caretTimeout);
+        this.caretTimeout = null;
+      }
+      el.classList.remove("dropdown_button-animation-mold");
+      el.classList.remove("selected-dropdown-text");
+      el.classList.remove("selected-dropdown-button");
+      this.displayCaret = false;
+    },
+/*
+    getTempData() {
+      console.log("currentDateData", this.currentDateData);
+      if (this.currentDateData) {
+        if (this.currentDateData.selectedType == "CUSTOM_RANGE") {
+          this.range = this.currentDateData.range;
+        } else {
+          this.selectedItem = this.currentDateData.selectedItem;
+        }
+        this.dateFrom = this.currentDateData.dateFrom;
+        this.dateTo = this.currentDateData.dateTo;
+      }
+    },
+*/
+    getDefaultDate(){
+      this.currentYearForWeek = this.maxDate.getFullYear()
+      this.currentYearForMonth = this.maxDate.getFullYear()
+      this.currentMonth = this.maxDate.getMonth()
+      this.singleDate = this.maxDate;
+      this.selectedItem = {
+        selectedMonth: this.maxDate.getMonth(),
+        selectedYear: this.maxDate.getFullYear(),
+        selectedWeek: null,
+      }
+    },
+    datePickerMove: function (event) {
+      // pass event object, bound to mouse move with updat
+      let x = event.clientX;
+      let y = event.clientY;
+      console.log("x:", x, "y:", y);
+      let arrRangeTemp = document.querySelectorAll(
+          '.vc-pane-container .vc-day span[style*="color: var(--blue-900);"]'
+      );
+      if (arrRangeTemp && arrRangeTemp.length > 0) {
+        arrRangeTemp[0].style.color = " var(--white)";
+        arrRangeTemp[arrRangeTemp.length - 1].style.color = " var(--white)";
+      }
+    },
+    // checkEnable () {
+    //   if ()
+    // },
+    chooseDataFrequency(item) {
+      this.dataFrequency = item;
+    },
+    // chooseDataFrequency2 (item) {
+    //   this.dataFrequency = item
+    // },
+    chooseDataType(checked, data) {
+      // this.dataType = 'CYCLE_TIME'
+      if (checked) {
+        if (this.dataType == data) {
+          this.dataType = null;
+        } else {
+          this.dataType = data;
+        }
+      } else {
+        this.dataType = null;
+      }
+      console.log(this.dataType);
+    },
+    chooseDataType2(data) {
+      // this.dataType = 'CYCLE_TIME'
+      if (this.dataType.filter((item) => item == data).length == 0) {
+        this.dataType.push(data);
+      } else {
+        this.dataType = this.dataType.filter((item) => item != data);
+      }
+    },
+    // onChangeStart(date, dateString) {
+    //   console.log(date, dateString);
+    //   this.startDate = dateString.replaceAll('-', '')
+    // },
+    // onChangeEnd(date, dateString) {
+    //   console.log(date, dateString);
+    //   this.endDate = dateString.replaceAll('-', '')
+    // },
+    setDataType(isChecked, type) {
+      if (isChecked) {
+        this.dataType = type;
+      } else {
+        this.dataType = null;
+      }
+    },
+    setDataFrequency(type) {
+      this.dataFrequency = type;
+    },
+    animationPrimary() {
+      $(".animationPrimary").click(function () {
+        console.log($(".animationPrimary"));
+        $(this).addClass("primary-animation");
+        $(this).one(
+            "webkitAnimationEnd oanimationend msAnimationEnd animationend",
+            function (event) {
+              $(this).removeClass("primary-animation");
+            }
+        );
+      });
+    },
+    animationOutline() {
+      $(".animationOutline").click(function () {
+        $(this).addClass("outline-animation");
+        $(this).one(
+            "webkitAnimationEnd oanimationend msAnimationEnd animationend",
+            function (event) {
+              $(this).removeClass("outline-animation");
+            }
+        );
+      });
+    },
+    // animationOutline() {
+    //   $(".animationOutline2").click(function () {
+    //     $(this).addClass("outline-animation");
+    //     $(this).one(
+    //       "webkitAnimationEnd oanimationend msAnimationEnd animationend",
+    //       function (event) {
+    //         $(this).removeClass("outline-animation");
+    //       }
+    //     );
+    //   });
+    // },
+    close() {
+      console.log("close-export");
+      this.$emit("close-export");
+    },
+    convertTimestamp(timestamp) {
+      return new Date(timestamp * 1000)
+          .toISOString()
+          .slice(0, 10)
+          .split("-")
+          .join("");
+    },
+    showCalendar() {
+      this.calendarShow = true;
+      if (this.displayDatePicker == "" || this.selectedType == "") {
+        this.selectedType = "CUSTOM_RANGE";
+      }
+    },
+    convertDate(date) {
+      return `${date.getFullYear()}${
+          +date.getMonth() + 1 < 10
+              ? "0" + (+date.getMonth() + 1)
+              : +date.getMonth() + 1
+      }${date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}`;
+    },
+    submitData(){
+      let data = null;
+      let time = "";
+      if (this.isCustomRange) {
+        let range = {
+          startDate: this.convertDate(this.range.start),
+          endDate: this.convertDate(this.range.end),
+        }
+        data = {
+          // dataFrequency: this.dataFrequency,
+          // isCustomRange: this.isCustomRange,
+          range: range,
+          dataType: this.selectedType,
+        }
+      } else {
+        if (this.selectedType == "HOURLY") {
+          console.log('there')
+          time = this.convertDate(this.singleDate)
+
+        } else {
+          switch (this.selectedType) {
+            case "DAILY":
+              time = `${this.selectedItem.selectedYear}${
+                  +this.selectedItem.selectedMonth + 1 < 10
+                      ? "0" + (+this.selectedItem.selectedMonth + 1)
+                      : +this.selectedItem.selectedMonth + 1
+              }`;
+              break;
+            case "WEEKLY":
+              time = `${this.selectedItem.selectedYear}`;
+              break;
+            case "MONTHLY":
+              time = `${this.selectedItem.selectedYear}`;
+              break;
+
+          }
+          
+        }
+        data = {
+            rangeType: this.selectedType,
+            dataType: this.dataType,
+            // dataFrequency: this.dataFrequency,
+            time: time,
+            // isCustomRange: this.isCustomRange,
+          };
+      }
+      
+      
+      this.tempData = {
+        singleDate: time,
+        selectedItem: this.selectedItem,
+        selectedType: this.selectedType,
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        isCustomRange: this.isCustomRange,
+      };
+      data = {
+        ...data,
+        isCustomRange: this.isCustomRange,
+        dataFrequency: this.dataFrequency,
+
+        singleDate: time,
+        selectedItem: this.selectedItem,
+        selectedType: this.selectedType,
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+
+      }
+      console.log("date data", data, this.tempData);
+      this.handleSubmit(data, this.tempData);
+      // this.getDefaultDate();
+      this.currentYearForMonth = this.maxDate.getFullYear()
+      this.getTitle();
+    },
+    changeType(type){
+      this.selectedType = type
+      this.getDefaultDate();
+      this.getTitle();
+    },
+    changeDateData(dateData){
+      console.log("this.tempDate: ", dateData);
+
+      this.currentYearForWeek = dateData.yearSelected
+      this.currentYearForMonth = dateData.yearSelected
+      this.currentMonth = dateData.monthHour - 1
+
+      // this.singleDate = new Date(`${dateData.yearSelected}-${dateData.monthHour}-${dateData.day}`);
+      this.singleDate = new Date(Number(dateData.yearSelected), Number(dateData.monthHour) - 1, Number(dateData.day));
+
+      this.selectedItem = {
+        selectedMonth: dateData.monthHour - 1,
+        selectedYear: dateData.yearSelected,
+        selectedWeek: null,
+      }
+      this.getTitle();
+    },
+    getDateOfISOWeek(w, y) {
+      let simple = null;
+      if (new Date("1-1-" + y).getDay() < 4) {
+        simple = new Date(y, 0, 1 + (w - 2) * 7);
+      } else {
+        simple = new Date(y, 0, 1 + (w - 1) * 7);
+      }
+
+      let dow = simple.getDay();
+      let ISOweekStart = simple;
+      if (dow <= 4)
+        ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
+      else ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
+      return ISOweekStart;
+    },
+    getCurrentWeekNumber(date) {
+      let oneJan = new Date(date.getFullYear(), 0, 1);
+      let numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
+      let result = Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
+      return result;
+    },
+    getNumberOfWeek() {
+      let result = this.getCurrentWeekNumber(
+          new Date("12-31-" + this.currentYearForWeek)
+      );
+      if (new Date("1-1-" + this.currentYearForWeek).getDay() >= 4) {
+        result--;
+      }
+      if (new Date("12-31-" + this.currentYearForWeek).getDay() < 4) {
+        result--;
+      }
+      return result;
+    },
+    handleSelectWeek(weekNumber, currentYearForWeek) {
+      console.log(`${weekNumber} - ${currentYearForWeek}`);
+      if (weekNumber != this.selectedItem.selectedWeek) {
+        this.selectedItem = {
+          selectedMonth: null,
+          selectedYear: currentYearForWeek,
+          selectedWeek: weekNumber,
+        };
+        console.log(
+            `Selected Week Change to ${this.selectedItem.selectedWeek}`
+        );
+        this.submitDate();
+        this.getTitle();
+      } else {
+        this.selectedItem = {
+          selectedMonth: null,
+          selectedYear: null,
+          selectedWeek: null,
+        };
+        this.dateFrom = "";
+        this.dateTo = "";
+        console.log("deselect week!");
+      }
+      this.getDateRange();
+
+    },
+    handleSelectMonth(month, currentYearForMonth) {
+      console.log(`${month} - ${currentYearForMonth}`);
+      if (
+          month == this.selectedItem.selectedMonth &&
+          currentYearForMonth == this.selectedItem.selectedYear
+      ) {
+        this.selectedItem = {
+          selectedMonth: null,
+          selectedYear: null,
+          selectedWeek: null,
+        };
+        console.log("deselect month!");
+      } else {
+        this.selectedItem = {
+          selectedMonth: month,
+          selectedYear: currentYearForMonth,
+          selectedWeek: null,
+        };
+        this.dateFrom = "";
+        this.dateTo = "";
+        console.log(
+            `Selected Month Change to ${+this.selectedItem.selectedMonth + 1} - ${
+                this.selectedItem.selectedYear
+            }`
+        );
+        this.submitDate();
+        this.getTitle();
+      }
+      if (this.selectedType == "DAILY") {
+        this.singleDate = new Date(
+            `${this.selectedItem.selectedMonth}-1-${this.currentYearForMonth}`
+        );
+      }
+      this.getDateRange();
+
+    },
+    handleSelectYear(year) {
+      if (this.selectedItem.selectedYear != year) {
+        this.selectedItem.selectedYear = year;
+        console.log(`Selected year: ${this.selectedItem.selectedYear}`);
+        this.submitDate();
+        this.getTitle();
+      } else {
+        this.selectedItem.selectedYear = null;
+        this.dateFrom = "";
+        this.dateTo = "";
+        console.log("Deselected year");
+
+      }
+
+      this.getDateRange();
+
+    },
+    getDateRange() {
+      let n1 = null;
+      let n2 = null;
+      switch (this.selectedType) {
+        case "WEEKLY":
+          if (this.selectedItem.selectedWeek) {
+            var firstDay = new Date(
+                this.selectedItem.selectedYear,
+                0,
+                1
+            ).getDay();
+            var d = new Date(
+                "Jan 01, " + this.selectedItem.selectedYear + " 00:00:00"
+            );
+            var lastWeekDate =
+                d.getTime() -
+                3600000 * 24 * (firstDay - 1) +
+                604800000 * this.getNumberOfWeek();
+            var w =
+                d.getTime() -
+                3600000 * 24 * (firstDay - 1) +
+                604800000 * (this.selectedItem.selectedWeek - 1);
+
+            if (this.selectedItem.selectedYear == this.getNumberOfWeek()) {
+              if (new Date(lastWeekDate).getDay() < 4) {
+                w =
+                    d.getTime() -
+                    3600000 * 24 * (firstDay - 1) +
+                    604800000 * (this.selectedItem.selectedWeek - 1);
+              }
+            } else {
+              if (d.getDay() > 3) {
+                // if ((new Date(firstWeek) - d) / 86400000 < 4) {
+                w =
+                    d.getTime() -
+                    3600000 * 24 * (firstDay - 1) +
+                    604800000 * this.selectedItem.selectedWeek;
+              }
+            }
+
+            n1 = new Date(w - 86400000);
+            n2 = new Date(w + 432000000);
+          }
+          break;
+        case "MONTHLY":
+          if (this.selectedItem.selectedMonth) {
+            n1 = new Date(
+                this.selectedItem.selectedYear,
+                this.selectedItem.selectedMonth,
+                1
+            );
+            n2 = new Date(
+                this.selectedItem.selectedYear,
+                +this.selectedItem.selectedMonth + 1,
+                0
+            );
+          }
+          break;
+        case "YEARLY":
+          if (this.selectedItem.selectedYear) {
+            n1 = new Date(this.selectedItem.selectedYear, 0, 1);
+            n2 = new Date(this.selectedItem.selectedYear, 11, 31);
+          }
+          break;
+      }
+      if (n1 != null) {
+        this.dateFrom = `${n1.getFullYear()}-${
+            n1.getMonth() < 9 ? "0" + (+n1.getMonth() + 1) : +n1.getMonth() + 1
+        }-${n1.getDate() < 10 ? "0" + +n1.getDate() : n1.getDate()}`;
+      } else {
+        this.dateFrom = "";
+      }
+      if (n2 != null) {
+        this.dateTo = `${n2.getFullYear()}-${
+            n2.getMonth() < 9 ? "0" + (+n2.getMonth() + 1) : +n2.getMonth() + 1
+        }-${n2.getDate() < 10 ? "0" + +n2.getDate() : n2.getDate()}`;
+      } else {
+        this.dateTo = "";
+      }
+      this.textboxKey++;
+      console.log(`From ${this.dateFrom} to ${this.dateTo}`);
+    },
+    closeCalendar() {
+      const element = document.getElementById("light-animation");
+      console.log(element);
+      element.classList.add("light-animation-button");
+      console.log(element);
+      setTimeout(() => {
+        element.classList.remove("light-animation-button");
+        setTimeout(() => {
+          this.calendarShow = false;
+          this.range = this.tempData.range;
+          this.selectedItem = this.tempData.selectedItem;
+          this.selectedType = this.tempData.selectedType;
+          this.dateFrom = this.tempData.dateFrom;
+          this.dateTo = this.tempData.dateTo;
+        }, 300);
+        this.cancelCalendar();
+      }, 400);
+    },
+    resetDateData() {
+      this.range = {
+        start: null,
+        end: null,
+        startMessage: "",
+        endMessage: "",
+      };
+      (this.today = new Date()),
+          (this.currentYearForWeek = new Date().getFullYear());
+      this.currentYearForMonth = new Date().getFullYear();
+      this.currentMonth = new Date().getMonth();
+      this.yearRange = 2010;
+      this.selectedItem = {
+        selectedMonth: null,
+        selectedYear: null,
+        selectedWeek: null,
+      };
+      this.selectedType = "";
+      this.dateFrom = "";
+      this.dateTo = "";
+      this.inputType = "";
+    },
+    checkIsCheckedDataType(dataType) {
+      return this.dataType.filter((item) => item == dataType).length > 0;
+    },
+    changeRangeType(type) {
+      if (type != this.selectedType) {
+        let id = ''
+        switch (type) {
+          case 'HOURLY':
+            id = 'hourly-btn'
+            break;
+          case 'DAILY':
+            id = 'daily-btn'
+            break;
+          case 'WEEKLY':
+            id = 'weekly-btn'
+            break;
+          case 'MONTHLY':
+            id = 'monthly-btn'
+            break;
+        }
+        const el = document.getElementById(id)
+        if (el) {
+          el.classList.add('select-type-button-animation')
+          setTimeout(() => {
+            el.classList.remove('select-type-button-animation')
+            this.resetDateData();
+            this.selectedType = type;
+          }, 700);
+        }
+      }
+    },
+    parseDate(inputDate, dateType) {
+      if (dateType == "from") {
+        if (inputDate == "") {
+          this.range.startMessage = "";
+        } else {
+          let dateParts = inputDate.split("-");
+          let checkDate = new Date(
+              dateParts[0],
+              +dateParts[1] - 1,
+              dateParts[2]
+          );
+          if (dateParts.length == 3 && checkDate != "Invalid Date") {
+            if (
+                checkDate.getDate() == dateParts[2] &&
+                checkDate.getMonth() == +dateParts[1] -1 &&
+                checkDate.getFullYear() == dateParts[0]
+            ) {
+              if (checkDate.getTime() <= this.today.getTime()) {
+                return checkDate;
+              } else {
+                this.range.startMessage =
+                    "‘From’ date must be earlier or equal than Today.";
+              }
+            } else {
+              this.range.startMessage =
+                  "Please enter the date in the format ‘yyyy-mm-dd’.";
+            }
+          } else {
+            console.log(`this - ${this.inputType}`);
+            this.range.startMessage =
+                "Please enter the date in the format ‘yyyy-mm-dd’.";
+          }
+        }
+      } else {
+        if (inputDate == "") {
+          this.range.endMessage = "";
+        } else {
+          let dateParts = inputDate.split("-");
+          let checkDate = new Date(
+              dateParts[0],
+              +dateParts[1] - 1,
+              dateParts[2]
+          );
+          if (dateParts.length == 3 && checkDate != "Invalid Date") {
+            if (
+                checkDate.getDate() == dateParts[2] &&
+                checkDate.getMonth() == +dateParts[1] - 1 &&
+                checkDate.getFullYear() == dateParts[0]
+            ) {
+              if (checkDate.getTime() <= this.today.getTime()) {
+                return checkDate;
+              } else {
+                this.range.endMessage =
+                    "‘To’ date must be earlier or equal than Today.";
+              }
+            } else {
+              this.range.endMessage =
+                  "Please enter the date in the format ‘yyyy-mm-dd’.";
+              console.log(
+                  `${checkDate.getFullYear()}-${checkDate.getMonth()}-${checkDate.getDate()}`
+              );
+            }
+          } else {
+            this.range.endMessage =
+                "Please enter the date in the format ‘yyyy-mm-dd’.";
+          }
+        }
+      }
+      return null;
+    },
+    checkDateFrom() {
+      let checkDate = this.parseDate(this.dateFrom, "from");
+      let endDate = this.parseDate(this.dateTo, "to");
+      if (checkDate) {
+        let minDate = null
+        if (this.minDate ) {
+          minDate = this.minDate
+        }
+        if (minDate && (checkDate < minDate)) {
+              this.range.startMessage =
+                    "‘From’ date must be later than min date.";
+        } else {
+          if (this.dateTo != "" && endDate != null) {
+          // if (checkDate != null && this.dateTo != "" && endDate != null) {
+            if (checkDate.getTime() > endDate.getTime()) {
+                this.range.startMessage =
+                    "‘From’ date must be earlier than ‘To’ date.";
+            } else {
+                console.log("1-1");
+                this.range.startMessage = "valid";
+                this.range.start = checkDate;
+
+                if (this.inputType == "from") {
+                  this.checkDateTo();
+                }
+            }
+          } else {
+            console.log("1-2");
+            this.range.startMessage = "valid";
+            this.range.start = checkDate;
+          }
+        }
+      }
+    },
+    checkDateTo() {
+      let checkDate = this.parseDate(this.dateTo, "to");
+      let startDate = this.parseDate(this.dateFrom, "from");
+      if (checkDate) {
+        let maxDate = null
+          if (this.maxDate) {
+            maxDate = this.maxDate
+          } else {
+            maxDate = this.today
+        }
+        if (checkDate > maxDate) {
+            this.range.endMessage = "‘To’ date must be earlier than max date.";
+        } else {
+          if (this.dateFrom != "" && startDate != null) {
+            // if (checkDate != null && this.dateFrom != "" && startDate != null) {
+            if (checkDate.getTime() < startDate.getTime()) {
+              this.range.endMessage = "‘To’ date must be later than ‘From’ date.";
+            } else {
+              console.log("2-1");
+              this.range.endMessage = "valid";
+              this.range.end = checkDate;
+
+              if (this.inputType == "to") {
+                this.checkDateFrom();
+              }
+            }
+          } else {
+            console.log("2-2");
+            this.range.endMessage = "valid";
+            this.range.end = checkDate;
+          }
+        }
+        
+      }
+    },
+    checkEnableButton(){
+      console.log('check', this.range.startMessage == "valid" && this.range.endMessage == "valid")
+      if (this.range.startMessage == "valid" && this.range.endMessage == "valid") {
+         this.isEnableSubmitCustomRange = true;
+      } else {
+        this.isEnableSubmitCustomRange = false;
+      }
+    },
+    handleDateFromInput: _.debounce(function (event) {
+      this.inputType = "from";
+      this.range.start = null;
+      this.dateFrom = event.target.value;
+      this.checkDateFrom();
+      console.log(this.range);
+      this.customKey++;
+      this.trigger++;
+    }, 500),
+    handleDateToInput: _.debounce(function (event) {
+      this.inputType = "to";
+      this.range.end = null;
+      this.dateTo = event.target.value;
+      this.checkDateTo();
+      console.log(this.range);
+      this.customKey++;
+      this.trigger++;
+    }, 500),
+    prevYearRange() {
+      if (this.yearRange <= 10) {
+        this.yearRange = 1;
+      } else {
+        this.yearRange -= 20;
+      }
+    },
+    nextYearRange() {
+      if (this.yearRange == 1) {
+        this.yearRange = 10;
+      } else {
+        this.yearRange += 20;
+      }
+    },
+    hyperLinkAnimation(){
+      const el = document.getElementById('back-btn');
+      if (el) {
+        el.classList.add('hyper-link-btn-animation')
+        setTimeout(() => {
+          this.isCustomRange = false;
+          el.classList.remove('hyper-link-btn-animation')
+        }, 700);
+      }
+    },
+    iconAnimation(){
+      const el = document.getElementById('custom-range-icon');
+      if (el) {
+        el.classList.add('icon-animation')
+        setTimeout(() => {
+          this.isCustomRange = true;
+          el.classList.remove('icon-animation')
+        }, 700);
+      }
+    },
+    submitDate(){
+      this.submitData();
+      this.submitCustomRange = false;
+      this.visible = false;
+    },
+    submitCustomRangeDate(){
+      this.submitData();
+      this.submitCustomRange = true;
+      this.visible = false;
+    },
+    togglePopup() {},
+    mouseleaveButton() {},
+    mouseOverButton() {},
+    hidePopupFromOutside() {},
+  },
+};
+</script>
+<style>
+[ant-click-animating-without-extra-node]:after {
+  -webkit-animation: none !important;
+  -moz-animation: none !important;
+  -o-animation: none !important;
+  -ms-animation: none !important;
+  animation: none !important;
+}
+    .dropdown_button-custom-mold {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+      color: #3491FB;
+  transition: 0ms;
+  line-height: 1.499;
+  position: relative;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  height: 32px !important;
+  padding: 0 8px 0px 10px;
+  font-size: 14px;
+  border-radius: 3px;
+      border: 1px solid #FFFFFF;
+      background-color: #FFFFFF;
+      outline: 1px solid #3491FB;
+  text-decoration: none !important;
+}
+    .dropdown_button-custom-mold:hover {
+      color: #0E65C7 !important;
+      background-color: #DEEDFF;
+      outline: 1px solid transparent;
+      border: 1px solid transparent;
+}
+    .dropdown_button-animation-mold {
+      animation: dropdown_button-mold-animation-primary 1.7s;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  border: 1px solid transparent;
+      outline: 1px solid #3491FB;
+}
+    @keyframes dropdown_button-mold-animation-primary {
+  0% {
+  }
+  15% {
+    /*  box-shadow: 0 0 0 2px rgba(137, 209, 253, 0.5) !important;
+        outline: 1px solid rgba(137, 209, 253, 0.5) !important; */
+        color: #0E65C7;
+        outline: 3px solid #89D1FD;
+  }
+  100% {
+        color: #3491FB;
+        outline: 1px solid #3491FB;
+  }
+}
+.vc-header-title {
+  font-size: 11px;
+  color: #0E65C7;
+  text-align: center;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ant-popover-inner-content {
+  /* padding: 2px !important; */
+}
+.ant-modal-body {
+  padding: 0;
+  border-radius: 6px;
+}
+.ant-modal-content {
+  width: fit-content;
+  height: auto;
+  border-radius: 6px;
+}
+.ant-modal-centered {
+  top: -100px;
+  vertical-align: text-top;
+}
+/* .pretty.p-default input:checked ~ .state label:after {
+  background-color: #0075ff !important;
+  background: #0075ff !important;
+} */
+.pretty.p-round {
+}
+.pretty .state label {
+  margin-left: 4px;
+}
+.pretty .state label:before,
+.pretty .state label:after {
+  width: 14px;
+  height: 14px;
+}
+:not(.p-round) .state label:before,
+:not(.p-round) .state label:after {
+  border-radius: 1px;
+}
+.p-round .state label:before {
+  border: 0.7px solid #909090;
+}
+.pretty .state label:before {
+  border-color: #909090;
+}
+.pretty:hover .state label:before {
+  border-color: #4b4b4b;
+}
+/* .pretty.p-default input:checked ~ .state label:before {
+  border-color: #0075ff;
+}
+.pretty.p-default input:checked ~ .state label:before {
+  border-color: #0075ff;
+} */
+.pretty span {
+  margin-left: 0;
+}
+
+.pretty {
+  margin-right: unset;
+}
+/* .row-time{
+  height: 27px;
+} */
+.calendar-picker-input {
+  width: 232px;
+  height: 27px;
+  color: #4b4b4b;
+  border: 0.5px solid #909090;
+  border-radius: 2px;
+  font-size: 13px;
+  padding: 8px 25px 8px 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.calendar-picker-input::placeholder {
+  color: #c9c9c9;
+}
+.calendar-picker-input:hover {
+  border: 0.5px solid #4b4b4b;
+}
+.calendar-picker-input-active {
+  border: 1.5px solid #98d1fd !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.calendar-picker-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.export-filed-title {
+  font-size: 14px;
+  color: #4b4b4b;
+}
+.choosing-items {
+  margin-bottom: 10px;
+}
+.vc-container.vc-blue {
+  border: none;
+}
+.container-date-pick {
+  display: flex;
+  justify-content: space-around;
+  height: fit-content;
+}
+.vc-container.vc-blue {
+  border: none;
+}
+.title {
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #696969;
+}
+.block {
+  min-width: 222px;
+  position: relative;
+}
+.wrapper {
+  font-family: Helvetica Neue, Regular;
+  display: grid;
+  position: relative;
+  padding: 5px;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(6, 30px);
+  font-size: 12px;
+  color: #4b4b4b;
+}
+.week-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-origin: 50% 50%;
+  height: 32px;
+  cursor: pointer;
+}
+.selected {
+  color: #fff !important;
+  background-color: #519ffc;
+}
+.selected:hover {
+  background-color: #519ffc !important;
+}
+.week-number {
+  width: 17px;
+  height: 17px;
+  text-align: center;
+  line-height: 17px;
+}
+/* .week-number:hover {
+  color: #53575f;
+  background-color: #f0f3f6;
+  border-radius: 17px;
+} */
+.month-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-origin: 50% 50%;
+  height: 32px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.month-text {
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  color: #4b4b4b;
+  font-size: 12px;
+}
+/* .month-text:hover {
+  color: #4b4b4b;
+  background-color: #f0f3f6;
+  border-radius: 25px;
+} */
+.selected-month {
+  border-radius: 25px;
+}
+.selected-week {
+  border-radius: 17px;
+}
+.selected-year {
+  border-radius: 34px;
+}
+.year-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-origin: 50% 50%;
+  height: 32px;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+.year-text {
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  font-size: 12px;
+}
+/* .year-text:hover {
+  color: #4b4b4b;
+  background-color: #f0f3f6;
+  border-radius: 34px;
+} */
+.selected-month {
+  color: #fff;
+  background-color: #519ffc;
+  border-radius: 34px;
+}
+.disable {
+  color: #d5d5d5;
+  pointer-events: none;
+}
+.today {
+  color: #2aa3ff;
+}
+.wrapper-month {
+  display: grid;
+  position: relative;
+  padding: 5px;
+  grid-template-columns: repeat(3, 1fr);
+  font-size: 12px;
+  color: #4b4b4b;
+}
+.wrapper-year {
+  display: grid;
+  position: relative;
+  padding: 5px;
+  grid-template-columns: repeat(5, 1fr);
+  font-size: 12px;
+  color: #4b4b4b;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 20px;
+  align-items: center;
+  padding: 0px 7px 0px 7px;
+}
+.link-button {
+  cursor: pointer;
+}
+.block-button {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.select-type-button {
+  width: 90px;
+  height: 24px;
+  font-size: 13px;
+  color: #3491FF;
+  border: 1px solid #3491FB;
+  background-color: #fff;
+  border-radius: 2px;
+  margin-right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+}
+/* .select-type-button:focus {
+  outline: none !important;
+} */
+.select-type-button:hover {
+  background-color: #DEEDFF;
+  border: 1px solid #3491FB;
+}
+.selected-button {
+  background-color: #3491FB;
+  color: #ffffff;
+}
+.selected-button:hover {
+  background-color: #3994FF;
+  color: #ffffff;
+}
+.select-type-button-animation{
+  animation: select-type-button-animation-primary 0.7s;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  border: 1px solid transparent;
+  outline: 1px solid #3491FB;
+}
+    @keyframes select-type-button-animation-primary {
+      0% {
+      }
+      15% {
+        /*  box-shadow: 0 0 0 2px rgba(137, 209, 253, 0.5) !important;
+            outline: 1px solid rgba(137, 209, 253, 0.5) !important; */
+        outline: 3px solid #89D1FD;
+      }
+      100% {
+        outline: 1px solid #3491FB;
+      }
+    }
+
+.d-flex {
+  display: flex;
+  /* justify-content: space-between; */
+}
+.date-bar {
+  height: 22px;
+  width: 76px;
+  color: #4b4b4b;
+  font-size: 11px;
+  border: 0.5px solid #909090;
+  border-radius: 2px;
+  padding: 5px 6px 5px 6px;
+}
+.date-bar:hover {
+  border: 0.5px solid #4b4b4b;
+}
+.date-bar:focus {
+  outline: none;
+  border: 1.5px solid #98d1fd;
+}
+.date-bar-disable {
+  /* pointer-events: none; */
+  background-color: #e8e8e8;
+  border: none !important;
+}
+.date-bar::placeholder {
+  color: #c9c9c9;
+}
+.date-bar-disable::placeholder {
+  color: #909090;
+}
+.right-title {
+  float: left;
+}
+.block-footer {
+  font-size: 11px;
+  color: #838383;
+  position: absolute;
+  bottom: 0;
+  margin-left: 10px;
+}
+.btn-custom-date {
+  font-size: 11px;
+  padding: 6px 8px;
+  height: 24px;
+  line-height: 11px;
+  margin-left: 8px;
+  /* margin: 1px 1px 1px 8px; */
+}
+.btn-custom-date-light {
+  background-color: #fff;
+  border: 1px solid #7c7c7c;
+  color: #7c7c7c !important;
+}
+.btn-custom-date-light:hover {
+  background-color: #fafafa;
+  border: 1px solid #7c7c7c;
+  color: #464646 !important;
+}
+/* .btn-custom-date-light:active {
+  color: #464646;
+  background-color: #fff;
+  border: 2px solid #e8e8e8 !important;
+  padding: 5px 7px 5px 7px;
+} */
+.btn-custom-primary-active {
+  background-color: #3585e5;
+  /* border: 2px solid #89d1fd !important; */
+  outline: 2px solid #89d1fd !important;
+}
+.btn-disable {
+  background-color: #c4c4c4 !important;
+  border: 1px solid #c4c4c4 !important;
+  pointer-events: none;
+}
+.warning-text {
+  color: #ef4444;
+  font-size: 7px;
+  line-height: 11px;
+  width: 80px;
+}
+.warning-input {
+  border: 0.5px solid #ef4444 !important;
+}
+.disable-cta {
+  pointer-events: none;
+}
+.ant-tooltip-inner {
+  /* width: 180px; */
+  padding: 5px 4px 4px 6px;
+}
+.ant-tooltip-arrow {
+  top: 0px;
+}
+.light-animation-button {
+  /* animation: light-animation 1s;
+  animation-iteration-count: 1;
+  animation-direction: alternate; */
+  color: #464646;
+  background-color: #fff;
+  border: 1px solid #e8e8e8 !important;
+  outline: 1px solid #e8e8e8 !important;
+} /*
+@keyframes light-animation {
+  0% {
+  }
+  33% {
+    color: #464646;
+    background-color: #fff;
+    border: 2px solid #e8e8e8 !important;
+    padding: 5px 7px 5px 7px;
+  }
+  66% {
+    color: #464646;
+    background-color: #fff;
+    border: 2px solid #e8e8e8 !important;
+    padding: 5px 7px 5px 7px;
+  }
+  100% {
+  }
+} */
+.t-icon-close {
+  width: 12px;
+  height: 12px;
+  /*line-height: 12px;*/
+  background-image: url("/images/icon/black-close-12.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+/*override into library style*/
+.vc-pane {
+  font-family: Helvetica Neue !important;
+}
+.vc-header {
+  padding-top: 0px !important;
+  height: 20px !important;
+}
+.vc-title {
+  font-size: 13px !important;
+  line-height: 28px !important;
+  text-align: center !important;
+  color: #696969 !important;
+  font-weight: normal !important;
+}
+.vc-svg-icon {
+  height: 20px;
+}
+.vc-arrow {
+  height: 20px;
+}
+.vc-weekday {
+  color: #4b4b4b !important;
+  font-size: 12px;
+  font-weight: bold !important;
+}
+.vc-day-content {
+  color: #4b4b4b;
+  font-family: Helvetica Neue, Regular !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  padding-bottom: 1px;
+}
+.vc-arrows-container {
+  padding: 0px;
+}
+.vc-highlight {
+  width: 20px !important;
+  height: 20px !important;
+  background-color: #519ffc !important;
+}
+.today-range {
+  color: #2aa3ff !important;
+}
+.vc-day {
+  min-height: 28px !important;
+}
+.vc-day-content.is-disabled {
+  color: #d5d5d5;
+  pointer-events: none;
+}
+.date-range .vc-day-content:hover {
+  /* background-color: lightgray !important; */
+  /* color: white !important; */
+}
+.date-single .vc-day-content:hover {
+  /* background-color: lightgray !important; */
+}
+.vc-highlight.vc-highlight-base-middle,
+.vc-highlight.vc-highlight-base-end,
+.vc-highlight.vc-highlight-base-start {
+  height: 15px !important;
+  width: 35px !important;
+  background-color: #519ffc66 !important;
+}
+.vc-day-content:focus {
+  background: none !important;
+  /* color: white !important; */
+}
+
+/*end override library style */
+.row-items{
+  display: flex !important;
+  flex-direction: row-reverse;
+}
+.column-items{
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    margin-left: 5px;
+}
+.btn-group-title{
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  color: #696969;
+  font-weight: normal;
+  margin-bottom: 13px;
+}
+.column-items .select-type-button{
+  margin-bottom: 26px;
+}
+.hyper-link-btn{
+  color: #298BFF;
+  font-size: 12px;
+  line-height: 12px;
+  cursor: pointer;
+}
+.hyper-link-btn:hover{
+  text-decoration: underline;
+}
+
+.hyper-link-btn-animation{
+  animation: btn-hyper-link-animation-primary 0.7s;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  color: #006CFF;
+}
+@keyframes btn-hyper-link-animation-primary {
+  0% {
+  }
+  33%{
+    color: #006CFF !important;
+    text-decoration: unset !important;
+  }
+  66%{
+    color: #006CFF !important;
+    text-decoration: unset !important;
+  }
+  100% {
+  }
+}
+.custom-range-icon{
+  padding: 2px;
+  border-radius: 3px;
+  margin-top: -4px;
+}
+.icon-animation{
+  animation: icon-animation-primary 0.7s;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  outline: 2px solid transparent;
+}
+@keyframes icon-animation-primary {
+    0% {
+    }
+    33%{
+      outline: 2px solid #e1edfd;
+    }
+    66%{
+      outline: 2px solid #e1edfd;
+    }
+    100% {
+    }
+}
+.custom-range-garp{
+      padding: 0 10px 0 10px;
+}
+</style>
+<style scoped>
+.export-field-item_left {
+  margin-right: 27px;
+}
+.custom-modal-title {
+  background: #f5f8ff;
+  font-size: 16px;
+  color: #4b4b4b;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 24px;
+  height: 56px;
+}
+.head-line {
+  position: absolute;
+  background: #52a1ff;
+  height: 8px;
+  border-radius: 6px 6px 0 0;
+  top: 0;
+  width: 100%;
+}
+.ant-modal {
+  width: fit-content !important;
+}
+</style>
+<style scoped>
+.dropdown_button {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px;
+  align-items: center;
+  width: 100px;
+  background: #f2f5fa;
+}
+.ant-btn.active,
+.ant-btn:active,
+.ant-btn:focus > svg {
+  fill: #fff !important;
+}
+
+.down-icon {
+  fill: #564efb;
+}
+
+.ant-menu-submenu-title:hover {
+  background-image: linear-gradient(#414ff7, #6a4efb) !important;
+  background-color: red;
+}
+
+.first-layer-wrapper {
+  position: relative;
+}
+
+.first-layer {
+  position: absolute;
+  top: 0;
+}
+
+</style>

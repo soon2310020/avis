@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v2.0.0
+* @link https://coreui.io
+* Copyright (c) 2018 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+
+<html lang="en">
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+    <meta name="author" content="Łukasz Holeczek">
+    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+    <title>CoreUI Free Bootstrap Admin Template</title>
+    <!-- Icons-->
+    <link href="/ui/node_modules/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
+    <link href="/ui/node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+    <link href="/ui/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/ui/node_modules/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    <!-- Main styles for this application-->
+    <link href="/ui/css/style.css?v2022-03-15-1" rel="stylesheet">
+    <link href="/ui/vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+</head>
+<body class="app flex-row align-items-center">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+
+            <div class="card">
+                <form action="/mms/transfer/data" method="post">
+                    <div class="card-header">
+                        <strong>TDATA</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label for="t1">&nbsp; at=TDATA&ti=TMS1744KRB001&rc=0&tv=2.0.0&dh=1&ip=192.168.123.218&gw=192.168.123.1&dn=192.168.123.2</label>
+                            <input type="text" id="t1" class="form-control" name="q" placeholder="TDATA" value="36PBUe+Q7WYy3di9MQ1hBvDHqGm+H9oB9n5TihmwADjhAYspVeUAszJJYr5VAPC7Nbte6ma3RyA6H9yip1XNeKF55u1+cgyF2klhNYPFCghWxNKlhYmYw+1u931wvvmdEPSoarizPchql18CFOqMvw==">
+                        </div>
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <form action="/mms/transfer/data" method="post">
+                    <div class="card-header">
+                        <strong>CDATA</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label for="c1">&nbsp; at=CDATA&ti=TMS1744KRB001&ci=CMS1744I04002&sc=39&lst=20180803000323&rt=20180803081103&cf=N&ct=60&bs=H&rc=0&tv=2.0.0&sn=00077</label>
+                            <input type="text" id="c1" class="form-control" name="q" placeholder="CDATA" value="YDQ+6++wkdtLjxTuV/CWu++0XROINPwXrR7HY0HXse++14Zvzab6b1xVpZ0WWjiWHJwCSnUVhwOzfgphhWkQ2Nu7q/AMhtJBGthdwsXQLtwk16BQwGrqvb6P46NwCAHICD1A7FxalUj37VIhoJyhjVTPR0hv25nRaXHaw4Xg94k=">
+                        </div>
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+
+                    <div class="card-header">
+                        <strong>PRESET</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <form action="/mms/transfer/data" method="post">
+                            <div class="alert alert-danger" role="alert">
+                                1. PRESET 테이블에 CI: CMS1744I04002, PRESET: 37 등록 후 테스트<br />
+                                2. 1차 실행 , 2차 실행 시 테이터 삭제 확인. (37로 등록된 경우 삭제 / 아닌 경우 AUTH_FAIL)
+                            </div>
+                            <div class="form-group">
+                                <label for="p1">1차 : &nbsp; at=PRESET&ti=TMS1744KRB001&ci=CMS1744I04002&tv=2.0.0</label>
+                                <input type="text" id="p1" class="form-control" name="q" placeholder="PRESET" value="iOcttJuLt01RQGiyBWZ+Lk1301RdQRr/U3lTKRvwCy+5mjmKVXsSBbdnF9DSBH388TGnBq5EHe49poNhwlCy4Q==">
+                            </div>
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                        </form>
+
+                        <br />
+
+                        <form action="/mms/transfer/data" method="post">
+                            <div class="form-group">
+                                <label for="p2">2차 : &nbsp; at=PRESET&ti=TMS1744KRB001&ci=CMS1744I04002&sc=37&tv=2.0.0</label>
+                                <input type="text" id="p2" class="form-control" name="q" placeholder="PRESET" value="iOcttJuLt01RQGiyBWZ+Lk1301RdQRr/U3lTKRvwCy8Ua1J4ZuwAST5r1CRvQunUwlMECg1i2aKiGLoLyvHX6g==">
+                            </div>
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                        </form>
+                    </div>
+
+            </div>
+
+            <div class="card">
+                <form action="/mms/transfer/data" method="post">
+                    <div class="card-header">
+                        <strong>UPURL</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label for="u1">&nbsp; at=UPURL&ti=TMS1744KRB001</label>
+                            <input type="text" id="u1" class="form-control" name="q" placeholder="UPURL" value="v9pCXWMFuihPnrvDrhgxcTkMLkP/+8AcjaeEepcDfd8=">
+                        </div>
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- CoreUI and necessary plugins-->
+<script src="/ui/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/ui/node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="/ui/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/ui/node_modules/pace-progress/pace.min.js"></script>
+<script src="/ui/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+<script src="/ui/node_modules/@coreui/coreui/dist/js/coreui.min.js"></script>
+</body>
+</html>

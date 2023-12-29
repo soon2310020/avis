@@ -1,0 +1,19 @@
+{
+  "aiType": "AI_MFE",
+  "inferenceBoundary": {
+    "type": "BATCH",
+    "value": "1W"
+  },
+  "scale": {
+    "type": "PERIOD",
+    "value": "2Y"
+  },
+  "fields": {
+    "MOLD": ["ID"],
+    "STATISTICS": ["TFF", "HOUR", "TAV", "CT"],
+    "STATISTICS_EXT": ["SHOT_COUNT_CTT_VAL"]
+  },
+  "target": {
+    "name": "db"
+  }
+}

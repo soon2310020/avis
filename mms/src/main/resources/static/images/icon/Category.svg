@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-Category);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-Category">
+      <rect width="134" height="134"/>
+    </clipPath>
+  </defs>
+  <g id="Category" class="cls-1">
+    <g id="Group_81" data-name="Group 81" transform="translate(-4 -4.268)">
+      <g id="Group_78" data-name="Group 78">
+        <rect id="Rectangle_11" data-name="Rectangle 11" class="cls-2" width="89" height="21" rx="10.5" transform="translate(40 26.268)"/>
+        <circle id="Ellipse_4" data-name="Ellipse 4" class="cls-2" cx="10.5" cy="10.5" r="10.5" transform="translate(13 26.268)"/>
+      </g>
+      <g id="Group_79" data-name="Group 79">
+        <rect id="Rectangle_12" data-name="Rectangle 12" class="cls-2" width="89" height="21" rx="10.5" transform="translate(40 60.268)"/>
+        <circle id="Ellipse_5" data-name="Ellipse 5" class="cls-2" cx="10.5" cy="10.5" r="10.5" transform="translate(13 60.268)"/>
+      </g>
+      <g id="Group_80" data-name="Group 80">
+        <rect id="Rectangle_13" data-name="Rectangle 13" class="cls-2" width="89" height="21" rx="10.5" transform="translate(40 95.268)"/>
+        <circle id="Ellipse_6" data-name="Ellipse 6" class="cls-2" cx="10.5" cy="10.5" r="10.5" transform="translate(13 95.268)"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,86 @@
+<style scoped>
+.ant-modal-body {
+  padding: 0;
+  border-radius: 6px;
+}
+.dialogTooling {
+  text-align: center;
+  /*width: 100%;*/
+}
+.dialogTooling:hover {
+  color: blue;
+}
+.radio-confirm-modal:hover span {
+  color: #76A4EC
+}
+.radio-confirm-modal:focus span {
+  color: #183ABE
+}
+.radio-confirm-modal:active span {
+  color: #1D44D9
+}
+.action-zone {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+.confirm-create-zone {
+  margin-bottom: 8px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+.confirm-zone img {
+  width: 18px;
+}
+.confirm-zone span {
+  cursor: pointer;
+}
+.confirm-zone .checklist-cancel-edit {
+  width: 15px;
+  margin-left: 12px;
+}
+.confirm-zone .checklist-cancel-edit img {
+  width: 15px!important;
+}
+.show-more > div{
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+.show-more div, .show-more span {
+  z-index: 1;
+}
+.is-show-less {
+  margin-top: 30px;
+  z-index: 1;
+}
+.confirm-zone .action-item img {
+  width: 14px!important;
+}
+.confirm-zone .checklist-edit {
+  margin-right: 10px;
+}
+.isDisable {
+  background-color: unset!important;
+}
+.confirm-zone .action-item .icon-hover {
+  display: none;
+}
+.confirm-zone .action-item .icon-primary {
+  display: block;
+}
+.confirm-zone .action-item:hover .icon-hover {
+  display: block;
+}
+.confirm-zone .action-item:hover .icon-primary {
+  display: none;
+}
+.left-header strong {
+  font-size: 14.66px;
+  font-family: 'Helvetica Neue', Helvetica, 'Microsoft Sans Serif', Arial, Arimo;
+}
+</style>

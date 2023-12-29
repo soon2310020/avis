@@ -1,0 +1,30 @@
+DROP TABLE IF EXISTS `STATISTICS_SUMMARY`;
+
+CREATE TABLE STATISTICS_SUMMARY (
+	ID bigint not null auto_increment,
+	
+	SUMMARY_STATUS varchar(20),
+	SUMMARY_GROUP varchar(20),
+	PERIOD_TYPE varchar(20),
+	YEAR integer,
+	MONTH integer,
+	DAY integer,
+	WEEK integer,
+	
+	MOLD_ID bigint,
+	CI varchar(50),
+	
+	UPTIME_SECONDS bigint,
+	CT double,
+	CT_VAL double,
+	SHOT_COUNT bigint,
+	SHOT_COUNT_VAL bigint,
+	
+	CREATED_AT datetime,
+	UPDATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+) CHARSET=utf8;
+
+ALTER TABLE STATISTICS_SUMMARY
+   ADD CONSTRAINT UX_STATISTICS_SUMMARY UNIQUE (SUMMARY_GROUP, PERIOD_TYPE, YEAR, MONTH, DAY, WEEK, MOLD_ID, CI);

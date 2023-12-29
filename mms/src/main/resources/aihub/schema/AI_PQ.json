@@ -1,0 +1,19 @@
+{
+  "aiType": "AI_PQ",
+  "inferenceBoundary": {
+    "type": "BATCH",
+    "value": "1H"
+  },
+  "scale": {
+    "type": "PERIOD",
+    "value": "3H"
+  },
+  "fields": {
+    "MOLD": ["ID", "WEIGHTED_AVERAGE_CYCLE_TIME"],
+    "STATISTICS": ["ID", "CT", "TAV", "HOUR", "TFF"],
+    "STATISTICS_EXT": ["SHOT_COUNT_CTT_VAL"]
+  },
+  "target": {
+    "name": "db"
+  }
+}

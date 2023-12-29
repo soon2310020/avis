@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <style type="text/css">
+        form input[type=radio] {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ant-modal-body {
+            padding: 0;
+            border-radius: 6px;
+        }
+
+        .custom-drawer-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            width: 100%;
+            padding: 10px 11px 10px 21px;
+            font-weight: bold;
+        }
+
+        .pretty.p-default input:checked~.state label:after {
+            background-color: #0075FF !important;
+            background: #0075FF !important;
+        }
+
+        .pretty.p-round {}
+
+        .pretty .state label {
+            margin-left: 6px;
+        }
+
+        /*.pretty .state label:before, .pretty .state label:after {*/
+        /*    width: 15px;*/
+        /*    height: 15px;*/
+        /*    top: calc((0% - (100% - 17px)) - 8%);*/
+        /*}*/
+        /*.pretty .state label:after {*/
+        /*    transform: scale(0.5)!important;*/
+        /*    width: 19px;*/
+        /*    height: 19px;*/
+        /*    left: -2px;*/
+        /*    top: calc((0% - (100% - 15px)) - 8%);*/
+        /*}*/
+        :not(.p-round) .state label:before,
+        :not(.p-round) .state label:after {
+            border-radius: 1px;
+        }
+
+        .p-round .state label:before {
+            border: 0.7px solid #909090;
+        }
+
+        .pretty .state label:before {
+            border-color: #909090;
+        }
+
+        .pretty:hover .state label:before {
+            border-color: #4B4B4B;
+        }
+
+        .pretty.p-default input:checked~.state label:before {
+            border-color: #0075FF;
+            /*border-radius: 1px;*/
+        }
+
+        .pretty.p-default input:checked~.state label:before {
+            border-color: #0075FF;
+            /*border-radius: 1px;*/
+        }
+
+        .pretty span {
+            margin-left: 0;
+        }
+
+        .show-more>div {
+            /*margin-top: 30px;*/
+            display: flex;
+            justify-content: center;
+            z-index: 99999;
+        }
+
+        .show-more div,
+        .show-more span {
+            z-index: 99999;
+        }
+
+        .is-show-less {
+            margin-top: 30px;
+            z-index: 99999;
+        }
+
+        .op-menus {}
+
+        .op-menus li {
+            list-style: none;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .op-menus>ul {
+            padding-left: 10px;
+            -webkit-padding-start: 10px;
+
+        }
+
+        .col-md-6 {
+            display: grid;
+        }
+
+        .col-md-6:nth-child(2) {
+            order: 2;
+        }
+
+        .col-md-6:nth-child(3) {
+            order: 5;
+        }
+
+        .col-md-6:nth-child(4) {
+            order: 4;
+        }
+
+        .col-md-6:nth-child(5) {
+            order: 3;
+        }
+
+        .op-menu-list {
+            display: none;
+        }
+
+        .sidebar.wave_sidebar div,
+        .tab-support.wave_header div,
+        .tab-insight.wave_header div,
+        .tab-reports.wave_header div,
+        .tab-user.wave_header div {
+            visibility: hidden !important;
+        }
+
+        .hide_account {
+            display: none !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+
+        <div class="hide_account alert alert-dark" role="alert">
+            <h5 class="alert-heading mb-0"><i class="fa fa-user"></i>
+                <span v-if="!isAccFeature && isUpdate" th:text="#{edit_access_group}"></span>
+                <span v-else-if="!isAccFeature" th:text="#{create_access_group}"></span>
+                <span v-else-if="!!isAccFeature && isUpdate" th:text="#{edit_access_feature}"></span>
+                <span v-else th:text="#{create_access_feature}"></span>
+            </h5>
+        </div>
+
+        <form class="needs-validation" @submit.prevent="submit">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave" id="remove_profile"> </div>
+                    <div class="card profile_wave1">
+                        <div class="card-header">
+                            <strong th:text="#{role}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="roleType"><span th:text="#{type}"></span>
+                                    <span class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10" v-if="isEdit == false">
+                                    <select id="roleType" v-model="role.roleType" class="form-control" required>
+                                        <option value="" th:text="#{select_type}"></option>
+                                        <option th:each="authority : ${roleTypes}" th:if="${authority.code} != 'ROLE'"
+                                            th:value="${authority.code}" th:switch="${authority.title}">
+                                            <span th:case="'Access ' + 'Feature'" th:text="#{access_feature}"></span>
+                                            <span th:case="*" th:text="#{tooling_access_group}"></span>
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-10" v-if="isEdit">
+                                    {{role.roleTypeName}}
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="role.roleType === 'ROLE_MENU'">
+                                <label class="col-md-2 col-form-label" for="name">
+                                    <span th:text="#{access_feature_name}"></span>
+                                    <!--                                    <span class="avatar-status badge-danger"></span>-->
+                                    <span class="badge-require"></span>
+
+                                </label>
+                                <div class="col-md-10">
+                                    <input type="text" id="name" v-model="role.name" class="form-control"
+                                        th:placeholder="#{access_feature_name}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="role.roleType === 'ROLE_GROUP'">
+                                <label class="col-md-2 col-form-label" for="name2">
+                                    <span th:text="#{access_group_name}"></span>
+                                    <!--                                    <span class="avatar-status badge-danger"></span>-->
+                                    <span class="badge-require"></span>
+
+                                </label>
+                                <div class="col-md-10">
+                                    <input type="text" id="name2" v-model="role.name" class="form-control"
+                                        placeholder="Access Group Name" required>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="role.roleType === 'ROLE_MENU'">
+                                <label class="col-md-2 col-form-label" for="authCode">Access Feature ID
+                                    <!--                                    <span-->
+                                    <!--                                        class="avatar-status badge-danger"></span>-->
+                                    <span class="badge-require"></span>
+
+                                </label>
+                                <div class="col-md-10">
+                                    <input type="text" id="authCode" v-model="authCode" class="form-control"
+                                        placeholder="Access Feature ID" required>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="role.roleType === 'ROLE_GROUP'">
+                                <label class="col-md-2 col-form-label" for="authCode2">Access Group ID
+                                    <!--                                    <span-->
+                                    <!--                                        class="avatar-status badge-danger"></span>-->
+                                    <span class="badge-require"></span>
+
+                                </label>
+                                <div class="col-md-10">
+                                    <input type="text" id="authCode2" v-model="authCode" class="form-control"
+                                        placeholder="Access Group ID" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="description"><span
+                                        th:text="#{description}"></span> <span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10">
+                                    <input type="text" id="description" v-model="role.description" class="form-control"
+                                        th:placeholder="#{description}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row op-menu-list" :class="{'d-flex': role.roleType == 'ROLE_MENU'}">
+                <th:block th:each="menu1 : ${menu.children}">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header" th:switch="${menu1.id}">
+                                <strong th:case="1000" th:text="#{mms_menu_access}"></strong>
+                                <strong th:case="*" th:text="#{admin_menu_access}"></strong>
+                                <span class="ml-3"><label class="mb-0"><input id="checkbox-all" type="checkbox"
+                                            class="check-all" /> <span th:text="#{check_all}"></span></label></span>
+                            </div>
+                            <div class="card-body" style="min-height: 190px;overflow: scroll;">
+                                <div class="op-menus">
+                                    <ul>
+                                        <th:block th:if="${menu1.id == 1000}">
+                                            <li class="mb-3">
+                                                <p class="mb-0">
+                                                    <label>
+                                                    <input type="checkbox" v-model="isCheckedAllGraphs" style="margin-right: 5px;" id="checkbox-dashboard">
+                                                        <!--                                                        <input @click="onCheckAllChart" type="checkbox"-->
+                                                        <!--                                                            class="check-all-children">-->
+                                                        <strong th:text="#{dashboard}"></strong>
+                                                    </label>
+                                                </p>
+                                                <ul>
+                                                    <!-- <li style="margin-bottom: 15px">
+                                                        <p-radio v-model="dateType" value="dashboard" @change="onChange($event, 'dashboard')">dashboard</p-radio>
+                                                    </li> -->
+                                                    <!-- <li style="margin-bottom: 15px">
+                                                        <p-radio v-model="dateType" value="SUPPLIER_PERFORMANCE_MANAGEMENT_DASHBOARD" @change="onChange($event, 'SUPPLIER_PERFORMANCE_MANAGEMENT_DASHBOARD')">Supplier Performance Management Dashboard</p-radio>
+                                                    </li> -->
+                                                    <li style="margin-bottom: 15px">
+                                                        <ul
+                                                            :style="sectionDialog === false ? '-webkit-mask-image: -webkit-gradient(linear, left 30%, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));max-height: 137px;' : ''">
+                                                            <!-- <div style="height: 15px;">
+                                                                <div v-if="graphLength" style="color: #FF0000;font-size: 10px;line-height: 100%;margin-left: -12px;">
+                                                                    At least one option needs to be selected
+                                                                </div>
+                                                            </div> -->
+                                                            <li v-for="item in graphsSorted" :key="item.id">
+                                                                <p class="mb-0">
+                                                                    <label style="margin-bottom: 10px;"
+                                                                        @click="() => chooseIndividual(item)">
+                                                                        <input type="checkbox" v-model="item.checked">
+                                                                        <span>{{item.name}}</span>
+                                                                    </label>
+                                                                </p>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="show-more" :class="{'is-show-less': sectionDialog}"
+                                                            style="cursor: pointer" @click="changeSectionDialog()">
+                                                            <div>
+                                                                <span class="dialogTooling"
+                                                                    v-if="sectionDialog === false">
+                                                                    <img class="mr-1"
+                                                                        src="/images/icon/arrow-of-double-angle-pointing-down.svg"
+                                                                        height="11">
+                                                                    <span th:text="#{show_more}"></span>
+                                                                </span>
+                                                                <span class="dialogTooling" v-else>
+                                                                    <img class="mr-1"
+                                                                        src="/images/icon/arrow-of-double-angle-pointing-up.svg"
+                                                                        height="11">
+                                                                    <span th:text="#{show_less}"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <!--                                                <ul>-->
+                                                <!--                                                    <li v-for="item in graphs" :key="item.id">-->
+                                                <!--                                                        <p class="mb-0" >-->
+                                                <!--                                                            <label>-->
+                                                <!--                                                                <input type="checkbox" v-model="item.checked">-->
+                                                <!--                                                                <span>{{item.name}}</span>-->
+                                                <!--                                                            </label>-->
+                                                <!--                                                        </p>-->
+                                                <!--                                                    </li>-->
+                                                <!--                                                </ul>-->
+                                            </li>
+                                        </th:block>
+                                        <th:block th:each="menu2 : ${menu1.children}" th:if="${!menu2.adminMenu}">
+                                            <li class="mb-3">
+                                                <p class="mb-0" th:switch="${menu2.menuName}">
+                                                    <label>
+                                                        <input type="checkbox" class="check-all-children" th:id="${menu2.id}">
+                                                        <strong th:case="Overview" th:text="#{overview}"></strong>
+                                                        <strong th:case="Alerts" th:text="#{alerts}"></strong>
+                                                        <strong th:case="Search" th:text="#{search}"></strong>
+                                                        <strong th:case="Communication"
+                                                            th:text="#{communication}"></strong>
+                                                        <strong th:case="COMMUNICATION"
+                                                            th:text="#{communication}"></strong>
+                                                        <strong th:case="'Data Management'"
+                                                            th:text="#{master_data_small}"></strong>
+                                                        <strong th:case="'Base Data'" th:text="#{Data_Family}"></strong>
+                                                        <strong th:case="Equipment" th:text="#{equipment}"></strong>
+                                                        <strong th:case="Reporting"
+                                                            th:text="#{operation_data_small}"></strong>
+                                                        <strong th:case="Insights" th:text="#{insights}"></strong>
+                                                        <strong th:case="INSIGHTS" th:text="#{insights}"></strong>
+                                                        <strong th:case="Reports" th:text="#{reports}"></strong>
+                                                        <strong th:case="*" th:text="${menu2.menuName}">메뉴2</strong>
+                                                    </label>
+                                                </p>
+                                                <ul>
+                                                    <li th:each="menu3 : ${menu2.children}" th:if="${!menu3.adminMenu}">
+                                                        <p class="mb-0" th:switch="${menu3.menuName}">
+                                                            <label>
+                                                                <input type="checkbox" name="menuId"
+                                                                       class="children-checkbox"
+                                                                    th:value="${menu3.id}" v-model="role.menuIds" @click="onClickIndividual" th:parent-id="${menu2.id}">
+                                                                <span th:case="'Data Submission'"
+                                                                    th:text="#{data_submission}"></span>
+                                                                <span th:case="'Cycle Time'"
+                                                                    th:text="#{cycle_time}"></span>
+                                                                <span th:case="'Advanced Search'"
+                                                                    th:text="#{advance_search}"></span>
+                                                                <span th:case="'Project Hierarchy'"
+                                                                    th:text="#{project_hiearchy}"></span>
+                                                                <span th:case="'End of Life Cycle'"
+                                                                    th:text="#{end_of_cycle_time}"></span>
+                                                                <span th:case="'Uptime Status'"
+                                                                    th:text="#{uptime_status}"></span>
+                                                                <span th:case="Part" th:text="#{part}"></span>
+                                                                <span th:case="Tooling" th:text="#{tooling}"></span>
+                                                                <span th:case="Relocation"
+                                                                    th:text="#{relocation}"></span>
+                                                                <span th:case="Uptime" th:text="#{uptime}"></span>
+                                                                <span th:case="Reset" th:text="#{reset}"></span>
+                                                                <span th:case="Company" th:text="#{company}"></span>
+                                                                <span th:case="Location" th:text="#{location}"></span>
+                                                                <span th:case="Detachment"
+                                                                    th:text="#{detachment}"></span>
+                                                                <span th:case="Refurbishment"
+                                                                    th:text="#{refurbishment}"></span>
+                                                                <span th:case="Disconnection"
+                                                                    th:text="#{disconnection}"></span>
+                                                                <span th:case="Maintenance"
+                                                                    th:text="#{maintenance}"></span>
+                                                                <span th:case="Category" th:text="#{category}"></span>
+                                                                <span th:case="Terminal" th:text="#{terminal}"></span>
+                                                                <span th:case="Counter" th:text="#{counter}"></span>
+                                                                <span th:case="Tutorials" th:text="#{tutorials}"></span>
+                                                                <span th:case="Toolmaker" th:text="#{toolmaker}"></span>
+                                                                <span th:case="Downtime" th:text="#{downtime}"></span>
+                                                                <span th:case="Supplier" th:text="#{supplier}"></span>
+                                                                <span th:case="'Support'+ ' Center'"
+                                                                    th:text="#{support_center}"></span>
+                                                                <span th:case="*" th:text="${menu3.menuName}">메뉴3</span>
+                                                            </label>
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card wave_save">
+                        <div class="card-body text-center">
+                            <button type="submit" class="btn btn-primary" th:text="#{save_changes}"></button>
+                            <button type="button" class="btn btn-default" @click="cancel" th:text="#{cancel}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hide_account">
+                <a-modal v-model="visibleSuccess" width="300px" :footer="null" :closable="false"
+                    class="text-center col-3" centered>
+                    <div>
+                        <div class="custom-drawer-title">
+                            <span>Notification</span>
+                            <div @click="visibleSuccess = false">
+                                <span style="font-size: 22px!important;line-height: 100%;cursor: pointer;color: #808080"
+                                    aria-hidden="true">&times;</span>
+                            </div>
+                        </div>
+                        <div style="padding: 15px 11px 15px 21px; text-align: left;border-bottom: 1px solid #ccc;">
+                            Please select at least one dashboard for the “Individual Dashboards" option.
+                        </div>
+                        <div style="display: flex;justify-content: flex-end;padding: 15px 11px 15px 21px;">
+                            <a @click="visibleSuccess = false" href="javascript:void(0)" id="handleOkay"
+                                style="background: rgb(32, 168, 216)!important; width: 43px;"
+                                class="btn-custom btn-custom-primary">
+                                <span style="font-size: 11px;line-height:12px;">OK</span>
+                            </a>
+                        </div>
+                    </div>
+                </a-modal>
+            </div>
+        </form>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/roles/form.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

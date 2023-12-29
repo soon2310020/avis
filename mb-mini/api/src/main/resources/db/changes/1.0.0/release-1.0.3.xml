@@ -1,0 +1,225 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="-2023-06-05-add-column-table-insurance_payment" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="way4_docs_id" type="VARCHAR(100)" />
+            <column name="period" type="VARCHAR(10)" />
+            <column name="periodic_conversion_fee" type="VARCHAR(255)" />
+            <column name="fees_pay_able" type="VARCHAR(255)" />
+            <column name="installment_status" type="VARCHAR(50)" />
+            <column name="card_class" type="VARCHAR(500)" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-06-15-update_insurance_payment_table.sql" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <sqlFile path="db/data/update_insurance_payment_table.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="-2023-07-06-add-column-funding_source-table-insurance_payment" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="funding_source" type="VARCHAR(50)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-07-06-update_insurance_payment_funding_source_table.sql" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <sqlFile path="db/data/update_insurance_payment_funding_source_table.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-07-07-update_insurance_payment_data.sql" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <sqlFile path="db/data/update_insurance_payment_data.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-07-22-update_insurance_payment_table_20230722.sql" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <sqlFile path="db/data/update_insurance_payment_table_20230722.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-07-22-add-column-version-table-insurance_payment" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="version" type="INTEGER" defaultValue="0"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="-2023-07-27-add-column-installment_error_desc-table-insurance_payment" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="installment_error_code" type="VARCHAR(50)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-08-02-add-column-show_popup-insurance_payment" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="installment_popup" type="VARCHAR(50)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-08-19-add-column-table-baas_pay_on_behalf" author="Ben">
+        <preConditions>
+            <tableExists tableName="insurance_payment"/>
+            <not>
+                <columnExists tableName="insurance_payment" columnName="mb_callback_response"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="mb_callback_response" type="jsonb"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-08-21-add-column-table-customer" author="Ben">
+        <preConditions>
+            <tableExists tableName="customer"/>
+            <not>
+                <columnExists tableName="customer" columnName="last_updated"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="customer">
+            <column name="last_updated" type="datetime"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-10-16-add-column-table-insurance_payment" author="Ben">
+        <preConditions>
+            <tableExists tableName="insurance_payment"/>
+            <not>
+                <columnExists tableName="insurance_payment" columnName="mic_contract_num"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="mic_contract_num" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <!-- Sync contract  -->
+    <changeSet id="29-11-create-table-insurance_contract_sync" author="Ben">
+        <createTable tableName="insurance_contract_sync">
+
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mb_contract_id" type="BIGINT" remarks="ID hop dong mua ben Miniapp tuong ung"/>
+            <column name="mbal_policy_number" type="VARCHAR(45)" remarks="So HDBH MBAL"/>
+            <column name="policy_eff_date" type="DATE" remarks="Ngay bắt đầu hieu luc hop dong"/>
+            <column name="mbal_app_no" type="VARCHAR(45)" remarks="So AF.xxx"/>
+            <column name="policy_status" type="VARCHAR(45)" remarks="Trạng thái hợp đồng"/>
+            <column name="prd_name" type="VARCHAR(255)" remarks="Tên sản phẩm MBAL"/>
+            <column name="ph_name" type="VARCHAR(255)"/>
+            <column name="pay_frequency" type="VARCHAR(255)" remarks="Định ky đóng phí"/>
+            <column name="currency" type="VARCHAR(255)" remarks="Đơn vi thanh toan VND"/>
+            <column name="periodic_prem" type="VARCHAR(255)" remarks="Phi BH chính"/>
+            <column name="policy_status_id" type="VARCHAR(255)"/>
+            <column name="agent_code" type="VARCHAR(100)"/>
+            <column name="agent_name" type="VARCHAR(255)"/>
+            <column name="agent_num" type="VARCHAR(50)"/>
+            <column name="source" type="VARCHAR(50)" remarks="Nguồn hợp đồng MiniApp(MB), MBAL, OneID"/>
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="insurance_contract_sync"
+                                 constraintName="FK_contract_sync_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="customer"/>
+
+        <addForeignKeyConstraint baseColumnNames="mb_contract_id"
+                                 baseTableName="insurance_contract_sync"
+                                 constraintName="FK_contract_contract_sync_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_contract"/>
+    </changeSet>
+
+    <changeSet id="30-11-create-table-insurance_contract_sync_detail" author="Ben">
+        <createTable tableName="insurance_contract_sync_detail">
+
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="insurance_contract_sync_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="insurance_payment_id" type="BIGINT" remarks="Mã yêu cầu thanh toán"/>
+            <column name="product_id" type="VARCHAR(100)"/>
+            <column name="product_name" type="VARCHAR(255)" remarks="Tên sản phẩm"/>
+            <column name="inquiry_date" type="DATE"/>
+            <column name="policy_eff_date" type="DATE" remarks="Ngay bắt đầu hieu luc hop dong"/>
+            <column name="payfreq_text" type="VARCHAR(255)"/>
+            <column name="periodic_prem" type="VARCHAR(255)" remarks="Số tiền gốc mua bảo hiểm"/>
+            <column name="fee_amt" type="VARCHAR(255)"/>
+            <column name="over_due_amt" type="VARCHAR(255)"/>
+            <column name="suspense_amt" type="VARCHAR(100)"/>
+            <column name="payment_amt" type="VARCHAR(255)"/>
+            <column name="payment_min_amt" type="VARCHAR(50)"/>
+            <column name="insur_duration" type="VARCHAR(50)"/>
+            <column name="insured_name" type="VARCHAR(255)" remarks="Tên người mua gói bảo hiểm"/>
+            <column name="premium_type" type="VARCHAR(50)" remarks="Trạng thái thông báo đóng tái tục: DUE, NEXTDUE, OVERDUE"/>
+            <column name="due_from_date" type="DATE" remarks="Thời gian hợp đồng được đóng tại tục From"/>
+            <column name="due_to_date" type="DATE" remarks="Thời gian hợp đồng được đóng tại tục To"/>
+            <column name="due_amount" type="DECIMAL" remarks="Số phí bảo hiểm tái tục phải đóng"/>
+            <column name="insured_dob" type="DATE" remarks="Ngày sinh người mua bảo hiểm"/>
+            <column name="insured_bp" type="VARCHAR(50)"/>
+            <column name="max_top_up" type="DECIMAL"/>
+            <column name="min_top_up" type="DECIMAL" remarks="Phí bảo hiểm bổ sung"/>
+            <column name="transaction_id" type="VARCHAR(50)" remarks="Mã giao dịch khi khởi ta thanh toán"/>
+
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="insurance_contract_sync_id"
+                                 baseTableName="insurance_contract_sync_detail"
+                                 constraintName="FK_contract_sync_detail_insurance_contract_sync_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_contract_sync"/>
+
+        <addForeignKeyConstraint baseColumnNames="insurance_payment_id"
+                                 baseTableName="insurance_contract_sync_detail"
+                                 constraintName="FK_contract_sync_detail_payment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_payment"/>
+    </changeSet>
+
+</databaseChangeLog>

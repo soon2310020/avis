@@ -1,0 +1,75 @@
+{
+    "data": {
+        "labels": [],
+        "datasets": []
+    },
+    "options": {
+        "animation": {
+            "duration": 0
+        },
+        "interaction": {
+            "mode": "nearest"
+        },
+        "maintainAspectRatio": false,
+        "legend": {
+            "display": false,
+            "position": "bottom"
+        },
+        "tooltips": {
+            "mode": "index",
+            "intersect": false
+        },
+        "scales": {
+            "xAxes": [
+                {
+                    "stacked": true,
+                    "gridLines": {
+                        "drawOnChartArea": false
+                    },
+                    "scaleLabel": {
+                        "display": true,
+                        "labelString": "Date"
+                    }
+                }
+            ],
+            "yAxes": [
+                {
+                    "id": "first-y-axis",
+                    "type": "linear",
+                    "stacked": true,
+                    "ticks": {
+                        "beginAtZero": true
+                    },
+                    "scaleLabel": {
+                        "display": true,
+                        "labelString": "Total Part Quantity"
+                    }
+                },
+                {
+                    "id": "second-y-axis",
+                    "type": "linear",
+                    "stacked": true,
+                    "position": "right",
+                    "ticks": {
+                        "beginAtZero": true
+                    },
+                    "scaleLabel": {
+                        "display": true,
+                        "labelString": "Cycle Time"
+                    },
+                    "gridLines": {
+                        "display": false
+                    }
+                }
+            ]
+        },
+        "elements": {
+            "point": {
+                "radius": 0,
+                "hitRadius": 10,
+                "hoverRadius": 4,
+                "hoverBorderWidth": 3
+            }
+        }
+    }
+}

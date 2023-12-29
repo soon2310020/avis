@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName} accepted",
+  "content": "${senderName} (${senderCompanyName}) has accepted your Work Order request."
+}

@@ -1,0 +1,30 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+    <changeSet id="2023-07-29-add-column-table-baas_pay_on_behalf" author="DatVQ">
+        <preConditions>
+            <tableExists tableName="baas_pay_on_behalf"/>
+            <not>
+                <columnExists tableName="baas_pay_on_behalf" columnName="mic_contract_num"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="baas_pay_on_behalf">
+            <column name="mic_contract_num" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-08-26-add-column-table-additional_product" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="additional_product" columnName="parent_mic_contract"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="additional_product">
+            <column name="parent_mic_contract" type="jsonb"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-base}"
+>
+    <th:block layout:fragment="op-content">
+        <div id="app" class="chart-detail-container">
+            <chart-detail
+                chart-wrap-style="width: 80vw; height: 50vh; max-height: 40vw"
+                legend-icon-style="width: 3vw; height: 1vw;"
+                legend-label-style="font-size: 0.8vw;"
+                :resources="resources"
+                type="part"
+                :chart-param="chartParam"
+            ></chart-detail>
+        </div>
+        <style>
+            .chart-detail-container {
+                width: 100%;
+                height: 100vh;
+                background-color: #fff;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+        </style>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"></script>
+
+        <script defer th:src="'/js/scripts/hotjar.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/scripts/admin/parts/chart.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

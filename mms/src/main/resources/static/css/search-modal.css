@@ -1,0 +1,10 @@
+.app-header .nav-item .nav-link .badge {
+    position: absolute;
+    top: 85% !important;
+    left: 90% !important;
+    margin-top: -16px;
+    margin-left: 0;
+}
+.nav{
+    justify-content: space-around;
+}

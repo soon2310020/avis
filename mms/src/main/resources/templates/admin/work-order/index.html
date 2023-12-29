@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list wave1">
+      <my-work-orders 
+        v-if="showWorkOrder" 
+        :resources="resources" 
+        :show-detail="handleViewWorkOrder" 
+        :my-order-key="myOrderKey"
+        @close="closeMyOrder"
+        :handle-complete-work-order="handleCompleteWorkOrder" 
+        :handle-view-work-order="handleViewWorkOrder"
+        :handle-update-status-work-order="handleUpdateStatusWorkOrder" 
+        :handle-edit-work-order="handleEditWorkOrder"
+        :handle-reopen-work-order="openReopenWorkOrder" 
+        :handle-close-edit-work-order="closeEditWorkOrder"
+        :handle-approve-reject-change-requested="handleApproveRejectChangeRequested"
+        :current-user="currentUser"
+        :reload-check-key="reloadCheckKey"
+        :handle-open-change-requested="handleOpenChangeRequested"
+      >
+      </my-work-orders>
+      <div :style="{'display': showWorkOrder ? 'none' : 'block'}">
+      <!-- FILTER -->
+      <div class="d-flex justify-space-between align-center">
+        <div class="tabbed-filters d-flex align-items-center">
+          <filter-work-orders
+            ref="tabbed-filter-type"
+            :selected-data="requestParam.typeList"
+            :all-length="typeOptions?.length"
+            :query="filterQueryFunc"
+            :option-array="typeOptions"
+            :all-type="resources['all_types']"
+            placeholder="Search Types"
+            type="types"
+            title="Type"
+          >
+          </filter-work-orders>
+          <filter-work-orders
+            ref="tabbed-filter-priority"
+            :selected-data="requestParam.priorityTypeList"
+            :all-length="priorityOptions?.length"
+            :query="filterQueryFunc"
+            :option-array="priorityOptions"
+            :all-type="resources['all_priority']"
+            placeholder="Search priority"
+            type="priority"
+            title="Priority"
+          >
+          </filter-work-orders>
+          <filter-work-orders
+            :selected-data="requestParam.companyIdList"
+            :all-length="companyOptions?.length"
+            :query="filterQueryFunc"
+            :option-array="companyOptions"
+            :all-type="resources['all_companies']"
+            placeholder="Search Types"
+            type="companies"
+            title="Company"
+          ></filter-work-orders>
+        </div>
+        <div class="d-flex" style="gap: 8px">
+          <base-button
+            :size="'medium'"
+            :type="'normal'"
+            :level="'secondary'"
+            icon="calendar"
+            @click="handleShowWorkOrder"
+          >
+            <span v-text="getDatePickerDisplay"></span>
+          </base-button>
+          <base-button
+            :size="'medium'"
+            :type="'normal'"
+            :level="'secondary'"
+            @click="showMyWorkOrder"
+          >
+            <span v-text="resources['my_orders']"></span>
+          </base-button>
+          <base-button
+            :size="'medium'"
+            :type="'normal'"
+            :level="'primary'"
+            @click="showCreateWorkOrderModal"
+          >
+            <span v-text="resources['create_work_order']"></span>
+          </base-button>
+          <customize-button @click="handleExportWorkOrder">
+            <template slot="tooltips">
+              <span v-text="resources['export']"></span>
+            </template>
+            <template>
+              <img
+                style="margin-bottom: 3px"
+                src="/images/icon/common/expand-icon-blue.svg"
+              />
+            </template>
+          </customize-button>
+        </div>
+      </div>
+      <!-- CARDS -->
+      <div class="status-card-container" style="gap: 13px">
+        <div class="status-card-wrapper">
+          <widget
+            style-props="width: 100%; height: 158px;"
+            header-text="Open Orders"
+          >
+            <template slot="tooltip">
+              <tooltip
+                position="bottom"
+                color="black"
+                :style-props="tooltipStyle"
+              >
+                <template slot="body">
+                  <div style="padding: 6px 8px; text-align: left">
+                    <span style="display: inline-block"
+                      >{{resources['open_orders_widget_tooltips']}}</span
+                    >
+                  </div>
+                </template>
+                <template slot="context">
+                  <div style="margin-top: -7px">
+                    <a-icon type="info-circle" />
+                  </div>
+                </template>
+              </tooltip>
+            </template>
+            <template slot="body">
+              <div class="relative" style="height: 100%; width: 100%">
+                <a
+                  class="text--blue status-card-text absolute absolute--center"
+                  @click="handleWidgetClick()"
+                >
+                  {{data.total}}
+                </a>
+              </div>
+            </template>
+          </widget>
+        </div>
+        <div class="status-card-wrapper">
+          <widget
+            style-props="width: 100%; height: 158px;"
+            header-text="Overdue Orders"
+          >
+            <template slot="tooltip">
+              <tooltip
+                position="bottom"
+                color="black"
+                :style-props="tooltipStyle"
+              >
+                <template slot="body">
+                  <div style="padding: 6px 8px; text-align: left">
+                    <span style="display: inline-block"
+                      >{{resources['overdue_orders_widget_tooltips']}}</span
+                    >
+                  </div>
+                </template>
+                <template slot="context">
+                  <div style="margin-top: -7px">
+                    <a-icon type="info-circle" />
+                  </div>
+                </template>
+              </tooltip>
+            </template>
+            <template slot="body">
+              <div class="relative" style="height: 100%; width: 100%">
+                <a
+                  class="text--red status-card-text absolute absolute--center"
+                  @click="handleWidgetClick({isHistory: false,status: 'overdue'})"
+                >
+                  {{data.overdue}}
+                </a>
+              </div>
+            </template>
+          </widget>
+        </div>
+        <div class="status-card-wrapper">
+          <widget
+            style-props="width: 100%; height: 158px;"
+            header-text="Emergency Orders"
+          >
+            <template slot="tooltip">
+              <tooltip
+                position="bottom"
+                color="black"
+                :style-props="tooltipStyle"
+              >
+                <template slot="body">
+                  <div style="padding: 6px 8px; text-align: left">
+                    <span style="display: inline-block"
+                      >{{resources['emergency_orders_widget_tooltips']}}</span
+                    >
+                  </div>
+                </template>
+                <template slot="context">
+                  <div style="margin-top: -7px">
+                    <a-icon type="info-circle" />
+                  </div>
+                </template>
+              </tooltip>
+            </template>
+            <template slot="body">
+              <div class="relative" style="height: 100%; width: 100%">
+                <a
+                  class="text--red status-card-text absolute absolute--center"
+                  @click="handleWidgetClick({isHistory: false, orderType: ['EMERGENCY']})"
+                >
+                  {{data.emergency}}
+                </a>
+              </div>
+            </template>
+          </widget>
+        </div>
+        <div class="status-card-wrapper">
+          <widget
+            style-props="width: 100%; height: 158px;"
+            header-text="Preventive Maintenance"
+          >
+            <template slot="tooltip">
+              <tooltip
+                position="bottom"
+                color="black"
+                :style-props="tooltipStyle"
+              >
+                <template slot="body">
+                  <div style="padding: 6px 8px; text-align: left">
+                    <label
+                      >{{resources['pm_orders_widget_tooltips_line_1']}}</label
+                    >
+                    <label
+                      >{{resources['pm_orders_widget_tooltips_line_2']}}</label
+                    >
+                    <label
+                      >{{resources['pm_orders_widget_tooltips_line_3']}}</label
+                    >
+                    <label
+                      >{{resources['pm_orders_widget_tooltips_line_4']}}</label
+                    >
+                  </div>
+                </template>
+                <template slot="context">
+                  <div style="margin-top: -7px">
+                    <a-icon type="info-circle" />
+                  </div>
+                </template>
+              </tooltip>
+            </template>
+            <template slot="body">
+              <div style="height: 100%; width: 100%">
+                <div
+                  class="text--dark-grey d-flex flex-column justify-content-center"
+                  style="width: 90%; height: 100%; margin: 0 auto"
+                >
+                  <div
+                    class="d-flex justify-space-between align-center"
+                    style="width: 100%; margin: 5px 0"
+                  >
+                    <span>Open</span>
+                    <div
+                      class="cursor-pointer work-order-widget"
+                      @click="handleWidgetClick({isHistory: false, orderType: ['PREVENTATIVE_MAINTENANCE'], status: 'open', isPmWorkOrder: true})"
+                    >
+                      <progress-bar
+                        bg-color="#F7CC57"
+                        :value="data.pmSummary.openPercent"
+                        :buffer-value="100"
+                      >
+                        <template slot="value"
+                          >{{`${data.pmSummary.open ? data.pmSummary.open : 0}
+                          (${data.pmSummary.openPercent}%)`}}</template
+                        >
+                      </progress-bar>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-space-between align-center"
+                    style="width: 100%; margin: 5px 0"
+                  >
+                    <span>Overdue</span>
+                    <div
+                      class="cursor-pointer work-order-widget"
+                      @click="handleWidgetClick({isHistory: false, orderType: ['PREVENTATIVE_MAINTENANCE'], status: 'overdue', isPmWorkOrder: true})"
+                    >
+                      <progress-bar
+                        bg-color="#E34537"
+                        :value="data.pmSummary.overduePercent ?? 0"
+                        :buffer-value="100"
+                      >
+                        <template slot="value"
+                          >{{`${data.pmSummary.overdue ? data.pmSummary.overdue
+                          : 0} (${data.pmSummary.overduePercent}%)`}}</template
+                        >
+                      </progress-bar>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex justify-space-between align-center"
+                    style="width: 100%; margin: 5px 0"
+                  >
+                    <span>Completed</span>
+                    <div
+                      class="cursor-pointer work-order-widget"
+                      @click="handleWidgetClick({isHistory: true, orderType: ['PREVENTATIVE_MAINTENANCE'], status: 'completed', isPmWorkOrder: true})"
+                    >
+                      <progress-bar
+                        bg-color="#41CE77"
+                        :value="data.pmSummary.completedPercent ?? 0"
+                        :buffer-value="100"
+                      >
+                        <template slot="value"
+                          >{{`${data.pmSummary.completed ?
+                          data.pmSummary.completed : 0}
+                          (${data.pmSummary.completedPercent}%)`}}</template
+                        >
+                      </progress-bar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </widget>
+        </div>
+      </div>
+      <!-- LIST -->
+      <list-work-orders
+        :resources="resources"
+        :show-create-workorder="showCreateWorkOrderModal"
+        :type-list="requestParam.typeList"
+        :priority-type-list="requestParam.priorityTypeList"
+        :company-id-list="requestParam.companyIdList"
+        :handle-complete-work-order="handleCompleteWorkOrder"
+        :handle-view-work-order="handleViewWorkOrder"
+        :handle-update-status-work-order="handleUpdateStatusWorkOrder"
+        :handle-edit-work-order="handleEditWorkOrder"
+        :handle-reopen-work-order="openReopenWorkOrder"
+        :handle-close-edit-work-order="closeEditWorkOrder"
+        :handle-approve-reject-change-requested="handleApproveRejectChangeRequested"
+        :handle-open-change-requested="handleOpenChangeRequested"
+        :my-order-key="myOrderKey"
+        :is-all-company="isAllCompany"
+        :changed-type="changedType"
+        :current-user="currentUser"
+        :status="requestParam.status"
+        :show-machine-details="showMachineDetails"
+        :show-counter-details="showCounterDetails"
+        :show-terminal-details="showTerminalDetails"
+        :show-mold-chart="showMoldChart"
+        :results="results"
+        :is-loading="isLoadingTable"
+        :results-stat="resultsStat"
+        :total="total"
+        :pagination="pagination"
+        :request-param="requestParam"
+        :selected-date="selectedDate"
+        :reload-check-key="reloadCheckKey"
+        :total-pages="totalPages"
+        @on-paging="fetchWorkOrderList"
+        @on-change-tab="handleChangeTab"
+      >
+      </list-work-orders>
+      </div>
+      <!-- EXPORT WO -->
+      <work-order-export-modal
+        :resources="resources"
+        :visible="visibleExportModal"
+        @close="closeExportWorkOrder"
+      ></work-order-export-modal>
+      <!-- CREATOR -->
+      <creator-work-order-dialog
+        :resources="resources"
+        :is-show="showCreatorDialog"
+        :asset-selected="assetSelectedList"
+        :selected-item="selectedWorkOrder"
+        :modal-type="workOrderType"
+        @close="handleCloseDialog"
+        @reload-page="handleReloadMyOrderTable"
+        :notification="notification"
+      ></creator-work-order-dialog>
+      <!-- CREATED -->
+      <created-work-order-dialog
+        :resources="resources"
+        :visible="showDetailDialog"
+        :selected="selectedWorkOrder"
+        :tab="selectedTab"
+        @close="handleCloseDialog"
+        @reload="handleReloadMyOrderTable"
+        @open-edit="openEditWorkOrder"
+        @show-toast="handleShowToast"
+      ></created-work-order-dialog>
+      <!-- REPORTED -->
+      <reported-work-order-dialog
+        :resources="resources"
+        :visible="showReportDialog"
+        :selected="selectedWorkOrder"
+        :view-only="shouldViewOnly"
+        :notification="notification"
+        :handle-submit="handleSubmitComplete"
+        @close="handleCloseDialog"
+        @close-notification="handleCloseNotification"
+      >
+      </reported-work-order-dialog>
+      <!-- REQUEST CHANGE -->
+      <request-change-work-order-dialog
+        :resources="resources"
+        :mode="requestChangeViewMode"
+        :visible="showRequestChangeDialog"
+        :selected="selectedWorkOrder"
+        :notification="notification"
+        @close="handleCloseDialog"
+        @submit="handleSubmitRequestChange"
+        @accept="handleAcceptRequestChange" 
+        @decline="handleDeclineRequestChange" 
+        @reload="handleReloadMyOrderTable"
+      >
+      </request-change-work-order-dialog>
+      <!-- ALERT -->
+      <toast-alert
+        :show="notification.show"
+        :title="notification.title"
+        :content="notification.content"
+        @close-toast="$emit('close-toast')"
+      ></toast-alert>
+      <!-- MODAL -->
+      <machine-details
+        ref="machineDetails"
+        :resources="resources"
+      ></machine-details>
+      <chart-mold
+        ref="chartMold"
+        :show-file-previewer="showFilePreviewer"
+        :resources="resources"
+      ></chart-mold>
+      <file-previewer :back="backToMoldDetail"></file-previewer>
+      <date-picker-modal
+        ref="base-filter-date-picker"
+        :select-option="timeOption"
+        :resources="resources"
+        @change-date="handleChangeDate"
+      >
+      </date-picker-modal>
+      <sensor-detail-modal
+        ref="sensor-detail-modal"
+        :resources="resources"
+      ></sensor-detail-modal>
+      <terminal-details ref="terminal-details" :resources="resources"></terminal-details>
+    </div>
+  </th:block>
+  <th:block layout:fragment="op-script">
+    <style th:scope>
+      .work-order-widget {
+        height: 21px;
+        width: 70%;
+      }
+      .status-card-container {
+        margin-top: 24px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-column-gap: 17.25px;
+      }
+
+      .bottom-status-card-wrapper {
+        font-family: "Helvetica Neue";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14.66px;
+        line-height: 18px;
+        color: #3491ff;
+      }
+
+      .steps {
+        margin: 0 auto 30px;
+        width: fit-content;
+      }
+
+      .custom-dialog.dialog .dialog-body.custom-body {
+        padding: 19px 48px 20px;
+      }
+
+      .form-report {
+        margin-left: 8px;
+        margin-bottom: 11px;
+      }
+
+      .form-line {
+        display: flex;
+      }
+
+      .form-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .status-card-text {
+        font-weight: 700;
+        font-size: 50px;
+      }
+    </style>
+    <script
+      defer
+      th:src="'/js/chart-mold/container.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/chart-mold/point.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/shape.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/graph-element.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/hourly-chart.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/cycle-time-hourly-chart.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/temperature-hourly-chart.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/js/scripts/admin/work-order/index.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

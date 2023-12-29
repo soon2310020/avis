@@ -1,0 +1,16 @@
+|===
+|Parameter|Optional|Description
+
+|`+grant_type+`
+|`+false+`
+|'password'
+
+|`+username+`
+|`+false+`
+|Username
+
+|`+password+`
+|`+false+`
+|Password
+
+|===

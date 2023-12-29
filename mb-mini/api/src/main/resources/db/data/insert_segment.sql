@@ -1,0 +1,13 @@
+﻿INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(1, '1890', 'vip', 'PRIORITY', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(2, '1889', 'vvip', 'PRIORITY', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(3, '1888', 'svip', 'PRIORITY', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(4, '1891', 'hvip', 'PRIORITY', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(5, '1746', 'vip quân nhân/ nội bộ', 'PRIORITY', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(6, '1747', 'vip quân nhân/ nội bộ', 'PRIORITY', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(7, '1688', 'XPRIVATE', 'PRIVATE', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(8, '1689', 'LPRIVATE', 'PRIVATE', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(9, '1690', 'MPRIVATE', 'PRIVATE', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(10, '1691', 'EPRIVATE', 'PRIVATE', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(11, '1699', 'NPRIVATE', 'PRIVATE', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(12, '1666', 'PPRIVATE', 'PRIVATE', current_timestamp);
+INSERT INTO segment (id, sector, segment, gain, creation_time) VALUES(13, 'Còn lại', 'Mass', 'MASS', current_timestamp);

@@ -1,0 +1,18 @@
+{
+    "type": "line",
+    "label": "Maximum Capacity",
+    "fill": false,
+    "borderColor": "#656565",
+    "pointRadius": 0,
+    "pointHoverBackgroundColor": "#fff",
+    "borderWidth": 1,
+    "data": [],
+    "yAxisID": "first-y-axis",
+    "stack": "maximumCapacity",
+    "options": {
+        "tooltips": {
+            "enabled": true,
+            "custom": null
+        }
+    }
+}

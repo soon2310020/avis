@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27.39" height="27.384" viewBox="0 0 27.39 27.384">
+  <g id="pie-chart" transform="translate(0 27.434) rotate(-90)">
+    <g id="Group_8682" data-name="Group 8682" transform="translate(0.05)">
+      <g id="Group_8681" data-name="Group 8681" transform="translate(0)">
+        <path id="Path_2023" data-name="Path 2023" d="M23.725,62.549H13.052V51.876a.773.773,0,0,0-.776-.776A12.226,12.226,0,1,0,24.5,63.326.78.78,0,0,0,23.725,62.549ZM12.276,74A10.673,10.673,0,0,1,11.5,52.681V63.326a.773.773,0,0,0,.776.776H22.92A10.683,10.683,0,0,1,12.276,74Z" transform="translate(-0.05 -48.161)" fill="#666569"/>
+        <path id="Path_2024" data-name="Path 2024" d="M263.152,12.185A12.224,12.224,0,0,0,250.926,0a.773.773,0,0,0-.776.776V12.226a.773.773,0,0,0,.776.776h11.449a.773.773,0,0,0,.776-.776Zm-11.449-.73V1.587a10.68,10.68,0,0,1,9.868,9.868H251.7Z" transform="translate(-235.768 0)" fill="#666569"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head"></th:block>
+
+  <th:block layout:fragment="op-content">
+    <div id="app" style="width: 100%; height: 100%">
+      <dem-cpl-page></dem-cpl-page>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/hotjar.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/scripts/patch-styles.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/scripts/supplychain/dem-cpl/module-shim.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

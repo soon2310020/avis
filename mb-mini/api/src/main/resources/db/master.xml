@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="tag-empty" author="alan">
+        <tagDatabase tag="empty"/>
+    </changeSet>
+
+    <include file="changes/1.0.0/release-1.0.0.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.0/release-1.0.1.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.0/release-1.0.2.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.1/release-flexible-1.0.0.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.0/release-1.0.3.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.2/hotfix-alter-insured_mbal.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.1/release-flexible-1.0.1.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.3/release-e-app_1.0.0.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.3/000-alter_third_party_log.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.2/create-address.xml" relativeToChangelogFile="true"/>
+    <include file="data/address/import-data-address.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.3/create-insurance-payment-auto-debit.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.3/create-mb-employee.xml" relativeToChangelogFile="true"/>
+    <include file="changes/1.0.3/create_mb_employee_import_history.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

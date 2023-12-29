@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-default}"
+>
+    <th:block layout:fragment="op-head">
+        <style type="text/css">
+            .tutorial {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: calc(100vh - 200px);
+            }
+            .tutorial-content {
+                text-align: center;
+                max-width: 767px;
+            }
+            .description {
+                font-size: 16px;
+            }
+            .action {
+                display: flex;
+                justify-content: center;
+                margin-top: 15px;
+            }
+
+            .btn {
+                padding: 0.2rem 1rem;
+            }
+            .btn-cancel {
+                margin-left: 15px;
+            }
+        </style>
+    </th:block>
+
+    <th:block layout:fragment="op-content">
+        <div id="app">
+            <div class="tutorial">
+                <div class="tutorial-content">
+                    <div class="description">
+                        <span th:text="#{system_redirect_confirm} + ' '"></span><strong>5656</strong>.<br />
+                        <span th:text="#{are_you_sure}"></span>
+                    </div>
+                    <div class="action">
+                        <a class="btn btn-primary" href="https://www.emoldino.org/" target="_blank" th:text="#{yes}"></a>
+                        <a class="btn btn-default btn-cancel" href="/support/customer-support" th:text="#{tutorial_no}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/js/scripts/front/support/hotjar5.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/scripts/front/support/tutorial.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

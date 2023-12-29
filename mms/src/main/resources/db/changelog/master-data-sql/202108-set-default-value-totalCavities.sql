@@ -1,0 +1,18 @@
+BEGIN;
+SELECT count(*)
+INTO @exist
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE()
+  and COLUMN_NAME = 'TOTAL_CAVITIES'
+  AND table_name = 'MOLD_PART' LIMIT 1;
+
+set @query = IF(@exist <= 0, 'ALTER TABLE MOLD_PART ADD COLUMN TOTAL_CAVITIES INT(11)',
+    'select \'Column Exists\' status');
+
+prepare stmt from @query;
+
+EXECUTE stmt;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE MOLD_PART set TOTAL_CAVITIES = CAVITY WHERE TOTAL_CAVITIES is null;
+COMMIT;

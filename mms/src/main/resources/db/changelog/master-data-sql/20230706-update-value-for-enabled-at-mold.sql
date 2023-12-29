@@ -1,0 +1,3 @@
+BEGIN ;
+UPDATE MOLD set `ENABLED` = 'N' where `DELETED`='Y';
+COMMIT;

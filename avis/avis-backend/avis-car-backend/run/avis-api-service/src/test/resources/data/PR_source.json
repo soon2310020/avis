@@ -1,0 +1,1507 @@
+{
+  "status": "success",
+  "data": {
+    "id": 58,
+    "contract_code": "SPRINT 6 - 003",
+    "contract_type_id": 1,
+    "customer_name": "CÔNG TY TNHH TƯ VẤN ĐẦU TƯ HOÀNG ANH",
+    "admin_name": "",
+    "customer_address": "VP1: Ngách 14 Ngõ 850 Đường Láng, Láng Thượng, Đống Đa, Hà Nội",
+    "driver_name": "Nguyễn Văn Quý",
+    "vehicle_number_plate": "29C-23864",
+    "from_date": 1590944400000,
+    "to_date": 1593450000000,
+    "created_at": 1594291884000,
+    "customer_journey_diaries": [
+      {
+        "id": 1354,
+        "date": 1593450000000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 58988,
+        "used_km_self_drive": 731,
+        "working_time_gps_from": "10:00:00",
+        "working_time_gps_to": "23:10:00",
+        "over_time": 787,
+        "over_km": 58888,
+        "over_km_self_drive": 531,
+        "overnight": 2,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "12A-123457",
+          "51F-190000"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1355,
+        "date": 1593363600000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 49045,
+        "used_km_self_drive": 872,
+        "working_time_gps_from": "00:00:00",
+        "working_time_gps_to": "16:00:00",
+        "over_time": 597,
+        "over_km": 48945,
+        "over_km_self_drive": 672,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000",
+          "12A-123457"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1356,
+        "date": 1593277200000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 233,
+        "used_km_self_drive": 123,
+        "working_time_gps_from": "06:00:00",
+        "working_time_gps_to": "19:00:00",
+        "over_time": 537,
+        "over_km": 133,
+        "over_km_self_drive": 0,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000",
+          "12A-123457"
+        ],
+        "parking_fee": 125000,
+        "tolls_fee": 125000,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1357,
+        "date": 1593190800000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 35,
+        "used_km_self_drive": 12322,
+        "working_time_gps_from": "06:00:00",
+        "working_time_gps_to": "10:01:00",
+        "over_time": 0,
+        "over_km": 0,
+        "over_km_self_drive": 12122,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000",
+          "12A-123457"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1358,
+        "date": 1593104400000,
+        "customer_name_used": [
+          "ggg",
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 23446,
+        "used_km_self_drive": null,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "04:00:00",
+        "over_time": 180,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "12A-123457",
+          "51F-190000"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": false
+      },
+      {
+        "id": 1359,
+        "date": 1593018000000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình"
+        ],
+        "used_km": null,
+        "used_km_self_drive": 2328,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "15:00:00",
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": 2128,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          "12A-123457"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": true
+      },
+      {
+        "id": 1360,
+        "date": 1592931600000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình"
+        ],
+        "used_km": null,
+        "used_km_self_drive": 1232,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "05:00:00",
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": 1032,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          "51F-190000"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": true
+      },
+      {
+        "id": 1361,
+        "date": 1592845200000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình"
+        ],
+        "used_km": null,
+        "used_km_self_drive": 0,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "23:32:00",
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": 0,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          "51F-190000"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": true
+      },
+      {
+        "id": 1362,
+        "date": 1592758800000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1363,
+        "date": 1592672400000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình"
+        ],
+        "used_km": null,
+        "used_km_self_drive": 24990,
+        "working_time_gps_from": "02:00:00",
+        "working_time_gps_to": "06:00:00",
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": 24790,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          "51F-19000"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": true
+      },
+      {
+        "id": 1364,
+        "date": 1592586000000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1365,
+        "date": 1592499600000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1366,
+        "date": 1592413200000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": null,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1367,
+        "date": 1592326800000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 1324529,
+        "used_km_self_drive": 23230,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "22:00:00",
+        "over_time": 600,
+        "over_km": null,
+        "over_km_self_drive": 23030,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000",
+          "12A-123457",
+          "12A-123450"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1368,
+        "date": 1592240400000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": null,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1369,
+        "date": 1592154000000,
+        "customer_name_used": [
+          "Trần Minh",
+          "Đặng Bình",
+          "Hà Minh"
+        ],
+        "customer_department": [
+          "KD",
+          "IT",
+          "sales"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Ninh Bình",
+          "Phú Yên",
+          "Hòa Bình"
+        ],
+        "used_km": 34657,
+        "used_km_self_drive": 111110,
+        "working_time_gps_from": "03:00:00",
+        "working_time_gps_to": "09:00:00",
+        "over_time": 240,
+        "over_km": null,
+        "over_km_self_drive": 110910,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà",
+          "Hà Minh"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000",
+          "51F-190001",
+          "12A-123459"
+        ],
+        "parking_fee": 125000,
+        "tolls_fee": 125000,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1370,
+        "date": 1592067600000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 2226,
+        "used_km_self_drive": 3567,
+        "working_time_gps_from": "04:00:00",
+        "working_time_gps_to": "08:00:00",
+        "over_time": 120,
+        "over_km": 2126,
+        "over_km_self_drive": 3367,
+        "overnight": 1,
+        "is_holiday": true,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000",
+          "12A-123457"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1371,
+        "date": 1591981200000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình"
+        ],
+        "used_km": null,
+        "used_km_self_drive": 2308,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "02:00:00",
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": 2108,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          "12A-123457"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": true
+      },
+      {
+        "id": 1372,
+        "date": 1591894800000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1373,
+        "date": 1591808400000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1374,
+        "date": 1591722000000,
+        "customer_name_used": [
+          "Trần Minh",
+          "Trần Minh 3",
+          "test"
+        ],
+        "customer_department": [
+          "KD",
+          "KD 3",
+          "test"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình 2",
+          "Hòa Bình 3",
+          "test"
+        ],
+        "used_km": 44663,
+        "used_km_self_drive": 2342,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "23:00:00",
+        "over_time": 660,
+        "over_km": null,
+        "over_km_self_drive": 2142,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà",
+          "Hà 12",
+          "test"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000",
+          "51F-190221",
+          "12-1234"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1375,
+        "date": 1591635600000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình"
+        ],
+        "used_km": 33333,
+        "used_km_self_drive": null,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "05:00:00",
+        "over_time": 240,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": false
+      },
+      {
+        "id": 1376,
+        "date": 1591549200000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1377,
+        "date": 1591462800000,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": null,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      },
+      {
+        "id": 1378,
+        "date": 1591376400000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 1210,
+        "used_km_self_drive": null,
+        "working_time_gps_from": "02:00:00",
+        "working_time_gps_to": "04:00:00",
+        "over_time": 120,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "12A-123457",
+          "51F-190000"
+        ],
+        "parking_fee": 125000,
+        "tolls_fee": 125000,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": false
+      },
+      {
+        "id": 1379,
+        "date": 1591290000000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 452,
+        "used_km_self_drive": 17559,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "12:00:00",
+        "over_time": 360,
+        "over_km": null,
+        "over_km_self_drive": 17359,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "12A-123457",
+          "51F-190000"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1380,
+        "date": 1591203600000,
+        "customer_name_used": [
+          "Trần Minh",
+          "Trần Minh Thúy"
+        ],
+        "customer_department": [
+          "KD",
+          "IT"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 2341,
+        "used_km_self_drive": 998,
+        "working_time_gps_from": "01:00:00",
+        "working_time_gps_to": "04:00:00",
+        "over_time": 180,
+        "over_km": null,
+        "over_km_self_drive": 798,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "51F-190000",
+          "51F-190065"
+        ],
+        "parking_fee": 0,
+        "tolls_fee": 0,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1381,
+        "date": 1591117200000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình"
+        ],
+        "used_km": 0,
+        "used_km_self_drive": null,
+        "working_time_gps_from": "00:00:00",
+        "working_time_gps_to": "03:00:00",
+        "over_time": 180,
+        "over_km": null,
+        "over_km_self_drive": null,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "Trần Văn Hoàng"
+        ],
+        "vehicle_number_plate": [
+          "51F-19989"
+        ],
+        "parking_fee": 124000,
+        "tolls_fee": 124000,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": false
+      },
+      {
+        "id": 1382,
+        "date": 1591030800000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 0,
+        "used_km_self_drive": 21332,
+        "working_time_gps_from": "07:00:00",
+        "working_time_gps_to": "22:00:00",
+        "over_time": 240,
+        "over_km": null,
+        "over_km_self_drive": 21132,
+        "overnight": 1,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "",
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "30N-00107",
+          "51F-190000"
+        ],
+        "parking_fee": 1375911,
+        "tolls_fee": 1340556,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1383,
+        "date": 1590944400000,
+        "customer_name_used": [
+          "Trần Minh"
+        ],
+        "customer_department": [
+          "KD"
+        ],
+        "trip_itinerary": [
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình",
+          "Hòa Bình"
+        ],
+        "used_km": 0,
+        "used_km_self_drive": 333334,
+        "working_time_gps_from": "03:00:00",
+        "working_time_gps_to": "04:00:00",
+        "over_time": 60,
+        "over_km": null,
+        "over_km_self_drive": 333134,
+        "overnight": 0,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          "",
+          "Hà"
+        ],
+        "vehicle_number_plate": [
+          "30N-00107",
+          "51F-190000"
+        ],
+        "parking_fee": 135655,
+        "tolls_fee": 1356668,
+        "note": null,
+        "is_with_driver": true,
+        "is_self_drive": true
+      },
+      {
+        "id": 1384,
+        "date": null,
+        "customer_name_used": [
+          ""
+        ],
+        "customer_department": [
+          ""
+        ],
+        "trip_itinerary": [
+          ""
+        ],
+        "used_km": null,
+        "used_km_self_drive": null,
+        "working_time_gps_from": null,
+        "working_time_gps_to": null,
+        "over_time": 5101,
+        "over_km": 1568723,
+        "over_km_self_drive": 555255,
+        "overnight": 12,
+        "is_holiday": false,
+        "is_weekend": false,
+        "driver_name": [
+          ""
+        ],
+        "vehicle_number_plate": [
+          ""
+        ],
+        "parking_fee": 2010566,
+        "tolls_fee": 3196224,
+        "note": null,
+        "is_with_driver": false,
+        "is_self_drive": false
+      }
+    ],
+    "customer_payment_request_items": [
+      {
+        "name": "Giá thuê theo tháng (chưa VAT)",
+        "price": 36000000,
+        "count": 1.00,
+        "unit": "Tháng",
+        "total_price": 36000000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (ngày thường)",
+        "price": 12000,
+        "count": 48.00,
+        "unit": "Giờ",
+        "total_price": 576000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (ngày thường)",
+        "price": 13500,
+        "count": 3.00,
+        "unit": "Giờ",
+        "total_price": 40500,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (ngày thường)",
+        "price": 8900,
+        "count": 0.00,
+        "unit": "Giờ",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (cuối tuần)",
+        "price": 12000,
+        "count": 0.00,
+        "unit": "Giờ",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (cuối tuần)",
+        "price": 13500,
+        "count": 0.00,
+        "unit": "Giờ",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (cuối tuần)",
+        "price": 8900,
+        "count": 32.02,
+        "unit": "Giờ",
+        "total_price": 284948,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (ngày lễ)",
+        "price": 12000,
+        "count": 2.00,
+        "unit": "Giờ",
+        "total_price": 24000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (ngày lễ)",
+        "price": 13500,
+        "count": 0.00,
+        "unit": "Giờ",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over time (ngày lễ)",
+        "price": 8900,
+        "count": 0.00,
+        "unit": "Giờ",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over km (ngày thường)",
+        "price": 5466,
+        "count": 1458631.00,
+        "unit": "Km",
+        "total_price": 7972877046,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over km (cuối tuần)",
+        "price": 5466,
+        "count": 107966.00,
+        "unit": "Km",
+        "total_price": 590142156,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over km (ngày lễ)",
+        "price": 5466,
+        "count": 2126.00,
+        "unit": "Km",
+        "total_price": 11620716,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over km (tự lái)",
+        "price": 4000,
+        "count": 541930.00,
+        "unit": "Km",
+        "total_price": 2167720000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Over km (tự lái)",
+        "price": 25000,
+        "count": 13325.00,
+        "unit": "Km",
+        "total_price": 333125000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Sunday (có lái)",
+        "price": 250000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Sunday (có lái - 70%)",
+        "price": 175000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Sunday (có lái)",
+        "price": 150000,
+        "count": 4.00,
+        "unit": "Ngày",
+        "total_price": 600000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Sunday (có lái - 70%)",
+        "price": 105000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Sunday (tự lái)",
+        "price": 150000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Sunday (tự lái)",
+        "price": 75400,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Sunday (tự lái)",
+        "price": 34000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Holiday (có lái)",
+        "price": 350000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Holiday (có lái - 70%)",
+        "price": 245000,
+        "count": 1.00,
+        "unit": "Ngày",
+        "total_price": 245000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Holiday (có lái)",
+        "price": 50000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Holiday (có lái - 70%)",
+        "price": 35000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Holiday (tự lái)",
+        "price": 200000,
+        "count": 1.00,
+        "unit": "Ngày",
+        "total_price": 200000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Holiday (tự lái)",
+        "price": 25000,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Holiday (tự lái)",
+        "price": 77040,
+        "count": 0.00,
+        "unit": "Ngày",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Chi phí tự lái",
+        "price": 250000,
+        "count": 12.00,
+        "unit": "Ngày",
+        "total_price": 3000000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Chi phí tự lái",
+        "price": 12500,
+        "count": 2.00,
+        "unit": "Ngày",
+        "total_price": 25000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Chi phí tự lái",
+        "price": 23444,
+        "count": 2.00,
+        "unit": "Ngày",
+        "total_price": 46888,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Overnight",
+        "price": 150000,
+        "count": 7.00,
+        "unit": "Đêm",
+        "total_price": 1050000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Overnight",
+        "price": 7500,
+        "count": 0.00,
+        "unit": "Đêm",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Overnight",
+        "price": 7900,
+        "count": 1.00,
+        "unit": "Đêm",
+        "total_price": 7900,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Overnight",
+        "price": 60000,
+        "count": 4.00,
+        "unit": "Đêm",
+        "total_price": 240000,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Chi phí vé (đỗ xe + cầu đường)",
+        "price": null,
+        "count": null,
+        "unit": "VNĐ",
+        "total_price": 5206790,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Chi phí khác",
+        "price": null,
+        "count": null,
+        "unit": "VNĐ",
+        "total_price": 0,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Tổng chi phí trước VAT",
+        "price": null,
+        "count": null,
+        "unit": "VNĐ",
+        "total_price": 11123031944,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "VAT (10%)",
+        "price": null,
+        "count": null,
+        "unit": "VNĐ",
+        "total_price": 1112303194,
+        "from_date": null,
+        "to_date": null
+      },
+      {
+        "name": "Tổng chi phí",
+        "price": null,
+        "count": null,
+        "unit": "VNĐ",
+        "total_price": 12235335138,
+        "from_date": null,
+        "to_date": null
+      }
+    ]
+  }
+}

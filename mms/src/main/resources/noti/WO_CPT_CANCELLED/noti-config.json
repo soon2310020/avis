@@ -1,0 +1,10 @@
+{
+  "notiPriority": "MEDIUM",
+  "description": "Completion approval for Work Order has been cancelled",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/admin/work-order?popup=WO_CPT_CANCELLED&id=${id}"
+}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-Data_approval);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-Data_approval">
+      <rect width="134" height="134"/>
+    </clipPath>
+  </defs>
+  <g id="Data_approval" data-name="Data approval" class="cls-1">
+    <g id="Group_53" data-name="Group 53" transform="translate(-9.035 -6.303)">
+      <g id="Group_50" data-name="Group 50">
+        <rect id="Rectangle_7" data-name="Rectangle 7" class="cls-2" width="42.053" height="42.053" rx="4.109" transform="translate(14.035 12.303)"/>
+      </g>
+      <g id="Group_51" data-name="Group 51">
+        <rect id="Rectangle_8" data-name="Rectangle 8" class="cls-2" width="42.053" height="42.053" rx="4.109" transform="translate(14.035 63.426)"/>
+      </g>
+      <g id="Group_52" data-name="Group 52">
+        <rect id="Rectangle_9" data-name="Rectangle 9" class="cls-2" width="42.053" height="42.053" rx="4.109" transform="translate(65.983 12.303)"/>
+      </g>
+      <path id="Path_36" data-name="Path 36" class="cls-2" d="M98.2,63.426H70.091a4.108,4.108,0,0,0-4.108,4.108V93.182A35.5,35.5,0,0,1,98.2,63.426Z"/>
+      <path id="Path_37" data-name="Path 37" class="cls-2" d="M103.248,66.8a34.065,34.065,0,1,0,34.065,34.064A34.064,34.064,0,0,0,103.248,66.8Zm1.351,49.948-6.83,6.83a1.443,1.443,0,0,1-2.04,0l-6.83-6.83-10.62-10.62a1.443,1.443,0,0,1,0-2.04l5.809-5.81a1.444,1.444,0,0,1,2.041,0l10.212,10.212a.578.578,0,0,0,.816,0l23.211-23.21a1.441,1.441,0,0,1,2.04,0l5.81,5.809a1.444,1.444,0,0,1,0,2.041Z"/>
+    </g>
+  </g>
+</svg>

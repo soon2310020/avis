@@ -1,0 +1,52 @@
+
+/*style for vue trend chart*/
+.trend-chart .vtc {
+    width: 160px;
+    height: 60px;
+    margin-right: -5px;
+}
+.trend-chart .stroke {
+    stroke-width: 2;
+}
+
+.trend-chart .fill {
+    opacity: 0.2;
+}
+
+.trend-chart .active-line {
+    stroke: rgba(0, 0, 0, 0.2);
+}
+
+.trend-chart .point {
+    display: none;
+}
+
+.trend-chart .point.is-active {
+    display: block;
+}
+
+.up .stroke {
+    stroke: #39af77;
+}
+
+.up .fill {
+    fill: #39af77;
+}
+
+.up .point {
+    fill: #39af77;
+    stroke: #39af77;
+}
+
+.down .stroke {
+    stroke: #d8002b;
+}
+
+.down .fill {
+    fill: #d8002b;
+}
+
+.down .point {
+    fill: #d8002b;
+    stroke: #d8002b;
+}

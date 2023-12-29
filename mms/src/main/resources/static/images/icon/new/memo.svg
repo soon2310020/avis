@@ -1,0 +1,12 @@
+<svg id="Memo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="125" height="125" viewBox="0 0 125 125">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_21" data-name="Rectangle 21" width="125" height="125" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_92" data-name="Group 92" clip-path="url(#clip-path)">
+    <path id="Union_24" data-name="Union 24" d="M-3090-396a3,3,0,0,1-3-3V-518a3,3,0,0,1,3-3H-2971a3,3,0,0,1,3,3v78.207l-.177.177h-40.74a2.4,2.4,0,0,0-2.4,2.4v40.738l-.473.473Zm80.886-39.115a2.277,2.277,0,0,1,2.277-2.277h36.437l-38.713,38.714Z" transform="translate(3093 521)" fill="#595959" stroke="rgba(89,89,89,0)" stroke-width="1"/>
+    <path id="Path_89" data-name="Path 89" d="M79.9,118.764l-.429.429H79.9Z" fill="#fff"/>
+    <path id="Path_90" data-name="Path 90" d="M119.193,79.634v-.161l-.161.161Z" fill="#fff"/>
+  </g>
+</svg>

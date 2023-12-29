@@ -1,0 +1,9 @@
+{
+  "excludeMenus": [
+    "CM1060:Codelist Center",
+    "DASHBOARD-ON_TIME_DELIVERY",
+    "DASHBOARD-ACTUAL_TARGET_UPTIME_RATIO",
+    "AN6010:Process Analysis",
+    "SC6060:Part Quality Risk"
+  ]
+}

@@ -1,0 +1,191 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql" />
+
+    <changeSet id="2024-09-23-create-potential_customer_refer-table" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="potential_customer_refer" />
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="potential_customer_refer_seq" startValue="1000" incrementBy="1" />
+
+        <createTable tableName="potential_customer_refer">
+            <column name="id" type="bigint" defaultValueComputed="nextval('potential_customer_refer_seq')">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+
+            <column name="potential_customer_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="rm_code" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ic_code" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ic_full_name" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ic_email" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ic_phone_number" type="varchar(12)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ic_branch_code" type="varchar(10)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ic_branch_name" type="varchar(10)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)" />
+            <column name="last_modified_date" type="timestamp" />
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_potential_customer_refer"
+            referencedTableName="potential_customer" baseColumnNames="potential_customer_id"
+            baseTableName="potential_customer_refer" referencedColumnNames="id" />
+
+    </changeSet>
+
+    <changeSet id="2023-10-04-potential_customer_refer-add-reason" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer_refer" columnName="reason" />
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer_refer">
+            <column name="reason" type="clob">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-10-04-potential_customer_refer-add-state" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer_refer" columnName="state" />
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer_refer">
+            <column name="state" type="int" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-10-04-potential_customer_refer-add-contract" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer_refer" columnName="contract_state" />
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer_refer">
+            <column name="contract_state" type="varchar(15)">
+                <constraints nullable="true" />
+            </column>
+            <column name="contract_id" type="varchar(30)">
+                <constraints nullable="true" />
+            </column>
+            <column name="contract_pending_note" type="text">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-10-08-potential_customer_refer-modify-state" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="potential_customer_refer" columnName="state" />
+        </preConditions>
+
+        <modifyDataType tableName="potential_customer_refer" columnName="state" newDataType="varchar(15)" />
+
+    </changeSet>
+    
+   <changeSet id="2023-10-11-potential_customer_refer-modify-ic-branch-name" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="potential_customer_refer" columnName="ic_branch_name" />
+        </preConditions>
+
+        <modifyDataType tableName="potential_customer_refer" columnName="ic_branch_name" newDataType="varchar(256)" />
+
+    </changeSet>
+    
+    <changeSet id="2023-10-11-potential_customer_refer-drop-constraint" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer_refer" />
+        </preConditions>
+        
+        <dropNotNullConstraint tableName="potential_customer_refer" columnName="ic_email"/>
+        <dropNotNullConstraint tableName="potential_customer_refer" columnName="ic_phone_number"/>
+
+    </changeSet>
+    
+    <changeSet id="2023-11-20-potential_customer_refer-remove-contract" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="potential_customer_refer" columnName="contract_state"/>
+        </preConditions>
+        
+        <addColumn tableName="potential_customer_refer">
+            <column name="app_status" type="varchar(15)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+        
+        <update tableName="potential_customer_refer">
+          <column name="app_status" valueComputed="contract_state"/>
+        </update>
+        
+        <dropColumn tableName="potential_customer_refer">
+            <column name="contract_state" />
+            <column name="contract_id" />
+            <column name="contract_pending_note" />
+        </dropColumn>
+
+    </changeSet>
+    
+    <changeSet id="2023-12-10-set-remark-potential_customer_refer" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer_refer"/>
+        </preConditions>
+        
+        <setTableRemarks tableName="potential_customer_refer" remarks="Thông tin khách hàng refer"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="potential_customer_id" remarks="ID khách hàng tiềm năng"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="rm_code" remarks="Mã RM"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="ic_code" remarks="Mã IC"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="ic_full_name" remarks="Họ tên của IC"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="ic_email" remarks="Email của IC"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="ic_phone_number" remarks="Số điện thoại của IC"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="ic_branch_code" remarks="Mã chi nhánh của IC"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="ic_branch_name" remarks="Tên chi nhánh của IC"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="reason" remarks="Lý do refer"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="state" remarks="Trạng thái refer"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="lead_info_id" remarks="Lead info ID"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="app_status" remarks="Trạng thái HSYCBH"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="created_by" remarks="Người tạo"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="created_date" remarks="Thời điểm tạo"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="last_modified_by" remarks="Người cập nhật"/>
+        <setColumnRemarks tableName="potential_customer_refer" columnName="last_modified_date" remarks="Thời điểm cập nhật gần nhất"/>
+    </changeSet>
+
+</databaseChangeLog>

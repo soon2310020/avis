@@ -1,0 +1,178 @@
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #BBB;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+.nav-tabs {
+    /* border-bottom: 2px solid #c8ced3; */
+}
+.access-group-container {
+    background-color: #ffffff;
+    outline: none;
+    overflow: auto;
+    height: 500px;
+    width: 100%;
+    position: relative;
+    margin-top: 1rem;
+}
+
+.element-container {
+    position: relative;
+    display: flex;
+    font-size: 14px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+.add-icon {
+    position: absolute;
+    bottom: -30px;
+    width: 30px;
+    right: calc(50% - 15px);
+
+}
+
+.remove-icon {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #FFF;
+    top: -10px;
+    border-radius: 50%;
+    right: 0;
+    display: flex;
+}
+.remove-icon img {
+    width: 30px;
+    height: 30px;
+    transform: translate(-5px,-5px);
+}
+.assigned-action {
+    position: absolute;
+    left: -30px;
+    top: -17px;
+    font-size: 12px;
+    width: 100px;
+}
+.assigned-action span:hover {
+    color: #3233fe;
+}
+.legend {
+    /*position: absolute;*/
+    font-size: 16px;
+    /*right: 0;*/
+    min-width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.legend-item {
+    display: flex;
+    height: 40px;
+}
+.legend-item .legend-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+
+}
+
+#op-company-search {
+    font-size: 14px;
+}
+.assign-tooling {
+    font-size: 14px;
+}
+.assign-header {
+    font-size: 1.8rem;
+    padding: 0.75rem;
+    font-weight: bold;
+    border-bottom: 1px solid #CDCDCD;
+}
+.assign-content {
+    padding: 0.5rem;
+}
+.assign-item {
+    display: flex;
+    padding: 0.5rem;
+}
+.assign-item .tooling-item,
+.assign-item .company-item {
+    flex: 1;
+    text-align: left;
+}
+.tooling-item .tooling-title {
+    font-weight: bold;
+
+}
+.company-item .company-title {
+    font-weight: bold;
+}
+.tooling-select {
+    padding: 1rem 0;
+}
+.tooling-select-content {
+    width: 180px;
+    position: relative;
+}
+.tooling-value {
+    border: 1px solid #CDCDCD;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding-left: .5rem;
+}
+.select-icon img {
+    width: 13px;
+    position: absolute;
+    top: 7px;
+    right: 5px;
+}
+.company-value {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    margin-top: 5px;
+}
+.assign-footer {
+    padding: 0 1.5rem 1rem 0;
+}
+.assign-footer .btn-secondary {
+    margin-left: .75rem;
+}
+.ant-popover {
+    z-index: 1051;
+}
+.add-root-node {
+    width: 100%;
+    position: relative;
+}
+.element-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.assign-dialog {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    height: calc(100% - 1.75rem);
+    overflow: auto;
+}

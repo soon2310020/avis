@@ -1,0 +1,273 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+	<property name="now" value="current_timestamp"
+		dbms="postgresql" />
+
+	<changeSet id="2023-03-07-tool-quotation-header"
+		author="Ha Nguyen">
+
+		<createSequence sequenceName="tool_quotation_header_seq"
+			startValue="1000" incrementBy="1" />
+
+		<createTable tableName="tool_quotation_header">
+
+			<column name="id" type="bigint"
+				defaultValueComputed="nextval('tool_quotation_header_seq')">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+
+			<column name="quotation_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="submission_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="customer_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="type" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="package_benefit_type" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="package_premium_term" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="package_policy_term" type="int">
+			</column>
+
+			<column name="package_payment_period" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="package_sum_assured" type="decimal">
+				<constraints nullable="false" />
+			</column>
+			<column name="package_periodic_premium" type="decimal">
+				<constraints nullable="false" />
+			</column>
+			<column name="package_discount_code" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="raider_deduct_fund" type="boolean"
+				defaultValue="false">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="search_name" type="varchar(256)">
+			</column>
+			<column name="search_phone_number" type="varchar(12)">
+			</column>
+
+			<column name="raw" type="boolean">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="created_by" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp"
+				defaultValueDate="${now}">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_modified_by" type="varchar(50)" />
+			<column name="last_modified_date" type="timestamp" />
+
+		</createTable>
+
+	</changeSet>
+
+	<changeSet id="2023-03-07-tool-quotation-customer"
+		author="Ha Nguyen">
+
+		<createSequence sequenceName="tool_quotation_customer_seq"
+			startValue="1000" incrementBy="1" />
+
+		<createTable tableName="tool_quotation_customer">
+
+			<column name="id" type="bigint"
+				defaultValueComputed="nextval('tool_quotation_customer_seq')">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+
+			<column name="full_name" type="varchar(256)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="dob" type="date">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="gender" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="occupation_id" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="married" type="boolean">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="identification_type" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="identification_id" type="varchar(25)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="phone_number" type="varchar(12)">
+			</column>
+
+			<column name="quotation_header_id" type="bigint">
+			</column>
+
+			<column name="created_by" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp"
+				defaultValueDate="${now}">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_modified_by" type="varchar(50)" />
+			<column name="last_modified_date" type="timestamp" />
+
+		</createTable>
+
+	</changeSet>
+
+	<changeSet id="2023-03-07-tool-quotation-amount"
+		author="Ha Nguyen">
+
+		<createSequence sequenceName="tool_quotation_amount_seq"
+			startValue="1000" incrementBy="1" />
+
+		<createTable tableName="tool_quotation_amount">
+
+			<column name="id" type="bigint"
+				defaultValueComputed="nextval('tool_quotation_amount_seq')">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+
+			<column name="type" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="value" type="decimal">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="start_year" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="end_year" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="quotation_header_id" type="bigint">
+			</column>
+
+			<column name="created_by" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp"
+				defaultValueDate="${now}">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_modified_by" type="varchar(50)" />
+			<column name="last_modified_date" type="timestamp" />
+
+		</createTable>
+
+	</changeSet>
+
+	<changeSet id="2023-03-07-tool-quotation-product"
+		author="Ha Nguyen">
+
+		<createSequence sequenceName="tool_quotation_product_seq"
+			startValue="1000" incrementBy="1" />
+
+		<createTable tableName="tool_quotation_product">
+
+			<column name="id" type="bigint"
+				defaultValueComputed="nextval('tool_quotation_amount_seq')">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+
+			<column name="type" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="policy_term" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="premium_term" type="int">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="sum_assured" type="decimal">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="quotation_customer_id" type="bigint">
+			</column>
+
+			<column name="created_by" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp"
+				defaultValueDate="${now}">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_modified_by" type="varchar(50)" />
+			<column name="last_modified_date" type="timestamp" />
+
+		</createTable>
+
+	</changeSet>
+
+	<changeSet id="2023-03-07-fk" author="Ha Nguyen">
+
+		<addForeignKeyConstraint
+			constraintName="fk_tool_quotation_customer"
+			referencedTableName="tool_quotation_customer"
+			baseColumnNames="customer_id" baseTableName="tool_quotation_header"
+			referencedColumnNames="id" />
+
+		<addForeignKeyConstraint
+			constraintName="fk_tool_quotation_assured"
+			referencedTableName="tool_quotation_header"
+			baseColumnNames="quotation_header_id"
+			baseTableName="tool_quotation_customer" referencedColumnNames="id" />
+
+		<addForeignKeyConstraint
+			constraintName="fk_tool_quotation_amount"
+			referencedTableName="tool_quotation_header"
+			baseColumnNames="quotation_header_id"
+			baseTableName="tool_quotation_amount" referencedColumnNames="id" />
+
+		<addForeignKeyConstraint
+			constraintName="fk_tool_quotation_product"
+			referencedTableName="tool_quotation_customer"
+			baseColumnNames="quotation_customer_id"
+			baseTableName="tool_quotation_product" referencedColumnNames="id" />
+
+	</changeSet>
+</databaseChangeLog>

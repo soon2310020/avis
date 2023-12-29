@@ -1,0 +1,46 @@
+name: Check Branch Cleanliness
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  check_branch_cleanliness:
+    runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.head_ref, 'translation-update-') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Fetch All Branches
+        run: git fetch --all
+      - name: Check for Unmerged Branches in Master
+        run: |
+          PR_BRANCH=${{ github.head_ref }}
+          THREE_MONTHS_AGO=$(date -d '3 months ago' +%s)
+          UNMERGED_BRANCHES=$(git for-each-ref --sort=-committerdate --format '%(refname:short) %(committerdate:unix)' refs/remotes/origin/ | grep -v -E 'origin/master|origin/HEAD|origin/'"$PR_BRANCH" | awk -v THREE_MONTHS_AGO="$THREE_MONTHS_AGO" '$2 > THREE_MONTHS_AGO {print $1}' | sed 's/origin\///')
+          FOUND_UNMERGED=0
+          for BRANCH in $UNMERGED_BRANCHES; do
+            echo "Checking branch: $BRANCH"
+            if [ "$BRANCH" = "$PR_BRANCH" ] || [ "$BRANCH" = "safe_develop" ] || [[ "$BRANCH" == translation-* ]] || [[ "$BRANCH" == test-sp* ]]; then
+              continue
+            fi
+            UNMERGED_COMMITS=$(git rev-list -n 50 origin/$BRANCH --not origin/master)
+            for COMMIT in $UNMERGED_COMMITS; do
+              if git rev-list -n 50 origin/$PR_BRANCH | grep -q $COMMIT; then
+                echo "The branch $PR_BRANCH contains commit $COMMIT from the unmerged branch $BRANCH."
+                FOUND_UNMERGED=1
+                break
+              fi
+            done
+            if [ $FOUND_UNMERGED -eq 1 ]; then
+              break
+            fi
+          done
+          if [ $FOUND_UNMERGED -eq 0 ]; then
+            echo "No unmerged branches found in $PR_BRANCH."
+            exit 0
+          else
+            echo "WE HAVE FOUND, PLEASE CHECK CAREFULLY!!!"
+            exit 1
+          fi

@@ -1,0 +1,52 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <changeSet id="2023-11-16_load-mbal_rm_information" author="HaNST">
+    	<preConditions onFail="MARK_RAN">
+        	<tableExists tableName="mbal_rm_information"/>
+        </preConditions>
+
+		<delete tableName="mbal_rm_information"/>
+
+		<loadData file="../data/sale/rm_prod.csv" separator=";"
+			tableName="mbal_rm_information" encoding="UTF-8" quotchar="'"
+			relativeToChangelogFile="true">
+		</loadData>
+
+    </changeSet>
+    
+    <changeSet id="2023-11-16-load-mbal_ic_information" author="HaNST">
+    	<preConditions onFail="MARK_RAN">
+        	<tableExists tableName="mbal_ic_information"/>
+        </preConditions>
+        
+        <delete tableName="mbal_ic_information" />
+        
+        <loadData file="../data/sale/ic_prod.csv" separator=";"
+			tableName="mbal_ic_information" encoding="UTF-8" quotchar="'"
+			relativeToChangelogFile="true">
+		</loadData>
+
+    </changeSet>
+    
+    <changeSet id="2023-11-16-load-mbal_branch_information" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_branch_information"/>
+        </preConditions>
+        
+        <delete tableName="mbal_branch_information" />
+        
+        <loadData file="../data/sale/branch_prod.csv" separator=";"
+            tableName="mbal_branch_information" encoding="UTF-8" quotchar="'"
+            relativeToChangelogFile="true">
+        </loadData>
+
+    </changeSet>
+
+</databaseChangeLog>

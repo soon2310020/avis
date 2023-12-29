@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-default}"
+    xmlns:v-bind="http://www.w3.org/1999/xhtml"
+>
+    <th:block layout:fragment="op-content">
+        <div id="app" class="op-user-list">
+            <common-component-test-page></common-component-test-page>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/js/scripts/admin/common-component/list.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

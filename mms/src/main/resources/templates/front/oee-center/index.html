@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-default}"
+>
+    <th:block layout:fragment="op-content">
+        <div id="app" class="op-user-list wave1">
+            <oee-center :resources="resources" :permissions="permissions"></oee-center>
+        </div>
+    </th:block>
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/js/cdn/lodash.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/chart-mold/container.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/chart-mold/point.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/chart-mold/shape.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/chart-mold/graph-element.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/chart-mold/hourly-chart.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/chart-mold/cycle-time-hourly-chart.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/chart-mold/temperature-hourly-chart.js?'+${noCacheVer}"></script>
+
+        <script defer th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/cdn/npm-apexcharts.js?'+${noCacheVer}"></script>
+
+        <script defer th:src="'/js/scripts/hotjar.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/scripts/front/oee-center/index.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

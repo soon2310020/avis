@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-tooling);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-tooling">
+      <rect width="134" height="134"/>
+    </clipPath>
+  </defs>
+  <g id="tooling" class="cls-1">
+    <g id="Group_40" data-name="Group 40" transform="translate(-3.866 -3.366)">
+      <g id="Group_36" data-name="Group 36">
+        <rect id="Rectangle_2" data-name="Rectangle 2" class="cls-2" width="51" height="51" rx="4.109" transform="translate(13.866 14.366)"/>
+      </g>
+      <g id="Group_37" data-name="Group 37">
+        <rect id="Rectangle_3" data-name="Rectangle 3" class="cls-2" width="51" height="51" rx="4.109" transform="translate(13.866 76.366)"/>
+      </g>
+      <g id="Group_38" data-name="Group 38">
+        <rect id="Rectangle_4" data-name="Rectangle 4" class="cls-2" width="51" height="51" rx="4.109" transform="translate(76.866 14.366)"/>
+      </g>
+      <g id="Group_39" data-name="Group 39">
+        <rect id="Rectangle_5" data-name="Rectangle 5" class="cls-2" width="51" height="51" rx="4.109" transform="translate(76.866 76.366)"/>
+      </g>
+    </g>
+  </g>
+</svg>

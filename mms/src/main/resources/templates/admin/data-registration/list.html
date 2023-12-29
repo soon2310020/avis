@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+    <style type="text/css">
+        .tr-4 th {
+            width: 25%;
+        }
+        .tr-3 th {
+            width: 33.33%;
+        }
+        .tr-2 th {
+            width: 50%;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .caption-zone {
+            margin-bottom: 14px;
+        }
+        .caption-zone .caption-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4B4B4B;
+        }
+        .registration-category {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .registration-category .registration-category__item:not(:last-child) {
+            margin-right: 28px;
+        }
+        .registration-category__item {
+            display: flex;
+            align-items: center;
+            width: calc(33.33% - 28px);
+            padding: 21px 0 17px 37px;
+            margin-bottom: 12px;
+            box-shadow: 0px 3px 6px #00000029;
+            border-radius: 3px;
+            border: 1px solid #fff;
+            height: 104px;
+            cursor: pointer;
+        }
+        .registration-category__item.active {
+            border: 4px solid #ACD2FF!important;
+        }
+        .registration-category__item:hover .registration-category__item-img-zone{
+            background: #F2ECFB;
+        }
+        .registration-category__item.active .registration-category__item-img-zone {
+            background: #F2ECFB;
+        }
+        .registration-category__item:hover {
+            border: 1px solid #5D43F7;
+        }
+        .registration-category__item .registration-category__item-img-zone {
+            width: 50px;
+            height: 50px;
+            padding: 11px;
+            background: #E6E6E6;
+            border-radius: 50%;
+            margin-right: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .registration-category__item .registration-category__item-img-zone img {
+            max-width: 100%;
+        }
+        .registration-category .registration-category__item .registration-category__item-text {
+            font-size: 24px;
+            color: #4B4B4B;
+            font-weight: bold;
+        }
+        .registration-category .registration-category__item .registration-category__item-subtext {
+            font-size: 15px;
+            color: #AAAAAA;
+            font-weight: 500;
+        }
+        /*
+             --------------
+              Wave effect animation
+             --------------
+             */
+        .wave1 {
+            height: 850px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation:wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+            border:none;
+        }
+
+        .wave {
+            height: 121px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation:wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+            border: none;
+        }
+        .wave1 .registration-category__item-text-zone {
+            display: none;
+        }
+        .wave1 div, .wave1 ul, .wave1 table{
+            display: none;
+        }
+        .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{
+            visibility:hidden;
+        }
+        .card.wave div, .card.wave1 div{
+            display: none;
+        }
+        .loading{
+            height: 1000px !important;
+            width: 100%;
+            border: none !important;
+        }.ant-drawer-content-wrapper{
+            transition-property: opacity, left, right;
+            transition-duration: 0.5s, 1.5s, 0.5s;
+            transition-timing-function: ease-in-out;
+            right: -384px !important;
+        }
+        .drawer-show{
+            right: 0 !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list wave1" style="padding-top: 20px">
+        <div class="caption-zone">
+            <div class="caption-title" th:text="#{overall_data_registration_statistics}">
+            </div>
+            <!-- <code-list-temp :resources="resources"></code-list-temp> -->
+        </div>
+        <div class="registration-category wave_header">
+            <div
+                v-for="(item, index) in categoryList"
+                class="registration-category__item"
+                :class="{'active': item.code === categorySelected , 'disabled': (item.code =='categories')}"
+                v-if="item.code !='categories'"
+                @click="changeSelectedCategory(item.code)"
+                @mouseover="onHover(item.code)"
+                @mouseleave="onHover(null)"
+            >
+                <div class="registration-category__item-img-zone">
+                    <img v-show="isHover !== item.code && item.code !== categorySelected" :src="`/images/icon/registration/` + item.img + '.svg'" alt="">
+                    <img v-show="isHover === item.code || item.code === categorySelected" style="width: 110%;max-width: 110%;" :src="`/images/icon/registration/` + item.img + '-hover.svg'" alt="">
+                </div>
+                <div class="registration-category__item-text-zone">
+                    <div class="registration-category__item-text">
+                        {{ item.number }}
+                    </div>
+                    <div class="registration-category__item-subtext">
+                        {{ item.number > 1 ? item.plural : item.singular }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-table">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="table" class="card wave1">
+                        <div class="card-header" style="display:none">
+                            <i class="fa fa-align-justify"></i> <span th:text="#{striped_tbl}"></span>
+                        </div>
+                        <div class="card-body card-overflow-reset">
+                            <div class="card-tool">
+                                <ul v-if="categorySelected === 'companies'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == 'active'}" href="#" @click.prevent="tab('active')"><span th:text="#{enabled}"></span>
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == 'active'">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown" v-for="code in codes.CompanyType" v-if="code.enabled && userType == 'OEM'">
+                                        <a class="nav-link" :class="{active: requestParam.status == code.code}" href="#"@click.prevent="tab(code.code)">{{code.title}}
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == code.code">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == 'disabled'}" href="#" @click.prevent="tab('disabled')"><span th:text="#{disabled}"></span>
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == 'disabled'">{{ total }}</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul v-if="categorySelected === 'locations'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == 'active'}" href="#" @click.prevent="tab('active')"><span  th:text="#{enabled}"></span>
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == 'active'">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown" v-for="code in codes.CompanyType" v-if="code.enabled && userType == 'OEM'">
+                                        <a class="nav-link" :class="{active: requestParam.status == code.code}" href="#"@click.prevent="tab(code.code)">{{code.title}}
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == code.code">{{ total }}</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == 'disabled'}" href="#" @click.prevent="tab('disabled')"><span  th:text="#{disabled}"></span>
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == 'disabled'">{{ total }}</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul v-if="categorySelected === 'categories'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == '1'}" href="#" @click.prevent="tab('1')"><span th:text="#{all}"></span>
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == '1'" style="display:none">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul v-if="categorySelected === 'parts'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == 'active'}" href="#"
+                                           @click.prevent="tab('active')"><span  th:text="#{enabled}"></span>
+                                            <span class="badge badge-light badge-pill"
+                                                  v-if="requestParam.status == 'active'">{{ total }}</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == 'disabled'}" href="#"
+                                           @click.prevent="tab('disabled')"><span  th:text="#{disabled}"></span>
+                                            <span class="badge badge-light badge-pill"
+                                                  v-if="requestParam.status == 'disabled'">{{ total }}</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <ul v-if="categorySelected === 'molds'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == 'all'}" href="#"
+                                           @click.prevent="tab('all')"><span th:text="#{all}"></span>
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == 'all'">{{ total }}</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item dropdown" v-for="code in (isDataSumissionDefaultShow ? codes.DataSubmission : codes.CompanyType)" v-if="code.enabled">
+                                        <a class="nav-link" :class="{active: requestParam.status == code.code}" href="#"
+                                           @click.prevent="tab(code.code)">{{code.title}}
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == code.code">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" :class="{active: requestParam.status == 'DELETED'}" href="#"
+                                           @click.prevent="tab('DELETED')"><span th:text="#{deleted}"></span>
+                                            <span class="badge badge-light badge-pill" v-if="requestParam.status == 'DELETED'">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul v-if="categorySelected === 'machines'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link" :class="{active: requestParam.status === 'enabled'}" href="#"
+                                           @click.prevent="tab('enabled')">Enabled
+                                            <span class="badge badge-light badge-pill"
+                                                  v-if="requestParam.status === 'enabled'">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link" :class="{active: requestParam.status === 'disabled'}" href="#"
+                                           @click.prevent="tab('disabled')">Disabled
+                                            <span class="badge badge-light badge-pill"
+                                                  v-if="requestParam.status === 'disabled'">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="btn-group btn-group-select-column all-time-filters">
+                                    <a @click="showDrawer('Request Data Input')" href="javascript:void(0)" class="btn-custom btn-outline-custom-primary animationOutlineCta">
+                                            <span>
+                                                Request Data Input
+                                            </span>
+                                    </a>
+                                </div>
+
+                                <a v-if="createText != 'Create Category' && createText != 'Create Part' && createText != 'Create Tooling' && createText != 'Create Machine'" @click="onChangeHref(href)" href="javascript:void(0)" class="btn-custom btn-group btn-group-select-column btn-group-select-column-last-child btn-custom-primary animationPrimary all-time-filters">
+                                        <span>
+                                            {{ createText }}
+                                        </span>
+                                </a>
+                                <a v-if="createText === 'Create Category'" @click="goToCreateProject" href="javascript:void(0)" class="btn-custom btn-group btn-group-select-column btn-outline-custom-primary animationOutline all-time-filters animationOutlineCta">
+                                        <span>
+                                            Create Product
+                                        </span>
+                                </a>
+                                <a v-if="createText === 'Create Category'" @click="onChangeHref(href)" href="javascript:void(0)" class="btn-custom btn-group btn-group-select-column btn-outline-custom-primary btn-group-select-column-last-child animationOutline all-time-filters animationOutlineCta">
+                                        <span>
+                                            Create Category
+                                        </span>
+                                </a>
+                                <div v-if="importText || createText === 'Create Machine'" class="btn-group btn-group-select-column btn-group-select-column-last-child">
+                                    <div>
+                                        <a-popover v-model="visiblePopover" placement="bottomLeft" trigger="click">
+                                            <a @click="animationOutlineDropdown()" :class="{'outline-animation': showAnimation}" href="javascript:void(0)" class="btn-custom btn-custom-primary animationPrimary all-time-filters">
+                                                    <span>
+                                                        {{ createText }}
+                                                    </span>
+                                                <img class="img-transition" src="/images/icon/icon-cta-white.svg" :class="{'caret-show' : displayCaret}" alt="">
+                                            </a>
+                                            <a-menu
+                                                    slot="content"
+                                                    class="wrapper-action-dropdown"
+                                                    style="border-right: unset!important;max-height: 250px;overflow: auto"
+                                                    @click="visiblePopover = false"
+                                            >
+                                                <a-menu-item @click="onChangeHref(href)">
+                                                        <span>
+                                                            {{ createText }}
+                                                        </span>
+                                                </a-menu-item>
+                                                <a-menu-item v-if="createText !== 'Create Machine'" @click="onChangeHref( importText === 'Import Part' ? '/admin/parts/import?fromPage=DATA_REGISTRATION' : '/admin/molds/import?fromPage=DATA_REGISTRATION')">
+                                                        <span>
+                                                            {{ importText }}(s)
+                                                        </span>
+                                                </a-menu-item>
+                                                <a-menu-item @click="showDrawer( createText === 'Create Part' ? 'PART' : (createText === 'Create Tooling' ? 'TOOLING' : 'MACHINE'))">
+                                                    <div>
+                                                        {{ createText === 'Create Part' ? 'Create Part Property' : (createText === 'Create Tooling' ? 'Create Tooling Property' : 'Create Machine Property')  }}
+                                                    </div>
+                                                </a-menu-item>
+                                            </a-menu>
+                                        </a-popover>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-responsive-sm table-striped">
+                                <colgroup>
+                                    <col />
+                                    <col />
+                                    <col />
+                                    <col />
+                                    <col style="width:130px" />
+                                </colgroup>
+                                <thead id="thead-actionbar">
+                                    <tr v-if="categorySelected === 'companies'" class="tr-sort tr-4">
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.NAME)"><span th:text="#{company_name}"></span><span class="__icon-sort"></span></th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.COMPANY_CODE}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.COMPANY_CODE)"> <span th:text="#{company_id}"></span><span class="__icon-sort"></span></th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.ADDRESS}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.ADDRESS)"><span th:text="#{address}"></span><span class="__icon-sort"></span></th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.MANAGER}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.MANAGER)"><span th:text="#{manager}"></span><span class="__icon-sort"></span></th>
+                                    </tr>
+                                    <tr v-if="categorySelected === 'locations'" class="tr-sort tr-4">
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.NAME)"> <span th:text="#{location_name}"></span><span class="__icon-sort"></span></th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.LOCATION_CODE}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.LOCATION_CODE)"> <span th:text="#{location_id}"></span><span class="__icon-sort"></span></th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.COMPANY}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.COMPANY)"><span th:text="#{company}"></span><span class="__icon-sort"></span></th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.ADDRESS}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.ADDRESS)"> <span th:text="#{address}"></span><span class="__icon-sort"></span></th>
+                                    </tr>
+                                    <tr v-if="categorySelected === 'categories'" class="tr-sort tr-2">
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.NAME)"><span th:text="#{company_name}"></span><span class="__icon-sort"></span></th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.DESCRIPTION}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.DESCRIPTION)"><span th:text="#{description}"></span><span class="__icon-sort"></span></th>
+                                    </tr>
+                                    <tr v-if="categorySelected === 'parts'" class="tr-sort tr-3">
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.PART}, isDesc ? 'desc': 'asc']"
+                                            @click="sortBy(sortType.PART)">
+                                            <span th:text="#{part_id}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']"
+                                            @click="sortBy(sortType.NAME)">
+                                            <span th:text="#{part_name}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.CATEGORY}, isDesc ? 'desc': 'asc']"
+                                            @click="sortBy(sortType.CATEGORY)">
+                                            <span th:text="#{category}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                    </tr>
+                                    <tr v-if="categorySelected === 'molds'" class="tr-sort tr-4">
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.EQUIPMENT_CODE}, isDesc ? 'desc': 'asc']"
+                                            @click="sortBy(sortType.EQUIPMENT_CODE)">
+                                            <span th:text="#{tooling_id}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.PART2}, isDesc ? 'desc': 'asc']"
+                                            @click="sortBy(sortType.PART2)">
+                                            <span th:text="#{part}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.COMPANY_LOCATION}, isDesc ? 'desc': 'asc']"
+                                            @click="sortBy(sortType.COMPANY_LOCATION)">
+                                            <span th:text="#{company}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                        <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.LOCATION_NAME}, isDesc ? 'desc': 'asc']"
+                                            @click="sortBy(sortType.LOCATION_NAME)">
+                                            <span th:text="#{location}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                    </tr>
+                                    <tr v-if="categorySelected === 'machines'" class="tr-sort tr-4">
+                                        <th v-for="(item, index) in allColumnList" v-if="item.enabled" :key="index"
+                                            :class="[{__sort: item.sortable, active: currentSortType === item.sortField}, isDesc ? 'desc': 'asc', 'text-left']"
+                                            @click="sortBy(item.sortField)">
+                                            <span>{{item.label}}</span>
+                                            <span v-if="item.sortable" class="__icon-sort"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="categorySelected === 'companies'" class="op-list" style="display:none">
+                                    <tr v-for="(result, index, id) in results" :id="result.id" >
+                                        <td class="text-left">
+                                            <div>
+                                                <a href="#" @click.prevent="showCompanyDetails(result)">
+                                                    {{result.name}}
+                                                </a>
+                                            </div>
+
+                                            <div class="small text-muted font-size-11-2">
+                                                <span th:text="#{registered}+':'"></span>
+                                                {{formatToDate(result.createdAt)}}
+                                            </div>
+                                        </td>
+                                        <td class="text-left">{{result.companyCode}}</td>
+                                        <td class="text-left">{{result.address}}</td>
+                                        <td class="text-left">{{result.manager}}</td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-if="categorySelected === 'locations'" class="op-list" style="display:none">
+                                    <tr v-for="(result, index, id) in results" :id="result.id" >
+                                        <td class="text-left">{{result.name}}</td>
+                                        <td class="text-left">{{result.locationCode}}</td>
+                                        <td class="text-left">
+                                            <div v-if="result.companyName">
+                                                <div v-html="companyName(result.companyName, result.companyEnabled)"></div>
+                                                <div class="small text-muted font-size-11-2">{{result.companyId}}</div>
+                                            </div>
+                                        </td>
+                                        <td class="text-left">{{result.address}}</td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-if="categorySelected === 'categories'" class="op-list" style="display:none">
+                                    <tr v-for="(result, index, id) in results" :id="result.id" >
+                                        <td class="text-left">
+                                            <div>
+                                                <!--<a :href="'/admin/companies/' + result.id">{{result.name}}</a>-->
+                                                <span>{{result.name}}</span>
+                                            </div>
+
+                                            <div class="small text-muted font-size-11-2">
+                                                <span th:text="#{registered}+':'"></span>
+                                                <!--{{result.createdDate}}-->
+                                                {{formatToDate(result.createdAt)}}
+                                            </div>
+                                        </td>
+                                        <td class="text-left">{{result.description}}</td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-if="categorySelected === 'parts'" class="op-list" style="display:none">
+                                    <tr v-for="(result, index, id) in results" :id="result.id" >
+                                        <td class="text-left">
+                                            <a href="#" @click.prevent="showChartPart(result)" style="color:#1aaa55" class="mr-1"><i
+                                                    class="fa fa-bar-chart"></i></a>
+                                            <a href="#" @click.prevent="showPartDetails(result)">
+                                                {{result.partCode}}</a>
+                                            <div class="small text-muted font-size-11-2">
+                                                Registered:
+                                                <!--{{result.createdDate}}-->
+                                                {{formatToDate(result.createdAt)}}
+                                            </div>
+                                        </td>
+                                        <td class="text-left">{{result.name}}</td>
+                                        <td class="text-left" v-html="categoryLocation(result.categoryId)"></td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-if="categorySelected === 'molds'" class="op-list" style="display:none">
+                                    <tr v-for="(result, index, id) in results" :id="result.id" >
+                                        <td class="text-left">
+                                            <div>
+                                                <a href="#" @click.prevent="showChart(result)" style="color:#1aaa55"
+                                                   class="mr-1"><i class="fa fa-bar-chart"></i></a>
+                                                <a href="#" @click.prevent="showMoldDetails(result)">
+                                                    {{result.equipmentCode}}
+                                                </a>
+                                            </div>
+
+                                            <div class="small text-muted font-size-11-2">
+                                                <span th:text="#{updated_on}"></span>  {{formatToDate(result.lastShotAt)}}
+                                            </div>
+                                        </td>
+                                        <td class="text-left" style="max-width: 600px">
+                                            <div v-for="(part, index, id) in result.parts" :id="part.partId">
+                                                <div>
+                                                    <a href="#" @click.prevent="showPartChart(part)" class="font-size-14">
+                                                        {{part.partName}}
+                                                    </a>
+                                                </div>
+                                                <span class="font-size-11-2">
+                                                    {{part.partCode}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+                                            {{result.companyName}}
+                                            <div class="small text-muted font-size-11-2">{{result.companyId}}</div>
+                                        </td>
+                                        <td class="text-left">
+                                            <div v-if="result.locationCode">
+                                                <div class="font-size-14" v-html="locationName(result.locationName, result.locationEnabled)">
+                                                <div class="small text-muted font-size-11-2">{{result.locationCode}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-if="categorySelected === 'machines'" class="op-list" style="display:none">
+                                    <tr v-for="(result, index, id) in results" :id="result.id" >
+                                        <template v-for="(column, columnIndex) in allColumnList" v-if="column.enabled">
+                                            <td v-if="column.field === 'machineCode'" class="text-left">
+                                                <div>
+                                                    <a href="#" @click.prevent="showMachineDetails(result)">
+                                                        {{result.machineCode}}
+                                                    </a>
+                                                </div>
+                                                <div class="small text-muted font-size-11-2">
+                                                    <span th:text="#{registered}+':'"></span>
+                                                    {{formatToDate(result.createdAt)}}
+                                                </div>
+                                            </td>
+                                            <td v-else-if="column.field === 'company'" class="company-cell text-left">
+                                                {{result.companyName}}
+                                                <div class="small text-muted font-size-11-2">{{result.companyCode}}</div>
+                                            </td>
+                                            <td class="text-left" v-else-if="column.field === 'location'">
+                                                <div v-if="result.locationCode">
+                                                    <div class="font-size-14" v-html="locationName(result.locationName, result.locationEnabled)">
+                                                    <div class="small text-muted font-size-11-2">{{result.locationCode}}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="titleCase text-left" v-else>
+                                                {{result[column.field]}}
+                                            </td>
+                                        </template>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="no-results d-none" th:text="#{no_results}"></div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <ul class="pagination">
+                                        <li v-for="(data, index) in pagination" class="page-item"
+                                            :class="{active: data.isActive}">
+                                            <a class="page-link" @click="paging(data.pageNumber)">{{data.text}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <company-details :resources="resources"></company-details>
+        <chart-part :resources="resources"></chart-part>
+        <part-details :resources="resources" ></part-details>
+        <chart-mold :show-file-previewer="showFilePreviewer" :resources="resources"></chart-mold>
+        <mold-details :show-file-previewer="showFilePreviewer" :resources="resources"></mold-details>
+        <file-previewer :back="backToMoldDetail"></file-previewer>
+        <machine-details :resources="resources"></machine-details>
+        <create-property-drawer :resources="resources" :visible="visible"
+                                @open="showDrawer()" @close="closeDrawer()"
+                                :is-type="isType" :category-selected="categorySelected"
+                                :name-drawer="nameDrawer"
+                                :current-user="currentUser" :current-user-type="currentUserType">
+        </create-property-drawer>
+        <action-bar-feature feature="ACTION_BAR" ></action-bar-feature>
+        <category-form-modal :resources="resources" @reload-page="paging(1)"></category-form-modal>
+        <project-form-modal :resources="resources" @reload-page="paging(1)"></project-form-modal>
+
+    </div>
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/chart-mold/container.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/point.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/shape.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/graph-element.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/cycle-time-hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/temperature-hourly-chart.js?'+${noCacheVer}"></script>
+
+    <script defer th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/cdn/pdf.min.js?'+${noCacheVer}"></script>
+
+    <script defer th:src="'/js/scripts/admin/data-registration/index.js?'+${noCacheVer}"></script>
+
+</th:block>
+
+</html>

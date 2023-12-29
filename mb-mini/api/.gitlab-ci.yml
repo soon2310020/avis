@@ -1,0 +1,10 @@
+stages:
+  - run
+run:
+  stage: run
+  tags:
+    - mibiapp_dev
+  script:
+    - sudo sh /home/mb-miniapp/build_mb-mini-application.sh $CI_COMMIT_BRANCH
+  only:
+    - develop

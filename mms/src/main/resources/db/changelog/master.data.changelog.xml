@@ -1,0 +1,1232 @@
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet id="1617379666250-01" author="truongnc">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-insight-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="1624592723781" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/change-checklist-item-longtext.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="1625827297221" author="vietnv" >
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-currency-config.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20210712" author="vietnv" >
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-currency-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20210727-2" author="vietnv" >
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/modify-general_config.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20210805-01" author="vietnv" >
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 endDelimiter="//"
+				 path="master-data-sql/insert-custom-propertie-value-default.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+		<sql>CALL INSERT_CUSTOM_VALUE_DEFAULT();</sql>
+	</changeSet>
+	<changeSet id="20210810" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202108-delete-custom-field-error.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20210817" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202108-set-default-value-totalCavities.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="1629545091804" author="truongnc">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-machine-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20210831-2" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202108-create-view-target-uptime-hour.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202109161707" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/change-length-of-machine-code.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202109161739" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/change-length-of-machine-id-in-machine-version.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202109201633-1" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-data-management-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202109301609-1" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-position-to-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20211011" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202110-modify-role-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20211019-1" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202110-drop-ref-file-store-to-terminal.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20211101" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-field-emoldino-to-company.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20211115" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202111-enable-menu-data-completion.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="1637035334-1" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202111-add-last-shot-made-at-mold.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="1637058328" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202111-set-default-deleted.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="1637141890" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-downtime-alert-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="1637574513" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-position-to-all-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202111241522" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/202111-add-field-enabled.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="20211130" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20211130-disable-menu-reset.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="20220106170000-3" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220106-menu-reorganization.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202201181" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220118-add-menu-machine-availability.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="20220122-01" author="kepha">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220122-create-index-mold-month-shotcount.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202201182" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220118-update-menu-sidebar.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="20220118333" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220118-add-checklist-type.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022012715" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220127-change-position-reject-rate.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022012820" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220128-alter-machine-statistics-note-to-longtext.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2022020805-2" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220208-create-option-field-value.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022021011-2" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220210-recreate-mold-standard-value.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202202101508" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220209-create-table-downtime-item.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022021011-2" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220210-recreate-mold-standard-value.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022020816" author="duongnt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220208-create-dashboard-setting-table.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202202151037" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220215-add-edited-at-to-machine-statistics.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022022816" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220228-new-device-data.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202203021056" author="kepha">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220302-add-mms-data-page-to-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202202251601" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220225-fix-email-flag-in-user-alert.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022022215" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220222-migration-utilization-rate.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2022022303c" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202202302-migration-utilization-rate-with-null.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202202241656-2" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220224-create-table-statistics-part-replaced.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022030611-2" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220306-create-error-and-access-log.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022030708" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220307-create-machine-engineer.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022030623" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220306-create-code-data.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202203031336" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220303-delete-statistics-part-with-no-cavity.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022030812-807" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220308-modify-enable-config.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022030913-0" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220309-create-cache-data.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022030914-789-1" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220309-create-user-graph-settings-table.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="20220223151513" author="duongnt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/2022022315-create-chart-type-config-table.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202203091209" author="duongnt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220309-drop-column-chart-type-config.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202203251703" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220325-update-table-produced-part.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202203141055" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220314-add-column-wact-to-mold.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022032708-2" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220327-create-statistics-summary.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022032903-1" author="argen">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220229-add-field-pwdExpire.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2022040810-1" author="duongnt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220408-create-dashboard-chart-display-setting-table.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202204051143" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220405-add-column-to-part.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202204141004-1" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220414-add-field-to-category.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202204141414" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220414-create-part-project-produced.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202204210909" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220421-set-default-quantity-required.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022042817" author="mickey">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220428-create-inf-message.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2022050723-1" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220507-create-product-statistics.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202205181031-3" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220518-create-machine-downtime-alert.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202205191724-1" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220519-insert-menu-machine-downtime-alert.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022052213" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220520-create-product-supplychain.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022060116" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220601-create-product-supplychain-sourcing.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="20220603-2" author="kepha">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+						 path="master-data-sql/20220603-alter-table-data-modify-column.sql"
+						 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202205231741-1" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220523-create-table-shift-config.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202206021120" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220602-add-oee-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202206021349-1" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220602-add-column-latest-machine-downtime.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202206031129-1" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220603-create-table-machine-oee.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022061014" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220610-add-deleted-column-for-user-table.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022061315" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2022061315-drop-UK-email-in-user-table.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022061711" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220616-create-data3collected.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202206170930" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220617-alter-project-id.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202206170930" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220621-change-type-column-RESIN_CODE.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="20220628" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220628-create-reject-rate-configuration.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202206291624" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220629-change-type-column-param-value.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2022063011" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220630-add-last-shot-to-statistics-preset.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202206280931" author="kepha">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+						 path="master-data-sql/20220628-add-common-component-menu.sql"
+						 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202207041247" author="saad">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/add-code-list-center-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202206201609" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220620-add-user-id-to-dashboard-group.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202206071535" author="duongvt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220607-add-column-lastshotval.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022070518" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220705-add-dataid-at-data3collected.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202207071532" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+						 path="master-data-sql/20220707-change-type-cost-column.sql"
+						 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022071109" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220711-create-role-user-permission.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022071012" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220710-create-job-data.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022071313-1" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220713-add-tabbed-overview-dashboard.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022071314-1" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220714-create-tabbed_overview_general_filter.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202207151810-1" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220715-alter-mold.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022071210" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220712-create-sync-ctrl-data.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+		<changeSet id="2022070408-1" author="gm">
+			<sqlFile dbms="mysql" encoding="UTF-8"
+					 path="master-data-sql/2022070404-insert-role-config-into-menu.sql"
+					 relativeToChangelogFile="true" stripComments="true"/>
+		</changeSet>
+
+	<changeSet id="202206100334" author="gm">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220414-create-app-version.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022072316-2" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220723-add-timezoneid-at-location.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022072606" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220726-create-device-command.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022073021" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220730-add-company-enabled-at-role.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202207271412" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220727-add-column-for-task-844.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022080804" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220808-create-job-data-index.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022081117" author="argen">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/2022081117-upgrade-size-data-counter.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022081206" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220812-create-transfer-message.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022081211" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220812-add-job-detail.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022081614" author="argen">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/2022081614-disable-codeconfig-menu.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202208111350-2" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220810-create-column-and-migration-category.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202208171311-1" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220817-migrate-data-category.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202208181202-1" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220818-create-support-user.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202208241035" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220823-create-tab-table.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202208291045" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220829-alter-table-tab-table.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202209091624-2" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220907-create-work-order-tables.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202209220859" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220922-alter-charset-work-order.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202209261755" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220926-alter-table-work-order.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202209221508" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220922-create-checklist-user.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202209261349" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220926-create-checklist-company.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="20220824" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220824-new-field-in-mold.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022081603" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220816-add-column-tool-maker-contracted-time.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022090406-1" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20220904-create-mold-chart-stat.sql"
+      relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022092902" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20220929-add-sn-at-data3collected.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+  </changeSet>
+
+	<changeSet id="202210051309" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20221005-alter-table-machine-oee.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202210120936" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20221012-alter-table-machine-oee.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202210061631" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221006-add-column-reported-by-produced-part-table.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202210190838" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221019-alter-table-work-order.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202210171637" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221017-update-data-fq-oee.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202210240832" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221024-alter-table-work-order.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202211031657" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221103-alert-rejected-part-details.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+
+	<changeSet id="2022101317-3" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20221013-create-file-table.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022102514" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221025-add-column-permission-items.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202211101026" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221109-create-resin-code-change.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022111716-5" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221117-create-mold-ct-deviation-table.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202211101441" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221110-alter-table-work-order.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202211231114" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221123-create-default-refurbishment-point-config.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202211241619" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221124-alert-add-column-reason-table-work-order.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202211251155" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221125-alert-add-column-action-user-table-work-order.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212051436" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221205-alter-mold-maintenance-and-work-order.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212071406" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221207-set-overdue-maintenance-to-zero.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022121315-1" author="mickey">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221213-create-ai-pq-result.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2022121315-2" author="mickey">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221213-create-ai-tsd-result.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+<!--
+
+	<changeSet id="20221209-3" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20221209-create-cycle-time-fluctuation-table.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+-->
+
+	<changeSet id="20221212-1" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20221212-add-column-cycle-time-fluctuation.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212051436" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221205-alter-mold-maintenance-and-work-order.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212071406" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221207-set-overdue-maintenance-to-zero.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212161610" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221216-remove-required-config-overdue-tolerance.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212211756" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221221-add-column-previous-location.sql"
+       relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212201355" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221220-add-field-match-hour-and-migration-data.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212290924" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221229-alter-table-data-request.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212291510" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221229-create-table-data-registration-object.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202301061729" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20230105-create-table-for-data-request.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212211650" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221221-alter-work-order.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="202212221530-1" author="mickey">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221222-alter-ai-tsd-result.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2023011009" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230110-create-statistics-ext.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2023011312" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230113-add-column-appversion-items.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2023011412" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230114-create-option-content.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202212191717-2" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221219-alert-system-note-table.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2022122115-3" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20221221-create-system-note-read-table.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="20230104-1" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230104-alert-notification-table.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023012618" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230126-create-transfer-index.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023012011-1" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230120-add-column-option-field-value-user-id.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023011215" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230112-alter-counter-table.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023012412" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230123-add-column-option-field-value-option-name.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023011615-2" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230116-merger-enum-type.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202302100842" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230210-alter-machine-oee.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+
+	<changeSet id="2023021006" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20230210-create-id-rule-seq.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023013113" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/20230131-alert-table-data-request.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023021707" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20230217-add-column-rejected-part-details-remark.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202302201731" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20230220-migrate-work-order-start-end.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023022104" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20230221-create-master-filter.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="202302211434" author="anhlt">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20230221-create-index-in-produced-part.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023022218" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/2023022218-add-column-job-data-before-logic.sql"
+				 relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023031905" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023031905-add-location-at-part-stat.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023031507" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023031507-add-backup-at-mold.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023031405" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023031405-create-area.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023031821" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023031821-add-area-at-mold-location.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023032208" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023032208-add-previous-area-at-mold-location.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023032801" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023032801-add-tooling-status-at-mold.sql"
+      relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023030606" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023030606-create-mold-pm-plan.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+	<changeSet id="2023032418" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023032418-add-downtime-duration-at-machine-oee.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023031905" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023031905-add-location-at-part-stat.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023040710" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/2023040710-create-mold-plant-engineer.sql"
+				 relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023040608" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/2023040608-add-column-last-terminal-id-at-counter.sql"
+				 relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023022700" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023022700-create-draft-data.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023041415" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/2023041415-increase-ctt-size-at-transfer-n-cdata.sql"
+				 relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023061207-2" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023061207-add-ref-id-and-participant-type-at-work-order.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023061517-1" author="sontc">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023062710-change-category-structure.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023061517-1" author="sontc">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023062710-change-category-structure.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023030604-8" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023030604-create-noti.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023060713" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023060713-create-login-hist.sql"
+			relativeToChangelogFile="true" stripComments="true"/>
+	</changeSet>
+
+	<changeSet id="2023060710" author="mickey">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			 path="master-data-sql/2023060710-alter-ai-pq-result-column.sql"
+			 relativeToChangelogFile="true" stripComments="true"/>
+  	</changeSet>
+
+	<changeSet id="2023061301" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023061301-create-mold-proc-chg.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023061416" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023061416-add-column-similarity-metric-at-data-acceleration.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023061514-1" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023061514-add-column-proc-status-at-data-acceleration.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023042711" author="sontc">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/202304-change-location-status.sql"
+				 relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023051112" author="sontc">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20230511-change-status-relocation.sql"
+				 relativeToChangelogFile="true" stripComments="true" />
+  </changeSet>
+
+	<changeSet id="2023061614" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023061614-modify-mold-version-parts-and-engineers.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023050217-2" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023050217-create-prod-mold-stat.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023061613-1" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023061613-alter-column-mold-id-at-data-acceleration.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023062614" author="mickey">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023062616-add-column-similarity_metric_hr-at-data-acceleration.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023081014-11" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20230612-truncate-CYCLE_TIME_DEVIATION.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023062010" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023062010-add-column-enabled-at-mold.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023072223" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023072223-add-cycle-time-deviation-index.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023070616" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+				 path="master-data-sql/20230706-update-value-for-enabled-at-mold.sql"
+				 relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023073114" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023073114-add-relocation-type-at-mold-location.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023081115" author="vietnv">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/20230811-update-tab-table.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2323081416" author="sontc">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+             path="master-data-sql/2023081416-set-completed-on-is-null-when-status-is-accepted.sql"
+             relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+	<changeSet id="2023081511" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+             path="master-data-sql/20230815-migrate-data-status-workorder.sql"
+             relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023082212" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023082212-modify-cache-name-size-at-cache-data.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023081608" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023081608-add-deleted-at-custom-field.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023091214" author="sontc">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023081416-set-completed-on-is-null-when-status-is-accepted.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="202310040550-1" author="tuannh">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023100405-delete-error-request-change-work-order.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023101607" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023101607-modify-location-code-length.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023101805" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023101805-modify-ux-file.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023102016" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023102016-add-supplier-mold-code-at-mold.sql"
+      relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023103016" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023103016-modify-file-content-type-length.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023103116" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023103116-add-column-created-by-at-versions.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+	<changeSet id="2023110116" author="steve">
+		<sqlFile dbms="mysql" encoding="UTF-8"
+			path="master-data-sql/2023110116-update-tooling-tab-name.sql"
+			relativeToChangelogFile="true" stripComments="true" />
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ http --form --auth 'saleson-manager:password' POST 'http://api.emoldino.com/oauth/token' \
+    'username=admin' \
+    'password=password' \
+    'grant_type=password'
+----

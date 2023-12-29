@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-content">
+    <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+    <link rel="stylesheet" th:href="'/css/table-dropdown.css?'+${noCacheVer}" />
+    <link rel="stylesheet" th:href="'/css/data-table.css?'+${noCacheVer}" />
+    <style th:scope>
+      #myProgress {
+        width: 80%;
+        background-color: white;
+        height: 32px;
+        border: 1px solid #615ea9;
+        border-radius: 24px;
+        margin: 0 auto;
+        margin-top: 10px;
+      }
+
+      #myBar {
+        border-top-left-radius: 24px;
+        border-bottom-left-radius: 24px;
+        width: 1%;
+        height: 24px;
+        background-color: #263163;
+        max-width: 92%;
+        margin-top: 3px;
+        margin-left: 4px;
+      }
+    </style>
+    <div id="app" class="op-user-list wave1">
+      <data-family></data-family>
+    </div>
+  </th:block>
+  <th:block layout:fragment="op-script">
+    <script
+      defer
+      th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/container.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/chart-mold/point.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/shape.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/graph-element.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/cycle-time-hourly-chart.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/temperature-hourly-chart.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/cdn/pdf.min.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/scripts/admin/data-family/index.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

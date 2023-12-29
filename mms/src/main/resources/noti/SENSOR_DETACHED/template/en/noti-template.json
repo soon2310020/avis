@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "Detachment Alert",
+  "content": "Sensor ${code} has been detached from its tooling."
+}

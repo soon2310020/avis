@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head"></th:block>
+
+  <th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list">
+      <permission-config-page :resources="resources"></permission-config-page>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/hotjar.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/scripts/admin/permission-config-new/module-shim.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

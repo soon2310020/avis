@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-default}"
+>
+    <th:block layout:fragment="op-head">
+        <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+        <link rel="stylesheet" th:href="'/css/table-dropdown.css?'+${noCacheVer}" />
+        <link rel="stylesheet" th:href="'/css/data-table.css?'+${noCacheVer}" />
+        <style type="text/css"></style>
+    </th:block>
+    <th:block layout:fragment="op-content">
+        <file-management id="app"></file-management>
+    </th:block>
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/js/scripts/common/fle-mng/index.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

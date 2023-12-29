@@ -1,0 +1,151 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <changeSet id="2023-10-03-create-mbal_rm_information-table" author="HaNST">
+    	<preConditions onFail="MARK_RAN">
+        	<not> <tableExists tableName="mbal_rm_information"/> </not>
+        </preConditions>
+        
+        <createSequence sequenceName="mbal_rm_information_seq" startValue="1000" incrementBy="1"/>
+        
+        <createTable tableName="mbal_rm_information">
+			<column name="id" type="bigint" defaultValueComputed="nextval('mbal_rm_information_seq')">
+			    <constraints primaryKey="true" nullable="false"/>
+			</column>
+			
+			<column name="rm_code" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ic_code" type="varchar(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="full_name" type="varchar(256)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="phone_number" type="varchar(12)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="branch_code" type="varchar(30)">
+                <constraints nullable="true" />
+            </column>
+            <column name="branch_name" type="varchar(256)">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="2023-10-03-create-mbal_ic_information-table" author="HaNST">
+    	<preConditions onFail="MARK_RAN">
+        	<not> <tableExists tableName="mbal_ic_information"/> </not>
+        </preConditions>
+        
+        <createSequence sequenceName="mbal_ic_information_seq" startValue="1000" incrementBy="1"/>
+        
+        <createTable tableName="mbal_ic_information">
+			<column name="id" type="bigint" defaultValueComputed="nextval('mbal_ic_information_seq')">
+			    <constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="branch_code" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+            <column name="branch_name" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ic_code" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ic_name" type="varchar(256)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="full_name" type="varchar(256)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="phone_number" type="varchar(12)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="varchar(256)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="experience_years" type="int">
+                <constraints nullable="true"/>
+            </column>
+            
+        </createTable>
+
+    </changeSet>
+    
+    <changeSet id="2023-10-30-create-mbal_branch_information-table" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not> <tableExists tableName="mbal_branch_information"/> </not>
+        </preConditions>
+        
+        <createSequence sequenceName="mbal_branch_information_seq" startValue="1000" incrementBy="1"/>
+        
+        <createTable tableName="mbal_branch_information">
+            <column name="id" type="bigint" defaultValueComputed="nextval('mbal_branch_information_seq')">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+            <column name="name" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="region" type="varchar(100)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+    
+    <changeSet id="2023-12-10-set-remark-mbal_rm_information" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_rm_information"/>
+        </preConditions>
+        
+        <setTableRemarks tableName="mbal_rm_information" remarks="Thông tin RM"/>
+        <setColumnRemarks tableName="mbal_rm_information" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="mbal_rm_information" columnName="rm_code" remarks="Mã RM"/>
+        <setColumnRemarks tableName="mbal_rm_information" columnName="ic_code" remarks="Mã IC của RM"/>
+        <setColumnRemarks tableName="mbal_rm_information" columnName="full_name" remarks="Họ tên RM"/>
+        <setColumnRemarks tableName="mbal_rm_information" columnName="phone_number" remarks="Số điện thoại của RM"/>
+        <setColumnRemarks tableName="mbal_rm_information" columnName="branch_code" remarks="Mã chi nhánh của RM"/>
+        <setColumnRemarks tableName="mbal_rm_information" columnName="branch_name" remarks="Tên chi nhánh của RM"/>
+    </changeSet>
+    
+    <changeSet id="2023-12-10-set-remark-mbal_ic_information" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_ic_information"/>
+        </preConditions>
+        
+        <setTableRemarks tableName="mbal_ic_information" remarks="Thông tin IC"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="ic_code" remarks="Mã IC"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="ic_name" remarks="Tên IC"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="full_name" remarks="Họ tên"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="phone_number" remarks="Số điện thoại"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="email" remarks="Email"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="experience_years" remarks="Số năm kinh nghiệm"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="branch_code" remarks="Mã chi nhánh"/>
+        <setColumnRemarks tableName="mbal_ic_information" columnName="branch_name" remarks="Tên chi nhánh"/>
+    </changeSet>
+    
+    <changeSet id="2023-12-10-set-remark-mbal_branch_information" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_branch_information"/>
+        </preConditions>
+        
+        <setTableRemarks tableName="mbal_branch_information" remarks="Danh sách chi nhánh"/>
+        <setColumnRemarks tableName="mbal_branch_information" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="mbal_branch_information" columnName="code" remarks="Mã chi nhánh"/>
+        <setColumnRemarks tableName="mbal_branch_information" columnName="name" remarks="Tên chi nhánh"/>
+        <setColumnRemarks tableName="mbal_branch_information" columnName="region" remarks="Khu vực"/>
+    </changeSet>
+
+</databaseChangeLog>

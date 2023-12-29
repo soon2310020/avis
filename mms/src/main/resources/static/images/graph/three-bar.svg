@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="612" height="72" viewBox="0 0 612 72">
+  <g id="Cycle_time_bar" data-name="Cycle time bar" transform="translate(-792 -392)">
+    <g id="Rectangle_16923" data-name="Rectangle 16923" transform="translate(792 392)" fill="#b1e0ee" stroke="#63c2de" stroke-width="10">
+      <rect width="196" height="72" rx="1.5" stroke="none"/>
+      <rect x="5" y="5" width="186" height="62" rx="3.5" fill="none"/>
+    </g>
+    <g id="Rectangle_16924" data-name="Rectangle 16924" transform="translate(1000 392)" fill="#ffe083" stroke="#ffc107" stroke-width="10">
+      <rect width="196" height="72" rx="1.5" stroke="none"/>
+      <rect x="5" y="5" width="186" height="62" rx="3.5" fill="none"/>
+    </g>
+    <g id="Rectangle_16925" data-name="Rectangle 16925" transform="translate(1208 392)" fill="#fbb5b5" stroke="#f86c6b" stroke-width="10">
+      <rect width="196" height="72" rx="1.5" stroke="none"/>
+      <rect x="5" y="5" width="186" height="62" rx="3.5" fill="none"/>
+    </g>
+  </g>
+</svg>

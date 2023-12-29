@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS `ID_RULE_SEQ`;
+
+CREATE TABLE `ID_RULE_SEQ` (
+	`ID` BIGINT not null auto_increment,
+	
+	`ID_RULE_CODE` varchar(50),
+	`VALUE_PATTERN` varchar(100),
+	`LAST_VALUES` varchar(100),
+	
+	`CREATED_BY` bigint,
+	`CREATED_AT` datetime,
+	`UPDATED_BY` bigint,
+	`UPDATED_AT` datetime,
+	
+	PRIMARY KEY (ID)
+);
+
+ALTER TABLE `ID_RULE_SEQ`
+   ADD CONSTRAINT `UX_ID_RULE_SEQ` UNIQUE (`ID_RULE_CODE`, `VALUE_PATTERN`);

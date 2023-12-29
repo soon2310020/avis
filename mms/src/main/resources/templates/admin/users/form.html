@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head">
+    <script
+      th:src="'/js/cdn/fontawesome.js?'+${noCacheVer}"
+      crossorigin="anonymous"
+    ></script>
+    <style type="text/css">
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+        visibility: hidden !important;
+      }
+      .hide_account {
+        display: none !important;
+      }
+      .pwd {
+        position: relative;
+      }
+      .p-viewer {
+        z-index: 9999;
+        position: absolute;
+        top: 25%;
+        right: 23px;
+      }
+    </style>
+  </th:block>
+
+  <th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list">
+      <div class="hide_account alert alert-dark" role="alert">
+        <h5 class="alert-heading mb-0">
+          <i class="fa fa-user"></i>
+          <span v-if="isNew" th:text="#{new_user}"></span>
+          <span v-else th:text="#{edit_user}"></span>
+        </h5>
+      </div>
+
+      <form class="needs-validation" @submit.prevent="submit">
+        <!-- Account -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card profile_wave" id="remove_profile"></div>
+            <div class="card profile_wave1">
+              <div class="card-header">
+                <strong th:text="#{account}"></strong>
+
+                <span
+                  v-if="userData.ssoEnabled"
+                  class="label label-warning float-right ml-1"
+                  v-cloak
+                  th:text="#{sso}"
+                ></span>
+                <span
+                  v-if="userData.admin"
+                  class="label label-success float-right"
+                  v-cloak
+                  th:text="#{admin}"
+                ></span>
+              </div>
+              <div class="card-body">
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="name">
+                    <span v-text="resources['full_name']"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      type="text"
+                      id="name"
+                      v-model="userData.name"
+                      class="form-control"
+                      :readonly="false"
+                      :placeholder="resources['full_name']"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="email">
+                    <span v-text="resources['email_address']"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      type="email"
+                      id="email"
+                      v-model="userData.email"
+                      autocomplete="new-password"
+                      class="form-control"
+                      :readonly="readonly"
+                      th:placeholder="#{email_address}"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card profile_wave2">
+              <div class="card-header">
+                <strong th:text="#{password}"></strong>
+                <span
+                  class="text-sm text-danger float-right"
+                  v-if="userData.ssoEnabled"
+                  v-cloak
+                  th:text="#{cannot_change_password}"
+                ></span>
+              </div>
+              <div class="card-body" v-if="isNew">
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="password-1">
+                    <span v-text="resources['password']"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <div class="input-group col-md-10 pwd">
+                    <input
+                      :type="type"
+                      id="password-1"
+                      v-model="userData.password"
+                      class="form-control"
+                      th:placeholder="#{password}"
+                      @input="password_check"
+                      @click="typing = true"
+                      autocomplete="new-password"
+                      :pattern="pattern1"
+                      required
+                    />
+                    <div class="p-viewer" style="border-radius: 0.25rem">
+                      <i
+                        class="fa"
+                        :class="show ? 'fa-eye' : 'fa-eye-slash'"
+                        @click="showPassword"
+                        aria-hidden="true"
+                        style="cursor: pointer"
+                      ></i>
+                    </div>
+                  </div>
+                  <div v-if="typing" class="col-md-10 ml-auto">
+                    <p
+                      style="
+                        margin-top: 5px;
+                        margin-bottom: 15px;
+                        font-size: 12px;
+                      "
+                    >
+                      Your password must contain at least:
+                    </p>
+                    <p
+                      class="frmValidation"
+                      :class="{'frmValidation--passed' : userData?.password?.length > 7}"
+                    >
+                      <i
+                        class="frmIcon fas"
+                        :class="[userData?.password?.length > 7 ? 'fa-check-circle' : 'fa-times-circle']"
+                      ></i>
+                      8 characters
+                    </p>
+                    <p
+                      class="frmValidation"
+                      :class="{'frmValidation--passed' :has_uppercase }"
+                    >
+                      <i
+                        class="frmIcon fas"
+                        :class="has_uppercase ? 'fa-check-circle' : 'fa-times-circle'"
+                      ></i>
+                      One uppercase letter
+                    </p>
+                    <p
+                      class="frmValidation"
+                      :class="{'frmValidation--passed' : has_number }"
+                    >
+                      <i
+                        class="frmIcon fas"
+                        :class="has_number ? 'fa-check-circle' : 'fa-times-circle'"
+                      ></i>
+                      One number
+                    </p>
+                    <p
+                      class="frmValidation"
+                      :class="{'frmValidation--passed' : has_special }"
+                    >
+                      <i
+                        class="frmIcon fas"
+                        :class="has_special ? 'fa-check-circle' : 'fa-times-circle'"
+                      ></i>
+                      One special character: .,!@#$%^&*+=_-
+                    </p>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="password2-1">
+                    <span v-text="resources['password_confirm']"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <div class="input-group col-md-10">
+                    <input
+                      :type="type"
+                      id="password2-1"
+                      v-model="userData.passwordConfirm"
+                      class="form-control"
+                      th:placeholder="#{password_confirm}"
+                      required
+                    />
+                    <div class="p-viewer" style="border-radius: 0.25rem">
+                      <i
+                        class="fa"
+                        :class="show ? 'fa-eye' : 'fa-eye-slash'"
+                        @click="showPassword"
+                        aria-hidden="true"
+                        style="cursor: pointer"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-body" v-if="isNew == false">
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="password-2">
+                    <span v-text="resources['password']"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      type="password"
+                      id="password-2"
+                      @input="password_check"
+                      v-model="userData.password"
+                      class="form-control"
+                      :readonly="userData.ssoEnabled"
+                      @click="typing = true"
+                      placeholder="•••••••••"
+                      autocomplete="new-password"
+                      :pattern="pattern2"
+                    />
+                    <div v-if="typing">
+                      <p
+                        style="
+                          margin-top: 5px;
+                          margin-bottom: 15px;
+                          font-size: 12px;
+                        "
+                      >
+                        Your password must contain at least:
+                      </p>
+                      <p
+                        class="frmValidation"
+                        :class="{'frmValidation--passed' : userData?.password?.length > 7}"
+                      >
+                        <i
+                          class="frmIcon fas"
+                          :class="[userData?.password?.length > 7 ? 'fa-check-circle' : 'fa-times-circle']"
+                        ></i>
+                        8 characters
+                      </p>
+                      <p
+                        class="frmValidation"
+                        :class="{'frmValidation--passed' : has_uppercase }"
+                      >
+                        <i
+                          class="frmIcon fas"
+                          :class="has_uppercase ? 'fa-check-circle' : 'fa-times-circle'"
+                        ></i>
+                        One uppercase letter
+                      </p>
+                      <p
+                        class="frmValidation"
+                        :class="{'frmValidation--passed' : has_number }"
+                      >
+                        <i
+                          class="frmIcon fas"
+                          :class="has_number ? 'fa-check-circle' : 'fa-times-circle'"
+                        ></i>
+                        One number
+                      </p>
+                      <p
+                        class="frmValidation"
+                        :class="{'frmValidation--passed' : has_special }"
+                      >
+                        <i
+                          class="frmIcon fas"
+                          :class="has_special ? 'fa-check-circle' : 'fa-times-circle'"
+                        ></i>
+                        One special character: .,!@#$%^&*+=_-
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="password2-2"
+                    ><span v-text="resources['password_confirm']"></span>
+                    <span class="badge-require"></span
+                  ></label>
+                  <div class="col-md-10">
+                    <input
+                      type="password"
+                      id="password2-2"
+                      v-model="userData.passwordConfirm"
+                      autocomplete="off"
+                      class="form-control"
+                      :readonly="userData.ssoEnabled"
+                      placeholder="•••••••••"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card profile_wave3">
+              <div class="card-header">
+                <strong th:text="#{profile}"></strong>
+              </div>
+              <div class="card-body">
+                <!-- Company -->
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="name">
+                    <span v-text="resources['company']"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <div class="col-md-4">
+                    <input
+                      type="hidden"
+                      v-model="userData.companyId"
+                      required
+                    />
+                    <input
+                      type="text"
+                      v-model="userData.companyName"
+                      readonly="readonly"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <button
+                      type="button"
+                      class="btn btn-outline-success"
+                      data-toggle="modal"
+                      data-target="#op-company-search"
+                      th:text="#{company_search}"
+                    ></button>
+                  </div>
+                </div>
+
+                <!-- Department & Position -->
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="text-input1">
+                    <span v-text="resources['department']"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <div class="col-md-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="text-input1"
+                      v-model="userData.department"
+                      th:placeholder="#{department}"
+                      required
+                    />
+                  </div>
+                  <label class="col-md-2 col-form-label" for="text-input2">
+                    <span v-text="resources['position']"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <div class="col-md-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="text-input2"
+                      v-model="userData.position"
+                      th:placeholder="#{position}"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <!-- Mobile Number -->
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="text-input4">
+                    Mobile Number
+                  </label>
+                  <!-- </label> -->
+                  <div class="col-md-4">
+                    <div class="d-flex">
+                      <div class="flex-column pr-0" style="width: 100px">
+                        <div class="btn-group btn-block">
+                          <button
+                            type="button"
+                            class="btn btn-default btn-block dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i
+                              class="flag-icon h6 mb-0"
+                              :class="['flag-icon-' + lower(mobileDialingAbbreviation)]"
+                            ></i>
+                            &nbsp;+{{userData.mobileDialingCode}}
+                          </button>
+                          <div
+                            class="dropdown-menu dropdown-menu-left"
+                            style="
+                              height: auto;
+                              max-height: 200px;
+                              overflow-x: hidden;
+                            "
+                          >
+                            <a
+                              href="#"
+                              v-for="code in codes.CountryCode"
+                              class="dropdown-item dropdown-country"
+                              @click.prevent="selectMobileDialing(code)"
+                            >
+                              <i
+                                class="flag-icon h4 mb-0"
+                                :class="['flag-icon-' + lower(code.code)]"
+                              ></i>
+                              {{code.title}} +{{code.description}}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col pr-0">
+                        <input
+                          type="tel"
+                          class="form-control"
+                          id="text-input4"
+                          maxlength="20"
+                          v-model="userData.mobileNumber"
+                          th:placeholder="#{mobile_number}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <label
+                    v-if="checkEditPage()"
+                    class="col-md-2 col-form-label"
+                    th:text="#{last_activity_time}"
+                  ></label>
+                  <div v-if="checkEditPage()" class="col-md-4">
+                    <input
+                      type="text"
+                      v-model="userData.lastLoginShow"
+                      readonly="readonly"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+
+                <!-- Memo -->
+                <div class="form-group row">
+                  <label
+                    class="col-md-2 col-form-label"
+                    for="textarea-input"
+                    th:text="#{memo}"
+                  ></label>
+                  <div class="col-md-10">
+                    <textarea
+                      class="form-control"
+                      id="textarea-input"
+                      v-model="userData.memo"
+                      rows="3"
+                      th:placeholder="#{memo}"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Access -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header">
+                <strong th:text="#{access}"></strong>
+              </div>
+              <div class="card-body">
+                <!-- Status & Access Level -->
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label"
+                    ><span th:text="#{status}"></span>
+                    <span class="badge-require"></span>
+                  </label>
+                  <!-- Status -->
+                  <div class="col-md-4 col-form-label">
+                    <div class="form-check form-check-inline mr-3">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="radio1"
+                        v-model="userData.status"
+                        name="options"
+                        value="ENABLED"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="radio1"
+                        th:text="#{enable}"
+                      ></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="radio2"
+                        v-model="userData.status"
+                        name="options"
+                        value="DISABLED"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="radio2"
+                        th:text="#{disable}"
+                      ></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="radio3"
+                        v-model="userData.status"
+                        name="options"
+                        value="REQUESTED"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="radio3"
+                        th:text="#{requested}"
+                      ></label>
+                    </div>
+                  </div>
+
+                  <!-- Access Level -->
+                  <label class="col-md-2 col-form-label"
+                    ><span th:text="#{access_level}"></span>
+                    <span
+                      v-if="userData.status == 'ENABLED'"
+                      class="badge-require"
+                    ></span
+                  ></label>
+                  <div class="col-md-4 col-form-label">
+                    <div class="form-check form-check-inline mr-3">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        v-model="userData.accessLevel"
+                        name="admin"
+                        value="REGULAR"
+                      />
+                      <label
+                        class="form-check-label"
+                        th:text="#{regular}"
+                      ></label>
+                    </div>
+
+                    <div
+                      v-if="userData.companyType == 'IN_HOUSE'"
+                      class="form-check form-check-inline"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        v-model="userData.accessLevel"
+                        name="admin"
+                        value="ADMIN"
+                      />
+                      <label
+                        class="form-check-label"
+                        th:text="#{admin}"
+                      ></label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        v-model="userData.accessLevel"
+                        name="admin"
+                        value="ROLE_REST_USER"
+                      />
+                      <label class="form-check-label">Role Rest User</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Plant Roles -->
+                <div
+                  class="form-group row"
+                  v-if="userData.accessLevel !== 'ADMIN'"
+                >
+                  <label class="col-md-2 col-form-label">
+                    <span>Plant Roles</span>
+                  </label>
+                  <div class="col-md-10 col-form-label">
+                    <div
+                      v-for="(plant, plantIndex) in plants"
+                      :key="plantIndex"
+                      style="
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 8px;
+                      "
+                    >
+                      <div style="width: 150px">{{plant.name}}</div>
+                      <div>
+                        <emdn-cta-button
+                          :style-props="'width: 130px;'"
+                          :ref="`plantfilter-cta-button-${plantIndex}`"
+                          :id="`plantfilter-cta-button-${plantIndex}`"
+                          :key="`plantfilter-cta-button-${plantIndex}`"
+                          :active="plant.visible"
+                          :click-handler="() => plantFilterToggle(plantIndex)"
+                          color-type="white"
+                          button-type="dropdown"
+                        >
+                          {{ dropdownButtonName(plant) }}
+                        </emdn-cta-button>
+                        <emdn-dropdown
+                          :ref="`plantfilter-dropdown-${plantIndex}`"
+                          :id="`plantfilter-dropdown-${plantIndex}`"
+                          :key="`plantfilter-dropdown-${plantIndex}`"
+                          :checkbox="true"
+                          :visible="plant.visible"
+                          :items="plant.availableRoles"
+                          title-name="name"
+                          :set-result="(result) => setPlantFilterResult(result, plantIndex)"
+                          :on-close="() => plantFilterClose(plantIndex)"
+                        >
+                        </emdn-dropdown>
+                      </div>
+                      <div
+                        style="
+                          margin-left: 8px;
+                          display: flex;
+                          align-self: flex-end;
+                          flex-wrap: wrap;
+                          width: 65%;
+                          gap: 8px;
+                        "
+                      >
+                        <emdn-chips
+                          style-props="background-color: #64D0C3"
+                          v-for="(availableRole, availableRoleIndex) in plant.availableRoles"
+                          v-if="availableRole.checked"
+                          :key="availableRoleIndex"
+                          :click-handler="() => deleteChipHandler(plantIndex, availableRoleIndex)"
+                          >{{availableRole.name}}
+                        </emdn-chips>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Notification (이전버전, 현재는 사용하지 않을 예정. 사용하고자 한다면 rolesId parameter 관련 부분의 api 수정이 필요함.) -->
+        <div class="row" v-if="alertStatusList.length > 0">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-header">
+                <strong th:text="#{email_notification}"></strong>
+              </div>
+              <!-- Alert -->
+              <div class="card-body">
+                <label
+                  class="col-md-2 col-form-label font-weight-bold px-lg-0"
+                  th:text="#{alert}"
+                ></label>
+                <template
+                  v-for="(alertList, index) in alertStatusList"
+                  :id="index"
+                >
+                  <div class="form-group row">
+                    <div
+                      class="col-md-4"
+                      v-for="alertItem in alertList"
+                      :id="alertItem.id"
+                    >
+                      <label class="col-md-5 col-form-label" style="float: left"
+                        >{{alertItem.name}} <span class="badge-require"></span
+                      ></label>
+                      <div
+                        class="col-md-7 col-form-label"
+                        style="display: inline-block"
+                      >
+                        <div class="d-inline-block mr-lg-1">
+                          <input
+                            type="radio"
+                            class=""
+                            :id="'enabled'+alertItem.id"
+                            v-model="alertItem.email"
+                            :name="alertItem.id"
+                            value="true"
+                          />
+                          <label
+                            class="form-check-label"
+                            :for="'enabled' +alertItem.id"
+                            th:text="#{enable}"
+                          ></label>
+                        </div>
+                        <div class="d-inline-block">
+                          <input
+                            type="radio"
+                            :id="'disabled' + alertItem.id"
+                            v-model="alertItem.email"
+                            :name="alertItem.id"
+                            value="false"
+                          />
+                          <label
+                            class="form-check-label"
+                            :for="'disabled' + alertItem.id"
+                            th:text="#{disable}"
+                          ></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+              <!-- Access Request -->
+              <div
+                v-if="userData.companyType === 'IN_HOUSE' && userData.accessLevel === 'ADMIN'"
+                class="card-body pt-lg-0"
+              >
+                <div class="form-group row">
+                  <div class="col-md-4">
+                    <label
+                      class="col-md-5 col-form-label font-weight-bold px-lg-0"
+                      style="float: left"
+                    >
+                      <span th:text="#{access_request}"></span>
+                      <span class="badge-require"></span
+                    ></label>
+                    <div
+                      class="col-md-7 col-form-label"
+                      style="display: inline-block"
+                    >
+                      <div class="d-inline-block mr-lg-1">
+                        <input
+                          type="radio"
+                          id="enabledRequestAccess"
+                          v-model="userData.accessRequest"
+                          name="accessRequest"
+                          value="true"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="enabledRequestAccess"
+                          th:text="#{enable}"
+                        ></label>
+                      </div>
+                      <div class="d-inline-block">
+                        <input
+                          type="radio"
+                          id="disableRequestAccess"
+                          v-model="userData.accessRequest"
+                          name="accessRequest"
+                          value="false"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="disableRequestAccess"
+                          th:text="#{disable}"
+                        ></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Save & Cancle button -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card profile_wave4">
+              <div class="card-body text-center">
+                <button
+                  v-if="isNew == true"
+                  type="submit"
+                  class="btn btn-primary"
+                  th:text="#{new_user}"
+                ></button>
+                <button
+                  v-if="isNew == false"
+                  type="submit"
+                  class="btn btn-primary"
+                  th:text="#{save_changes}"
+                ></button>
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  onclick="history.back()"
+                  th:text="#{cancel}"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <company-search
+          :resources="resources"
+          :get-company="getCompany"
+        ></company-search>
+      </form>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script
+      defer
+      th:src="'/js/scripts/admin/users/form.js?'+${noCacheVer}"
+    ></script>
+    <script
+    defer
+    th:src="'/js/scripts/admin/users/form-module-shim.js?'+${noCacheVer}"
+  ></script>
+  </th:block>
+</html>

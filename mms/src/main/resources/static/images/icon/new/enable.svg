@@ -1,0 +1,14 @@
+<svg id="disable" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="121" height="121" viewBox="0 0 121 121">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_23" data-name="Rectangle 23" width="121" height="121" transform="translate(-0.171)" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Enable">
+    <g id="Group_96" data-name="Group 96" transform="translate(0.171)" clip-path="url(#clip-path)">
+      <g id="Group_104" data-name="Group 104">
+        <path id="Union_27" data-name="Union 27" d="M-3095.171-982.586A60.415,60.415,0,0,1-3034.757-1043a60.414,60.414,0,0,1,60.414,60.414,60.414,60.414,0,0,1-60.414,60.414A60.414,60.414,0,0,1-3095.171-982.586Zm9.589,0a50.883,50.883,0,0,0,50.825,50.825,50.882,50.882,0,0,0,50.825-50.825,50.883,50.883,0,0,0-50.825-50.825A50.883,50.883,0,0,0-3085.582-982.586Zm46.031,27.612V-1010.2c0-2.277,2.147-4.121,4.8-4.121s4.8,1.844,4.8,4.121v55.225c0,2.276-2.147,4.121-4.8,4.121S-3039.551-952.7-3039.551-954.974Z" transform="translate(3095.171 1043)" fill="#595959" stroke="rgba(89,89,89,0)" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

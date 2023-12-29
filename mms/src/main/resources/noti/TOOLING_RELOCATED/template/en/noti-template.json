@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "Tooling Relocation Alert",
+  "content": "Summary of Relocation Alerts for ${dateString}.",
+  "emailTitle": "Alerts for ${dateString}",
+  "emailContent": "Summary of  Relocation Alerts for ${dateString}"
+}

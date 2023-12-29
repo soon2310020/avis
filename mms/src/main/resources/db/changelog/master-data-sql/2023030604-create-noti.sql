@@ -1,0 +1,90 @@
+DROP TABLE IF EXISTS `NOTI_RECIPIENT_CONFIG`;
+DROP TABLE IF EXISTS `NOTI_RECIPIENT`;
+DROP TABLE IF EXISTS `NOTI_CONTENT`;
+DROP TABLE IF EXISTS `NOTI`;
+
+
+CREATE TABLE `NOTI` (
+	`ID` bigint not null auto_increment,
+	`NOTI_CODE` varchar(50),
+	`NOTI_CATEGORY` varchar(20),
+	`DATA_ID` bigint,
+	`NOTI_PRIORITY` varchar(20),
+	`TASK_STATUS` varchar(20),
+	`PROC_STATUS` varchar(20),
+	`SENDER_ID` bigint,
+	`SENT_AT` datetime,
+	`CREATED_BY` bigint,
+	`CREATED_AT` datetime,
+	`UPDATED_BY` bigint,
+	`UPDATED_AT` datetime,
+	PRIMARY KEY (`ID`)
+) DEFAULT CHARSET=UTF8;
+
+
+CREATE TABLE `NOTI_CONTENT` (
+	`ID` bigint not null auto_increment,
+	`NOTI_ID` bigint,
+	`USER_ID` bigint,
+	`LANGUAGE` varchar(10),
+	`WEB_ENABLED` varchar(1),
+	`MOBILE_ENABLED` varchar(1),
+	`EMAIL_ENABLED` varchar(1),
+	`LINK_TYPE` varchar(20),
+	`LINK_TO` varchar(500),
+	`TITLE` varchar(1000),
+	`CONTENT` longtext,
+	`EMAIL_TITLE` varchar(1000),
+	`EMAIL_SUBTYPE` varchar(100),
+	`EMAIL_CONTENT` longtext,
+	`CREATED_BY` bigint,
+	`CREATED_AT` datetime,
+	PRIMARY KEY (`ID`)
+) DEFAULT CHARSET=UTF8;
+
+ALTER TABLE `NOTI_CONTENT`
+	ADD CONSTRAINT UX_NOTI_CONTENT UNIQUE (`NOTI_ID`, `USER_ID`, `LANGUAGE`);
+ALTER TABLE `NOTI_CONTENT`
+	ADD CONSTRAINT `FK_NOTI_CONTENT__NOTI_ID`
+		FOREIGN KEY (`NOTI_ID`) REFERENCES `NOTI`(`ID`);
+
+
+CREATE TABLE `NOTI_RECIPIENT` (
+	`ID` bigint not null auto_increment,
+	`NOTI_ID` bigint,
+	`USER_ID` bigint,
+	`LANGUAGE` varchar(10),
+	`CONTENT_BY_USER` varchar(1),
+	`POSITION` integer,
+	`NOTI_STATUS` varchar(20),
+	`READ_AT` datetime,
+	`DELETED` varchar(1),
+	`DELETED_AT` datetime,
+	`CREATED_BY` bigint,
+	`CREATED_AT` datetime,
+	PRIMARY KEY (`ID`)
+) DEFAULT CHARSET=UTF8;
+
+ALTER TABLE `NOTI_RECIPIENT`
+	ADD CONSTRAINT UX_NOTI_RECIPIENT UNIQUE (`NOTI_ID`, `USER_ID`);
+ALTER TABLE `NOTI_RECIPIENT`
+	ADD CONSTRAINT `FK_NOTI_RECIPIENT__NOTI_ID`
+		FOREIGN KEY (`NOTI_ID`) REFERENCES `NOTI`(`ID`);
+
+
+CREATE TABLE `NOTI_RECIPIENT_CONFIG` (
+	`ID` bigint not null auto_increment,
+	`NOTI_CODE` varchar(50),
+	`RECIPIENT_TYPE` varchar(20),
+	`RECIPIENT_ID` bigint,
+	`POSITION` integer,
+	`RECIPIENT_PRIORITY` varchar(20),
+	`CREATED_BY` bigint,
+	`CREATED_AT` datetime,
+	`UPDATED_BY` bigint,
+	`UPDATED_AT` datetime,
+	PRIMARY KEY (`ID`)
+) DEFAULT CHARSET=UTF8;
+
+ALTER TABLE `NOTI_RECIPIENT_CONFIG`
+	ADD CONSTRAINT UX_NOTI_RECIPIENT_CONFIG UNIQUE (`NOTI_CODE`, `RECIPIENT_TYPE`, `RECIPIENT_ID`);

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+<th:block layout:fragment="op-head">
+    <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+    <style type="text/css">
+        .custom-header-table-data-completion tr th:not(.custom-td) {
+            width: 25%;
+        }
+
+        .avatar-zone {
+            display: flex;
+            align-items: center;
+            width: 275px;
+            padding: 7px 10px;
+            overflow: scroll;
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%232342' stroke-width='4' stroke-dasharray='10' stroke-dashoffset='5' stroke-linecap='round'/%3e%3c/svg%3e");
+        }
+
+        .avatar-item {
+            width: 33px;
+            height: 33px;
+            padding: 1px;
+            font-weight: 500;
+            font-size: 15px;
+            background: #AEACF9;
+            border-radius: 99%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: capitalize;
+        }
+
+        .avatar-item-w:not(:last-child) {
+            margin-right: 7px;
+        }
+
+        .chart-wrapper .progress {
+            width: 100%;
+        }
+
+        .chart-wrapper .progress-bar {
+            background-color: #5D43F7;
+        }
+
+        .chart-wrapper img {
+            max-width: 100%;
+        }
+
+        .chart-wrapper .img-zone {
+            width: 50px;
+            height: 50px;
+            padding: 11px;
+            background: #E6E6E6;
+            border-radius: 50%;
+            margin-right: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chart-wrapper:not(.chart-overall):hover {
+            border: 1px solid #5D43F7;
+        }
+
+        .chart-wrapper.active .img-zone {
+            background: #F2ECFB;
+        }
+
+        .chart-wrapper {
+            /*position: relative;*/
+            margin-top: 30px;
+            width: calc(33.33% - 36px);
+            border: 1px solid #fff;
+            border-radius: 4px;
+            /*width: 140px;*/
+        }
+
+        .chart-wrapper:not(:last-child) {
+            margin-right: 36px;
+        }
+
+        .chart-wrapper>div {
+            cursor: pointer;
+        }
+
+        /*@media screen and (max-width: 1378px) {*/
+        /*    .chart-wrapper {*/
+        /*        margin: 30px 0 50px 0;*/
+        /*    }*/
+        /*}*/
+        .chart-wrapper:not(.chart-overall)>div {
+            /*width: 110px;*/
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            /*background: #F5F6F7;*/
+            box-shadow: 0px 3px 6px rgb(0 0 0 / 16%);
+            border-radius: 4px;
+            filter: grayscale(1);
+            /*border: 4px solid #fff;*/
+            padding: 21px 8px 17px 8px;
+        }
+
+        .chart-wrapper:not(.chart-overall):hover>div {
+            filter: unset;
+        }
+
+        .chart-wrapper.active>div {
+            filter: unset !important;
+            outline: 4px solid #ACD2FF;
+            background: #fff;
+        }
+
+        .chart-wrapper.active .chart-action {
+            background: #DEEDFF;
+            box-shadow: unset;
+            color: #0075FF;
+        }
+
+        .chart-wrapper.active .chart-name {
+            font-weight: bold;
+        }
+
+        .chart-wrapper canvas {
+            margin: 0px -30px;
+            display: block;
+            height: 90px;
+            width: 180px;
+            min-height: 95px;
+            max-height: 95px;
+            max-width: 190px;
+            min-width: 190px;
+        }
+
+        .chart-wrapper .chart-title {
+            font-size: 24px;
+            color: #595959;
+            width: calc(100% - 61px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-wrapper .chart-title span {
+            color: #AAAAAA;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .chart-wrapper .chart-name {
+            position: absolute;
+            font-size: 12px;
+            color: #595959;
+            left: 50%;
+            top: -30px;
+            transform: translate(-50%, 0);
+            line-height: 100%;
+            margin-bottom: 11px;
+        }
+
+        .chart-wrapper .chart-action {
+            position: absolute;
+            font-size: 10px;
+            width: 71px;
+            height: 24px;
+            color: #595959;
+            left: 50%;
+            bottom: -40px;
+            transform: translate(-50%, 0);
+            box-shadow: 0px 4px 8px 1px rgb(0 0 0 / 16%);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .chart-wrapper:not(.active) .chart-action:hover {
+            background: #F1F4F9;
+        }
+
+        .chart-overall .chart-title {
+            font-size: 27px;
+            position: absolute;
+            color: #595959;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .chart-overall {
+            width: 240px;
+            height: 240px;
+            padding: 0 0 5px 0;
+            background: #F5F6F7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -5px !important;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .tr-4 th {
+            width: 25%;
+        }
+
+        .tr-3 th {
+            width: 33.33%;
+        }
+
+        .tr-2 th {
+            width: 50%;
+        }
+
+        .table td,
+        .table th {
+            vertical-align: middle !important;
+        }
+
+        .caption-zone {
+            margin-bottom: 14px;
+        }
+
+        .caption-zone .caption-title {
+            font-size: 14px;
+            font-weight: bold;
+            ;
+        }
+
+        .registration-category {
+            display: flex;
+            align-items: start;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .registration-category .registration-category__item:not(:last-child) {
+            margin-right: 28px;
+        }
+
+        .registration-category__item {
+            display: flex;
+            align-items: center;
+            width: calc(33.33% - 28px);
+            padding: 21px 0 17px 37px;
+            margin-bottom: 12px;
+            box-shadow: 0px 3px 6px #00000029;
+            border-radius: 3px;
+            border: 1px solid #fff;
+            height: 104px;
+            cursor: pointer;
+        }
+
+        .registration-category__item.active {
+            border: 4px solid #ACD2FF !important;
+        }
+
+        .registration-category__item:hover .registration-category__item-img-zone {
+            background: #F2ECFB;
+        }
+
+        .registration-category__item.active .registration-category__item-img-zone {
+            background: #F2ECFB;
+        }
+
+        .registration-category__item:hover {
+            border: 1px solid #5D43F7;
+        }
+
+        .registration-category__item .registration-category__item-img-zone {
+            width: 50px;
+            height: 50px;
+            padding: 11px;
+            background: #E6E6E6;
+            border-radius: 50%;
+            margin-right: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .registration-category__item .registration-category__item-img-zone img {
+            max-width: 100%;
+        }
+
+        .registration-category .registration-category__item .registration-category__item-text {
+            font-size: 24px;
+            ;
+            font-weight: bold;
+        }
+
+        .registration-category .registration-category__item .registration-category__item-subtext {
+            font-size: 15px;
+            color: #AAAAAA;
+            font-weight: 500;
+        }
+
+        /*
+             --------------
+              Wave effect animation
+             --------------
+             */
+        .wave1 {
+            height: 850px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation: wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+            border: none;
+        }
+
+        .wave {
+            height: 121px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation: wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+            border: none;
+        }
+
+        .wave1 .registration-category__item-text-zone {
+            display: none;
+        }
+
+        .wave1 .registration-category {
+            display: none;
+        }
+
+        .sidebar.wave_sidebar div,
+        .tab-support.wave_header div,
+        .tab-insight.wave_header div,
+        .tab-reports.wave_header div,
+        .tab-user.wave_header div {
+            visibility: hidden;
+        }
+
+        .card.wave div,
+        .card.wave1 div {
+            display: none;
+        }
+
+        .btn-full-filed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 8px;
+            border-radius: 3px;
+            font-size: 14px;
+            /* border: 1px dashed #FF0606; */
+            color: #4DB77A;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-decoration: none !important;
+            /* background-color: #FFF; */
+            width: 140px;
+            height: 30px;
+            margin: 0 auto;
+        }
+
+        .ant-drawer-content-wrapper {
+            transition-property: opacity, left, right;
+            transition-duration: 0.5s, 1.5s, 0.5s;
+            transition-timing-function: ease-in-out;
+            right: -384px !important;
+        }
+
+        .drawer-show {
+            right: 0 !important;
+        }
+
+        .custom-dropdown-item:hover {
+            color: #3491ff !important;
+        }
+
+        .requested-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            width: 25px;
+            height: 25px;
+            background-color: #AFACFF;
+            border-radius: 25px;
+            margin-bottom: 3px;
+        }
+
+        .requested-bar {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            width: 150px;
+            margin-bottom: -3px;
+        }
+
+        .chart-wrapper.active .img-zone img {
+            width: 110%
+        }
+
+        .hover-icon {
+            width: 110% !important;
+            max-width: 110% !important;
+        }
+
+        .card {
+            border: 1px solid #c8ced3;
+        }
+
+        .loading-table {
+            border: unset !important;
+        }
+
+        .img-zone-hover-background {
+            background-color: #F2ECFB !important;
+        }
+
+        .depth-2 {
+            padding-left: 20px;
+        }
+
+        .custom-dropdown-parent .btn-custom {
+            margin-left: 4px;
+        }
+
+        .was-validated .form-control:valid {
+            border: 1px solid #e4e7ea;
+        }
+
+        .was-validated {
+            border: none !important;
+        }
+
+        .text-truncate {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 280px;
+        }
+
+        .chart-wrapper.disabled,
+        .order-zone .disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+    </style>
+</th:block>
+<th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list wave1" style="padding-top: 20px">
+        <div class="registration-category">
+            <div style="text-align: center;margin-right: 20px;">
+                <div class="caption-zone">
+                    <div class="caption-title" th:text="#{overall_completion_rate}">
+                    </div>
+                </div>
+                <div class="chart-wrapper chart-overall">
+                    <canvas id="chart-data-completion" style="min-height: 180px;max-height: 180px; max-width: 360px; min-width: 360px;margin: 0 -50px;"></canvas>
+                    <div class="chart-title">
+                        <b>{{ avgRate }}%</b>
+                    </div>
+                </div>
+            </div>
+            <div style="flex-wrap: wrap;width: 100%;" class="d-flex align-items-center justify-content-start">
+                <div class="chart-wrapper" :class="{'active': requestParam.objectType === 'PART'}">
+                    <div @click="changeSelect('PART')" @mouseover="onHover('PART')" @mouseleave="onHover(null)">
+                        
+                        <div class="img-zone" :class="{'img-zone-hover-background' :  isHover == 'PART'}">
+                            <img src="/images/icon/part-icon-hover.svg" alt="" :class="{'hover-icon' : isHover == 'PART'}">
+                        </div>
+                        <div class="chart-title">
+                            <b>{{ listRate.partRate }}%</b>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar" role="progressbar" :style="{width: listRate.partRate + '%'}" :aria-valuenow="listRate.partRate" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span th:text="#{part}"></span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="chart-wrapper" :class="{'active': requestParam.objectType === 'TOOLING'}">
+                    <div @click="changeSelect('TOOLING')" @mouseover="onHover('TOOLING')" @mouseleave="onHover(null)">
+                        
+                        <div class="img-zone" :class="{'img-zone-hover-background' : isHover == 'TOOLING'}">
+                            <img src="/images/icon/tooling-icon-hover.svg" alt="" :class="{'hover-icon' : isHover == 'TOOLING'}">
+                        </div>
+                        <div class="chart-title">
+                            <b>{{ listRate.toolingRate }}%</b>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar" role="progressbar" :style="{width: listRate.toolingRate + '%'}" :aria-valuenow="listRate.toolingRate" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span th:text="#{tooling}"></span>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="chart-wrapper" :class="{'active': requestParam.objectType === 'COMPANY'}">
+                    <div @click="changeSelect('COMPANY')" @mouseover="onHover('COMPANY')" @mouseleave="onHover(null)">
+                        
+                        <div class="img-zone" :class="{'img-zone-hover-background' : isHover == 'COMPANY'}">
+                            <img src="/images/icon/company-icon-hover.svg" alt="" :class="{'hover-icon' : isHover == 'COMPANY'}">
+                        </div>
+                        <div class="chart-title">
+                            <b>{{ listRate.companyRate }}%</b>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar" role="progressbar" :style="{width: listRate.companyRate + '%'}" :aria-valuenow="listRate.companyRate" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span th:text="#{company}"></span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="chart-wrapper" :class="{'active': requestParam.objectType === 'LOCATION'}">
+                    <div @click="changeSelect('LOCATION')" @mouseover="onHover('LOCATION')" @mouseleave="onHover(null)">
+                        
+                        <div class="img-zone" :class="{'img-zone-hover-background' : isHover == 'LOCATION'}">
+                            <img src="/images/icon/location-icon-hover.svg" alt="" :class="{'hover-icon' : isHover == 'LOCATION'}">
+                        </div>
+                        <div class="chart-title">
+                            <b>{{ listRate.locationRate }}%</b>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar" role="progressbar" :style="{width: listRate.locationRate + '%'}" :aria-valuenow="listRate.locationRate" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span th:text="#{location}"></span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="chart-wrapper" :class="{'active': requestParam.objectType === 'MACHINE'}">
+                    <div @click="changeSelect('MACHINE')" @mouseover="onHover('MACHINE')" @mouseleave="onHover(null)">
+                        
+                        <div class="img-zone" :class="{'img-zone-hover-background' : isHover == 'MACHINE'}">
+                            <img src="/images/icon/machine-icon-hover.svg" alt="" :class="{'hover-icon' : isHover == 'MACHINE'}">
+                        </div>
+                        <div class="chart-title">
+                            <b>{{ listRate.machineRate }}%</b>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar" role="progressbar" :style="{width: listRate.machineRate + '%'}" :aria-valuenow="listRate.machineRate" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span th:text="#{machine}"></span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-table">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card wave1">
+                        <div class="card-header" style="display:none">
+                            <i class="fa fa-align-justify"></i> <span th:text="#{striped_tbl}"></span>
+                        </div>
+                        <div class="card-body card-overflow-reset">
+                            <div class="card-tool">
+                                <ul v-if="requestParam.objectType === 'COMPANY' && currentUser != null && currentUserType === 'OEM'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item" v-for="code in codes.CompanyType" v-if="code.enabled && userType == 'OEM'">
+                                        <a class="nav-link" :class="{active: requestParam.companyType == code.code}" href="#" @click.prevent="tab(code.code)">{{code.title}} <span class="badge badge-light badge-pill" v-if="requestParam.companyType == code.code">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul v-else-if="requestParam.objectType === 'LOCATION' && currentUser != null && currentUserType === 'OEM'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item" v-for="code in codes.CompanyType" v-if="code.enabled && userType == 'OEM'">
+                                        <a class="nav-link" :class="{active: requestParam.companyType == code.code}" href="#" @click.prevent="tab(code.code)">{{code.title}} <span class="badge badge-light badge-pill" v-if="requestParam.companyType == code.code">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul v-else-if="requestParam.objectType === 'TOOLING' && currentUser != null && currentUserType === 'OEM'" class="nav nav-tabs" style="margin-bottom: -1px">
+                                    <li class="nav-item" v-for="code in codes.CompanyType" v-if="code.enabled && userType == 'OEM'">
+                                        <a class="nav-link" :class="{active: requestParam.companyType == code.code}" href="#" @click.prevent="tab(code.code)">{{code.title}} <span class="badge badge-light badge-pill" v-if="requestParam.companyType == code.code">{{ total }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul v-else class="nav nav-tabs" style="margin-bottom: -1px;height: 39px;"></ul>
+                                <a-popover v-model="visiblePopover" placement="bottomLeft" trigger="click">
+                                    <a @click="animationOutlineDropdown()" :class="{'animation-secondary': showAnimationPopover}" href="javascript:void(0)" class="btn-custom btn-outline-custom-primary animationOutline btn-group btn-group-select-column all-time-filters">
+                                        <span> My Orders </span>
+                                        <img class="img-transition" src="/images/icon/icon-cta-blue.svg" :class="{'caret-show' : displayCaret}" alt="">
+                                    </a>
+                                    <a-menu slot="content" class="wrapper-action-dropdown" style="border-right: unset!important;max-height: 250px;overflow: auto" @click="visiblePopover = false">
+                                        <a-menu-item @click="showOrderPopup('created')">
+                                            <span>Created Completion Orders</span>
+                                        </a-menu-item>
+                                        <a-menu-item @click="showOrderPopup('received')">
+                                            <span>Received Completion Orders</span>
+                                        </a-menu-item>
+                                    </a-menu>
+                                </a-popover>
+                                <all-companies-dropdown :query="changeSelectCompany" :company-selected-list="companySelectedList" :option-array-tooling="companyList" :resources="resources">
+                                </all-companies-dropdown>
+                                <a @click="showDrawer('Create Data Completion Order')" href="javascript:void(0)" class="btn-custom btn-group btn-group-select-column btn-group-select-column-last-child btn-custom-primary animationPrimary all-time-filters">
+                                    <span> Create Completion Order </span>
+                                </a>
+                            </div>
+                            <table class="table table-responsive-sm table-striped" :class="{'invisible wave1': loading}">
+                                <colgroup>
+                                    <col />
+                                    <col />
+                                    <col />
+                                    <col />
+                                    <col style="width:130px" />
+                                </colgroup>
+                                <thead id="thead-actionbar" class="custom-header-table custom-header-table-data-completion">
+                                    <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px" v-if="requestParam.objectType === 'COMPANY'" class="tr-sort tr-4">
+                                        <th class="custom-td">
+                                            <input id="checkbox-all" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </th>
+                                        <th class="__sort text-left" :class="[{ active: currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.NAME)"><span th:text="#{company_name}"></span><span class="__icon-sort"></span></th>
+                                        <th class="__sort text-left" v-bind:class="[ {'active': currentSortType === sortType.RATE}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.RATE)"> <span th:text="#{completion_rate}"></span><span class="__icon-sort"></span></th>
+                                        <th class="__sort text-left"> <span th:text="#{requested_to}"></span></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px" v-if="requestParam.objectType === 'LOCATION'" class="tr-sort tr-4">
+                                        <th class="custom-td">
+                                            <input id="checkbox-all1" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </th>
+                                        <th class="__sort text-left" :class="[{ active: currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.NAME)"> <span th:text="#{location_name}"></span><span class="__icon-sort"></span></th>
+                                        <th class="__sort text-left" v-bind:class="[ {'active': currentSortType === sortType.RATE}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.RATE)"> <span th:text="#{completion_rate}"></span><span class="__icon-sort"></span></th>
+                                        <th class="__sort text-left"> <span th:text="#{requested_to}"></span></th>
+                                        <th></th>
+                                    </tr>
+                                    
+                                    <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px" v-if="requestParam.objectType === 'PART'" class="tr-sort tr-3">
+                                        <th class="custom-td">
+                                            <input id="checkbox-all3" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </th>
+                                        <th class="__sort text-left" :class="[{ active: currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.NAME)">
+                                            <span th:text="#{part_id}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                        <th class="__sort text-left" v-bind:class="[ {'active': currentSortType === sortType.RATE}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.RATE)"> <span th:text="#{completion_rate}"></span><span class="__icon-sort"></span></th>
+                                        <th class="__sort text-left"> <span th:text="#{requested_to}"></span></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px" v-if="requestParam.objectType === 'TOOLING'" class="tr-sort tr-4">
+                                        <th class="custom-td">
+                                            <input id="checkbox-all4" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </th>
+                                        <th class="__sort text-left" :class="[{ active: currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.NAME)">
+                                            <span th:text="#{tooling_id}"></span><span class="__icon-sort"></span>
+                                        </th>
+                                        <th class="__sort text-left" v-bind:class="[ {'active': currentSortType === sortType.RATE}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.RATE)"> <span th:text="#{completion_rate}"></span><span class="__icon-sort"></span></th>
+                                        <th class="__sort text-left"> <span th:text="#{requested_to}"></span></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px" v-if="requestParam.objectType === 'MACHINE'" class="tr-sort tr-4">
+                                        <th class="custom-td">
+                                            <input id="checkbox-all5" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </th>
+                                        <th v-for="(item, index) in allColumnList" v-if="item.enabled" :key="index" class="__sort text-left" :class="[{ active: currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.NAME)">
+                                            <span>{{item.label}}</span>
+                                            <span v-if="item.sortable" class="__icon-sort"></span>
+                                        </th>
+                                        <th class="__sort text-left" v-bind:class="[ {'active': currentSortType === sortType.RATE}, isDesc ? 'desc': 'asc']" @click="sortBy(sortType.RATE)"> <span th:text="#{completion_rate}"></span><span class="__icon-sort"></span></th>
+                                        <th class="__sort text-left"> <span th:text="#{requested_to}"></span></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr :class="{'d-none zindexNegative': listChecked.length == 0}" id="action-bar" class="tr-sort empty-tr">
+                                        <th class="empty-th">
+                                            <div class="first-checkbox-zone2" style="height: 90%!important;">
+                                                <div class="first-checkbox2" style="display: flex;align-items: center;padding-left: 0;width: 110px;">
+                                                    <div>
+                                                        <input id="checkbox-all-2" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                                    </div>
+                                                </div>
+                                                <div class="action-bar">
+                                                    <div v-if="listChecked.length >= 1" class="action-item" @click="showDrawer('Create Data Completion Order')">
+                                                        <span>Create Completion Order</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10.988" height="8.521" viewBox="0 0 10.988 8.521">
+                                                            <g id="order" transform="translate(0 -56.8)">
+                                                                <g id="Group_8534" data-name="Group 8534" transform="translate(0 56.815)">
+                                                                    <path id="Path_1956" data-name="Path 1956" d="M59.227,183.928H60.89a.215.215,0,1,0,0-.429H59.227a.215.215,0,1,0,0,.429Z" transform="translate(-57.746 -180.802)" fill="#4b4b4b" />
+                                                                    <path id="Path_1957" data-name="Path 1957" d="M59.227,253.174H60.89a.215.215,0,1,0,0-.429H59.227a.215.215,0,1,0,0,.429Z" transform="translate(-57.746 -248.562)" fill="#4b4b4b" />
+                                                                    <path id="Path_1958" data-name="Path 1958" d="M146.217,434.338a.214.214,0,1,0-.116.28.214.214,0,0,0,.116-.28Z" transform="translate(-142.676 -426.129)" fill="#4b4b4b" />
+                                                                    <path id="Path_1959" data-name="Path 1959"
+                                                                        d="M10.93,62.7,8.378,59.96l.782-.78a.708.708,0,0,0-1-1.008h0L7.086,59.244h-.4V58.42a.215.215,0,0,0-.215-.215H5.335V58.03a.215.215,0,1,0-.429,0v.17H4.122v-.17a.215.215,0,1,0-.429,0v.17H2.909v-.17a.215.215,0,1,0-.429,0v.17H1.7v-.17a.215.215,0,1,0-.429,0v.17H.215A.215.215,0,0,0,0,58.419v7.687a.215.215,0,0,0,.215.215H2.4a.215.215,0,1,0,0-.429H.429V58.634h.837v.195a.215.215,0,0,0,.429,0v-.195h.784v.195a.215.215,0,1,0,.429,0v-.195h.784v.195a.215.215,0,0,0,.429,0v-.195H4.9v.195a.215.215,0,0,0,.429,0v-.195h.922v.611a1.551,1.551,0,0,0-1.027.45L3.651,61.274a.217.217,0,0,0,.035.332,1.459,1.459,0,0,0,.585.219,1.478,1.478,0,0,0,.211.015h0l-.246.246a.215.215,0,0,0-.043.061L3.5,63.181a.469.469,0,0,0-.078.3H1.481a.215.215,0,1,0,0,.429H3.9a.475.475,0,0,0,.263-.083l1.046-.711a.222.222,0,0,0,.035-.028l.485-.484.529.528v2.756H4.293a.215.215,0,1,0,0,.429H6.471a.215.215,0,0,0,.215-.215V63.554a1.5,1.5,0,0,0,.967.348h.856a.657.657,0,0,1,.473.2l1.635,1.737a.216.216,0,0,0,.371-.147V62.85a.214.214,0,0,0-.058-.146ZM5.533,60a1.116,1.116,0,0,1,.786-.326h.336L5.319,61.007a1.5,1.5,0,0,1-.4.309,1.049,1.049,0,0,1-.751.048ZM8.46,58.48a.285.285,0,0,1,.4,0,.28.28,0,0,1,0,.4L6.613,61.117l-.108-.108a.837.837,0,0,0-.367-.214Zm-4.54,5a.037.037,0,0,1-.051,0,.035.035,0,0,1-.005-.051l.561-.842.331.331Zm1.171-.839-.4-.4L5.1,61.83a.843.843,0,0,0,.217.37l.1.1Zm5.467,2.517L9.293,63.809a1.089,1.089,0,0,0-.784-.335H7.653a1.08,1.08,0,0,1-.768-.317L5.621,61.9a.412.412,0,0,1,0-.584.42.42,0,0,1,.58,0l1.027,1.027a.212.212,0,1,0,.3-.3l-.615-.615,1.156-1.153,2.485,2.667Z"
+                                                                        transform="translate(0 -57.815)" fill="#4b4b4b" />
+                                                                </g>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="chartData && chartData.data" class="op-list">
+                                    <!-- <tbody v-if="chartData && chartData.data" class="op-list" > -->
+                                    <template v-if="requestParam.objectType !== 'CATEGORY'">
+                                        <tr v-for="(result, index) in chartData.data.content" :id="result.id">
+                                            <td class="custom-td">
+                                                <template v-if="listChecked.length >= 0">
+                                                    <input @click="(e) => check(e, result)" :checked="checkSelect(result.id)" class="checkbox" type="checkbox" :id="result.id + 'checkbox'" :value="result.id">
+                                                </template>
+                                            </td>
+                                            <td v-if="requestParam.objectType === 'TOOLING'" class="text-left" style="display:table-cell; vertical-align:middle;text-overflow: ellipsis; max-width: 210px; overflow: hidden; white-space: nowrap;">
+                                                <span class="part-name" style="color: #1890FF">
+                                                    <i style="color: rgb(26, 170, 85)" @click.prevent="showChart(result)" class="fa fa-bar-chart mr-1"></i>
+                                                    <span @click.prevent="showMoldDetails(result)">{{ result.code }}</span>
+                                                </span>
+                                                <div class="font-size-11-2">
+                                                    <span v-text="resources['updated_on']"></span> {{result.updatedOn}}
+                                                </div>
+                                            </td>
+                                            <td v-else-if="requestParam.objectType === 'PART'" class="text-left" style="display:table-cell; vertical-align:middle;text-overflow: ellipsis; max-width: 210px; overflow: hidden; white-space: nowrap;">
+                                                <span class="part-name" style="color: #1890FF">
+                                                    <i style="color: rgb(26, 170, 85)" @click.prevent="showChartPart(result)" class="fa fa-bar-chart mr-1"></i>
+                                                    <span @click.prevent="showPartDetails(result)">{{ result.code }}</span>
+                                                </span>
+                                                <div class="font-size-11-2">
+                                                    <span v-text="resources['registered']"></span>: {{result.updatedOn}}
+                                                </div>
+                                            </td>
+                                            <td v-else-if="requestParam.objectType === 'MACHINE'" class="text-left" style="display:table-cell; vertical-align:middle;text-overflow: ellipsis; max-width: 210px; overflow: hidden; white-space: nowrap;">
+                                                <span class="part-name" style="color: #1890FF">
+                                                    <span @click.prevent="showMachineDetails(result)">{{ result.code }}</span>
+                                                </span>
+                                                <div class="font-size-11-2">
+                                                    <span v-text="resources['registered']"></span>: {{result.updatedOn}}
+                                                </div>
+                                            </td>
+                                            <td v-else-if="requestParam.objectType === 'LOCATION'" class="text-left" style="display:table-cell; vertical-align:middle;text-overflow: ellipsis; max-width: 210px; overflow: hidden; white-space: nowrap;">
+                                                <span class="part-name" style=""> {{ result.name }} </span>
+                                                <div class="font-size-11-2">
+                                                    <span v-text="resources['registered']"></span>: {{result.updatedOn}}
+                                                </div>
+                                            </td>
+                                            
+                                            <td v-else class="text-left" style="display:table-cell; vertical-align:middle;text-overflow: ellipsis; max-width: 210px; overflow: hidden; white-space: nowrap;">
+                                                <span class="part-name" style="color: #1890FF">
+                                                    <span @click.prevent="showCompanyDetails(result)">{{ result.name }}</span>
+                                                </span>
+                                                <div class="font-size-11-2">
+                                                    <span v-text="resources['registered']"></span>: {{result.updatedOn}}
+                                                </div>
+                                            </td>
+                                            <td class="text-left">
+                                                <span class="part-name"> {{roundNum(result.rate)}} % </span>
+                                                <div class="font-size-11-2">
+                                                    <span v-text="resources['completed']"></span>
+                                                </div>
+                                            </td>
+                                            <td class="abc">
+                                                <div v-if="result.requestedTo" class="requested-bar">
+                                                    <div v-for="(item, index) in result.requestedTo" :style="{ 'background-color': getRequestedColor(item.name,item.id)}" class="requested-item">
+                                                        <a-tooltip placement="bottom">
+                                                            <template slot="title">
+                                                                <div style="padding: 6px;font-size: 13px;">
+                                                                    <div><b>{{item.name}}</b></div>
+                                                                    <div> Company: <span v-if="item.company">{{ item.company.name }}</span>
+                                                                    </div>
+                                                                    <div> Department: {{ item.department }} </div>
+                                                                    <div style="margin-bottom: 15px"> Position: {{ item.position }} </div>
+                                                                    <div> Email: {{ item.email }} </div>
+                                                                    <div> Phone: {{ item.mobileNumber }} </div>
+                                                                </div>
+                                                            </template>
+                                                            <div> {{convertName(item.name)}} </div>
+                                                        </a-tooltip>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td v-if="requestParam.objectType === 'COMPANY'">
+                                                <div v-if='roundNum(result.rate) == 100' class="btn-full-filed"> 100% Complete </div>
+                                                <a v-else style="white-space: nowrap;" @click="showAnimation('completion-data' + index, result)" :id="'completion-data' + index" href="javascript:void(0)" class="btn-custom btn-outline-custom-primary animationOutline">
+                                                    <span style="margin-right: 2px;"> Complete Data </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="6.749" height="6.822" viewBox="0 0 6.749 6.822">
+                                                        <g id="Group_446" data-name="Group 446" transform="translate(-184.625 -211.875)">
+                                                            <g id="Group_445" data-name="Group 445" transform="translate(185 211.875)">
+                                                                <g id="Rectangle_584" data-name="Rectangle 584" transform="translate(1.159 0)" fill="none" stroke="#3491ff" stroke-width="0.75">
+                                                                    <rect width="5.215" height="5.215" rx="1" stroke="none" />
+                                                                    <rect x="0.375" y="0.375" width="4.465" height="4.465" rx="0.625" fill="none" />
+                                                                </g>
+                                                                <path id="Path_732" data-name="Path 732" d="M0,2.979v3.25H3.231" transform="translate(0 0.218)" fill="none" stroke="#3491ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                            <td v-else-if="requestParam.objectType === 'TOOLING'">
+                                                <div v-if='roundNum(result.rate) == 100' class="btn-full-filed"> 100% Complete </div>
+                                                <a v-else style="white-space: nowrap;" @click="showAnimation('completion-data' + index, result)" :id="'completion-data' + index" href="javascript:void(0)" class="btn-custom btn-outline-custom-primary animationOutline">
+                                                    <span style="margin-right: 2px;"> Complete Data </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="6.749" height="6.822" viewBox="0 0 6.749 6.822">
+                                                        <g id="Group_446" data-name="Group 446" transform="translate(-184.625 -211.875)">
+                                                            <g id="Group_445" data-name="Group 445" transform="translate(185 211.875)">
+                                                                <g id="Rectangle_584" data-name="Rectangle 584" transform="translate(1.159 0)" fill="none" stroke="#3491ff" stroke-width="0.75">
+                                                                    <rect width="5.215" height="5.215" rx="1" stroke="none" />
+                                                                    <rect x="0.375" y="0.375" width="4.465" height="4.465" rx="0.625" fill="none" />
+                                                                </g>
+                                                                <path id="Path_732" data-name="Path 732" d="M0,2.979v3.25H3.231" transform="translate(0 0.218)" fill="none" stroke="#3491ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                            <td v-else-if="requestParam.objectType === 'MACHINE'">
+                                                <div v-if='roundNum(result.rate) == 100' class="btn-full-filed"> 100% Complete </div>
+                                                <a v-else style="white-space: nowrap;" @click="showAnimation('completion-data' + index, result)" :id="'completion-data' + index" href="javascript:void(0)" class="btn-custom btn-outline-custom-primary animationOutline">
+                                                    <span style="margin-right: 2px;"> Complete Data </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="6.749" height="6.822" viewBox="0 0 6.749 6.822">
+                                                        <g id="Group_446" data-name="Group 446" transform="translate(-184.625 -211.875)">
+                                                            <g id="Group_445" data-name="Group 445" transform="translate(185 211.875)">
+                                                                <g id="Rectangle_584" data-name="Rectangle 584" transform="translate(1.159 0)" fill="none" stroke="#3491ff" stroke-width="0.75">
+                                                                    <rect width="5.215" height="5.215" rx="1" stroke="none" />
+                                                                    <rect x="0.375" y="0.375" width="4.465" height="4.465" rx="0.625" fill="none" />
+                                                                </g>
+                                                                <path id="Path_732" data-name="Path 732" d="M0,2.979v3.25H3.231" transform="translate(0 0.218)" fill="none" stroke="#3491ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                            <td v-else-if="requestParam.objectType === 'PART'">
+                                                <div v-if='roundNum(result.rate) == 100' class="btn-full-filed"> 100% Complete </div>
+                                                <a v-else style="white-space: nowrap;" @click="showAnimation('completion-data' + index, result)" :id="'completion-data' + index" href="javascript:void(0)" class="btn-custom btn-outline-custom-primary animationOutline">
+                                                    <span style="margin-right: 2px;"> Complete Data </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="6.749" height="6.822" viewBox="0 0 6.749 6.822">
+                                                        <g id="Group_446" data-name="Group 446" transform="translate(-184.625 -211.875)">
+                                                            <g id="Group_445" data-name="Group 445" transform="translate(185 211.875)">
+                                                                <g id="Rectangle_584" data-name="Rectangle 584" transform="translate(1.159 0)" fill="none" stroke="#3491ff" stroke-width="0.75">
+                                                                    <rect width="5.215" height="5.215" rx="1" stroke="none" />
+                                                                    <rect x="0.375" y="0.375" width="4.465" height="4.465" rx="0.625" fill="none" />
+                                                                </g>
+                                                                <path id="Path_732" data-name="Path 732" d="M0,2.979v3.25H3.231" transform="translate(0 0.218)" fill="none" stroke="#3491ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                            <td v-else-if="requestParam.objectType === 'LOCATION'">
+                                                <div v-if='roundNum(result.rate) == 100' class="btn-full-filed"> 100% Complete </div>
+                                                <a v-else style="white-space: nowrap;" @click="showAnimation('completion-data' + index, result)" :id="'completion-data' + index" href="javascript:void(0)" class="btn-custom btn-outline-custom-primary animationOutline">
+                                                    <span style="margin-right: 2px;"> Complete Data </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="6.749" height="6.822" viewBox="0 0 6.749 6.822">
+                                                        <g id="Group_446" data-name="Group 446" transform="translate(-184.625 -211.875)">
+                                                            <g id="Group_445" data-name="Group 445" transform="translate(185 211.875)">
+                                                                <g id="Rectangle_584" data-name="Rectangle 584" transform="translate(1.159 0)" fill="none" stroke="#3491ff" stroke-width="0.75">
+                                                                    <rect width="5.215" height="5.215" rx="1" stroke="none" />
+                                                                    <rect x="0.375" y="0.375" width="4.465" height="4.465" rx="0.625" fill="none" />
+                                                                </g>
+                                                                <path id="Path_732" data-name="Path 732" d="M0,2.979v3.25H3.231" transform="translate(0 0.218)" fill="none" stroke="#3491ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                            <td v-else-if="requestParam.objectType === 'CATEGORY'">
+                                                <div v-if='roundNum(result.rate) == 100' class="btn-full-filed"> 100% Complete </div>
+                                                <a v-else style="white-space: nowrap;" @click="showAnimation('completion-data' + index, result)" :id="'completion-data' + index" href="javascript:void(0)" class="btn-custom btn-outline-custom-primary animationOutline">
+                                                    <span style="margin-right: 2px;"> Complete Data </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="6.749" height="6.822" viewBox="0 0 6.749 6.822">
+                                                        <g id="Group_446" data-name="Group 446" transform="translate(-184.625 -211.875)">
+                                                            <g id="Group_445" data-name="Group 445" transform="translate(185 211.875)">
+                                                                <g id="Rectangle_584" data-name="Rectangle 584" transform="translate(1.159 0)" fill="none" stroke="#3491ff" stroke-width="0.75">
+                                                                    <rect width="5.215" height="5.215" rx="1" stroke="none" />
+                                                                    <rect x="0.375" y="0.375" width="4.465" height="4.465" rx="0.625" fill="none" />
+                                                                </g>
+                                                                <path id="Path_732" data-name="Path 732" d="M0,2.979v3.25H3.231" transform="translate(0 0.218)" fill="none" stroke="#3491ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" />
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    
+                                </tbody>
+                            </table>
+                            <!--                            <div class="no-results d-none" th:text="#{no_results}"></div>-->
+                            <div :class="{'invisible': loading}" class="row">
+                                <div class="col-md-8">
+                                    <ul class="pagination">
+                                        <li v-for="(data, index) in pagination" class="page-item" :class="{active: data.isActive}">
+                                            <a class="page-link" @click="paging(data.pageNumber)">{{data.text}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <action-bar-feature feature="ACTION_BAR"></action-bar-feature>
+        <company-details :resources="resources"></company-details>
+        <company-details-form v-if="requestParam.objectType == 'COMPANY' || openOrderModal" :updated="resetAfterUpdate" :resources="resources"></company-details-form>
+        <chart-part :resources="resources"></chart-part>
+        <part-details :resources="resources"></part-details>
+        <part-details-form v-if="requestParam.objectType == 'PART' || openOrderModal" :updated="resetAfterUpdate" :resources="resources"></part-details-form>
+        <chart-mold :show-file-previewer="showFilePreviewer" :resources="resources"></chart-mold>
+        <mold-details :show-file-previewer="showFilePreviewer" :resources="resources"></mold-details>
+        <mold-details-form v-if="requestParam.objectType == 'TOOLING' || openOrderModal" :updated="resetAfterUpdate" :show-file-previewer="showFilePreviewer" :resources="resources"></mold-details-form>
+        <file-previewer :back="backToMoldDetail"></file-previewer>
+        <machine-details :resources="resources"></machine-details>
+        <location-form v-if="requestParam.objectType == 'LOCATION' || openOrderModal" :updated="resetAfterUpdate" :resources="resources"></location-form>
+        <!--        <category-form v-if="requestParam.objectType == 'CATEGORY' || openOrderModal" :updated="resetAfterUpdate" :resources="resources"></category-form>-->
+        <machine-details-form v-if="requestParam.objectType == 'MACHINE' || openOrderModal" :updated="resetAfterUpdate" :resources="resources"></machine-details-form>
+        <order-modal :show-complete-data="showCompleteData" :parent-name="'Order'" :change-open-order-modal="changeOpenOrderModal" :resources="resources"></order-modal>
+        <!--        <machine-details-form v-if="requestParam.objectType == 'MACHINE' || openOrderModal" :resources="resources"></machine-details-form>-->
+        <create-property-drawer v-if="visible" :resources="resources" :visible="visible" @open="showDrawer()" @close="closeDrawer()" :is-type="isType" :category-selected="categorySelected" :name-drawer="isType" :data-oder="getDataOrder()" :data-selected="listCheckedFull"
+            :type-name="requestParam.objectType" :get-requested-color="getRequestedColor" :current-user="currentUser" :current-user-type="currentUserType">
+        </create-property-drawer>        
+    </div>
+</th:block>
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/chart-mold/container.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/point.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/shape.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/graph-element.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/cycle-time-hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/temperature-hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/cdn/pdf.min.js?'+${noCacheVer}"></script>
+
+    <script defer th:src="'/js/scripts/admin/data-completion/index.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

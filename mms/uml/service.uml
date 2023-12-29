@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/kepha/Emoldino/mms/server/mms-dev/src/main/java/saleson/service</OriginalElement>
+  <nodes>
+    <node x="0.0" y="922.0">saleson.service.SsoController</node>
+    <node x="632.0" y="238.0">saleson.service.transfer.CdataRepositoryImpl</node>
+    <node x="287.0" y="466.0">saleson.service.data.domain.DataAccelerationRepository</node>
+    <node x="607.0" y="770.0">saleson.service.data.api.DataController</node>
+    <node x="761.0" y="542.0">saleson.service.transfer.LogTransferRepository</node>
+    <node x="372.0" y="922.0">saleson.service.util.NumberUtils</node>
+    <node x="197.0" y="238.0">saleson.service.transfer.TransferRepositoryImpl</node>
+    <node x="0.0" y="846.0">saleson.service.version.VersionService</node>
+    <node x="842.0" y="81.0">saleson.service.data.domain.DataRepository</node>
+    <node x="0.0" y="390.0">saleson.service.mail.ReminderInviteUserEmailContent</node>
+    <node x="80.0" y="157.0">saleson.service.transfer.TransferRepositoryCustom</node>
+    <node x="0.0" y="694.0">saleson.service.rest.RestfulAPIService</node>
+    <node x="736.0" y="922.0">saleson.service.data.domain.Acceleration</node>
+    <node x="307.0" y="1074.0">saleson.service.data.domain.Data</node>
+    <node x="417.0" y="314.0">saleson.service.mail.DataCompletionOrderForCreatorEmailContent</node>
+    <node x="213.0" y="694.0">saleson.service.mail.AlertEmailService</node>
+    <node x="849.0" y="694.0">saleson.service.transfer.AdataRepository</node>
+    <node x="321.0" y="390.0">saleson.service.mail.DataInputRequestEmailContent</node>
+    <node x="0.0" y="542.0">saleson.service.transfer.LogUserAlertRepository</node>
+    <node x="828.0" y="314.0">saleson.service.mail.SupportQuestionClientMailService</node>
+    <node x="114.0" y="0.0">saleson.service.transfer.LogDisconnectionRepositoryCustom</node>
+    <node x="426.0" y="694.0">saleson.service.data.domain.DataAcceleration</node>
+    <node x="0.0" y="1074.0">saleson.service.data.service.DataDto</node>
+    <node x="0.0" y="314.0">saleson.service.mail.DataCompletionOrderForReceiverEmailContent</node>
+    <node x="554.0" y="922.0">saleson.service.data.service.DataMapper</node>
+    <node x="632.0" y="390.0">saleson.service.mail.SupportAnsClientMailService</node>
+    <node x="475.0" y="618.0">saleson.service.transfer.TransferController</node>
+    <node x="522.0" y="157.0">saleson.service.transfer.CdataRepositoryCustom</node>
+    <node x="963.0" y="846.0">saleson.service.s3storage.DoLogService</node>
+    <node x="352.0" y="998.0">saleson.service.data.service.RefineData</node>
+    <node x="390.0" y="846.0">saleson.service.util.DateTimeUtils</node>
+    <node x="0.0" y="238.0">saleson.service.transfer.TransferRepository</node>
+    <node x="255.0" y="542.0">saleson.service.data.domain.DataCounterRepository</node>
+    <node x="0.0" y="998.0">saleson.service.util.DecryptInfo</node>
+    <node x="265.0" y="81.0">saleson.service.transfer.LogDisconnectionRepositoryImpl</node>
+    <node x="0.0" y="770.0">saleson.service.transfer.TdataRepository</node>
+    <node x="582.0" y="846.0">saleson.service.data.domain.DataValidator</node>
+    <node x="696.0" y="998.0">saleson.service.data.domain.CycleTime</node>
+    <node x="917.0" y="922.0">saleson.service.research.WUTService</node>
+    <node x="862.0" y="998.0">saleson.service.data.domain.DataType</node>
+    <node x="913.0" y="618.0">saleson.service.util.ContinentListUtils</node>
+    <node x="837.0" y="466.0">saleson.service.mail.InviteUserEmailContent</node>
+    <node x="639.0" y="694.0">saleson.service.rest.HTTPServiceImpl</node>
+    <node x="510.0" y="542.0">saleson.service.test.TerminalTestController</node>
+    <node x="154.0" y="1074.0">saleson.service.util.AESUtils</node>
+    <node x="773.0" y="846.0">saleson.service.s3storage.S3ServiceImpl</node>
+    <node x="585.0" y="81.0">saleson.service.data.domain.DataRepositoryCustomImpl</node>
+    <node x="449.0" y="238.0">saleson.service.transfer.CdataRepository</node>
+    <node x="708.0" y="0.0">saleson.service.data.domain.DataRepositoryCustom</node>
+    <node x="188.0" y="922.0">saleson.service.data.domain.DataCounter</node>
+    <node x="804.0" y="770.0">saleson.service.data.service.CounterAction</node>
+    <node x="0.0" y="466.0">saleson.service.data.infra.AccelerationDetailConverter</node>
+    <node x="571.0" y="466.0">saleson.service.transfer.LogDisconnectionService</node>
+    <node x="206.0" y="770.0">saleson.service.transfer.VersionChecker</node>
+    <node x="195.0" y="846.0">saleson.service.supplier.SubTierService</node>
+    <node x="694.0" y="618.0">saleson.service.version.VersionRepository</node>
+    <node x="0.0" y="618.0">saleson.service.notification.BroadCastServiceImpl</node>
+    <node x="524.0" y="998.0">saleson.service.util.CryptoUtils</node>
+    <node x="409.0" y="770.0">saleson.service.transfer.TransferService</node>
+    <node x="176.0" y="998.0">saleson.service.data.service.DataService</node>
+    <node x="243.0" y="618.0">saleson.service.data.infra.JsonStringConverter</node>
+    <node x="0.0" y="81.0">saleson.service.transfer.LogDisconnectionRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="saleson.service.transfer.LogDisconnectionRepositoryImpl" target="saleson.service.transfer.LogDisconnectionRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="402.5" y="56.0" />
+      <point x="336.75" y="56.0" />
+      <point x="74.25" y="15.5" />
+    </edge>
+    <edge source="saleson.service.transfer.TransferRepository" target="saleson.service.transfer.TransferRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="88.5" y="213.0" />
+      <point x="137.25" y="213.0" />
+      <point x="-57.25" y="15.5" />
+    </edge>
+    <edge source="saleson.service.transfer.CdataRepository" target="saleson.service.transfer.CdataRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="530.5" y="213.0" />
+      <point x="575.75" y="213.0" />
+      <point x="-53.75" y="15.5" />
+    </edge>
+    <edge source="saleson.service.transfer.TransferRepositoryImpl" target="saleson.service.transfer.TransferRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="300.5" y="213.0" />
+      <point x="251.75" y="213.0" />
+      <point x="57.25" y="15.5" />
+    </edge>
+    <edge source="saleson.service.data.domain.DataRepository" target="saleson.service.data.domain.DataRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="919.5" y="56.0" />
+      <point x="863.25" y="56.0" />
+      <point x="51.75" y="15.5" />
+    </edge>
+    <edge source="saleson.service.data.domain.DataRepositoryCustomImpl" target="saleson.service.data.domain.DataRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="703.5" y="56.0" />
+      <point x="759.75" y="56.0" />
+      <point x="-51.75" y="15.5" />
+    </edge>
+    <edge source="saleson.service.transfer.CdataRepositoryImpl" target="saleson.service.transfer.CdataRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="728.5" y="213.0" />
+      <point x="683.25" y="213.0" />
+      <point x="53.75" y="15.5" />
+    </edge>
+    <edge source="saleson.service.transfer.LogDisconnectionRepository" target="saleson.service.transfer.LogDisconnectionRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="122.5" y="56.0" />
+      <point x="188.25" y="56.0" />
+      <point x="-74.25" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6273333333333333" showDependencies="false" x="556.5" y="552.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

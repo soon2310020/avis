@@ -1,0 +1,39 @@
+server:
+  port: ${API_GATEWAY_PORT:8890}
+
+spring:
+  application:
+    name: api-gateway
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 50MB
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials Vary, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+      routes:
+        - id: auth-api-service
+          uri: http://${AUTH_API_HOST:localhost}:${AUTH_API_PORT:8085}
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=2
+        - id: web-api-service
+          uri: http://${WEB_API_HOST:localhost}:${WEB_API_PORT:8083}
+          predicates:
+            - Path=/api/web/**
+          filters:
+            - StripPrefix=2
+        - id: mobile-api-service
+          uri: http://${MOBILE_API_HOST:localhost}:${MOBILE_API_PORT:8081}
+          predicates:
+            - Path=/api/mobile/**
+          filters:
+            - StripPrefix=2

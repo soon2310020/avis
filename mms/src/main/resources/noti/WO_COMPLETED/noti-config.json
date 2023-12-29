@@ -1,0 +1,10 @@
+{
+  "notiPriority": "MEDIUM",
+  "description": "Work Order is completed",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/admin/work-order?popup=WO_COMPLETED&id=${id}"
+}

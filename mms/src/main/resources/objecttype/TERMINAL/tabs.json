@@ -1,0 +1,30 @@
+{
+  "All": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "In-house": {
+    "input": {
+      "companyType": "IN_HOUSE",
+      "enabled": true
+    }
+  },
+  "Supplier": {
+    "input": {
+      "companyType": "SUPPLIER",
+      "enabled": true
+    }
+  },
+  "Toolmaker": {
+    "input": {
+      "companyType": "TOOL_MAKER",
+      "enabled": true
+    }
+  },
+  "Disabled": {
+    "input": {
+      "enabled": false
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head"> </th:block>
+  <th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list wave1">
+      <dashboard-page :resources="resources"></dashboard-page>
+    </div>
+  </th:block>
+  <th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/common/dsh/index.js?'+${noCacheVer}"></script>
+  </th:block>
+</html>

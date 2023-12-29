@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<!--    <meta charset="UTF-8">-->
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <style>
+
+        body {
+            width: 4800px;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        .title {
+            text-align: left;
+            padding-left: 50px
+        }
+
+        .box {
+            border: 2px solid black;
+            margin-left: 50px;
+            padding: 20px;
+            width: 1200px;
+        }
+
+        .box table  tr td {
+            width: 300px;
+        }
+
+        .content {
+            margin-top: 30px
+        }
+
+        table {
+            border-collapse: collapse
+        }
+
+        .title-data {
+            background: #c00000;
+            color: white;
+            font-weight: 600;
+            padding: 5px;
+            border: 1px solid #000;
+            max-width: 300px;
+
+        }
+
+        .data {
+            text-align: center;
+            border: 1px solid #000;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1 class="title">Chi tiết nhật ký hành trình</h1>
+    <div class="box">
+        <table>
+            <tr>
+                <td>
+                    <b>Xem NKHT bắt đầu từ:</b>
+                </td>
+                <td>
+                    <span>{{fromDate}}</span>
+                </td>
+                <td>
+                    <b>Tài xế:</b>
+                </td>
+                <td>
+                    <span>{{driverName}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Xem NKHT đến:</b>
+                </td>
+                <td>
+                    <span>{{toDate}}</span>
+                </td>
+
+                <td>
+                    <b>Biển KS:</b>
+                </td>
+                <td>
+                    <span>{{licensePlate}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Chi nhánh quản lý xe:</b>
+                </td>
+                <td>
+                    <span>{{branch}}</span>
+                </td>
+
+                <td>
+                    <b>Thời gian làm việc ngày thường:</b>
+                </td>
+                <td>
+                    <span>{{timeWorkNormal}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Khu vực xe chạy:</b>
+                </td>
+                <td>
+                    <span>{{zoneDrive}}</span>
+                </td>
+
+                <td>
+                    <b>Thời gian làm việc ngày lễ/ cuối tuần:</b>
+                </td>
+                <td>
+                    <span>{{timeWorkHoliday}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Mã hợp đồng:</b>
+                </td>
+                <td>
+                    <span>{{contractCode}}</span>
+                </td>
+
+                <td>
+                    <b>Số ngày trong tháng:</b>
+                </td>
+                <td>
+                    <span>{{numberOfDayInMonth}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Khách hàng</b>
+                </td>
+                <td>
+                    <span>{{customerName}}</span>
+                </td>
+
+                <td>
+                    <b>Số ngày  làm việc theo HĐ</b>
+                </td>
+                <td>
+                    <span>{{numberWorkByContract}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Admin:</b>
+                </td>
+                <td>
+                    <span>{{adminName}}</span>
+                </td>
+
+                <td>
+                    <b>Số ngày thực tế làm việc:</b>
+                </td>
+                <td>
+                    <span>{{numberWorkReality}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Trạng thái:</b>
+                </td>
+                <td>
+                    <span>{{status}}</span>
+                </td>
+
+                <td>
+                    <b>Ngày đầu tiên phục vụ:</b>
+                </td>
+                <td>
+                    <span>{{dateFirst}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Ngày bắt đầu HĐ:</b>
+                </td>
+                <td>
+                    <span>{{timeStartContract}}</span>
+                </td>
+
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Ngày kết thúc HĐ:</b>
+                </td>
+                <td>
+                    <span>{{timeEndContact}}</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Kỳ hạn HĐ: </b>
+                </td>
+                <td>
+                    <span>{{contractAbout}}</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="content">
+        <table>
+            <tr>
+                <td class="title-data">STT</td>
+                <td class="title-data">Thứ</td>
+                <td class="title-data">Ngày</td>
+                <td class="title-data">Người sử dụng</td>
+                <td class="title-data">Bộ phận</td>
+                <td class="title-data" style="min-width: 300px;">Hành trình chuyến đi</td>
+                <td class="title-data">Số km bắt đầu</td>
+                <td class="title-data">Số km khi đón khách</td>
+                <td class="title-data">Số km khi trả khách</td>
+                <td class="title-data">Số km kết thúc</td>
+                <td class="title-data">Số km rỗng</td>
+                <td class="title-data">Số km đã đi</td>
+                <td class="title-data">Số km KH sử dụng (có lái)</td>
+                <td class="title-data">Số km KH sử dụng (tự lái)</td>
+                <td class="title-data">Thời gian bắt đầu làm việc (App)</td>
+                <td class="title-data">Thời gian kết thúc làm việc (App)</td>
+                <td class="title-data">Thời gian bắt đầu làm việc (GPS)</td>
+                <td class="title-data">Thời gian kết thúc làm việc (GPS)</td>
+                <td class="title-data">Over time</td>
+                <td class="title-data">Over km (Km)</td>
+                <td class="title-data">Over km tự lái (Km)</td>
+                <td class="title-data">Overnight (đêm)</td>
+                <td class="title-data">Ngày lễ</td>
+                <td class="title-data">Cuối tuần</td>
+                <td class="title-data">Có lái</td>
+                <td class="title-data">Tự lái</td>
+                <td class="title-data">Tài xế</td>
+                <td class="title-data">Biển KS</td>
+                <td class="title-data">Chi phí rửa xe (VNĐ)</td>
+                <td class="title-data">Chi phí đỗ xe (VNĐ)</td>
+                <td class="title-data">Chi phí săm lốp (VNĐ)</td>
+                <td class="title-data">Chi phí khác (VNĐ)</td>
+                <td class="title-data">Chi phí cầu đường (VNĐ)</td>
+                <td class="title-data">Chi phí lưu đêm (VNĐ)</td>
+                <td class="title-data" style="max-width: 300px">Ảnh chi phí phát sinh</td>
+                <td class="title-data">Chi phí sự cố (VNĐ)</td>
+                <td class="title-data" style="max-width: 300px">Ảnh sự cố chuyến đi</td>
+                <td class="title-data" style="max-width: 300px">Ảnh ODO (Hệ thống không nhận dạng được)</td>
+                <td class="title-data" style="max-width: 300px">Ảnh đón khách</td>
+                <td class="title-data" style="max-width: 300px">Ảnh trả khách</td>
+                <td class="title-data">Ghi chú</td>
+            </tr>
+            {{dataValue}}
+        </table>
+    </div>
+</div>
+</body>
+</html>

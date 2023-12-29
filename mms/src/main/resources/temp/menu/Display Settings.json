@@ -1,0 +1,8 @@
+{
+  "path": "Administration/Personal",
+  "position": 2,
+  "message": "display_settings",
+  "url": "/common/dsp-stp",
+  "icon": "/images/icon/display-settings.svg",
+  "hidden": false
+}

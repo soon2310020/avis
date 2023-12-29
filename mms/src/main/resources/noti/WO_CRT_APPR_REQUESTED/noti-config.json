@@ -1,0 +1,10 @@
+{
+  "notiPriority": "MEDIUM",
+  "description": "Supplier requests OEM approval for creating Work Order",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/admin/work-order?popup=WO_CRT_APPR_REQUESTED&id=${id}"
+}

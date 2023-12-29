@@ -1,0 +1,484 @@
+{
+    "content": [
+        {
+            "code": "01",
+            "title": "01 CAMBIO DE MOLDE",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "02",
+            "title": "02 CAMBIO DE COLOR",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "03",
+            "title": "03 PURGAS",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "04",
+            "title": "04 FUGA DE MATERIAL EN CANON",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "05",
+            "title": "05 AJUSTE POR BURBUJA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "06",
+            "title": "06 AJUSTE POR RAFAGA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "07",
+            "title": "07 AJUSTE POR INCOMPLETAS",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "08",
+            "title": "08 AJUSTE POR DISPERSION",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "09",
+            "title": "09 AJUSTE POR FRACTURA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "10",
+            "title": "10 FALTA DE AJUSTADOR",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PROCESS",
+            "group2Title": "Process Downtime"
+        },
+        {
+            "code": "11",
+            "title": "11 FALLA DE COLADA CALIENTE",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "TOOLSHOP",
+            "group2Title": "Tool shop Downtime"
+        },
+        {
+            "code": "12",
+            "title": "12 FALLA DE MOLDE",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "TOOLSHOP",
+            "group2Title": "Tool shop Downtime"
+        },
+        {
+            "code": "13",
+            "title": "13 FALLA DE MOLDE POR SUCIEDAD",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "TOOLSHOP",
+            "group2Title": "Tool shop Downtime"
+        },
+        {
+            "code": "14",
+            "title": "14 FALLA DE MOLDE POR NEGATIVOS",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "TOOLSHOP",
+            "group2Title": "Tool shop Downtime"
+        },
+        {
+            "code": "15",
+            "title": "15 FALLA DE MOLDE POR CIRCUITOS TAPADOS",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "TOOLSHOP",
+            "group2Title": "Tool shop Downtime"
+        },
+        {
+            "code": "16",
+            "title": "16 FALLA DE MOLDE POR ATASCAMIENTO",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "TOOLSHOP",
+            "group2Title": "Tool shop Downtime"
+        },
+        {
+            "code": "17",
+            "title": "17 FALLA DE MOLDE POR CILINDPOS HIDRAULICOS",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "TOOLSHOP",
+            "group2Title": "Tool shop Downtime"
+        },
+        {
+            "code": "18",
+            "title": "18 FALLA DE MAQUINA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "19",
+            "title": "19 FALLA DE ROBOT",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "20",
+            "title": "20 FALLA DE TERMORREGULADOR",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "21",
+            "title": "21 FALLA DE CONTROL DE TEMPERATURA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "22",
+            "title": "22 FALLA DE SECADOR",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "23",
+            "title": "23 FALLA DE CHILLER",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "24",
+            "title": "24 FALLA DE ESTAMPADORA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "25",
+            "title": "25 FALLA DE TAMPOGRAFIADORA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "26",
+            "title": "26 FALLA DE SELLADORA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "27",
+            "title": "27 FALLA DE DOSIFICADOR",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "28",
+            "title": "28 FALLA DE CARGADOR/CENTRALIZADO",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "29",
+            "title": "29 FALLA DE AIRE",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "30",
+            "title": "30 FALLA DE AGUA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "31",
+            "title": "31 FALLA DE ENERGIA ELECTRICA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "32",
+            "title": "32 MTTO PREVENTIVO/PREDICTIVO",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "33",
+            "title": "33 FALLA DE DISPOSITIVO (CORTE/ENSMABLE)",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "MAINTENANCE",
+            "group2Title": "Maintenance Downtime"
+        },
+        {
+            "code": "34",
+            "title": "34 FALTA DE DOCUMENTACION",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "QUALITY",
+            "group2Title": "Quality Downtime"
+        },
+        {
+            "code": "35",
+            "title": "35 FALTA DE DESVIACION",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "QUALITY",
+            "group2Title": "Quality Downtime"
+        },
+        {
+            "code": "36",
+            "title": "36 ACUMULAMIENTO DE MATERIAL",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "QUALITY",
+            "group2Title": "Quality Downtime"
+        },
+        {
+            "code": "37",
+            "title": "37 PARO SAT",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "QUALITY",
+            "group2Title": "Quality Downtime"
+        },
+        {
+            "code": "38",
+            "title": "38 MATERIA PRIMA NO CONFORME",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "QUALITY",
+            "group2Title": "Quality Downtime"
+        },
+        {
+            "code": "39",
+            "title": "39 PERSONAL NO AUTORIZADO OP CRITICA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "QUALITY",
+            "group2Title": "Quality Downtime"
+        },
+        {
+            "code": "41",
+            "title": "41 FALTA DE PIEZAS",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "45",
+            "title": "45 TOLVAS VACIAS",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "46",
+            "title": "46 FALTA DE MATERIAL PRESECADO",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "48",
+            "title": "48 FALTA DE PERIFE",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "50",
+            "title": "50 AJUSTE DE ESTAMP/TAMP/SELLADORA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "51",
+            "title": "51 FALTA DE OPERADOR",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "52",
+            "title": "52 FALTA DE HERRAMIENTA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "53",
+            "title": "53 FALTA DE CONTENDORES",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "54",
+            "title": "54 FALTA DE MATERIAL DE EMPAQUE",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "55",
+            "title": "55 FALTA DE MATERIA PRIMA",
+            "description": null,
+            "group1Code": "UNPLANNED",
+            "group1Title": "Unplanned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        }
+    ],
+    "pageable": {
+        "sort": {
+            "sorted": true,
+            "unsorted": false,
+            "empty": false
+        },
+        "offset": 0,
+        "pageNumber": 0,
+        "pageSize": 500,
+        "unpaged": false,
+        "paged": true
+    },
+    "codeType": {
+        "codeType": "MACHINE_DOWNTIME_REASON",
+        "name": "machine_downtime_reason",
+        "group1Field": {
+            "dataType": "CODE_DATA",
+            "codeType": "MACHINE_DOWNTIME_REASON_GROUP1",
+            "name": "machine_downtime_reason.group1"
+        },
+        "group2Field": {
+            "dataType": "CODE_DATA",
+            "codeType": "MACHINE_DOWNTIME_REASON_GROUP2",
+            "name": "machine_downtime_reason.group2"
+        }
+    },
+    "totalPages": 1,
+    "totalElements": 49,
+    "last": true,
+    "size": 500,
+    "number": 0,
+    "sort": {
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
+    },
+    "numberOfElements": 49,
+    "first": true,
+    "empty": false
+}

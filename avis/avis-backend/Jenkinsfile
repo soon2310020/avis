@@ -1,0 +1,163 @@
+pipeline {
+  agent any
+
+  environment {
+    REGISTRY = "trunganh12309/test_repository"
+    SSH = "ssh -i ~/.ssh/avis_aws centos@avis.itleadpro.vn"
+    SCP = "scp -i ~/.ssh/avis_aws"
+  }
+
+  stages {
+  stage('Build') {
+      steps {
+        dir('avis-car-backend') {
+          sh("""mvn --batch-mode --errors --fail-at-end --show-version \
+              -DinstallAtEnd=true -DdeployAtEnd=true -T 4 clean install -DskipTests -DskipITs""")
+        }
+      }
+    }
+
+    stage('Package') {
+      steps {
+        dir('avis-car-backend') {
+          script {
+            withCredentials([usernamePassword(credentialsId: 'my_docker_registry', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+              try {
+                sh'''
+                docker login -u $USER -p $PASSWORD
+                history -c && history -w
+
+                docker build -t base_service -f ./Dockerfile \
+                  --target base_service_image \
+                  --build-arg JAR_PATH=cloud/config-app/target/config-app-1.0.0-SNAPSHOT.jar .
+
+                docker build -t $REGISTRY:config -f Dockerfile.config-server \
+                  --build-arg CONFIG_REPO_PATH=cloud/config-app/files-config-repo \
+                  --build-arg BASE_IMAGE="base_service:latest" .
+
+                docker build -t $REGISTRY:gateway -f Dockerfile \
+                  --build-arg JAR_PATH=cloud/api-gateway-app/target/api-gateway-app-1.0.0-SNAPSHOT.jar .
+
+                docker build -t $REGISTRY:discovery -f Dockerfile \
+                  --build-arg JAR_PATH=cloud/service-discovery-app/target/service-discovery-app-1.0.0-SNAPSHOT.jar .
+
+                docker build -t $REGISTRY:avis_authen -f Dockerfile \
+                  --build-arg JAR_PATH=run/avis-authen-center/target/avis-authen-center-1.0.0-SNAPSHOT.jar .
+
+                docker build -t $REGISTRY:avis_mobile_api -f Dockerfile \
+                  --build-arg JAR_PATH=run/avis-mobile-api-service/target/avis-mobile-api-service-1.0.0-SNAPSHOT.jar .
+
+                docker build -t $REGISTRY:avis_web_api -f Dockerfile \
+                  --build-arg JAR_PATH=run/avis-api-service/target/avis-api-service-1.0.0-SNAPSHOT.jar .
+
+                docker push $REGISTRY:config
+                docker push $REGISTRY:gateway
+                docker push $REGISTRY:discovery
+                docker push $REGISTRY:avis_authen
+                docker push $REGISTRY:avis_mobile_api
+                docker push $REGISTRY:avis_web_api
+                '''
+              } catch(ex) {
+                throw ex
+              } finally {
+                sh '''
+                docker images -a | grep $REGISTRY | awk '{print $3}' | xargs -I {} docker rmi {}
+                docker image prune -f
+                docker logout
+                '''
+              }
+            }
+          }
+        }
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        script {
+          withCredentials([usernamePassword(credentialsId: 'my_docker_registry', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {            
+              try {
+                sh '''
+                $SSH rm -rf /home/centos/deployment/avis-backend/docker/*
+                $SSH mkdir -p /home/centos/deployment/avis-backend/docker
+                $SCP ~/enviroments/avis/.env.staging centos@avis.itleadpro.vn:/home/centos/deployment/avis-backend/docker/.env.staging
+              
+                $SSH docker login -u $USER -p $PASSWORD
+                $SSH history -c 
+                $SSH history -w
+
+                config_app_id=$($SSH docker ps -a -q --filter name=avis_config)
+                gateway_id=$($SSH docker ps -a -q --filter name=avis_gateway)
+                discovery_service_id=$($SSH docker ps -a -q --filter name=avis_discovery)
+                authen_app_id=$($SSH docker ps -a -q --filter name=avis_authen)
+                mobile_app_id=$($SSH docker ps -a -q --filter name=avis_mobile_api)
+                web_app_id=$($SSH docker ps -a -q --filter name=avis_web_api)
+
+                $SSH docker pull $REGISTRY:config
+                $SSH docker pull $REGISTRY:gateway
+                $SSH docker pull $REGISTRY:discovery
+                $SSH docker pull $REGISTRY:avis_authen
+                $SSH docker pull $REGISTRY:avis_mobile_api
+                $SSH docker pull $REGISTRY:avis_web_api
+        
+                $SSH docker stop $config_app_id || true
+                $SSH docker stop $gateway_id || true
+                $SSH docker stop $discovery_service_id || true
+                $SSH docker stop $authen_app_id || true
+                $SSH docker stop $mobile_app_id || true
+                $SSH docker stop $web_app_id || true
+
+                $SSH docker run --name avis_config -p 8866:8080 \
+                --env-file /home/centos/deployment/avis-backend/docker/.env.staging \
+                -v /var/log/avis-backend/config-server:/var/log/avis-backend/config-server \
+                --rm --detach $REGISTRY:config
+
+                sleep 10
+
+                $SSH docker run --name avis_discovery -p 8761:8080 \
+                --env-file /home/centos/deployment/avis-backend/docker/.env.staging \
+                -v /var/log/avis-backend/service-discovery:/var/log/avis-backend/service-discovery \
+                --rm --detach $REGISTRY:discovery
+
+                sleep 10
+
+                $SSH docker run --name avis_gateway -p 8890:8080 \
+                --env-file /home/centos/deployment/avis-backend/docker/.env.staging \
+                -v /var/log/avis-backend/api-gateway:/var/log/avis-backend/api-gateway \
+                --rm --detach $REGISTRY:gateway
+
+                sleep 5
+
+                $SSH docker run --name avis_authen -p 8085:8080 \
+                --env-file /home/centos/deployment/avis-backend/docker/.env.staging \
+                -v /var/log/avis-backend/authen-author-service:/var/log/avis-backend/authen-author-service \
+                --rm --detach $REGISTRY:avis_authen
+
+                sleep 5
+
+                $SSH docker run --name avis_mobile_api -p 8081:8080 \
+                --env-file /home/centos/deployment/avis-backend/docker/.env.staging \
+                -v /var/log/avis-backend/avis-mobile-api-service:/var/log/avis-backend/avis-mobile-api-service \
+                --rm --detach $REGISTRY:avis_mobile_api
+
+                sleep 5
+
+                $SSH docker run --name avis_web_api -p 8083:8080 \
+                --env-file /home/centos/deployment/avis-backend/docker/.env.staging \
+                -v /var/log/avis-backend/avis-api-service:/var/log/avis-backend/avis-api-service \
+                --rm --detach $REGISTRY:avis_web_api
+                '''
+              } catch(ex) {
+                throw ex
+              } finally {
+                sh '''
+                $SSH docker image prune -f
+                $SSH docker logout
+                '''
+              }
+          }
+        }
+      }
+    }
+  }
+}

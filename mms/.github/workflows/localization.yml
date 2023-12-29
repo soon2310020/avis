@@ -1,0 +1,56 @@
+name: Translate Message Properties
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/main/resources/messages.properties'
+
+jobs:
+  translate_and_update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install openai  # Install openai globally
+
+      - name: Translate message properties files
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python .github/scripts/translate_and_update.py
+
+      - name: Commit files
+        run: |
+          git config --local user.email "argen.adenov@emoldino.com"
+          git config --local user.name "AI"
+          git add src/main/resources/messages_*.properties
+          git commit -m "Automated translation update" || echo "No changes to commit"
+
+      - name: Create Pull Request
+        if: success()
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GHUB_PR_TOKEN }}
+          commit-message: Automated translation update
+          title: Automated Translation Update
+          body: This is an automated translation update.
+          branch: translation-update-${{ github.run_number }}
+          delete-branch: true
+          base: master
+
+      - name: Push changes
+        if: failure()
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GHUB_PR_TOKEN }}
+          branch: ${{ github.ref }}

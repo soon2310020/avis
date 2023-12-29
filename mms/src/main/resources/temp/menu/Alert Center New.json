@@ -1,0 +1,8 @@
+{
+    "path": "Overview",
+    "position": 2,
+    "message": "alert_center_new",
+    "url": "/common/alt-ctr",
+    "icon": "/images/icon/tooling.svg",
+    "hidden": true
+}

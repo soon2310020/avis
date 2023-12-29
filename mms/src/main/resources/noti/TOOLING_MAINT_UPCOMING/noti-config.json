@@ -1,0 +1,9 @@
+{
+  "notiPriority": "HIGH",
+  "description": "",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false
+}

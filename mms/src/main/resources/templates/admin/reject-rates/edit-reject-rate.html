@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-default}"
+>
+    <th:block layout:fragment="op-head">
+        <link rel="stylesheet" th:href="'/css/reject-rate/style.css?'+${noCacheVer}" />
+    </th:block>
+
+    <th:block layout:fragment="op-content">
+        <!--    <link href="/css/import-tooling/matching-data.css" rel="stylesheet">-->
+
+        <div id="app" class="op-reject-rate-list">
+            <edit-reject @update-done="updateDataDone" :fixed-reject-reasons="fixedRejectReasons" :resources="resources"></edit-reject>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/scripts/admin/reject-rate/edit-reject-rate.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

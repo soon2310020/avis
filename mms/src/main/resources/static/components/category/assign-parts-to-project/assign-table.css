@@ -1,0 +1,158 @@
+/* TABLE */
+.assign-table {
+    position: relative;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+}
+
+.table-wrapper {
+    height: 320px;
+    overflow: auto;
+    position: relative;
+}
+
+table thead {
+    background-color: rgb(245, 248, 255);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
+table thead tr th {
+    padding: 17px 34px;
+}
+
+table tbody tr td {
+    padding: 2px 34px;
+}
+
+table tbody tr:first-child td {
+    padding-top: 4px;
+}
+
+table tbody tr:last-child td {
+    padding-bottom: 4px;
+}
+
+table tbody tr td .reason {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+table tfoot {
+    position: sticky;
+    bottom: 0;
+    background-color: #fff;
+}
+
+table tfoot tr td {
+    padding: 13px 40px;
+}
+
+table tfoot .btn-link {
+    border: none;
+    color: #3491fb;
+}
+
+table tfoot button img {
+    max-width: 17px;
+}
+
+/* CUSTOM */
+.assign-table table td,
+.assign-table table th {
+    width: 50%;
+}
+
+.tr-sort {
+    border-top: 0
+}
+
+/* DETAIL */
+.part-name {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    min-height: 40px;
+}
+
+.part-quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.part-quantity input {
+    font-size: 1rem;
+    max-width: 143px;
+    width: 100%;
+    height: 40px;
+    padding: 6px 8px;
+    border-radius: 3px;
+    border: 1px solid #9090907a;
+}
+
+.part-quantity input:focus-visible {
+    outline: none;
+}
+
+.part-quantity__amount {
+    font-size: 1rem;
+}
+
+.part-quantity__remove {
+    font-size: 14px;
+    color: #595959;
+}
+
+.assign-more {
+    position: relative;
+    height: 55.5px;
+    padding-left: 18px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 -1px 1px rgb(0 0 0 / 10%);
+}
+
+.btn-show-picker:hover {
+    text-decoration: underline !important;
+}
+
+/* ICON */
+.spinner {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.icon-action__minus {
+    width: 9.85px;
+    height: 9.85px;
+    display: inline-block;
+    background-image: url("/images/icon/category/material-remove-circle.svg");
+    margin-left: 4px;
+}
+
+/* DROPDOWN CUSTOM */
+/* .dropdown-wrap.part-picker {
+    position: absolute;
+    top: 100%;
+    left: 15px;
+    min-width: 463px;
+    padding: 6px 8px;
+    z-index: 100;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: 300ms ease;
+}
+.dropdown-wrap.part-picker.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+} */

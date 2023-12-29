@@ -1,0 +1,232 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql" />
+
+    <changeSet id="2023-10-03-create-potential_customer_direct-table" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="potential_customer_direct" />
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="potential_customer_direct_seq" startValue="1000" incrementBy="1" />
+
+        <createTable tableName="potential_customer_direct">
+            <column name="id" type="bigint" defaultValueComputed="nextval('potential_customer_direct_seq')">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+
+            <column name="potential_customer_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_combo_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="quotation_header_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="state" type="varchar(15)">
+                <constraints nullable="false" />
+            </column>
+            <column name="raw" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)" />
+            <column name="last_modified_date" type="timestamp" />
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_potential_customer_direct"
+            referencedTableName="potential_customer" baseColumnNames="potential_customer_id"
+            baseTableName="potential_customer_direct" referencedColumnNames="id" />
+
+        <addForeignKeyConstraint constraintName="fk_potential_customer_direct_combo"
+            referencedTableName="user_combo" baseColumnNames="user_combo_id" baseTableName="potential_customer_direct"
+            referencedColumnNames="id" />
+
+        <addForeignKeyConstraint constraintName="fk_potential_customer_direct_quotation"
+            referencedTableName="quotation_header" baseColumnNames="quotation_header_id"
+            baseTableName="potential_customer_direct" referencedColumnNames="id" />
+
+    </changeSet>
+
+    <changeSet id="2023-10-06-potential_customer_direct-add-contract" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer_direct" columnName="contract_state" />
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer_direct">
+            <column name="contract_state" type="varchar(15)">
+                <constraints nullable="true" />
+            </column>
+            <column name="contract_id" type="varchar(30)">
+                <constraints nullable="true" />
+            </column>
+            <column name="contract_pending_note" type="text">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+    
+    <changeSet id="2023-10-06-potential_customer_direct-add-info" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer_direct" />
+        </preConditions>
+
+        <addColumn tableName="potential_customer_direct">
+            <column name="application_number" type="varchar(256)">
+                <constraints nullable="true" />
+            </column>
+            <column name="cif_number" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-10-29-create-potential_customer_direct_submit_status-table" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="potential_customer_direct_submit_status" />
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="potential_customer_direct_submit_status_seq" startValue="1000" incrementBy="1" />
+
+        <createTable tableName="potential_customer_direct_submit_status">
+            <column name="id" type="bigint" defaultValueComputed="nextval('potential_customer_direct_submit_status_seq')">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="potential_customer_direct_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="status" type="varchar(15)">
+                <constraints nullable="false" />
+            </column>
+            <column name="error_http_code" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="error_message" type="clob">
+                <constraints nullable="true" />
+            </column>
+            <column name="retry" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="next_retry" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)" />
+            <column name="last_modified_date" type="timestamp" />
+        </createTable>
+        
+        <addForeignKeyConstraint constraintName="fk_potential_customer_direct_submit_status"
+            referencedTableName="potential_customer_direct" baseColumnNames="potential_customer_direct_id"
+            baseTableName="potential_customer_direct_submit_status" referencedColumnNames="id" />
+
+    </changeSet>
+    
+    <changeSet id="2023-10-31-potential_customer_direct-change-type" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="potential_customer_direct" columnName="application_number"/>
+            <columnExists tableName="potential_customer_direct" columnName="cif_number"/>
+        </preConditions>
+        
+        <modifyDataType tableName="potential_customer_direct" columnName="application_number" newDataType="varchar(50)"/>
+        <modifyDataType tableName="potential_customer_direct" columnName="cif_number" newDataType="varchar(50)"/>
+
+    </changeSet>
+    
+    <changeSet id="2023-11-20-potential_customer_direct-remove-contract" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="potential_customer_direct" columnName="contract_state"/>
+        </preConditions>
+        
+        <addColumn tableName="potential_customer_direct">
+            <column name="app_status" type="varchar(15)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+        
+        <update tableName="potential_customer_direct">
+          <column name="app_status" valueComputed="contract_state"/>
+        </update>
+        
+        <dropColumn tableName="potential_customer_direct">
+            <column name="contract_state" />
+            <column name="contract_id" />
+            <column name="contract_pending_note" />
+        </dropColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-12-01-potential_customer_direct_submit_status-remove-next_retry" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="potential_customer_direct_submit_status" columnName="next_retry"/>
+        </preConditions>
+
+        <dropColumn tableName="potential_customer_direct_submit_status">
+            <column name="next_retry" />
+        </dropColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-12-10-set-remark-potential_customer_direct" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer_direct"/>
+        </preConditions>
+
+        <setTableRemarks tableName="potential_customer_direct" remarks="Thông tin khách hàng direct"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="potential_customer_id" remarks="ID khách hàng tiềm năng"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="user_combo_id" remarks="ID bảng minh họa ngược"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="quotation_header_id" remarks="ID bảng minh họa"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="state" remarks="Trạng thái direct"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="raw" remarks="Trạng thái nháp"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="application_number" remarks="Số HSYCBH"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="cif_number" remarks="ID khách hàng MB"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="lead_info_id" remarks="Lead info ID"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="app_status" remarks="Trạng thái HSYCBH"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="created_by" remarks="Người tạo"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="created_date" remarks="Thời điểm tạo"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="last_modified_by" remarks="Người cập nhật"/>
+        <setColumnRemarks tableName="potential_customer_direct" columnName="last_modified_date" remarks="Thời điểm cập nhật gần nhất"/>
+    </changeSet>
+
+    <changeSet id="2023-12-10-set-remark-potential_customer_direct_submit_status" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer_direct_submit_status"/>
+        </preConditions>
+
+        <setTableRemarks tableName="potential_customer_direct_submit_status" remarks="Trạng thái submit direct"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="potential_customer_direct_id" remarks="ID khách hàng tiềm năng"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="status" remarks="Trạng thái submit"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="error_http_code" remarks="Mã lỗi khi submit"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="error_message" remarks="Chi tiết lỗi khi submit"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="retry" remarks="Số lần retry"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="created_by" remarks="Người tạo"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="created_date" remarks="Thời điểm tạo"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="last_modified_by" remarks="Người cập nhật"/>
+        <setColumnRemarks tableName="potential_customer_direct_submit_status" columnName="last_modified_date" remarks="Thời điểm cập nhật gần nhất"/>
+    </changeSet>
+
+</databaseChangeLog>

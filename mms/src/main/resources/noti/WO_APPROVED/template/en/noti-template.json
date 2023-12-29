@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName} approved",
+  "content": "${senderName} (${senderCompanyName}) has approved your ${orderTypeName} request."
+}

@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${senderName} mentioned you in a note.",
+  "content": "${senderName} (${senderCompanyName}) mentioned you in a note in ${pageTypeName}."
+}

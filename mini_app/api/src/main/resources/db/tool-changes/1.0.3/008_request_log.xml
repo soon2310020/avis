@@ -1,0 +1,98 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql" />
+
+    <changeSet id="2023-10-25-create-request_log-table" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="request_log" />
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="request_log_seq" startValue="1000" incrementBy="1" />
+
+        <createTable tableName="request_log">
+            <column name="id" type="bigint" defaultValueComputed="nextval('request_log_seq')">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+
+            <column name="url" type="varchar(2048)">
+                <constraints nullable="false" />
+            </column>
+            <column name="method" type="varchar(7)">
+                <constraints nullable="false" />
+            </column>
+            <column name="code" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="payload" type="clob">
+                <constraints nullable="true" />
+            </column>
+            <column name="response" type="clob">
+                <constraints nullable="true" />
+            </column>
+            <column name="error_message" type="clob">
+                <constraints nullable="true" />
+            </column>
+            <column name="error_stack" type="clob">
+                <constraints nullable="true" />
+            </column>
+            <column name="request_time" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="response_time" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_time" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="request_id" type="varchar(36)">
+                <constraints nullable="true" />
+            </column>
+            
+        </createTable>
+
+    </changeSet>
+    
+    <changeSet id="2023-11-08-edit-request_log-table" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="request_log" />
+        </preConditions>
+
+        <dropColumn tableName="request_log">
+            <column name="total_time"/>
+        </dropColumn>
+
+        <addColumn tableName="request_log">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+    
+    <changeSet id="2023-12-10-set-remark-request_log" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="request_log"/>
+        </preConditions>
+        
+        <setTableRemarks tableName="request_log" remarks="Request logging"/>
+        <setColumnRemarks tableName="request_log" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="request_log" columnName="url" remarks="Đường dẫn request"/>
+        <setColumnRemarks tableName="request_log" columnName="method" remarks="http method"/>
+        <setColumnRemarks tableName="request_log" columnName="code" remarks="Response code"/>
+        <setColumnRemarks tableName="request_log" columnName="payload" remarks="Json body"/>
+        <setColumnRemarks tableName="request_log" columnName="response" remarks="Json response"/>
+        <setColumnRemarks tableName="request_log" columnName="error_message" remarks="Chi tiết lỗi trả về"/>
+        <setColumnRemarks tableName="request_log" columnName="error_stack" remarks="Chi tiết lỗi code"/>
+        <setColumnRemarks tableName="request_log" columnName="request_time" remarks="Thời điểm request"/>
+        <setColumnRemarks tableName="request_log" columnName="response_time" remarks="Thời điểm hoàn thành request"/>
+        <setColumnRemarks tableName="request_log" columnName="request_id" remarks="Request ID"/>
+        <setColumnRemarks tableName="request_log" columnName="created_by" remarks="Người request"/>
+    </changeSet>
+    
+</databaseChangeLog>

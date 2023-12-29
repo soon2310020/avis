@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head">
+    <style type="text/css">
+      .ant-popover-inner-content {
+        padding: 0px !important;
+        border: none;
+      }
+
+      .ant-popover-placement-bottomLeft {
+        padding-top: 0px !important;
+        margin-top: -6px !important;
+      }
+
+      .op-user-list .form-group {
+        margin-right: 10px;
+      }
+
+      .pagination {
+        display: none;
+      }
+
+      .depth-2 {
+        padding-left: 20px;
+      }
+
+      .depth-3 {
+        padding-left: 40px;
+      }
+
+      .depth-4 {
+        padding-left: 60px;
+      }
+
+      .text-right {
+        text-align: right;
+        padding-right: 2%;
+      }
+
+      .text-left {
+        text-align: left;
+      }
+
+      /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+      .wave1 {
+        height: 850px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 18%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+
+      .wave {
+        height: 121px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 28%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+        visibility: hidden;
+      }
+
+      .card.wave div,
+      .card.wave1 div {
+        display: none;
+      }
+
+      .risk-level__icon {
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        margin-right: 4px;
+      }
+
+      .risk-level__icon.high {
+        background-color: #db3b21;
+      }
+
+      .risk-level__icon.medium {
+        background-color: #ffc107;
+      }
+
+      .risk-level__icon.low {
+        background-color: #1aaa55;
+      }
+
+      .btn-group-create .ant-popover-inner-content {
+        padding: 0px;
+      }
+
+      .btn-group-create {
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+
+      .menu-item-custom {
+        padding: 4px 12px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        width: 164px;
+      }
+    </style>
+  </th:block>
+
+  <th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list">
+      <div class="row">
+        <div class="col-lg-12" v-click-outside="hideCalendarPicker">
+          <div class="card wave">
+            <div class="card-header">
+              <strong th:text="#{category}"></strong>
+
+              <div class="card-header-actions">
+                <span class="card-header-action">
+                  <small class="text-muted"
+                    ><span th:text="#{total}+':'"></span> {{total}}</small
+                  >
+                </span>
+              </div>
+            </div>
+            <div class="card-body">
+              <input type="hidden" v-model="requestParam.sort" />
+
+              <div class="form-row">
+                <div class="col-md-12 mb-3 mb-md-0 col-12">
+                  <common-searchbar
+                    :request-param="requestParam"
+                    :on-search="search"
+                    :placeholder="resources['search_by_columns_shown']"
+                  ></common-searchbar>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer" style="display: none">
+              <button class="btn btn-sm btn-primary" type="submit">
+                <i class="fa fa-dot-circle-o"></i>
+                <span th:text="#{submit}"></span>
+              </button>
+              <button class="btn btn-sm btn-danger" type="reset">
+                <i class="fa fa-ban"></i> <span th:text="#{reset}"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card wave1">
+            <div class="card-header" style="display: none">
+              <i class="fa fa-align-justify"></i>
+              <span th:text="#{striped_tbl}"></span>
+            </div>
+            <div class="card-body card-overflow-reset">
+              <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    :class="{active: requestParam.status == '1' && tabActive != 'disabled'}"
+                    href="#"
+                    @click.prevent="tab('1')"
+                    ><span th:text="#{enabled}"></span>
+                    <span
+                      class="badge badge-light badge-pill"
+                      v-if="requestParam.status == '1' && tabActive != 'disabled'"
+                      >{{ total }}</span
+                    >
+                  </a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link"
+                    :class="{active: tabActive === 'disabled'}"
+                    href="#"
+                    @click.prevent="tab('1','disabled')"
+                  >
+                    <span th:text="#{disabled}"> </span>
+                    <span
+                      class="badge badge-light badge-pill"
+                      v-if="tabActive == 'disabled'"
+                      >{{ total }}</span
+                    >
+                  </a>
+                </li>
+              </ul>
+              <div
+                class="nav-item d-flex"
+                style="
+                  position: absolute;
+                  right: 18px;
+                  top: 19px;
+                  align-items: center;
+                "
+              >
+                <a
+                  v-if="showSourceSupplierButton && Object.entries(resources).length"
+                  id="sourceSupplierBtn"
+                  href="javascript:void(0)"
+                  @click="handleShowSourceSupplier"
+                  class="btn-custom btn-outline-custom-primary"
+                  style="height: 31px"
+                >
+                  <span th:text="#{source_supplier}"></span>
+                </a>
+
+                <div class="btn-group-create">
+                  <week-picker-popup
+                    :key="weekKey"
+                    @on-close="handleChangeDate"
+                    :current-date="currentDate"
+                    :button-type="'secondary'"
+                    :date-range="timeRange"
+                  >
+                  </week-picker-popup>
+                </div>
+                <div>
+                  <div>
+                    <a-dropdown :trigger="['click']">
+                      <a
+                        @click="e => e.preventDefault()"
+                        :class="{'outline-animation': showAnimation}"
+                        class="btn-custom btn-custom-primary animationPrimary all-time-filters"
+                      >
+                        <span th:text="#{create}"></span>
+                        <img
+                          class="img-transition"
+                          src="/images/icon/icon-cta-white.svg"
+                          :class="{'caret-show' : displayCaret, 'visible': visibleCreateDropdown}"
+                          alt=""
+                        />
+                      </a>
+                      <a-menu
+                        slot="overlay"
+                        class="wrapper-action-dropdown"
+                        @click="handleCreate"
+                        v-model="visibleCreateDropdown"
+                      >
+                        <a-menu-item
+                          key="goToCreateProject"
+                          class="menu-item-custom"
+                        >
+                          <span th:text="#{create_project}"></span>
+                        </a-menu-item>
+                        <a-menu-item
+                          key="goToCreateCategory"
+                          class="menu-item-custom"
+                        >
+                          <span th:text="#{create_category}"></span>
+                        </a-menu-item>
+                        <a-menu-item
+                          key="showCreateBranch"
+                          class="menu-item-custom"
+                        >
+                          <div>Create Brand</div>
+                        </a-menu-item>
+                        <a-menu-item key="showDrawer" class="menu-item-custom">
+                          <div>Create Property</div>
+                        </a-menu-item>
+                      </a-menu>
+                    </a-dropdown>
+                  </div>
+                </div>
+                <customization-modal
+                  style="margin-left: 8px"
+                  :all-columns-list="allColumnList"
+                  @save="saveSelectedList"
+                  :resources="resources"
+                ></customization-modal>
+              </div>
+
+              <table class="table table-responsive-sm table-striped">
+                <colgroup>
+                  <col />
+                  <col />
+                  <col />
+                  <col style="width: 130px" />
+                </colgroup>
+                <thead id="thead-actionbar" class="custom-header-table">
+                  <tr
+                    :class="{'invisible': listCheckedFull.length != 0}"
+                    style="height: 57px"
+                    class="tr-sort"
+                  >
+                    <th class="custom-td">
+                      <div class="custom-td_header">
+                        <select-all
+                          :resources="resources"
+                          :show="allColumnList.length > 0"
+                          :checked="isAll"
+                          :total="total"
+                          :count="results.length"
+                          :unit="['tooling', 'toolings']"
+                          @select-all="handleSelectAll('all')"
+                          @select-page="handleSelectAll('page')"
+                          @deselect="handleSelectAll('deselect')"
+                        ></select-all>
+                      </div>
+                    </th>
+                    <th
+                      v-for="(item, index) in allColumnList"
+                      v-if="item.enabled && !item.hiddenInToggle"
+                      :key="index"
+                      class="text-left"
+                      :class="[{__sort: item.sortable && !item.isCustomField, active: currentSortType === item.sortField, 'disable-click': !item.sortable}, isDesc ? 'desc': 'asc', item.isNumber ? 'text-right' : item.isCenter ? 'text-center' : 'text-left']"
+                      @click="sortBy(item.field)"
+                    >
+                      <span>{{item.label}}</span>
+                      <span v-if="item.sortable" class="__icon-sort"></span>
+                    </th>
+                  </tr>
+
+                  <tr
+                    :class="{'d-none zindexNegative': listCheckedFull.length == 0}"
+                    id="action-bar"
+                    class="tr-sort empty-tr"
+                  >
+                    <th class="empty-th">
+                      <div class="first-checkbox-zone2">
+                        <div
+                          class="first-checkbox2"
+                          style="
+                            display: flex;
+                            align-items: center;
+                            padding-left: 0;
+                            width: 110px;
+                          "
+                        >
+                          <div>
+                            <select-all
+                              :resources="resources"
+                              :show="allColumnList.length > 0"
+                              :checked="isAll"
+                              :total="total"
+                              :count="results.length"
+                              :unit="['tooling', 'toolings']"
+                              @select-all="handleSelectAll('all')"
+                              @select-page="handleSelectAll('page')"
+                              @deselect="handleSelectAll('deselect')"
+                            ></select-all>
+                          </div>
+                        </div>
+                        <div class="action-bar">
+                          <div
+                            v-if="listCheckedFull.length == 1"
+                            @click="showEditModal"
+                            class="action-item"
+                          >
+                            <span>Edit</span>
+                            <i class="icon-action edit-icon"></i>
+                          </div>
+                          <div
+                            v-if="listCheckedFull.length == 1"
+                            @click="showRevisionHistory(listCheckedFull[0].id)"
+                            class="action-item"
+                          >
+                            <span>View Edit History</span>
+                            <i class="icon-action view-edit-history-icon"></i>
+                          </div>
+                          <div
+                            v-if="listCheckedFull.length == 1"
+                            class="action-item"
+                            @click="showSystemNoteModal(listCheckedFull[0].id)"
+                          >
+                            <span>Memo</span>
+                            <i class="icon-action memo-icon"></i>
+                          </div>
+                          <div
+                            v-if="tabActive != 'disabled' && canDisable"
+                            class="action-item"
+                            @click.prevent="disable(listCheckedFull)"
+                          >
+                            <span>Disable</span>
+                            <div class="icon-action disable-icon"></div>
+                          </div>
+                          <div
+                            v-if="tabActive == 'disabled'"
+                            class="action-item"
+                            @click.prevent="enable(listCheckedFull)"
+                          >
+                            <span>Enable</span>
+                            <div class="icon-action enable-icon"></div>
+                          </div>
+
+                          <div
+                            v-if="canAssignPartsToProject"
+                            class="action-item"
+                            @click.stop="openAssignPartsToProjectModal"
+                          >
+                            <span>Assign Part(s) to Product</span>
+                            <div class="icon-action share-icon"></div>
+                          </div>
+                          <div
+                            v-if="canAssignPartsToProject"
+                            class="action-item"
+                            @click.stop="openEditProductDemand(false)"
+                          >
+                            <span>Edit Product Demand</span>
+                            <div class="icon-action product-demand-icon"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="op-list" style="display: none">
+                  <template v-for="(result, index, id) in results">
+                    <category-list
+                      :result="result"
+                      :id="result.id"
+                      :index="index"
+                      :list-checked="listChecked"
+                      :check-select="checkSelect"
+                      :check="check"
+                      :show-drowdown="showDrowdown"
+                      :change-show="changeShow"
+                      :show-system-note-modal="showSystemNoteModal"
+                      :show-detail-modal="showDetailModal"
+                      :column-list="allColumnList"
+                      :is-showing-child="listShowId.includes(`${index}`)"
+                      @show-children="handleShowHideRow"
+                    >
+                    </category-list>
+                    <!-- <tr is="my-component" :result="result" :id="result.id" :list-checked="listChecked" :check-select="checkSelect" :check="check" :show-drowdown="showDrowdown" :change-show="changeShow" :show-system-note-modal="showSystemNoteModal" :show-detail-modal="showDetailModal"></tr> -->
+                    <template
+                      v-if="listShowId.includes(`${index}`)"
+                      v-for="(brand, i, id) in result.children"
+                    >
+                      <!-- <tr is="my-component" :result="product" :id="product.id" :list-checked="listChecked" :check-select="checkSelect" :check="check" :show-drowdown="showDrowdown" :change-show="changeShow" :show-system-note-modal="showSystemNoteModal" :show-detail-modal="showDetailModal"></tr> -->
+                      <category-list
+                        :result="brand"
+                        :id="brand.id"
+                        :parent-index="index"
+                        :index="i"
+                        :list-checked="listChecked"
+                        :check-select="checkSelect"
+                        :check="check"
+                        :show-drowdown="showDrowdown"
+                        :change-show="changeShow"
+                        :show-system-note-modal="showSystemNoteModal"
+                        :show-detail-modal="showDetailModal"
+                        :is-showing-child="listShowId.includes(`${index}-${i}`)"
+                        :column-list="allColumnList"
+                        @show-children="handleShowHideRow"
+                      >
+                      </category-list>
+                      <template
+                        v-if="listShowId.includes(`${index}-${i}`)"
+                        v-for="(product, j, id) in brand.children"
+                      >
+                        <category-list
+                          :result="product"
+                          :id="product.id"
+                          :list-checked="listChecked"
+                          :check-select="checkSelect"
+                          :check="check"
+                          :show-drowdown="showDrowdown"
+                          :change-show="changeShow"
+                          :show-system-note-modal="showSystemNoteModal"
+                          :show-detail-modal="showDetailModal"
+                          :column-list="allColumnList"
+                        >
+                        </category-list>
+                      </template>
+                    </template>
+                  </template>
+                </tbody>
+              </table>
+
+              <div class="no-results d-none" th:text="#{no_results}"></div>
+
+              <div class="row">
+                <div class="col-md-8">
+                  <ul class="pagination">
+                    <li
+                      v-for="(data, index) in pagination"
+                      class="page-item"
+                      :class="{active: data.isActive}"
+                    >
+                      <a class="page-link" @click="paging(data.pageNumber)"
+                        >{{data.text}}</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-auto ml-auto" v-if="false">
+                  <a href="/admin/categories/new" class="btn btn-primary"
+                    ><i class="fa fa-plus"></i>
+                    <span th:text="#{create_category}"></span
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <create-category-property
+          :resources="resources"
+          :visible="visible"
+          @open="showDrawer()"
+          @close="closeDrawer()"
+          is-type="CATEGORY"
+          @reload="setAllColumnList"
+        />
+      </div>
+
+      <revision-history :resources="resources"></revision-history>
+      <system-note
+        system-note-function="CATEGORY_SETTING"
+        :resources="resources"
+      ></system-note>
+      <action-bar-feature feature="ACTION_BAR"></action-bar-feature>
+      <category-library-modal
+        :show-file-previewer="showFilePreviewer"
+        :trigger-save-modal="triggerSaveModal"
+        :current-date="currentDate"
+        @open-edit-product-demand="openEditProductDemand"
+        @change-date="handleChangeDate"
+        :resources="resources"
+      ></category-library-modal>
+
+      <assign-parts-to-project
+        ref="assignPartsToProjectRef"
+        :resources="resources"
+        :is-visible="showAssignToProject"
+        :selected-project="selectedProject"
+        :on-refetch="paging"
+        @close="closeAssignPartsToProjectModal"
+      >
+      </assign-parts-to-project>
+
+      <project-form-modal
+        ref="projectModalRef"
+        :resources="resources"
+        @reload-page="reloadPage"
+        :on-create-category="goToCreateCategory"
+        :on-create-brand="onCreateBrand"
+        :default-selected-brands="defaultSelectedBrands"
+        :selected-category="selectedCategory"
+        @on-close="onCloseProduct"
+        :no-category-data="noCategoryData"
+      ></project-form-modal>
+      <category-form-modal
+        ref="categoryModalRef"
+        :resources="resources"
+        @reload-page="reloadPage"
+        :on-create-brand="onCreateBrand"
+        :default-selected-brands="defaultSelectedBrands"
+        :no-category-data="noCategoryData"
+        @reset-props="resetSelectedCategoryAndBrand"
+        @on-success-create-category="onSuccessCreateCategory"
+      >
+      </category-form-modal>
+      <edit-product-demand
+        ref="editProductDemand"
+        :resources="resources"
+        :current-date="currentDate"
+        @load-success="loadSuccess"
+      >
+      </edit-product-demand>
+
+      <file-previewer :back="backToMoldDetail"></file-previewer>
+
+      <source-supplier-modal
+        :is-visible="showSourceSupplierModal"
+        :current-date="currentDate"
+        :selected-product-prop="selectedProduct"
+        :resources="resources"
+        @close="handleCloseSourceSupplier"
+      >
+      </source-supplier-modal>
+      <brand-form-modal
+        :is-show="visibleCreateBranch"
+        :resources="resources"
+        :default-brand="selectedBrand"
+        :selected-category="selectedCategory"
+        :is-in-modal="isBrandModalInCategoryModal"
+        :is-edit="isEditBrand"
+        @on-success-create-brand="onSuccessCreateBrand"
+        @close="handleCloseCreateBranch"
+        @reload-page="reloadPage"
+        :open-category-modal="goToCreateCategory"
+      ></brand-form-modal>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script defer src="/ui/node_modules/chart.js/dist/Chart.min.js"></script>
+    <script
+      defer
+      th:src="'/js/scripts/admin/categories/list.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

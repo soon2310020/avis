@@ -1,0 +1,27 @@
+{
+  "aiType": "AI_PC",
+  "inferenceBoundary": {
+    "type": "BATCH",
+    "value": "4H"
+  },
+  "scale": {
+    "type": "PERIOD",
+    "value": "8H"
+  },
+  "fields": {
+    "DATA_ACCELERATION": [
+      "ID",
+      "COUNTER_ID",
+      "MEASUREMENT_DATE",
+      "ACCELERATIONS",
+      "SIMILARITY_METRIC",
+      "SIMILARITY_METRIC_HR",
+      "PROC_CHANGED"
+    ],
+    "MOLD": ["ID", "COUNTER_ID", "CONTRACTED_CYCLE_TIME"],
+    "COUNTER": ["ID", "EQUIPMENT_CODE"]
+  },
+  "target": {
+    "name": "db"
+  }
+}

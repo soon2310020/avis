@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "Cycle Time Alert",
+  "content": "Summary of CT Alerts for ${dateString}.",
+  "emailTitle": "Alerts for ${dateString}",
+  "emailContent": "Summary of  CT Alerts for ${dateString}"
+}

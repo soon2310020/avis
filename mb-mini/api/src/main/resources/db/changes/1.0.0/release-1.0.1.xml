@@ -1,0 +1,319 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="12-01-add-column-mb-id" author="datvq">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="customer" columnName="mb_id"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="customer">
+            <column name="mb_id" type="VARCHAR(45)" remarks="ID khách hàng MB"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-01-16-create-table-occupation" author="datvq">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="occupation"/>
+            </not>
+        </preConditions>
+        <createTable tableName="occupation">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="no" type="int"/>
+
+            <column name="job" type="VARCHAR(255)"/>
+
+            <column name="occupation" type="VARCHAR(255)"/>
+
+            <column name="occupation_group" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="column1" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="column2" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="shorten" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="column3" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="creation_time" type="datetime"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-01-17-create-table-health-question" author="datvq">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="health_question"/>
+            </not>
+        </preConditions>
+        <createTable tableName="health_question">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+
+            <column name="content" type="VARCHAR(1000)"/>
+
+            <column name="type" type="VARCHAR(255)"/>
+
+            <column name="option1" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="option2" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-01-18-update-table-customer" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="customer" columnName="insurance_participation"/>
+            <columnExists tableName="customer" columnName="date_participation"/>
+        </preConditions>
+        <dropColumn tableName="customer">
+            <column name="insurance_participation"/>
+            <column name="date_participation"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="2023-01-19-add-column-table-customer" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="customer" columnName="creation_time"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="customer" >
+            <column name="creation_time" type="datetime"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-01-18-create-table-campaign" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="campaign"/>
+            </not>
+        </preConditions>
+        <createTable tableName="campaign">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+
+            <column name="event" type="VARCHAR(255)"/>
+
+            <column name="start_time" type="DATETIME"/>
+
+            <column name="end_time" type="DATETIME"/>
+
+            <column name="image" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="content" type="clob">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="creation_time" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-01-30-insert-root-admin" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableIsEmpty tableName="user"/>
+            <tableIsEmpty tableName="email_and_password_credential"/>
+            <tableIsEmpty tableName="credential"/>
+        </preConditions>
+        <sqlFile path="db/data/insert_root_admin.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-02-06-drop-table-service_information" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="service_information"/>
+        </preConditions>
+        <dropTable tableName="service_information"/>
+    </changeSet>
+
+    <changeSet id="2023-02-06-add-column-type-content" author="datvq">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="health_question" columnName="type_content"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="health_question">
+            <column name="type_content" type="VARCHAR(45)" remarks="Loại 4 câu hỏi, 12 câu hỏi, ..."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-02-06-change-column-content" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="health_question" columnName="content"/>
+        </preConditions>
+        <modifyDataType tableName="health_question" columnName="content" newDataType="VARCHAR(10000)"/>
+    </changeSet>
+
+    <changeSet id="2023-02-14-create-table-package-photo" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="package_photo"/>
+            </not>
+        </preConditions>
+        <createTable tableName="package_photo">
+
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="type" type="VARCHAR(255)"/>
+
+            <column name="image" type="VARCHAR(1000)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="creation_time" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-02-20-update-table-customer" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="customer" columnName="first_name"/>
+            <columnExists tableName="customer" columnName="last_name"/>
+        </preConditions>
+        <dropColumn tableName="customer">
+            <column name="first_name"/>
+            <column name="last_name"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="21-02-create-table-pav_import" author="Ben">
+        <createTable tableName="pav_import">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="package_code" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_occupation_class" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contract_year" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age_insured" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="illustrated_account_value" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="illustrated_refund_value" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="committed_account_value" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="committed_refund_value" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2023-03-03-create-table-segment" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="segment"/>
+            </not>
+        </preConditions>
+        <createTable tableName="segment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sector" type="VARCHAR(255)"/>
+
+            <column name="segment" type="VARCHAR(255)"/>
+
+            <column name="gain" type="VARCHAR(255)"/>
+
+            <column name="creation_time" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-03-03-init-data-segment" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="segment"/>
+        </preConditions>
+        <sqlFile path="db/data/insert_segment.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-03-03-add-column-segment_id-table-customer" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="customer" columnName="segment_id"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="customer">
+            <column name="segment_id" type="BIGINT" remarks="ID phân khúc khách hàng"/>
+        </addColumn>
+    </changeSet>
+
+    <!--hotfix-11-06-->
+    <changeSet id="2023-06-11-change-size-columns-table-customer" author="Ben">
+        <modifyDataType
+                columnName="id_issued_place"
+                newDataType="varchar(255)"
+                tableName="customer"/>
+        <modifyDataType
+                columnName="full_name"
+                newDataType="varchar(255)"
+                tableName="customer"/>
+        <modifyDataType
+                columnName="job"
+                newDataType="varchar(255)"
+                tableName="customer"/>
+        <modifyDataType
+                columnName="id_card_type"
+                newDataType="varchar(255)"
+                tableName="customer"/>
+        <modifyDataType
+                columnName="email"
+                newDataType="varchar(255)"
+                tableName="customer"/>
+        <modifyDataType
+                columnName="identification"
+                newDataType="varchar(255)"
+                tableName="customer"/>
+        <modifyDataType
+                columnName="nationality"
+                newDataType="varchar(255)"
+                tableName="customer"/>
+        <modifyDataType
+                columnName="mb_id"
+                newDataType="varchar(255)"
+                tableName="customer"/>
+    </changeSet>
+
+</databaseChangeLog>

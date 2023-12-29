@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23.642" height="23.642" viewBox="0 0 23.642 23.642">
+  <g id="robotics" transform="translate(0.3 0.3)">
+    <g id="Group_1" data-name="Group 1" transform="translate(0 16.321)">
+      <path id="Path_1" data-name="Path 1" d="M19.682,23.721H3.36A3.36,3.36,0,0,1,3.36,17H19.682a3.36,3.36,0,0,1,0,6.721ZM3.36,17.96a2.4,2.4,0,0,0,0,4.8H19.682a2.4,2.4,0,0,0,0-4.8Z" transform="translate(0 -17)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_2" data-name="Group 2" transform="translate(3.84 18.722)">
+      <path id="Path_2" data-name="Path 2" d="M4.96,21.42a.96.96,0,1,1,.96-.96A.961.961,0,0,1,4.96,21.42Z" transform="translate(-4 -19.5)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_3" data-name="Group 3" transform="translate(8.641 18.722)">
+      <path id="Path_3" data-name="Path 3" d="M9.96,21.42a.96.96,0,1,1,.96-.96A.961.961,0,0,1,9.96,21.42Z" transform="translate(-9 -19.5)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_4" data-name="Group 4" transform="translate(13.441 18.722)">
+      <path id="Path_4" data-name="Path 4" d="M14.96,21.42a.96.96,0,1,1,.96-.96A.961.961,0,0,1,14.96,21.42Z" transform="translate(-14 -19.5)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_5" data-name="Group 5" transform="translate(18.242 18.722)">
+      <path id="Path_5" data-name="Path 5" d="M19.96,21.42a.96.96,0,1,1,.96-.96A.961.961,0,0,1,19.96,21.42Z" transform="translate(-19 -19.5)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_6" data-name="Group 6" transform="translate(3.84)">
+      <path id="Path_6" data-name="Path 6" d="M17.921,3.84H5.44A1.442,1.442,0,0,1,4,2.4V.48A.48.48,0,0,1,4.48,0h14.4a.48.48,0,0,1,.48.48V2.4A1.442,1.442,0,0,1,17.921,3.84ZM4.96.96V2.4a.481.481,0,0,0,.48.48H17.921a.481.481,0,0,0,.48-.48V.96Z" transform="translate(-4)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_7" data-name="Group 7" transform="translate(8.641 3.36)">
+      <path id="Path_7" data-name="Path 7" d="M11.88,6.86A2.884,2.884,0,0,1,9,3.98V3.5h.96v.48a1.92,1.92,0,1,0,3.84,0V3.5h.96v.48A2.884,2.884,0,0,1,11.88,6.86Z" transform="translate(-9 -3.5)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_8" data-name="Group 8" transform="translate(16.561 6.721)">
+      <path id="Path_8" data-name="Path 8" d="M19.17,10.84a1.92,1.92,0,1,1,1.92-1.92A1.922,1.922,0,0,1,19.17,10.84Zm0-2.88a.96.96,0,1,0,.96.96A.961.961,0,0,0,19.17,7.96Z" transform="translate(-17.25 -7)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_9" data-name="Group 9" transform="translate(9.601 14.401)">
+      <path id="Path_9" data-name="Path 9" d="M14.32,15.96H10.48a.48.48,0,1,1,0-.96h3.84a.48.48,0,1,1,0,.96Z" transform="translate(-10 -15)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_10" data-name="Group 10" transform="translate(11.521 8.659)">
+      <path id="Path_10" data-name="Path 10" d="M12.48,14.281A.48.48,0,0,1,12,13.8V11.4a.481.481,0,0,1,.313-.45l5.136-1.9a.48.48,0,1,1,.334.9L12.96,11.735V13.8A.48.48,0,0,1,12.48,14.281Z" transform="translate(-12 -9.019)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+    <g id="Group_11" data-name="Group 11" transform="translate(12.862 5.245)">
+      <path id="Path_11" data-name="Path 11" d="M0,0H.96V4.735H0Z" transform="translate(0 0.841) rotate(-61.129)" fill="#666569" stroke="#666569" stroke-width="0.6"/>
+    </g>
+  </g>
+</svg>

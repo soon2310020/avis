@@ -1,0 +1,25 @@
+{
+  "aiType": "AI_PPF",
+  "inferenceBoundary": {
+    "type": "BATCH",
+    "value": "1D"
+  },
+  "scale": {
+    "type": "PERIOD",
+    "value": "1D"
+  },
+  "fields": {
+    "MOLD": ["ID", "DESIGNED_SHOT"],
+    "MOLD_PART": ["CAVITY"],
+    "statistics": ["ID", "TFF", "HOUR"],
+    "tsd_result": ["SHOT_COUNT", "CORRECTED_SHOT_COUNT", "TSD_LABEL"],
+    "CDATA": ["SC"]
+  },
+  "target": {
+    "MOLD": "db",
+    "MOLD_PART": "db",
+    "STATISTICS": "db",
+    "TSD_RESULT": "db",
+    "CDATA": "db"
+  }
+}

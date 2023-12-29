@@ -1,0 +1,10 @@
+{
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": false,
+  "notiPriority": "LOW",
+  "description": "Someone's note gets new replies",
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "${menuUrl}#${pageType}?popup=NOTE_REPLIED&objectFunctionId=${objectFunctionId}&noteId=${noteId}"
+}

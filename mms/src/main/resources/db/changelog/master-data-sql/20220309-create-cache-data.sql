@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS `CACHE_DATA`;
+
+CREATE TABLE CACHE_DATA (
+	ID bigint not null auto_increment,
+	
+	CACHE_NAME varchar(50),
+	CACHE_KEY varchar(150),
+	CONTENT longtext,
+	
+	LAST_USED_AT datetime,
+	EXPIRED_AT datetime,
+	CREATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+);
+
+ALTER TABLE CACHE_DATA
+   ADD CONSTRAINT UX_CACHE_DATA UNIQUE (CACHE_NAME, CACHE_KEY);

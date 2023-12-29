@@ -1,0 +1,31 @@
+{
+  "aiType": "AI_TSD",
+  "inferenceBoundary": {
+    "type": "BATCH",
+    "value": "1D"
+  },
+  "scale": {
+    "type": "PERIOD",
+    "value": "3D"
+  },
+  "fields": {
+    "STATISTICS": ["ID", "TFF", "HOUR", "SHOT_COUNT", "TAV"],
+    "STATISTICS_EXT": ["SHOT_COUNT_CTT_VAL"],
+    "MOLD": ["ID"],
+    "AI_MOLD_FEATURE": [
+      "SC_MIN",
+      "SC_MAX",
+      "SC_5_PERC",
+      "SC_10_PERC",
+      "SC_15_PERC",
+      "SC_20_PERC",
+      "SC_25_PERC",
+      "SC_50_PERC",
+      "SC_75_PERC"
+    ],
+    "TSD_RESULT": ["LAST_LABEL"]
+  },
+  "target": {
+    "name": "db"
+  }
+}

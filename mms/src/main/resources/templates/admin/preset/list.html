@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+<style type="text/css">
+   .op-user-list .form-group {
+       margin-right: 10px;
+   }
+   .op-user-list .form-group label {
+       margin-right: 5px;
+   }
+
+    .pagination {
+        display:none;
+    }
+    .depth-2 {
+        padding-left: 20px;
+    }
+   .depth-3 {
+           padding-left: 40px;
+       }
+   .depth-4 {
+       padding-left: 60px;
+   }
+   /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+        .wave1 {
+            height: 650px;
+            animation: wave 4s infinite linear forwards;
+             -webkit-animation:wave 4s infinite linear forwards;
+             background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+             border:none;
+        }
+
+        .wave {
+            height: 121px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation:wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+            border: none;
+        }
+        .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{
+            visibility:hidden;
+        }
+        .card.wave div, .card.wave1 div{
+            display: none;
+        }
+
+
+</style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave">
+                    <div class="card-header">
+                        <strong th:text="#{reset}"></strong>
+
+                        <div class="card-header-actions">
+                            <span class="card-header-action">
+                                <small class="text-muted"><span  th:text="#{total}+':'"></span> {{total}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" v-model="requestParam.sort" />
+
+                        <div class="form-row">
+                            <div class="col-md-8 mb-3 mb-md-0 col-12 ">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-search"></i></div>
+                                    </div>
+                                    <input type="text" @input="requestParam.query = $event.target.value" @keyup="search" class="form-control" th:placeholder="#{placeholder_mold_misconfigured}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mb-3 mb-md-0">
+                                <select class="form-control" v-model="requestParam.operatingStatus" @change="search">
+                                    <option value="" selected disabled hidden th:text="#{op}"></option>
+                                    <option value="WORKING"  th:text="#{active}"></option>
+                                    <option value="IDLE" th:text="#{idle}"></option>
+                                    <option value="NOT_WORKING" th:text="#{inactive}"></option>
+                                    <option value="DISCONNECTED" th:text="#{disconnected}"></option>
+                                    <option value="ALL" th:text="#{all}"></option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2 mb-3 mb-md-0">
+                                <select class="form-control" v-model="requestParam.equipmentStatus" @change="search">
+                                    <option value="" selected disabled hidden th:text="#{status}"></option>
+
+                                    <template v-for="code in codes.EquipmentStatus">
+                                        <option :value="code.code">{{ code.title }}</option>
+                                    </template>
+                                    <option value="ALL" th:text="#{all}"></option>
+                                </select>
+                            </div>
+
+                            <!-- <div class="col-md-auto">
+                                <div>
+                                    <button class="btn btn-success mr-5px" type="button" @click="search">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div> -->
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="display:none">
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> <span th:text="#{submit}"></span></button>
+                        <button class="btn btn-sm btn-danger" type="reset">
+                            <i class="fa fa-ban"></i> <span th:text="#{reset}"></span></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave1">
+                    <div class="card-header" style="display:none">
+                        <i class="fa fa-align-justify"></i> <span th:text="#{striped_tbl}"></span>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <op-status v-if="Object.entries(resources).length" :resources="resources"></op-status>
+                        </div>
+
+
+                        <ul class="nav nav-tabs" style="margin-bottom: -1px">
+<!--
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{active: requestParam.status == 'all'}" href="#" @click.prevent="tab('all')">
+                                    <span th:text="#{all}"></span>
+                                    <span class="badge badge-light badge-pill" v-if="requestParam.status == 'all'">{{ total }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown" v-for="code in codes.CompanyType" v-if="code.enabled">
+                                <a class="nav-link" :class="{active: requestParam.status == code.code}" href="#"@click.prevent="tab(code.code)">{{code.title}}
+                                    <span class="badge badge-light badge-pill" v-if="requestParam.status == code.code">{{ total }}</span>
+                                </a>
+                            </li>
+-->
+
+                            <li style="width: 170px" class="nav-item">
+                                <a class="nav-link" :class="{active: tabType == 'tooling'}" href="#" @click.prevent="tab('tooling')">Reset Tooling
+                                    <span class="badge badge-light badge-pill" v-if="tabType == 'tooling'">{{ total }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{active: tabType == 'counter'}" href="#" @click.prevent="tab('counter')">Reset Counter
+                                    <span class="badge badge-light badge-pill" v-if="tabType == 'counter'">{{ total }}</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+
+
+                        <table class="table table-responsive-sm table-striped">
+                            <colgroup>
+                                <col v-if="tabType != 'counter'"/>
+                                <col v-if="tabType != 'counter'"/>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col style="width:80px"/>
+
+                            </colgroup>
+<!--                            <template v-if="tabType != 'counter'">-->
+                            <thead v-if="tabType != 'counter'" :class="{'invisible': tabType == 'counter' || listChecked.length != 0}" id="thead-actionbar" class="custom-header-table">
+                                <tr style="height: 57px" class="tr-sort">
+                                    <th class="custom-td">
+                                        <div class="custom-td_header">
+                                            <input id="checkbox-all" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </div>
+                                    </th>
+                                    <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.TOOLING_ID}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.TOOLING_ID)"><span th:text="#{tooling_id}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.COUNTER_ID}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.COUNTER_ID)"><span th:text="#{counter_id}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.COMPANY}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.COMPANY)"><span th:text="#{company}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.LOCATION}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.LOCATION)"><span th:text="#{location}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.LAST_SHOT}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.LAST_SHOT)"><span th:text="#{accumulated_shots}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-center __sort" v-bind:class="[ {'active': currentSortType === sortType.OP}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.OP)"><span th:text="#{op}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-center __sort" v-bind:class="[ {'active': currentSortType === sortType.STATUS}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.STATUS)"><span th:text="#{reset_status}"></span><span class="__icon-sort"></span></th>
+                                     <th style="vertical-align: middle;" th:text="#{reset}"></th>
+    <!--                                <th th:text="#{action}"></th>-->
+                                </tr>
+                            </thead>
+                            <div v-if="tabType != 'counter' && listChecked.length != 0" class="first-checkbox-zone2">
+                                    <div class="first-checkbox2" style="display: flex;align-items: center;padding-left: 0;width: 170px;">
+                                        <div>
+                                            <input id="checkbox-all-3" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </div>
+                                    </div>
+                                    <div class="action-bar">
+                                        <div v-if="listChecked.length > 1 && requestParam.status != 'DELETED'">
+                                            No batch action is available
+                                        </div>
+                                        <div v-if="listChecked.length == 1 && requestParam.status != 'DELETED'" class="action-item" @click="showSystemNoteModal(getPresetData())">
+                                            <span>Memo</span>
+                                            <i class="icon-action memo-icon"></i>
+                                        </div>
+                                        <div v-if="listChecked.length == 1 && requestParam.status != 'DELETED' && getPresetData().counterPresetStatus == null" class="action-item" v-click-outside="closeShowResetDropDown">
+                                            <div class="change-status-dropdown drowdown d-inline">
+                                                <div title="Reset" class="change-status"
+                                                    @click.prevent="showPresetForm(getPresetData())">
+                                                    <span>Reset</span>
+                                                    <img src="/images/icon/reset-gray.svg" width="12" height="12"/>
+                                                </div>
+                                                <!-- <template>
+                                                    <a-dropdown v-model="showResetDropdown" :trigger="['click']">
+                                                        <a-menu  slot="overlay" style="transform: translate(-12px, 0px);">
+                                                            <a-menu-item @click="handleClickReset('RESET',getPresetData())" v-if="checkShowReset('RESET',getPresetData())" v-text="resources['reset_counter']"></a-menu-item>
+                                                            <a-menu-item @click="handleClickReset('EDIT_RESET',getPresetData())" v-if="checkShowReset('EDIT_RESET',getPresetData())" v-text="resources['edit_reset']"></a-menu-item>
+                                                            <a-menu-item @click="handleClickReset('CANCEL_RESET',getPresetData())" v-if="checkShowReset('CANCEL_RESET',getPresetData())"  v-text="resources['cancel_reset']"></a-menu-item>
+                                                        </a-menu>
+                                                        <div title="Reset" class="change-status"
+                                                             @click="showResetDropdown = !showResetDropdown">
+                                                            <span>Reset</span>
+                                                            <img src="/images/icon/reset-gray.svg" width="12" height="12"/>
+                                                        </div>
+                                                    </a-dropdown>
+                                                </template> -->
+                                            </div>
+                                        </div>
+                                        <!-- <div v-if="listChecked.length == 1 && requestParam.status != 'DELETED' && getSingleCheckedItemInfo().counterCode != ''" class="action-item" @click="handleClickReset(getSingleCheckedItemInfo())">
+                                            <span>Reset</span>
+                                            <img src="/images/icon/reset-gray.svg" width="12" height="12"/>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            <tbody v-if="tabType != 'counter'" class="op-list" style="display:none">
+                                <tr v-for="(result, index, id) in results" :id="result.id" >
+                                    <td class="custom-td">
+                                        <template v-if="listChecked.length >= 0">
+                                            <input @click="(e) => check(e, result)" :checked="checkSelect(result.id)" class="checkbox"
+                                                   type="checkbox" :id="result.id + 'checkbox'" :value="result.id">
+<!--                                            <label class="custom-control-labelx" :for="result.id + 'checkbox'"></label>-->
+                                        </template>
+                                    </td>
+                                    <td class="text-left">
+<!--
+                                        <div>
+                                            {{result.equipmentCode}}
+
+                                        </div>
+
+                                        <div class="small text-muted">
+                                            <span th:text="#{updated_at}"></span>
+                                            &lt;!&ndash;{{result.updatedDate}}&ndash;&gt;
+                                            {{formatToDate(result.updatedAt)}}
+                                        </div>
+-->
+                                        <a href="#" @click.prevent="showMoldDetails(result)">
+                                            {{ result.equipmentCode }}
+                                        </a>
+                                        <div class="small text-muted font-size-11-2">
+                                            <span th:text="#{updated_on}"></span>  {{formatToDate(result.lastShotAt)}}
+                                        </div>
+                                    </td>
+                                    <td class="text-left">
+                                        <span v-if="result.counterCode">{{result.counterCode}}</span>
+                                    </td>
+                                    <td class="text-left">
+<!--
+                                        <div class="small text-muted">{{result.companyId}}</div>
+                                        <span v-if="result.companyName">{{result.companyName}}</span>
+-->
+                                        <a class="font-size-14" href="#" @click.prevent="showCompanyDetailsById(result.companyIdByLocation)">
+                                            {{result.companyName}}
+                                        </a>
+                                        <div class="small text-muted font-size-11-2">
+                                            {{result.companyCode}}
+                                        </div>
+                                    </td>
+                                    <td class="text-left">
+                                        <div v-if="result.locationCode">
+                                            <div class="font-size-14">
+                                                <a href="#"
+                                                   @click.prevent="showLocationHistory(result)">
+                                                    {{result.locationName}}
+                                                </a>
+                                            </div>
+
+                                            <div class="small text-muted font-size-11-2">
+                                                {{result.locationCode}}
+                                            </div>
+<!--                                            <div class="small text-muted">{{result.locationCode}}</div>
+                                            <div v-html="locationName(result.locationName, result.locationEnabled)"></div>-->
+                                        </div>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <span>{{formatNumber(result.lastShot)}}</span>
+                                        <div>
+                                            <span class='font-size-11-2'>{{result.lastShot ? 'shots' : ''}}</span>
+                                        </div>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span v-if="result.operatingStatus == 'WORKING'" class="op-active label label-success"></span>
+                                        <span v-if="result.operatingStatus == 'IDLE'" class="op-active label label-warning"></span>
+                                        <span v-if="result.operatingStatus == 'NOT_WORKING'" class="op-active label label-inactive"></span>
+                                        <span v-if="result.operatingStatus == 'DISCONNECTED'" class="op-active label label-danger"></span>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span v-if="result.counterPresetStatus == 'READY'" class="label label-danger" th:text="#{in_progress}"></span>
+                                    </td>
+
+                                    <td>
+                                        <!-- <a v-if="result.counterCode != ''" href="#" class="btn btn-default" @click.prevent="showPresetForm(result)" th:text="#{reset}"></a> -->
+                                        <a v-if="result.counterCode != ''" href="#" class="btn btn-default" @click.prevent="handleClickReset(result)" th:text="#{reset}"></a>
+                                    </td>
+<!--                                    <td>-->
+<!--                                        <a href="javascript:void(0)" @click="showSystemNoteModal(result)" title="Add note" class="table-action-link note">-->
+<!--                                            <img src="/images/icon/note.svg" alt="Add note" />-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+                                </tr>
+                            </tbody>
+<!--                            </template>-->
+
+<!--                            <template v-if="tabType == 'counter'">-->
+                            <thead :class="{'invisible': tabType != 'counter' || listChecked.length != 0}" id="thead-actionbar" class="custom-header-table">
+                                <tr style="height: 57px" class="tr-sort">
+                                <th class="custom-td">
+                                    <div class="custom-td_header">
+                                        <input id="checkbox-alll" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                    </div>
+                                </th>
+                                <!--<th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortTypeCounter.TOOLING_ID}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortTypeCounter.TOOLING_ID)">Tooling ID<span class="__icon-sort"></span></th>-->
+                                <th style="text-align: left;" class="__sort" v-bind:class="[ {'active': currentSortType === sortTypeCounter.COUNTER_ID}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortTypeCounter.COUNTER_ID)">Sensor ID<span class="__icon-sort"></span></th>
+                                <!--<th class="__sort" v-bind:class="[ {'active': currentSortType === sortTypeCounter.COMPANY}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortTypeCounter.COMPANY)">Company<span class="__icon-sort"></span></th>-->
+                                <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortTypeCounter.LOCATION}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortTypeCounter.LOCATION)">Location<span class="__icon-sort"></span></th>
+                                <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortTypeCounter.LAST_SHOT}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortTypeCounter.LAST_SHOT)">Accumulated Shots<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortTypeCounter.OP}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortTypeCounter.OP)">OP<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortTypeCounter.STATUS}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortTypeCounter.STATUS)">Reset Status<span class="__icon-sort"></span></th>
+                                <th  style="vertical-align: middle;">Reset</th>
+<!--                                <th>Action</th>-->
+                            </tr>
+                            </thead>
+                            <div v-if="tabType == 'counter' && listChecked.length != 0" class="first-checkbox-zone2">
+                                <div class="first-checkbox2" style="display: flex;align-items: center;padding-left: 0;width: 170px;">
+                                    <div>
+                                        <input id="checkbox-all-2" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                    </div>
+                                </div>
+                                <div class="action-bar">
+                                    <div v-if="listChecked.length > 1">
+                                        No batch action is available
+                                    </div>
+                                    <div v-if="listChecked.length == 1 && requestParam.status != 'DELETED'" class="action-item" @click="showSystemNoteModal(getPresetData())">
+                                        <span>Memo</span>
+                                        <i class="icon-action memo-icon"></i>
+                                    </div>
+                                    <!-- <div v-if="listChecked.length == 1 && requestParam.status != 'DELETED' && getSingleCheckedItemInfo().counterCode != ''" class="action-item" @click="handleClickReset(getSingleCheckedItemInfo())">
+                                        <span>Reset</span>
+                                        <img src="/images/icon/reset-gray.svg" width="12" height="12"/>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <tbody v-if="tabType == 'counter'" class="op-list" style="display:none">
+                                <tr v-for="(result, index, id) in results" :id="result.id" >
+<!--                                    <td class="text-left">
+                                        <div>
+                                            {{result.equipmentCode}}
+
+                                        </div>
+
+                                        <div class="small text-muted">
+                                            Updated at
+                                            &lt;!&ndash;{{result.updatedDate}}&ndash;&gt;
+                                            {{formatToDate(result.updatedAt)}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span v-if="result.counterCode">{{result.counterCode}}</span>
+                                    </td>-->
+                                    <td class="custom-td">
+                                        <template v-if="listChecked.length >= 0">
+                                            <input @click="(e) => check(e, result)" :checked="checkSelect(result.id)" class="checkbox"
+                                                   type="checkbox" :id="result.id + 'checkbox'" :value="result.id">
+<!--                                            <label class="custom-control-labelx" :for="result.id + 'checkbox'"></label>-->
+                                        </template>
+                                    </td>
+                                    <td class="text-left">
+                                        <div>
+                                           {{result.equipmentCode}}
+                                        </div>
+
+                                        <div class="small text-muted">
+                                            Updated at
+                                            <!--{{result.updatedDate}}-->
+                                            {{formatToDate(result.updatedAt)}}
+                                        </div>
+                                    </td>
+<!--
+                                    <td>
+                                        <span v-if="result.companyName">{{result.companyName}}</span>
+                                    </td>
+-->
+                                    <td class="text-left">
+                                        <div v-if="result.locationCode">
+                                            <div class="font-size-14">
+                                                {{result.locationName}}
+                                            </div>
+                                            <div class="small text-muted font-size-11-2">
+                                                {{result.locationCode}}
+                                            </div>
+<!--
+                                            <div class="small text-muted">{{result.locationCode}}</div>
+                                            <div v-html="locationName(result.locationName, result.locationEnabled)"></div>
+-->
+                                        </div>
+                                    </td>
+
+                                    <td class="text-left">
+                                        <span>{{formatNumber(result.shotCount)}}</span>
+                                    </td>
+
+                                    <td>
+                                        <span v-if="result.operatingStatus == 'WORKING'" class="op-active label label-success"></span>
+                                        <span v-if="result.operatingStatus == 'IDLE'" class="op-active label label-warning"></span>
+                                        <span v-if="result.operatingStatus == 'NOT_WORKING'" class="op-active label label-inactive"></span>
+                                        <span v-if="result.operatingStatus == 'DISCONNECTED'" class="op-active label label-danger"></span>
+                                    </td>
+
+                                    <td>
+                                        <span v-if="result.presetStatus == 'READY'" class="label label-danger">In Progress</span>
+                                    </td>
+
+                                    <td>
+                                        <a href="#" class="btn btn-default" @click.prevent="showPresetForm(result)">Reset</a>
+                                    </td>
+<!--                                    <td>-->
+<!--                                        <a href="javascript:void(0)" @click="showSystemNoteModal(result)" title="Add note" class="table-action-link note">-->
+<!--                                            <img src="/images/icon/note.svg" alt="Add note" />-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+                                </tr>
+                            </tbody>
+<!--                            </template>-->
+                        </table>
+
+                        <div class="no-results d-none" th:text="#{no_results}"></div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <ul class="pagination">
+                                    <li v-for="(data, index) in pagination" class="page-item" :class="{active: data.isActive}">
+                                        <a class="page-link"   @click="paging(data.pageNumber)">{{data.text}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <location-history :resources="resources"></location-history>
+        <mold-details :resources="resources"></mold-details>
+        <preset-form :resources="resources"></preset-form>
+        <system-note system-note-function="RESET" :resources="resources"></system-note>
+        <reset-drawer :resources="resources" :reload-page="reloadPage"></reset-drawer>
+        <action-bar-feature feature="ACTION_BAR" ></action-bar-feature>
+        <company-details :resources="resources"></company-details>
+
+    </div>
+
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/preset/list.js?'+${noCacheVer}"></script>
+</th:block>
+</html>

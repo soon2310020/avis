@@ -1,0 +1,47 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2023-12-25:create-mb-employee" author="SONTC">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="mb_employee"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="mb_employee">
+            <column name="identity_card_number" type="VARCHAR(20)" remarks="Identity card number of the employee">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="mb_id" type="VARCHAR(15)" remarks="Unique identifier for mb employee"/>
+            <column name="employee_code" type="VARCHAR(36)" remarks="Code assigned to mb employee"/>
+            <column name="employee_name" type="VARCHAR(100)" remarks="MB employee name"/>
+            <column name="managing_unit" type="VARCHAR(50)" remarks="Unit where the employee is managed">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)" remarks="Email address of the employee"/>
+            <column name="status" type='boolean' remarks="Activity status"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="current_timestamp" remarks="Timestamp indicating the creation date and time"/>
+            <column name="updated_at" type="TIMESTAMP" defaultValueDate="current_timestamp" remarks="Timestamp indicating the last update date and time"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-12-13:alter-table-customer-add-managing_unit" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="customer" columnName="managing_unit"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="customer">
+            <column name="managing_unit" type="VARCHAR(25)" remarks="Đơn vị quản lý thuộc tập đoàn MB"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2023-12-14:add-index-table-customer" author="VinhCv">
+        <modifyDataType tableName="customer" columnName="identification" newDataType="varchar(20)"/>
+        <createIndex indexName="index_customer_identification" tableName="customer">
+            <column name="identification"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

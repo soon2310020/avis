@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+<th:block layout:fragment="op-head">
+  <style type="text/css">
+      /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+      .wave1 {
+          height: 700px !important;
+          animation: wave 4s infinite linear forwards !important;
+          -webkit-animation: wave 4s infinite linear forwards !important;
+          background: linear-gradient(
+                  to right,
+                  #fcfcfc 8%,
+                  #ededed 18%,
+                  #fcfcfc 33%
+          ) !important;
+          border: none !important;
+      }
+
+      .wave {
+          height: 166px;
+          animation: wave 4s infinite linear forwards;
+          -webkit-animation: wave 4s infinite linear forwards;
+          background: linear-gradient(
+                  to right,
+                  #fcfcfc 8%,
+                  #ededed 28%,
+                  #fcfcfc 33%
+          );
+          border: none;
+      }
+
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+          visibility: hidden;
+      }
+
+      .card.wave div,
+      .card.wave1 div {
+          display: none !important;
+      }
+
+      .footer-submit {
+          padding: 0px 26px 0px 0px !important;
+          margin-top: 6%;
+      }
+  </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+  <div id="app" class="mainContent">
+    <!--        wave-->
+    <div class="d-flex h-100 align-items-stretch wave">
+      <div class="col-sm-3 pl-0">
+        <!--                wave-->
+        <div class="card mycard1 wave">
+          <div
+            class="card-body custom d-flex flex-column p-0 m-0 align-items-center"
+          >
+            <div class="heading1">Profile Image</div>
+            <div class="position-relative">
+              <div class="imgage">
+                <img
+                  v-if="imgDataUrl==null"
+                  width="96px"
+                  height="96px"
+                  src="/images/icon/uploadImage.svg"
+                />
+                <img
+                  v-if="imgDataUrl!=null"
+                  :src="imgDataUrl"
+                  style="border-radius: 48px; width: 96px; height: 96px"
+                />
+              </div>
+              <div class="position-absolute pencil">
+                <div>
+                  <button @focus="handleDropdown()">
+                    <img
+                      width="22px"
+                      height="22px"
+                      src="/images/icon/pencil.svg"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </div>
+              <div
+                :class="dropdown ? 'd-flex' : 'd-none'"
+                class="position-absolute dropdown justify-content-center flex-column align-items-center"
+              >
+                <button @click="showUploadProfile">Upload Photo</button>
+                <button v-if="imgDataUrl!=null" @click.stop="showWarning()">
+                  Remove
+                </button>
+              </div>
+            </div>
+            <div class="profile-info">
+              <h2>{{userName}}</h2>
+              <p>{{user?.email}}</p>
+            </div>
+            <div
+              class="profile-category d-flex flex-column justify-content-start align-items-start"
+            >
+              <div class="info">
+                <h2>Company</h2>
+                <p>{{user?.company?.name}}</p>
+              </div>
+              <div class="info">
+                <h2>Position</h2>
+                <p>{{position}}</p>
+              </div>
+              <div class="info">
+                <h2>Access Level</h2>
+                <p>Regular</p>
+              </div>
+              <div class="info">
+                <h2>Role</h2>
+                <p>{{user?.roleUserData}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="customCol">
+        <!--                wave1-->
+        <div class="card mycard2 wave1">
+          <div class="">
+            <div class="profile">
+              <div>
+                <div class="profileText">Profile</div>
+                <div class="personal">Update your personal profile here.</div>
+              </div>
+
+              <form
+                class="needs-validation customForm"
+                @submit.prevent="submit"
+              >
+                <div>
+                  <div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label" for="name">
+                        <span class="customFormStyle">Full Name</span>
+                        <span class="avatar-status badge-danger"></span>
+                        <span class="badge-require"></span>
+                      </label>
+                      <div class="col-md-5">
+                        <input
+                          v-model="user.name"
+                          readonly
+                          type="text"
+                          id="name"
+                          class="form-control customFormStyle"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label" for="email">
+                        <span class="customFormStyle">Email Address</span>
+                        <span class="avatar-status badge-danger"></span>
+                        <span class="badge-require"></span>
+                      </label>
+                      <div class="col-md-5">
+                        <input
+                          type="email"
+                          v-model="user.email"
+                          readonly
+                          id="email"
+                          class="form-control customFormStyle"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label" for="pass">
+                      <span class="customFormStyle">Password</span>
+                      <span class="avatar-status badge-danger"></span>
+                      <span class="badge-require"></span>
+                    </label>
+                    <div class="col-md-5 pwd">
+                      <div class="relative password-input-container">
+                        <input
+                        v-model="password"
+                        :type="type"
+                        id="pass"
+                        class="form-control customFormStyle password-input"
+                        placeholder="Password"
+                        @click="typing = true"
+                        @input="passwordCheck"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*.]).{8,}"
+                      />
+                      <div class="absolute" style="border-radius: 0.25rem; right: 10px; top: 5px;">
+                        <i
+                          v-show="eye"
+                          class="fa fa-eye-slash"
+                          aria-hidden="true"
+                          style="cursor: pointer"
+                          @click="eyeChange"
+                        ></i>
+                        <i
+                          v-show="!eye"
+                          class="fa fa-eye"
+                          aria-hidden="true"
+                          style="cursor: pointer"
+                          @click="eyeChange"
+                        ></i>
+                      </div>
+                      </div>
+                      <div class="password-validation" style="margin-left: 30px;">
+                        <p
+                          style="
+                            margin-top: 5px;
+                            font-size: 12px;
+                          "
+                        >
+                          Your password must contain at least:
+                        </p>
+                        <p
+                          class="frmValidation"
+                          :class="{'frmValidation--passed' : password?.length > 7}"
+                        >
+                          <div
+                            class="frmIcon fas"
+                            :class="[password?.length > 7 ? 'icon-check--green' : 'icon-cross--red']"
+                          ></div>
+                          8 characters
+                        </p>
+                        <p
+                          class="frmValidation"
+                          :class="{'frmValidation--passed' : passwordProperties.hasUppercase }"
+                        >
+                          <div
+                            class="frmIcon fas"
+                            :class="[passwordProperties.hasUppercase ? 'icon-check--green' : 'icon-cross--red']"
+                          ></div>
+                          One uppercase letter
+                        </p>
+                        <p
+                          class="frmValidation"
+                          :class="{'frmValidation--passed' : passwordProperties.hasNumber }"
+                        >
+                          <div
+                            class="frmIcon fas"
+                            :class="[passwordProperties.hasNumber ? 'icon-check--green' : 'icon-cross--red']"
+                          ></div>
+                          One number
+                        </p>
+                        <p
+                          class="frmValidation"
+                          :class="{'frmValidation--passed' : passwordProperties.hasSpecial }"
+                        >
+                          <div
+                            class="frmIcon fas"
+                            :class="[passwordProperties.hasSpecial ? 'icon-check--green' : 'icon-cross--red']"
+                          ></div>
+                          One special character: .,!@#$%^&*+=_-
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label" for="cpassword">
+                      <span class="customFormStyle">Confirm Password</span>
+                      <span class="avatar-status badge-danger"></span>
+                      <span class="badge-require"></span>
+                    </label>
+                    <div class="col-md-5 pwd">
+                      <div class="relative password-input-container">
+                        <input
+                        id="cpassword"
+                        v-model="confirmPassword"
+                        :type="type1"
+                        class="form-control customFormStyle password-input"
+                        placeholder="Confirm Password"
+                        @input="confirmPasswordCheck"
+                      />
+                      <div class="absolute" style="border-radius: 0.25rem; right: 10px; top: 5px;">
+                        <i
+                          v-show="eye1"
+                          class="fa fa-eye-slash"
+                          aria-hidden="true"
+                          style="cursor: pointer"
+                          @click="eyeChange1"
+                        ></i>
+                        <i
+                          v-show="!eye1"
+                          class="fa fa-eye"
+                          aria-hidden="true"
+                          style="cursor: pointer"
+                          @click="eyeChange1"
+                        ></i>
+                      </div>
+                      </div>
+                      <div class="password-validation" style="margin-left: 30px;">
+                        <p
+                          style="
+                            margin-top: 5px;
+                            font-size: 12px;
+                          "
+                        >
+                          Your password must contain at least:
+                        </p>
+                        <p
+                          class="frmValidation"
+                          :class="{'frmValidation--passed' : confirmPassword?.length > 7}"
+                        >
+                          <div
+                            class="frmIcon fas"
+                            :class="[confirmPassword?.length > 7 ? 'icon-check--green' : 'icon-cross--red']"
+                          ></div>
+                          8 characters
+                        </p>
+                        <p
+                          class="frmValidation"
+                          :class="{'frmValidation--passed' : confirmPasswordProperties.hasUppercase }"
+                        >
+                          <div
+                            class="frmIcon fas"
+                            :class="[confirmPasswordProperties.hasUppercase ? 'icon-check--green' : 'icon-cross--red']"
+                          ></div>
+                          One uppercase letter
+                        </p>
+                        <p
+                          class="frmValidation"
+                          :class="{'frmValidation--passed' : confirmPasswordProperties.hasNumber }"
+                        >
+                          <div
+                            class="frmIcon fas"
+                            :class="[confirmPasswordProperties.hasNumber ? 'icon-check--green' : 'icon-cross--red']"
+                          ></div>
+                          One number
+                        </p>
+                        <p
+                          class="frmValidation"
+                          :class="{'frmValidation--passed' : confirmPasswordProperties.hasSpecial }"
+                        >
+                          <div
+                            class="frmIcon fas"
+                            :class="[confirmPasswordProperties.hasSpecial ? 'icon-check--green' : 'icon-cross--red']"
+                          ></div>
+                          One special character: .,!@#$%^&*+=_-
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label" for="department">
+                      <span class="customFormStyle">Department</span>
+                      <span class="avatar-status badge-danger"></span>
+                      <span class="badge-require"></span>
+                    </label>
+                    <div class="col-md-5">
+                      <input
+                        type="text"
+                        v-model="dept"
+                        id="department"
+                        class="form-control customFormStyle"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label" for="position">
+                      <span class="customFormStyle">Position</span>
+                      <span class="avatar-status badge-danger"></span>
+                      <span class="badge-require"></span>
+                    </label>
+                    <div class="col-md-5">
+                      <input
+                        type="text"
+                        v-model="position1"
+                        id="position"
+                        class="form-control customFormStyle"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">
+                      <span class="customFormStyle">Mobile Number</span>
+                    </label>
+                    <div class="col-md-5">
+                      <div class="input-group custom-number">
+                        <vue-tel-input
+                          v-on:country-changed="changeCountryMobile"
+                          placeholder="Mobile Number"
+                          v-model="contactNumber"
+                          style="padding: 0.09rem 0rem; display: inherit"
+                          v-bind="bindProps"
+                          class="form-control customFormStyle"
+                        >
+                        </vue-tel-input>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label">
+                      <span class="customFormStyle">Language</span>
+                    </label>
+                    <div class="col-md-5">
+                      <div class="language-dropdown-wrapper">
+                        <emdn-dropdown-root
+                          :on-dropdown-close="() => isOpenedLanguageDropdown = false"
+                          position="bottom-left"
+                        >
+                          <emdn-dropdown-trigger>
+                            <emdn-cta-button
+                              variant="dropdown"
+                              color-type="white"
+                              :active="isOpenedLanguageDropdown"
+                              :style-props="{ height: '29px' }"
+                              :click-handler="() => isOpenedLanguageDropdown = true"
+                            >{{ displayLanguage }}
+                            </emdn-cta-button>
+                          </emdn-dropdown-trigger>
+                          <emdn-dropdown-portal>
+                            <emdn-dropdown-content>
+                              <emdn-dropdown-item
+                                v-for="(item, index) in languageOptions"
+                                :key="index"
+                                :text="item.title"
+                                @click="(e) => setLanguage(e, item)"
+                              ></emdn-dropdown-item>
+                            </emdn-dropdown-content>
+                          </emdn-dropdown-portal>
+                        </emdn-dropdown-root>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="">
+                  <!-- Dialog Box Start -->
+                  <div v-if="success" class="dialogbox">
+                    <div class="heading1">Success!</div>
+                    <p>Your profile has been saved succesfully.</p>
+                    <div class="close" @click="closeSuccess">
+                      <img
+                        width="11px"
+                        height="11px"
+                        src="/images/icon/cross.svg"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <!-- Dialog Box End -->
+
+                  <div class="row footer-submit">
+                    <button
+                      type="submit"
+                      :disabled="disable"
+                      class="btn mt-0 btn-primary button-custom"
+                      :class="disable ? 'disable-button-edit' : 'button-edit' "
+                    >
+                      Save Changes
+                    </button>
+                    <!--                                        <cta-button :click-handler="submit" class="button-custom"  :disabled="disable" color-type="blue-fill" >Save Changes</cta-button>-->
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <delete-image
+        :confirm-delete="confirmRemove"
+        :is-show-warning-again="true"
+        :resources="resources"
+        :is-remove-image="true"
+      ></delete-image>
+    </div>
+    <upload-profile
+      v-model="show"
+      ref="uploadModalRef"
+      field="img"
+      @crop-success="cropSuccess"
+      @crop-upload-success="cropUploadSuccess"
+      @crop-upload-fail="cropUploadFail"
+      @src-file-set="getFileSet"
+      @clear="removeImgUploaded"
+      :width="250"
+      :height="250"
+      img-bgc="#2E2E2E"
+      :params="params"
+      :headers="headers"
+      img-format="png"
+    ></upload-profile>
+  </div>
+</th:block>
+
+<th:block layout:fragment="op-script">
+  <script
+  defer
+  th:src="'/js/scripts/admin/profile/module-shim.js?'+${noCacheVer}"
+></script>
+  <script
+    defer
+    th:src="'/js/scripts/admin/profile/list.js?'+${noCacheVer}"
+  ></script>
+
+
+  <style>
+      /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+      .wave1 {
+          height: 700px !important;
+          animation: wave 4s infinite linear forwards !important;
+          -webkit-animation: wave 4s infinite linear forwards !important;
+          background: linear-gradient(
+                  to right,
+                  #fcfcfc 8%,
+                  #ededed 18%,
+                  #fcfcfc 33%
+          ) !important;
+          border: none !important;
+      }
+
+      .wave {
+          height: 166px;
+          animation: wave 4s infinite linear forwards;
+          -webkit-animation: wave 4s infinite linear forwards;
+          background: linear-gradient(
+                  to right,
+                  #fcfcfc 8%,
+                  #ededed 28%,
+                  #fcfcfc 33%
+          );
+          border: none;
+      }
+
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+          visibility: hidden;
+      }
+
+      .card.wave div,
+      .card.wave1 div {
+          display: none !important;
+      }
+
+      .breadcrumb {
+          margin-bottom: 0px;
+      }
+
+      .main .container-fluid {
+          padding: 0px !important;
+      }
+  </style>
+  <style scoped>
+      @-webkit-keyframes fadein {
+          from {
+              bottom: 0;
+              opacity: 0;
+          }
+          to {
+              bottom: 100px;
+              opacity: 1;
+          }
+      }
+
+      @keyframes fadein {
+          from {
+              bottom: 0;
+              opacity: 0;
+          }
+          to {
+              bottom: 100px;
+              opacity: 1;
+          }
+      }
+
+      @-webkit-keyframes fadeout {
+          from {
+              bottom: 100px;
+              opacity: 1;
+          }
+          to {
+              bottom: 0;
+              opacity: 0;
+          }
+      }
+
+      @keyframes fadeout {
+          from {
+              bottom: 100px;
+              opacity: 1;
+          }
+          to {
+              bottom: 0;
+              opacity: 0;
+          }
+      }
+
+      .customClose {
+          -webkit-animation: fadein 0s, fadeout 0s 0.5s;
+          animation: fadein 0s, fadeout 0s 0.5s;
+      }
+
+      .dialogbox {
+          -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
+          animation: fadein 0.5s, fadeout 0.5s 4.5s;
+          background: #e6f7ff;
+          border: 1px solid #3491ff;
+          position: fixed;
+          z-index: 1;
+          border-radius: 3px;
+          height: 62px;
+          width: 424px;
+          padding: 15px 20px;
+          bottom: 100px;
+      }
+
+      .dialogbox .close {
+          position: absolute;
+          top: 5px;
+          right: 10px;
+      }
+
+      .dialogbox .heading1 {
+          font-weight: 700;
+          margin: 0px;
+          text-align: left;
+          font-size: 14.66px;
+          line-height: 17.9px;
+          color: #3491ff;
+      }
+
+      .dialogbox p {
+          font-weight: 400;
+          margin: 0px;
+          text-align: left;
+          font-size: 14.66px;
+          line-height: 17.49px;
+          color: #3491ff;
+      }
+
+      .vue-tel-input {
+          border: 1px solid #e4e7ea;
+      }
+
+      .vue-tel-input:focus-within {
+          color: #5c6873;
+          background-color: #fff;
+          border-color: #8ad4ee;
+          outline: 0;
+          box-shadow: 0 0 0 0.2rem rgb(32 168 216 / 25%);
+      }
+
+      .customFormStyle {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14.66px;
+          line-height: 17px;
+          color: #4b4b4b;
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+      }
+
+      .personal {
+          margin-top: 10px;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 11.25px;
+          line-height: 13px;
+          color: #8b8b8b;
+      }
+
+      .profileText {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 14.66px;
+          line-height: 18px;
+          color: #4b4b4b;
+      }
+
+      .pwd {
+          position: relative;
+          height: fit-content;
+      }
+
+      .p-viewer {
+          z-index: 3;
+          position: absolute;
+          top: 25%;
+          right: 23px;
+      }
+
+      .card-body.custom {
+          padding: 29px 29px 0px !important;
+          overflow: auto;
+      }
+
+      .dropdown {
+          box-shadow: 0px 10px 25px rgb(0 0 0 / 25%);
+          bottom: -40px;
+          right: -60px;
+          background: #ffffff;
+          border-radius: 3px;
+          padding: 2px;
+      }
+
+      .dropdown button {
+          border: 0px;
+          outline: none !important;
+          background: none;
+          width: 103px;
+          height: 32px;
+          text-align: left;
+          padding: 6px;
+          font-weight: 400;
+          font-size: 14.66px;
+          line-height: 17px;
+          color: #4b4b4b;
+      }
+
+      .dropdown button:hover {
+          border: 0px;
+          outline: none !important;
+          background: #e6f7ff;
+          width: 103px;
+          height: 32px;
+          text-align: left;
+          padding: 6px;
+          font-weight: 400;
+          font-size: 14.66px;
+          line-height: 17px;
+          color: #4b4b4b;
+      }
+
+      .profile-info h2 {
+          font-style: normal;
+          margin-top: 14px;
+          text-align: center;
+          font-weight: bold;
+          font-size: 14.66px;
+          line-height: 18px;
+          color: #4b4b4b;
+      }
+
+      .profile-info p {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14.66px;
+          text-align: center;
+          margin-top: 7px;
+          line-height: 17px;
+          color: #4b4b4b;
+      }
+
+      .profile-category {
+          width: 100%;
+          margin-top: 38px;
+          gap: 22px;
+      }
+
+      .profile-category h2 {
+          font-weight: 400;
+          font-size: 14.66px;
+          line-height: 17px;
+          color: #c4c4c4;
+      }
+
+      .profile-category p {
+          margin-top: 5px;
+          font-weight: 400;
+          font-size: 14.66px;
+          line-height: 17px;
+          color: #4b4b4b;
+      }
+
+      .heading1 {
+          font-style: normal;
+          font-weight: 700;
+          text-align: center;
+          font-size: 14.66px;
+          margin-bottom: 20px;
+          line-height: 18px;
+          color: #4b4b4b;
+      }
+
+      .pencil {
+          right: 13px;
+          bottom: 0px;
+      }
+
+      .pencil button {
+          border: none;
+          background: none;
+          outline: none !important;
+      }
+
+      .customCol {
+          width: 66%;
+      }
+
+      .button-custom {
+          margin-top: 4% !important;
+          margin-left: 84% !important;
+      }
+
+      .button-edit {
+          width: 102px;
+          height: 31px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 3px;
+          border-radius: 3px;
+          opacity: 1;
+          margin-top: 10%;
+          margin-left: 84%;
+          background: #3491ff;
+          border-radius: 3px;
+      }
+
+      .button-edit:hover {
+          width: 102px;
+          height: 31px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 3px;
+          border-radius: 3px;
+          opacity: 1;
+          margin-top: 10%;
+          margin-left: 84%;
+
+          background: #3585e5;
+          border-radius: 3px;
+      }
+
+      .btn-primary:focus,
+      .btn-primary.focus {
+          box-shadow: none;
+          background: #3585e5;
+          border: 2px solid #daeeff;
+          border-radius: 3px;
+      }
+
+      .btn-primary.button-edit:focus {
+          outline: none !important;
+          box-shadow: none !important;
+          width: 102px;
+          height: 31px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 3px;
+          opacity: 1;
+          margin-top: 10%;
+          margin-left: 84%;
+          background: #3585e5;
+          border: 2px solid #daeeff;
+          border-radius: 3px;
+      }
+
+      .disable-button-edit {
+          width: 102px;
+          height: 31px;
+          border: 1px solid #c4c4c4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 3px;
+          background: #c4c4c4 0% no-repeat padding-box;
+          border-radius: 3px;
+          opacity: 1;
+          margin-top: 10%;
+          margin-left: 84%;
+      }
+
+      .disable-button-edit:hover {
+          width: 102px;
+          height: 31px;
+          border: 1px solid #c4c4c4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 3px;
+          background: #c4c4c4 0% 0% no-repeat padding-box;
+          border-radius: 3px;
+          opacity: 1;
+          margin-top: 10%;
+          margin-left: 84%;
+      }
+
+      .btn-primary.disable-button-edit:disabled,
+      .btn-primary.disable-button-edit.focus {
+          box-shadow: none;
+          background: #c4c4c4 0% 0% no-repeat padding-box !important;
+      }
+
+      .btn-primary.disable-button-edit:disabled {
+          outline: none !important;
+          box-shadow: none !important;
+          cursor: not-allowed;
+          width: 102px;
+          height: 31px;
+          border: 2px solid #c4c4c4;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 3px;
+          background: #c4c4c4 0% 0% no-repeat padding-box !important;
+          border-radius: 3px;
+          opacity: 1;
+          margin-top: 10%;
+          margin-left: 84%;
+      }
+
+      .customForm {
+          margin-top: 50px;
+          margin-left: 15px;
+      }
+
+      .profile {
+          margin-left: 42px;
+          margin-top: 32px;
+      }
+
+      .mainContent {
+          height: 100%;
+      }
+
+      .container-fluid {
+          width: 110%;
+          height: 85vh;
+          background: #e5e5e5 !important;
+      }
+
+      .mycard1 {
+          height: 100%;
+          padding: 0px;
+          margin-bottom: 0px;
+      }
+
+      .mycard2 {
+          height: 100%;
+          padding: 0px;
+          margin-bottom: 0px;
+          width: 103%;
+      }
+
+      .card.mycard2 {
+          overflow-x: auto;
+      }
+
+      .customRow {
+          height: 97%;
+      }
+
+      .language-dropdown-wrapper {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+      }
+
+      .language-dropdown-wrapper img.dropdown {
+          box-shadow: none;
+          bottom: unset;
+          right: unset;
+          background: unset;
+          border-radius: unset;
+          padding: unset;
+      }
+  </style>
+</th:block>
+</html>

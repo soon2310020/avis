@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "Work Order completion approval rejected",
+  "content": "${senderName} (${senderCompanyName}) has disapproved for the ${orderTypeLowercase} reporting.",
+  "emailTitle": "Disapproved request to carry out ${orderTypeLowercase} work order.",
+  "emailContent": "Disapproved request to carry out ${orderTypeLowercase} work order."
+}

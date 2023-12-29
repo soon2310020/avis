@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <style type="text/css">
+        .op-user-list .form-group {
+            margin-right: 10px;
+        }
+
+        .op-user-list .form-group label {
+            margin-right: 5px;
+        }
+
+        .pagination {
+            display: none;
+        }
+
+        .depth-2 {
+            padding-left: 20px;
+        }
+
+        .depth-3 {
+            padding-left: 40px;
+        }
+
+        .depth-4 {
+            padding-left: 60px;
+        }
+
+        .selectbox {
+            position: relative;
+            width: 50px;
+            height: 32px;
+            margin-right: 5px;
+            border: 1px solid #e4e7ea;
+            border-radius: 0.25rem;
+            cursor:pointer;
+            background-color: #fff;
+            z-index: 1;
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+
+        .selectbox.focus {
+            border-color: #66afe9;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        }
+
+        .selectbox:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            width: 0;
+            height: 0;
+            margin-top: -1px;
+            border: solid  #5C6873;
+            border-width: 0 0.8px 0.8px 0;
+            color: #e4e7ea;
+            display: inline-block;
+            padding: 2px;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+
+        .selectbox label {
+            position: absolute;
+            padding: .5em .5em;
+            color: #333;
+            z-index: -1;
+        }
+
+        .selectbox select {
+            width: 100%;
+            height: auto;
+            line-height: normal;
+            font-family: inherit;
+            padding: .8em .5em;
+            border: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        .select {
+            width: 50px;
+            height: 32px;
+            margin-right: 5px;
+            border: 1px solid #e4e7ea;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            color: #5C6873;
+        }
+
+        .id-input {
+            padding: 0.4rem 0.5rem;
+            font-size: 0.765625rem;
+            border-radius: 0.25rem;
+            flex: 1;
+            width: 1px;
+            border: 1px solid #e4e7ea;
+        }
+
+        .input-group-2 {
+            padding: 0px;
+            align-items: center;
+        }
+
+        /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+        .wave1 {
+            height: 700px;
+            animation: wave 4s infinite linear forwards;
+             -webkit-animation:wave 4s infinite linear forwards;
+             background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+             border:none;
+        }
+
+        .wave {
+            height: 166px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation:wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+            border: none;
+        }
+         .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{
+            visibility:hidden;
+        }
+        .card.wave div, .card.wave1 div{
+            display: none;
+        }
+
+        .import-tooling-icon {
+            height: 15px;
+            padding-right: 6px;
+            transform: translateY(-3px);
+        }
+        .nav-tabs .nav-link:first-letter {
+            text-transform: uppercase;
+        }
+
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave">
+                    <div class="card-header">
+                        <strong th:text="#{maintenance_checklist}"></strong>
+
+                        <div class="card-header-actions">
+                            <span class="card-header-action">
+                                <small class="text-muted"><span  th:text="#{total}+':'"></span> {{total}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" v-model="requestParam.sort" />
+                        <div class="form-row">
+                            <div class="col-md-12 col-12">
+
+                                <div class="form-row">
+                                    <!-- <div class="col-md-9 mb-8 mb-md-0 "> -->
+                                    <div class="col-md-12 mb-3 mb-md-0 col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-search"></i></div>
+                                            </div>
+                                            <input type="text" v-model="requestParam.query" @input="requestParam.query = $event.target.value"
+                                                @keyup="search" class="form-control"
+                                                   th:placeholder="#{search_by_selected_column}">
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3 mb-4 mb-md-0">
+                                        <select class="form-control" v-model="requestParam.enabled"
+                                            @change="changeStatus" disabled>
+                                            <option value="" hidden th:text="#{status}"></option>
+                                            <option :value="false" th:text="#{disabled}"></option>
+                                            <option :value="true" th:text="#{enabled}"></option>
+                                        </select>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="display:none">
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> <span th:text="#{submit}"></span></button>
+                        <button class="btn btn-sm btn-danger" type="reset">
+                            <i class="fa fa-ban"></i> <span th:text="#{reset}"></span></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave1">
+                    <div class="card-header" style="display:none">
+                        <i class="fa fa-align-justify"></i> <span th:text="#{striped_tbl}"></span>
+                    </div>
+                    <div class="card-body">
+
+                        <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{active: requestParam.companyType === 'all'}" href="#"
+                                   @click.prevent="tab('all')"><span th:text="#{enabled}"></span>
+                                    <span class="badge badge-light badge-pill"
+                                          v-if="requestParam.companyType === 'all'">{{ total }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{active: requestParam.companyType === 'IN_HOUSE'}" href="#"
+                                   @click.prevent="tab('IN_HOUSE')"><span th:text="#{in-house}"></span>
+                                    <span class="badge badge-light badge-pill"
+                                          v-if="requestParam.companyType === 'IN_HOUSE'">{{ total }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{active: requestParam.companyType === 'SUPPLIER'}" href="#"
+                                   @click.prevent="tab('SUPPLIER')"><span th:text="#{supplier}"></span>
+                                    <span class="badge badge-light badge-pill"
+                                          v-if="requestParam.companyType === 'SUPPLIER'">{{ total }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{active: requestParam.companyType === ''}" href="#"
+                                   @click.prevent="tabToDisable('disabled')"><span th:text="#{disabled}"></span>
+                                    <span class="badge badge-light badge-pill"
+                                          v-if="requestParam.status === 'disabled'">{{ total }}</span>
+                                </a>
+                            </li>
+<!--                            <show-columns style="position: absolute; right: 20px;" @reset-columns-list="handleResetColumnsListSelected" @change-value-checkbox="handleChangeValueCheckBox" :all-columns-list="allColumnList" v-if="Object.entries(resources).length" :resources="resources"></show-columns>-->
+                            <customization-modal style="position: absolute; right: 20px;" :all-columns-list="allColumnList" @save="saveSelectedList" :resources="resources" />
+
+                        </ul>
+                        <table class="table table-responsive-sm table-striped">
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                            </colgroup>
+                            <thead id="thead-actionbar" class="custom-header-table">
+                                <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px" class="tr-sort">
+                                    <th class="custom-td">
+                                        <div class="custom-td_header">
+                                            <input class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </div>
+                                    </th>
+                                    <th v-for="(item, index) in allColumnList" v-if="item.enabled" :key="index"
+                                        :class="[{__sort: item.sortable, active: currentSortType === item.sortField}, isDesc ? 'desc': 'asc', item.label === 'Status' ? '': 'text-left']"
+                                        @click="sortBy(item.sortField)">
+                                        <span>{{item.label}}</span>
+                                        <span v-if="item.sortable" class="__icon-sort"></span>
+                                    </th>
+<!--                                    <th style="min-width: 130px"><span th:text="#{action}"></span></th>-->
+                                </tr>
+
+                                <tr :class="{'d-none zindexNegative': listChecked.length == 0}" id="action-bar" class="tr-sort empty-tr">
+                                    <th class="empty-th">
+                                      <div class="first-checkbox-zone2">
+                                        <div class="first-checkbox2" style="display: flex;align-items: center;padding-left: 0;width: 110px;">
+                                          <div>
+                                            <input id="checkbox-all-2" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                          </div>
+                                        </div>
+                                        <div class="action-bar">
+                                            <div v-if="listChecked.length == 1" @click="goToEdit" class="action-item">
+                                                <span>Edit</span>
+                                                <i class="icon-action edit-icon"></i>
+                                            </div>
+                                            <div v-if="listChecked.length == 1" @click="showRevisionHistory(listChecked[0])" class="action-item">
+                                                <span>View Edit History</span>
+                                                <i class="icon-action view-edit-history-icon"></i>
+                                            </div>
+                                            <div v-if="listChecked.length == 1" class="action-item" @click="showSystemNoteModal(listChecked[0])">
+                                                <span>Memo</span>
+                                                <i class="icon-action memo-icon"></i>
+                                            </div>
+                                            <div v-if="requestParam.status !== 'disabled'" class="action-item" @click.prevent="disable(listCheckedFull)">
+                                                <span>Disable</span>
+                                                <div class="icon-action disable-icon"></div>
+                                            </div>
+                                            <div v-if="requestParam.status === 'disabled'" class="action-item" @click.prevent="enable(listCheckedFull)">
+                                                <span>Enable</span>
+                                                    <div class="icon-action enable-icon"></div>
+                                            </div>
+                                            <!--                                    <div v-if="requestParam.status != 'DELETED'" @click="showDeletePopup" class="action-item">-->
+                                            <!--                                        <span>Delete</span>-->
+                                            <!--                                        <svg xmlns="http://www.w3.org/2000/svg" width="6.949" height="8.611" viewBox="0 0 6.949 8.611">-->
+                                            <!--                                            <g id="Icon__delete" data-name="Icon_ delete" transform="translate(0.25 0.25)">-->
+                                            <!--                                                <path id="Icon_material-delete" data-name="Icon material-delete" d="M7.961,11.71a.914.914,0,0,0,.921.9h3.685a.914.914,0,0,0,.921-.9V6.3H7.961Zm5.988-6.759H12.337L11.876,4.5h-2.3l-.461.451H7.5v.9h6.449Z" transform="translate(-7.5 -4.5)" fill="none" stroke="#4b4b4b" stroke-width="0.5"/>-->
+                                            <!--                                            </g>-->
+                                            <!--                                        </svg>-->
+                                            <!--                                    </div>-->
+                                            <!--                                    <div v-if="requestParam.status == 'DELETED' && listChecked.length == 1" class="action-item">-->
+                                            <!--                                        <span @click.prevent="restoreItem()">Restore</span>-->
+                                            <!--                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 68.137 58.403">-->
+                                            <!--                                            <path id="Icon_material-settings-backup-restore" data-name="Icon material-settings-backup-restore" d="M45.425,33.7a6.489,6.489,0,1,0-6.489,6.489A6.508,6.508,0,0,0,45.425,33.7ZM38.935,4.5a29.2,29.2,0,0,0-29.2,29.2H0L12.978,46.68,25.957,33.7H16.223A22.728,22.728,0,1,1,25.762,52.2l-4.607,4.672A29.2,29.2,0,1,0,38.935,4.5Z" transform="translate(0 -4.5)" fill="#4b4b4b"/>-->
+                                            <!--                                        </svg>-->
+                                            <!--                                    </div>-->
+                                        </div>
+                                    </div>
+                            </thead>
+
+                            <tbody class="op-list" style="display:none">
+                                <tr v-for="(result, index, id) in results" :id="result.id">
+                                    <td class="custom-td">
+                                        <template v-if="listChecked.length >= 0">
+                                            <input @click="(e) => check(e, result)" :checked="checkSelect(result.id)" class="checkbox"
+                                                   type="checkbox" :id="result.id + 'checkbox'" :value="result.id">
+<!--                                            <label class="custom-control-labelx" :for="result.id + 'checkbox'"></label>-->
+                                        </template>
+                                    </td>
+                                    <template v-for="(column, columnIndex) in allColumnList" v-if="column.enabled">
+                                        <td v-if="column.field === 'checklistCode'" class="text-left">
+                                            {{ result.checklistCode }}
+                                            <div class="small text-muted font-size-11-2">
+                                                <span th:text="#{registered}+':'"></span>
+                                                {{formatToDate(result.createdAt)}}
+                                            </div>
+                                        </td>
+                                        <td v-else-if="column.field === 'companyName'" class="text-left">
+                                            <!--<div class="small text-muted">{{result.company.companyTypeText}}</div>-->
+                                            {{ result.company.name }}
+                                        </td>
+                                        <td v-else-if="column.field === 'address'" class="text-left">
+                                            {{ result.company.address }}
+                                        </td>
+                                        <td style="vertical-align: middle!important;" class="text-center op-status-td" v-else-if="column.field === 'enabled'">
+                                            <span v-if="result.enabled" class="label label-success" th:text="#{enabled}"> </span>
+                                            <span v-else class="label label-danger" th:text="#{disabled}"> </span>
+                                        </td>
+                                        <td class="text-left" v-else>
+                                            {{result[column.field]}}
+                                        </td>
+                                    </template>
+<!--                                    <td>-->
+<!--                                        <a :href="'/admin/maintenance-checklist/' + result.id + '/edit'" class="table-action-link edit" title="Edit">-->
+<!--                                            <img src="/images/icon/edit.svg" alt="edit" />-->
+<!--                                        </a>-->
+
+<!--                                        <div class="drowdown d-inline">-->
+<!--                                            <a href="javascript:void(0)" title="Change status" class="table-action-link change-status"-->
+<!--                                               data-toggle="dropdown" role="button"-->
+<!--                                               @click="changeShow(result.id)"-->
+<!--                                               aria-haspopup="true" aria-expanded="false">-->
+<!--                                                <img src="/images/icon/change-status.svg" alt="Change status" />-->
+<!--                                            </a>-->
+<!--                                            <ul class="dropdown-menu" :class="[(parseInt(result.id) === parseInt(showDrowdown)) ? `show` : ``]">-->
+<!--                                                <li class="dropdown-header"><span class="op-change-status" th:text="#{change_status}"></span></li>-->
+<!--                                                <li v-if="!result.enabled">-->
+<!--                                                    <div class="dropdown-item" @click.prevent="enable(result)">-->
+<!--                                                        <span th:text="#{enable}"></span>-->
+<!--                                                    </div>-->
+<!--                                                </li>-->
+<!--                                                <li v-if="result.enabled">-->
+<!--                                                    <div class='dropdown-item' @click.prevent="disable(result)">-->
+<!--                                                        <span th:text="#{disable}"></span>-->
+<!--                                                    </div>-->
+<!--                                                </li>-->
+<!--                                                &lt;!&ndash;<li>&ndash;&gt;-->
+<!--                                                    &lt;!&ndash;<div class="dropdown-item" @click.prevent="deleteChecklist(result)"><span th:text="#{delete}"></span></div>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;</li>&ndash;&gt;-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                        <a href="javascript:void(0)"-->
+<!--                                           @click.prevent = "showRevisionHistory(result.id)"-->
+<!--                                           title="View edit history"-->
+<!--                                           class="table-action-link revision-history">-->
+<!--                                            <img src="/images/icon/revision-history.svg" alt="View edit history" />-->
+<!--                                        </a>-->
+<!--                                        <a href="javascript:void(0)" @click="showSystemNoteModal(result)" title="Add note" class="table-action-link note">-->
+<!--                                            <img src="/images/icon/note.svg" alt="Add note" />-->
+<!--                                        </a>-->
+<!--                                    </td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="no-results d-none" th:text="#{no_results}"></div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <ul class="pagination">
+                                    <li v-for="(data, index) in pagination" class="page-item"
+                                        :class="{active: data.isActive}">
+                                        <a class="page-link" @click="paging(data.pageNumber)">{{data.text}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-auto ml-auto">
+                                <a href="/admin/maintenance-checklist/new" class="btn btn-primary"><i class="fa fa-plus"></i>
+                                    <span th:text="#{create_checklist}"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <revision-history :resources="resources"></revision-history>
+        <system-note :system-note-function="pageType" :resources="resources"></system-note>
+        <action-bar-feature feature="ACTION_BAR" ></action-bar-feature>
+    </div>
+
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script th:src="'/js/cdnnzlintplgihj0vtlqw9bl7invttp2pwr.js?'+${noCacheVer}" async></script>
+    <script defer th:src="'/js/scripts/admin/maintenance-checklist/list.js?'+${noCacheVer}"></script>
+</th:block>
+</html>

@@ -1,0 +1,34 @@
+name: Pull Request Action
+on:
+  push:
+    branches:
+      - emdn-ui
+    paths:
+      - 'src/main/resources/static/dist/0.4.1/**'
+      
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            const result = await github.rest.pulls.create({
+              title: 'New Changes Common Components',
+              owner,
+              repo,
+              head: '${{ github.ref_name }}',
+              base: 'safe_develop',
+              body: [
+                'This PR is auto-generated!',
+                'Please Review it carefully.'
+              ].join('\n')
+            });
+            github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: result.data.number,
+              labels: ['UI-component', 'Automated-PR']
+            });

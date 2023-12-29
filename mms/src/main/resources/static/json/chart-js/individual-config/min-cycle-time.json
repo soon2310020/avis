@@ -1,0 +1,13 @@
+{
+    "type": "line",
+    "label": "Min CT (sec)",
+    "backgroundColor": "transparent",
+    "fill": false,
+    "pointRadius": 2,
+    "pointHoverBackgroundColor": "#fff",
+    "borderWidth": 2,
+    "borderColor": "",
+    "data": [],
+    "yAxisID": "second-y-axis",
+    "stack": "minCycleTime"
+}

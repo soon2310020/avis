@@ -1,0 +1,17 @@
+CREATE INDEX IX_JOB_DATA ON JOB_DATA (
+	EXECUTOR_NAME,
+	SYNC_KEY
+);
+
+CREATE TABLE TRANSFER_RESULT (
+	ID bigint not null,
+	
+	PROC_STATUS varchar(20),
+	PROC_ERROR_ID bigint,
+	ELAPSED_TIME_MILLIS bigint,
+	
+	CREATED_AT datetime,
+	UPDATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+) CHARSET=utf8;

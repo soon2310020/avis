@@ -1,0 +1,38 @@
+DROP TABLE IF EXISTS JOB_DATA_PARAM;
+DROP TABLE IF EXISTS JOB_DATA;
+
+CREATE TABLE JOB_DATA (
+	ID bigint not null auto_increment,
+	
+	EXECUTOR_NAME varchar(50),
+	SYNC_KEY varchar(50),
+	LOGIC_NAME varchar(200),
+	LOGIC_TX_TYPE varchar(20),
+	AFTER_LOGIC_NAME varchar(200),
+	AFTER_LOGIC_TX_TYPE varchar(20),
+	THROWS_LOGIC_NAME varchar(200),
+	THROWS_LOGIC_TX_TYPE varchar(20),
+	
+	CREATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+) CHARSET=utf8;
+
+CREATE TABLE JOB_DATA_PARAM (
+	ID bigint not null auto_increment,
+	
+	JOB_DATA_ID bigint,
+	
+	PARAM_FOR varchar(20),
+	POSITION integer,
+	NAME varchar(100),
+	DATA_TYPE varchar(200),
+	`VALUE` longtext,
+	
+	PRIMARY KEY (ID)
+) CHARSET=utf8;
+
+ALTER TABLE JOB_DATA_PARAM
+	ADD CONSTRAINT FK_JOB_DATA_PARAM
+	FOREIGN KEY (JOB_DATA_ID)
+	REFERENCES JOB_DATA (ID);

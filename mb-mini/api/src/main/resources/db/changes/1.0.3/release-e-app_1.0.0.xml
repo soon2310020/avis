@@ -1,0 +1,154 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2023-07-30:alter_third_party_log" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="third_party_log" columnName="action"/>
+            </not>
+            <not>
+                <columnExists tableName="third_party_log" columnName="error_stack"/>
+            </not>
+            <not>
+                <columnExists tableName="third_party_log" columnName="request_time"/>
+            </not>
+            <!--<not>
+                <columnExists tableName="third_party_log" columnName="request_id"/>
+            </not>-->
+        </preConditions>
+
+        <addColumn tableName="third_party_log">
+            <column name="action" type="VARCHAR(100)"/>
+        </addColumn>
+        <addColumn tableName="third_party_log">
+            <column name="error_stack" type="jsonb"/>
+        </addColumn>
+        <addColumn tableName="third_party_log">
+            <column name="request_time" type="int4"/>
+        </addColumn>
+        <!--<addColumn tableName="third_party_log">
+            <column name="request_id" type="VARCHAR(36)"/>
+        </addColumn>-->
+    </changeSet>
+
+    <changeSet id="2023-08-29-alter-third_party_log" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="third_party_log" columnName="request_time"/>
+        </preConditions>
+
+        <renameColumn tableName="third_party_log" oldColumnName="request_time" newColumnName="total_time"/>
+    </changeSet>
+
+    <changeSet id="2023-08-29-alter-insurance_request" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_request" columnName="crm_tool_uuid"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="insurance_request">
+            <column name="crm_tool_uuid" type="uuid"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-11-30-alter-insurance_request" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_request" columnName="process_id"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="insurance_request">
+            <column name="process_id" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-09-06-alter-insurance_payment" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_payment" columnName="rm_phone_number"/>
+            </not>
+            <not>
+                <columnExists tableName="insurance_payment" columnName="rm_email"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="insurance_payment">
+            <column name="rm_email" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="insurance_payment">
+            <column name="rm_phone_number" type="VARCHAR(15)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2023-09-06:alter-insurance_payment-supporter" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_payment" columnName="support_phone_number"/>
+            </not>
+            <not>
+                <columnExists tableName="insurance_payment" columnName="support_email"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="insurance_payment">
+            <column name="support_email" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="insurance_payment">
+            <column name="support_phone_number" type="VARCHAR(15)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-10-18:alter-customer" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="customer" columnName="full_name_t24"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="customer">
+            <column name="full_name_t24" type="VARCHAR(100)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-10-19:alter-address-tables" author="SonTC">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="address_district" columnName="unsigned_name"/>
+            </not>
+            <not>
+                <columnExists tableName="address_province" columnName="unsigned_name"/>
+            </not>
+            <not>
+                <columnExists tableName="address_ward" columnName="unsigned_name"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="address_province">
+            <column name="unsigned_name" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="address_district">
+            <column name="unsigned_name" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="address_ward">
+            <column name="unsigned_name" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2023-10-19:update-data-unsigned-name-address" author="SonTC">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="address_province"/>
+            <tableExists tableName="address_district"/>
+            <tableExists tableName="address_ward"/>
+            <columnExists tableName="address_ward" columnName="unsigned_name"/>
+            <columnExists tableName="address_province" columnName="unsigned_name"/>
+            <columnExists tableName="address_district" columnName="unsigned_name"/>
+        </preConditions>
+
+        <sqlFile path="../../data/address/update_address_province_unsigned_name_data.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="../../data/address/update_address_district_unsigned_name_data.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="../../data/address/update_address_ward_unsigned_name_data.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,265 @@
+.export-area {
+    height: 0;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+#export-content {
+    width: 1130px;
+    background: #FFF;
+}
+
+.group-item {
+    padding: 1rem 2rem;
+}
+
+.group-item .page-content {
+    position: relative;
+}
+
+.group-item .page-content{
+    min-height: 1000px;
+}
+
+
+.group-item .page-content .water-mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+}
+
+.group-item .page-content .water-mark .water-mark-img {
+    height: 76%;
+}
+
+.page-footer {
+    border-top: 2px solid black;
+    margin-top: 1rem;
+    display: flex;
+    padding: 0.5rem 0;
+}
+
+.page-footer .page-title {
+    flex: 3;
+    text-align: left;
+}
+
+.page-footer .page-logo {
+    flex: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-footer .page-logo img {
+    height: 2rem;
+}
+
+.page-footer .page-number {
+    flex: 3;
+    text-align: right;
+}
+
+.export-action {
+    text-align: right;
+    padding-bottom: 1rem;
+}
+.report-chart .progress {
+    position: relative;
+}
+.report-chart .progress .progress-item {
+    position: relative;
+}
+
+.report-chart .progress-item .progress-hint {
+    position: fixed;
+    background: rgba(0, 0,0, 0.7);
+    color: #FFF;
+    padding: 0.2rem 0.4rem;
+    top: 30px;
+    display: none;
+    border-radius: 5px;
+
+}
+.report-chart .progress-item:hover .progress-hint {
+    display: flex;
+    align-items: center;
+}
+.report-chart .progress-item .progress-hint::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    border-width: 8px;
+    left: 60px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.7) transparent transparent transparent;
+    transform: rotate(-180deg);
+}
+.report-chart .progress-item .progress-hint .hint-icon {
+    margin-right: 4px;
+}
+.report-chart .progress-item .progress-hint .hint-title {
+    font-size: 13px;
+}
+.report-chart .progress-item .progress-hint .hint-icon .within-icon {
+    width: 14px;
+    height: 14px;
+    background: #6FB97D;
+}
+
+.report-chart .progress-item .progress-hint .hint-icon .over-icon {
+    width: 14px;
+    height: 14px;
+    background: #8752D7;
+}
+
+
+
+
+.production-efficiency .progress {
+    position: relative;
+}
+.production-efficiency .progress .progress-bar {
+    position: relative;
+}
+
+.production-efficiency .progress .progress-bar:first-child {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+.production-efficiency .progress .progress-bar:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.production-efficiency .progress-bar .progress-hint {
+    position: fixed;
+    background: rgba(0, 0,0, 0.7);
+    color: #FFF;
+    padding: 0.2rem 0.4rem;
+    top: 30px;
+    display: none;
+    border-radius: 5px;
+
+}
+.production-efficiency .progress-bar:hover .progress-hint {
+    display: flex;
+    align-items: center;
+    min-width: 145px;
+}
+.production-efficiency .progress-bar .progress-hint::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    border-width: 8px;
+    left: 60px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.7) transparent transparent transparent;
+    transform: rotate(-180deg);
+}
+.production-efficiency .progress-bar .progress-hint .hint-icon {
+    margin-right: 4px;
+}
+.production-efficiency .progress-bar .progress-hint .hint-title {
+    font-size: 13px;
+}
+.production-efficiency .progress-bar .progress-hint .hint-icon .within-icon {
+    width: 14px;
+    height: 14px;
+    background: #6FB97D;
+}
+
+.production-efficiency .progress-bar .progress-hint .hint-icon .over-icon {
+    width: 14px;
+    height: 14px;
+    background: #8752D7;
+}
+
+.export-area .card-header {
+    background-color: rgba(112,152,152,0.1)
+}
+.chart-item {
+    position: relative;
+}
+.expand-icon {
+    position: absolute;
+    width: 18px;
+    top: 0;
+    right: 5px;
+}
+.expand-icon img {
+    width: 100%;
+    height: 100%;
+}
+.expand-icon:hover {
+    width: 20px;
+}
+/*expanded chart*/
+.report-chart-wrapper {
+    height: 300px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    background: #FFF;
+}
+.report-chart-content {
+    height: 270px;
+}
+
+@media (min-width: 992px) {
+    .report-chart-wrapper {
+        height: 400px;
+    }
+    .report-chart-content {
+        height: 370px;
+    }
+}
+@media (min-width: 1100px) {
+    .report-chart-wrapper {
+        height: 500px;
+    }
+    .report-chart-content {
+        height: 470px;
+    }
+}
+.minimize-chart {
+    width: 30px;
+
+}
+.lower-case {
+    text-transform: lowercase;
+}
+.number-part-hint .number-value {
+    cursor: pointer;
+}
+
+.part-number-tooltip {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.part-number-tooltip table {
+    font-size: 13px;
+}
+
+.part-number-tooltip table th,
+.part-number-tooltip table td {
+    /*width: 150px;*/
+    max-width: 320px;
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+    padding: 5px 5px 5px 10px;
+    border-left: 1px solid #CCC;
+}
+.part-number-tooltip table th:first-child,
+.part-number-tooltip table td:first-child {
+    border-left: none;
+}
+.part-number-tooltip table thead tr {
+    border-bottom: 1px solid #CCC;
+}

@@ -1,0 +1,18 @@
+BEGIN;
+SELECT count(*)
+INTO @exist
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE()
+  and COLUMN_NAME = 'LAST_SHOT_MADE_AT'
+  AND table_name = 'MOLD' LIMIT 1;
+
+set @query = IF(@exist <= 0, 'ALTER TABLE MOLD ADD `LAST_SHOT_MADE_AT` DATETIME',
+    'select \'Column Exists\' status');
+
+prepare stmt from @query;
+
+EXECUTE stmt;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE MOLD SET LAST_SHOT_MADE_AT = LAST_SHOT_AT;
+COMMIT;

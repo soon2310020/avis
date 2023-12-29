@@ -1,0 +1,120 @@
+/* MODAL TITLE */
+.modal-title {
+    background: rgb(245, 248, 255);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 19.5px 25.5px 11.5px;
+    border-radius: 6px 6px 0px 0px;
+}
+
+.modal-title .span-title {
+    color: rgb(75, 75, 75);
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 100%;
+    margin-right: 64px;
+}
+
+.modal-title .head-line {
+    position: absolute;
+    background: #52a1ff;
+    height: 8px;
+    border-radius: unset;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.modal-title .t-icon-close {
+    width: 12px;
+    height: 12px;
+    background-image: url("/images/icon/black-close-12.svg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.modal-title .close-button {
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    height: 17px;
+    cursor: pointer;
+}
+
+/* MODAL BODY */
+.modal-body {
+    padding: 20px 52px;
+    /* Overwrite */
+    overflow-x: initial; 
+}
+
+.modal-body__title .form-item {
+    margin-bottom: 4px;
+}
+
+.modal-body__title .form-item:last-child {
+    margin-bottom: 30px;
+}
+
+
+.modal-body__title .form-item__label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 8px;
+    min-width: 80px;    
+    display: inline-block;
+}
+
+.modal-body__title .form-item__value {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.modal-body__list {
+    position: relative;
+}
+
+.modal-body__list table {
+    width: 100%;
+}
+
+.modal-body__pagination {
+    margin: 15px 0 36px;
+    gap: 10px;
+}
+
+.modal-body__pagination button {
+    background-color: #3491ff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+
+.modal-body__pagination button:disabled {
+    background-color: #C4C4C4;
+    color: white;
+}
+
+.modal-body__action {
+    margin-top: 120px;
+    display: flex;
+}
+
+/* BUTTON */
+.btn-submit {
+    padding: 6px 8px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #3491ff;
+    border: none;
+}
+
+.btn-submit:hover {
+    background-color: #3585E5;
+}
+
+.btn-submit:focus {
+    outline-color: rgb(161 204 255 / 67%);
+}

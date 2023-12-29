@@ -1,0 +1,92 @@
+.data-table-top {
+    /*margin-bottom: 48px;*/
+}
+.data-table-top-action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+.data-table .table thead th {
+    border-top: unset;
+}
+.data-table-status {
+    height: 42px;
+    margin: 2px 0 4px 0;
+    display: flex;
+    align-items: center;
+}
+.data-table-tabs .nav-tabs {
+    display: -webkit-box;
+    flex-wrap: nowrap;
+}
+.data-table-tabs .nav-item {
+    max-width: 285px;
+    display: flex;
+    align-items: center;
+    -webkit-box-flex: 1;
+    overflow: hidden;
+}
+.data-table-tabs .nav-item .nav-link:hover .close-tab {
+    visibility: visible!important;
+}
+.data-table-tabs .nav-item .nav-link.active .close-tab {
+    visibility: visible!important;
+}
+.data-table-tabs .nav-item .nav-link:not(.active) .badge {
+    font-weight: 400!important;
+}
+.data-table-tabs .nav-item .nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px 10px;
+    height: 41px;
+    position: relative;
+}
+.data-table-tabs .nav-item .nav-link > div {
+    display: flex;
+    align-items: center;
+}
+.data-table-tabs .nav-item .nav-link span:first-child {
+    margin-right: 9px;
+}
+.data-table-tabs .nav-item .nav-link span.badge {
+    font-size: 11px;
+    z-index: 2;
+}
+.data-table-tabs .nav-item .nav-link .close-tab:hover {
+    background: #DEEDFF;
+}
+.data-table-tabs .nav-item .nav-link .close-tab {
+    visibility: hidden;
+    display: flex;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 3;
+    background: #fff;
+}
+.data-table-tabs .part-name-drop-down {
+    position: relative;
+    max-width: 80%;
+}
+.data-table-tabs .part-name-drop-down span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.line-row-wrapper {
+    margin-right: -15px!important;
+    margin-bottom: 8px;
+}
+.no-results {
+    border: 1px solid #c8ced3;
+    border-top: unset;
+}

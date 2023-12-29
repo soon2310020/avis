@@ -1,0 +1,10 @@
+{
+  "notiPriority": "HIGH",
+  "description": "Uptime Alert",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/production/alr#UPTIME?id=${id}"
+}

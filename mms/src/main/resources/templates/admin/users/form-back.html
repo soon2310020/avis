@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <script th:src="'/js/cdn/fontawesome.js?'+${noCacheVer}" crossorigin="anonymous"></script>
+    <style type="text/css">
+        .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{visibility:hidden !important;}
+        .hide_account{   display: none !important; }
+        .pwd{
+            position: relative;
+        }
+        .p-viewer {
+            z-index: 9999;
+            position: absolute;
+            top: 25%;
+            right: 23px;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list">
+
+        <div class="hide_account alert alert-dark" role="alert">
+            <h5 class="alert-heading mb-0"><i class="fa fa-user"></i>
+                <span v-if="isNew" th:text="#{new_user}"></span>
+                <span v-else th:text="#{edit_user}"></span>
+            </h5>
+        </div>
+
+        <form class="needs-validation" @submit.prevent="submit">
+
+            <!-- Account -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave" id="remove_profile"> </div>
+                    <div class="card profile_wave1">
+                        <div class="card-header">
+                            <strong th:text="#{account}"></strong>
+
+                            <span v-if="isSSO" class="label label-warning float-right ml-1" v-cloak th:text="#{sso}"></span>
+                            <span v-if="user.admin" class="label label-success float-right" v-cloak th:text="#{admin}"></span>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="name">
+                                    <span v-text="resources['full_name']"></span>
+                                    <span class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10">
+                                    <input type="text" id="name" v-model="user.name" class="form-control"
+                                        :readonly="false" :placeholder="resources['full_name']" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="email" th:text="#{email_address}"></label>
+                                <div class="col-md-10">
+                                    <input type="email" id="email" v-model="user.email" autocomplete="new-password" class="form-control"
+                                        :readonly="readonly" th:placeholder="#{email_address}" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave2">
+                        <div class="card-header">
+                            <strong th:text="#{password}"></strong>
+                            <span class="text-sm text-danger float-right" v-if="isSSO" v-cloak th:text="#{cannot_change_password}"></span>
+                        </div>
+                        <div class="card-body" v-if="isNew">
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="password-1" th:text="#{password}"></label>
+                                <div class="input-group col-md-10 pwd">
+                                    <input :type="type" id="password-1" v-model="user.password" class="form-control"
+                                           th:placeholder="#{password}"  @input="password_check" @click="typing = true" autocomplete="new-password"
+                                           :pattern="pattern1" required>
+                                    <div class="p-viewer" style="border-radius: 0.25rem;">
+                                        <i class="fa" :class="show ? 'fa-eye' : 'fa-eye-slash'" @click="showPassword" aria-hidden="true" style="cursor:pointer"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-10 ml-auto">
+                                    <p v-if="typing" style="margin-top: 5px; margin-bottom: 15px; font-size: 12px;">Your password must contain at least: </p>
+                                    <p v-if="typing" class="frmValidation" :class="{'frmValidation--passed' : user?.password?.length > 7}"><i class="frmIcon fas" :class="[user?.password?.length > 7 ? 'fa-check-circle' : 'fa-times-circle']"></i> 8 characters</p>
+                                    <p v-if="typing" class="frmValidation" :class="{'frmValidation--passed' :has_uppercase }"><i class="frmIcon fas" :class="has_uppercase ? 'fa-check-circle' : 'fa-times-circle'"></i> One uppercase letter</p>
+                                    <p v-if="typing" class="frmValidation" :class="{'frmValidation--passed' : has_number }"><i class="frmIcon fas" :class="has_number ? 'fa-check-circle' : 'fa-times-circle'"></i> One number</p>
+                                    <p v-if="typing" class="frmValidation" :class="{'frmValidation--passed' : has_special }"><i class="frmIcon fas" :class="has_special ? 'fa-check-circle' : 'fa-times-circle'"></i> One special character: .,!@#$%^&*+=_-</p>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="password2-1" th:text="#{password_confirm}"></label>
+                                <div class="input-group col-md-10">
+                                    <input :type="type" id="password2-1" v-model="user.passwordConfirm"
+                                        class="form-control"  th:placeholder="#{password_confirm}" required>
+                                    <div class="p-viewer" style="border-radius: 0.25rem;">
+                                        <i class="fa" :class="show ? 'fa-eye' : 'fa-eye-slash'" @click="showPassword" aria-hidden="true" style="cursor:pointer"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-body" v-if="isNew == false">
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="password-2" th:text="#{password}"></label>
+                                <div class="col-md-10">
+                                    <input type="password" id="password-2"  @input="password_check" v-model="user.password" class="form-control"
+                                        :readonly="isSSO" @click="typing = true" placeholder="•••••••••"
+                                             autocomplete="new-password"
+                                           :pattern="pattern2">
+                                    <p v-if="typing" style="margin-top: 5px; margin-bottom: 15px; font-size: 12px;">Your password must contain at least: </p>
+                                    <p v-if="typing" class="frmValidation" :class="{'frmValidation--passed' : user?.password?.length > 7}"><i class="frmIcon fas" :class="[user?.password?.length > 7 ? 'fa-check-circle' : 'fa-times-circle']"></i> 8 characters</p>
+                                    <p v-if="typing" class="frmValidation" :class="{'frmValidation--passed' :has_uppercase }"><i class="frmIcon fas" :class="has_uppercase ? 'fa-check-circle' : 'fa-times-circle'"></i> One uppercase letter</p>
+                                    <p v-if="typing" class="frmValidation" :class="{'frmValidation--passed' : has_number }"><i class="frmIcon fas" :class="has_number ? 'fa-check-circle' : 'fa-times-circle'"></i> One number</p>
+                                    <p v-if="typing" class="frmValidation" :class="{'frmValidation--passed' : has_special }"><i class="frmIcon fas" :class="has_special ? 'fa-check-circle' : 'fa-times-circle'"></i> One special character: .,!@#$%^&*+=_-</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="password2-2" th:text="#{password_confirm}"></label>
+                                <div class="col-md-10">
+                                    <input type="password" id="password2-2" v-model="user.passwordConfirm"
+                                           autocomplete="off"
+                                        class="form-control" :readonly="isSSO" placeholder="•••••••••">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card profile_wave3">
+                        <div class="card-header">
+                            <strong th:text="#{profile}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <!-- Company -->
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="name" th:text="#{company}">
+                                    <span class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-4">
+                                    <input type="hidden" v-model="user.companyId" required>
+                                    <input type="text" v-model="user.company.name" readonly="readonly"
+                                        class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                        data-target="#op-company-search" th:text="#{company_search}"></button>
+                                </div>
+                            </div>
+
+                            <!-- Department & Position -->
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="text-input1" th:text="#{department}"></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="text-input1" v-model="user.department"
+                                           th:placeholder="#{department}" required>
+                                </div>
+                                <label class="col-md-2 col-form-label" for="text-input2" th:text="#{position}"></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="text-input2" v-model="user.position"
+                                           th:placeholder="#{position}" required>
+                                </div>
+                            </div>
+
+                            <!-- Mobile Number -->
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="text-input4">
+                                    Mobile Number </label>
+                                </label>
+                                <div class="col-md-4">
+                                    <div class="d-flex">
+                                        <div class="flex-column pr-0" style="width: 100px">
+                                            <div class="btn-group btn-block">
+                                                <button type="button" class="btn btn-default btn-block dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="flag-icon h6 mb-0 "
+                                                        :class="['flag-icon-' + lower(user.mobileDialingCountry)]"></i>
+                                                    &nbsp;+{{user.mobileDialingCode}}
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left"
+                                                    style="height: auto; max-height: 200px; overflow-x: hidden;">
+                                                    <a href="#" v-for="code in codes.CountryCode"
+                                                        class="dropdown-item dropdown-country"
+                                                        @click.prevent="selectMobileDialing(code)">
+                                                        <i class="flag-icon h4 mb-0 "
+                                                            :class="['flag-icon-' + lower(code.code)]"></i>
+                                                        {{code.title}} +{{code.description}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col pr-0">
+                                            <input type="tel" class="form-control" id="text-input4" maxlength="20"
+                                                v-model="user.mobileNumber" th:placeholder="#{mobile_number}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <label v-if="checkEditPage()" class="col-md-2 col-form-label" th:text="#{last_activity_time}"></label>
+                                <div v-if="checkEditPage()" class="col-md-4">
+                                    <!-- <input type="hidden" v-model="user.companyId" required> -->
+                                    <input type="text" v-model="user.lastLoginShow" readonly="readonly"
+                                           class="form-control">
+                                </div>
+                            </div>
+
+<!--                            <div v-if="checkEditPage()" class="form-group row">-->
+<!--                                <label class="col-md-2 col-form-label" th:text="#{last_activity_time}"></label>-->
+<!--                                <div class="col-md-4">-->
+<!--                                    &lt;!&ndash; <input type="hidden" v-model="user.companyId" required> &ndash;&gt;-->
+<!--                                    <input type="text" v-model="user.lastLoginShow" readonly="readonly"-->
+<!--                                        class="form-control">-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+                            <!-- Memo -->
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="textarea-input" th:text="#{memo}"></label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" id="textarea-input" v-model="user.memo" rows="3"
+                                              th:placeholder="#{memo}"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Access -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong th:text="#{access}"></strong>
+                        </div>
+                        <div class="card-body">
+
+                            <!-- Status & Access Level -->
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label"><span th:text="#{status}"></span> <span class="badge-require"></span>
+                                </label>
+                                <div class="col-md-4 col-form-label">
+                                    <div class="form-check form-check-inline mr-3">
+                                        <input type="radio" class="form-check-input" id="radio1"
+                                            v-model="user.enableOption" name="options" value="enabled">
+                                        <label class="form-check-label" for="radio1" th:text="#{enable}"></label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" id="radio2"
+                                            v-model="user.enableOption" name="options" value="disabled">
+                                        <label class="form-check-label" for="radio2" th:text="#{disable}"></label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" class="form-check-input" id="radio3"
+                                            v-model="user.enableOption" name="options" value="requested">
+                                        <label class="form-check-label" for="radio3" th:text="#{requested}"></label>
+                                    </div>
+                                </div>
+
+                                <label class="col-md-2 col-form-label"><span th:text="#{access_level}"></span>
+                                    <span v-if="user.enableOption == 'enabled'" class="badge-require"></span></label>
+                                <div class="col-md-4 col-form-label">
+                                    <div class="form-check form-check-inline mr-3">
+                                        <input type="radio" class="form-check-input" v-model="userAccessLevel" name="admin"
+                                            value="regular">
+                                        <label class="form-check-label" th:text="#{regular}"></label>
+                                    </div>
+                                    <div class="form-check form-check-inline"
+                                        v-if="user.company && user.company.companyType == 'IN_HOUSE'">
+                                        <input type="radio" class="form-check-input" v-model="userAccessLevel" name="admin"
+                                            value="admin">
+                                        <label class="form-check-label"
+                                               v-if="user.company && user.company.companyType == 'IN_HOUSE' " th:text="#{admin}"></label>
+                                    </div>
+                                     <div class="form-check form-check-inline"  v-if="user.company && user.company.companyType == 'IN_HOUSE'">
+                                        <input type="radio" class="form-check-input" v-model="userAccessLevel" name="admin"
+                                            value="ROLE_REST_USER">
+                                        <label class="form-check-label"
+                                                th:text="#{user.restUser}"></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Access Feature & Access Group-->
+                            <div class="form-group row mb-0">
+                                <label v-if="!user.admin || user.company.companyType != 'IN_HOUSE'" v-show="userAccessLevel != 'admin'" class="col-md-2 col-form-label">
+                                    <span th:text="#{access_feature}"></span>
+                                    <span class="badge-require"></span></label>
+                                <div  v-if="!user.admin || user.company.companyType != 'IN_HOUSE'" v-show="userAccessLevel != 'admin'" class="col-md-4 col-form-label" id="accessFeature">
+
+                                    <template v-for="(r, index, id) in roles" :id="result.id"
+                                        v-if="r.roleType=='ROLE_MENU'">
+                                        <div class="form-check checkbox pl-0">
+                                            <label><input type="checkbox" class="input_checkbox" name="roleId"
+                                                    :value="r.id" v-model="user.roleIds"
+                                                    @change="checkAccessFeature($event)"> {{r.name}} </label>
+                                        </div>
+                                    </template>
+
+                                </div>
+
+                                <label class="col-md-2 col-form-label"
+                                       v-if="user.company && user.company.companyType == 'IN_HOUSE'" th:text="#{access_group}">
+                                </label>
+                                <div class="col-md-4 col-form-label"
+                                     v-if="user.company && user.company.companyType == 'IN_HOUSE'">
+                                    <template v-for="(r, index, id) in roles" :id="result.id"
+                                        v-if="r.roleType=='ROLE_GROUP'">
+                                        <div class="form-check checkbox pl-0">
+                                            <label><input type="checkbox" name="roleId" :value="r.id"
+                                                    v-model="user.roleIds"
+                                                    :disabled="user.company && user.company.companyType == 'SUPPLIER'">
+                                                {{r.name}}
+                                            </label>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <!-- Plant Roles -->
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">
+                                    <span>Plant Roles</span> 
+                                </label>
+                                <div class="col-md-10 col-form-label">
+                                    <div  
+                                      v-for="(item,index) in plantDataList" 
+                                      :key="index" 
+                                      style="display: flex; align-items: center; margin-bottom: 8px;"
+                                    >
+                                        <div style="margin-right: 50px;">{{item.title}}</div>
+                                        <div>
+                                            <emdn-cta-button 
+                                              :ref="`plantfilter-cta-button-${index}`"
+                                              :id="`plantfilter-cta-button-${index}`"
+                                              :key="`plantfilter-cta-button-${index}`"
+                                              :active="item.visible"  
+                                              :click-handler="() => plantFilterToggle(index)"
+                                              type="dropdown"
+                                              color-type="blue" 
+                                              button-type="dropdown" 
+                                            >
+                                            {{
+                                                item.selectedRoleIdList.length === 0 
+                                                ? 'Select Role(s)' 
+                                                : `${item.selectedRoleIdList.length} Roles`
+                                            }}
+                                            </emdn-cta-button>
+                                            <emdn-dropdown 
+                                              :ref="`plantfilter-dropdown-${index}`"
+                                              :id="`plantfilter-dropdown-${index}`"
+                                              :key="`plantfilter-dropdown-${index}`"
+                                              :checkbox="true"
+                                              :visible="item.visible"
+                                              :items="item.selectedRoleList"
+                                              :set-result="(result) => setPlantFilterResult(result, index)" 
+                                              :on-close="() => plantFilterClose(index)">
+                                            </emdn-dropdown>
+                                          </div>
+                                        <div style="display: flex; align-self: flex-end;">
+                                            <emdn-chips 
+                                              v-for="(selectedRoleItem,selectedRoleIndex) in item.selectedRoleList" 
+                                              v-if="selectedRoleItem.checked"
+                                              :key="selectedRoleIndex" 
+                                              style-props="margin-left: 8px;"
+                                            >{{selectedRoleItem.title}}
+                                            </emdn-chips>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Notification -->
+            <div class="row" v-if="listAlertStatus.length > 0">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong th:text="#{email_notification}"></strong>
+                        </div>
+                        <!-- Alert -->
+                        <div class="card-body">
+                            <label class="col-md-2 col-form-label font-weight-bold px-lg-0" th:text="#{alert}"></label>
+                            <template v-for="(row, index) in listAlertStatus" :id="index">
+                                <div class="form-group row">
+                                    <div class="col-md-4" v-for="_alert in row" :id="_alert.id">
+                                        <label class="col-md-5 col-form-label" style="float: left;">{{_alert.name}}
+                                            <span class="badge-require"></span></label>
+                                        <div class="col-md-7 col-form-label" style="display: inline-block;">
+                                            <div class="d-inline-block  mr-lg-1">
+                                                <input type="radio" class="" :id="'enabled'+_alert.id"
+                                                    v-model="_alert.email" :name="_alert.id" value="true">
+                                                <label class="form-check-label"
+                                                    :for="'enabled' +_alert.id" th:text="#{enable}"></label>
+                                            </div>
+                                            <div class="d-inline-block">
+                                                <input type="radio" :id="'disabled' + _alert.id" v-model="_alert.email"
+                                                    :name="_alert.id" value="false">
+                                                <label class="form-check-label"
+                                                    :for="'disabled' + _alert.id" th:text="#{disable}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                        <!-- Access Request -->
+                        <div class="card-body pt-lg-0"
+                            v-if="user.company.companyType === 'IN_HOUSE' && (user.admin === true || user.admin === 'true')">
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <label class="col-md-5 col-form-label font-weight-bold px-lg-0"
+                                        style="float: left;">
+                                        <span th:text="#{access_request}"></span>
+                                        <span class="badge-require"></span></label>
+                                    <div class="col-md-7 col-form-label" style="display: inline-block;">
+                                        <div class="d-inline-block  mr-lg-1">
+                                            <input type="radio" id="enabledRequestAccess" v-model="user.accessRequest"
+                                                name="accessRequest" value="true">
+                                            <label class="form-check-label" for="enabledRequestAccess" th:text="#{enable}"></label>
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <input type="radio" id="disableRequestAccess" v-model="user.accessRequest"
+                                                name="accessRequest" value="false">
+                                            <label class="form-check-label" for="disableRequestAccess" th:text="#{disable}"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save & Cancle button -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card profile_wave4">
+                        <div class="card-body text-center">
+                            <button v-if="isNew == true" type="submit" class="btn btn-primary" th:text="#{new_user}"></button>
+                            <button v-if="isNew == false" type="submit" class="btn btn-primary" th:text="#{save_changes}"></button>
+                            <button type="button" class="btn btn-default" onclick="history.back()" th:text="#{cancel}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <company-search :resources="resources"></company-search>
+        </form>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script>
+        Vue.component('emdn-cta-button', EmoldinoComponents.CtaButton);
+        Vue.component('emdn-dropdown', EmoldinoComponents.Dropdown);
+        Vue.component('emdn-modal', EmoldinoComponents.Modal);
+        Vue.component('emdn-chips', EmoldinoComponents.Chips);
+
+        var timeout = null;
+        var Page = Common.getPage('users');
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        var intervalCheckAccessFeature;
+        var vm = new Vue({
+            el: '#app',
+            components: {
+                'company-search': httpVueLoader('/components/filter/company-search.vue')
+            },
+            
+            data: {
+                originalPlantFilterList: [
+                    { title: "option1", id: "1" },
+                    { title: "option2", id: "2" },
+                    { title: "option3", id: "3" },
+                    { title: "option4", id: "4" },
+                    { title: "option5", id: "5" },
+                    { title: "option6", id: "6" },
+                    { title: "option7", id: "7" },
+                ],
+                plantDataList: [
+                    { title: "Plant_Name_a", selectedRoleIdList: [], visible: false },
+                    { 
+                        title: "Plant_Name_b", 
+                        selectedRoleIdList: ['1', '2'],
+                        visible: false 
+                    },
+                    { title: "Plant_Name_c", selectedRoleIdList: [], visible: false },
+                    { title: "Plant_Name_d", selectedRoleIdList: [], visible: false },
+                    { title: "Plant_Name_e", selectedRoleIdList: [], visible: false },
+                ],
+                resources: {},
+                'isNew': Page.IS_NEW,
+                requireCheckbox: false,
+                listAccessFeature: [],
+                listAlertStatus: [],
+                isAccessRequest: false,
+                show: false,
+                listAlertType: ['CORRECTIVE_MAINTENANCE', 'CYCLE_TIME', 'DATA_SUBMISSION', 'DISCONNECTED', 'MAINTENANCE', 'MISCONFIGURE', 'RELOCATION', 'EFFICIENCY','REFURBISHMENT','DETACHMENT','DOWNTIME'],
+                'user': {
+                    'contactDialingCountry': Const.defaultCountry,
+                    'mobileDialingCountry': Const.defaultCountry,
+                    'name': '',
+                    'loginId': '',
+                    'email': '',
+                    'password': '',
+                    'passwordConfirm': '',
+                    'admin': false,
+                    'enabled': true,
+                    'disabled': false,
+                    'companyId': '',
+                    'department': '',
+                    'position': '',
+                    'contactDialingCode': Const.defaultDialingCode,
+                    'contactNumber': '',
+                    'mobileDialingCode': Const.defaultDialingCode,
+                    'mobileNumber': '',
+                    'memo': '',
+                    'requested': false,
+                    'enableOption': 'enabled',
+                    'ssoId': null,
+                    'roles': [],
+                    'roleIds': [],
+                    'company': {
+                        'companyType': 'HQ'
+                    },
+                    'roleUserData':''
+                },
+                'roleId': [],
+                'roles': [],
+                'codes': {},
+                'userAccessLevel':'regular',
+                typing: false,
+                type: 'password',
+                has_number:    false,
+                has_lowercase: false,
+                has_uppercase: false,
+                has_special:   false,
+                pattern1: "(?=.*\\d)(?=.*[a-z])(?=.*[!,@#\\$%\\^\\&*\\)\\(+=._-]).{8,}",
+                pattern2: "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!,@#\\$%\\^\\&*\\)\\(+=._-]).{8,}"
+            },
+            methods: {
+                plantFilterToggle(index){
+                    console.log('plantFilterToggle: ', index)
+                    this.plantDataList[index].visible = !this.plantDataList[index].visible
+                },
+                setPlantFilterResult(result, index) {
+                    console.log("setPlantFilterResult----", result, index);
+                },
+                plantFilterClose(index){
+                    console.log('plantFilterClose: ', index);
+                    this.plantDataList[index].visible = false;
+                },
+                checkEditPage: function () {
+                    return Page.IS_EDIT;
+                },
+                password_check: function () {
+                    this.has_number    = /\d/.test(this.user.password);
+                    this.has_lowercase = /[a-z]/.test(this.user.password);
+                    this.has_uppercase = /[A-Z]/.test(this.user.password);
+                    this.has_special   = /[,!@#\$%\^\&*\)\(+=._-]/.test(this.user.password);
+                },
+                checkAll: function () {
+                    var roleIds = [];
+
+
+                    $('input[name=roleId]:checked').each(function (index) {
+                        roleIds[index] = $(this).val();
+                    });
+
+                    vm.user.roleIds = roleIds;
+                },
+                showPassword: function() {
+                    if(this.type === 'password') {
+                        this.type = 'text';
+                        this.show = true;
+                    } else {
+                        this.type = 'password';
+                        this.show = false;
+                    }
+                },
+                submit: function () {
+
+                    if (this.user.password != this.user.passwordConfirm) {
+                        Common.alert("Your password and confirmation password do not match");
+                        return;
+                    }
+
+                    if (!this.user.companyId || !this.user.company) {
+                        Common.alert("Company is required!");
+                        return;
+                    }
+                    this.mapAccessLevel(this.userAccessLevel);
+                    if (Page.IS_NEW) {
+                        this.create();
+
+                    } else {
+                        this.update();
+                    }
+                },
+                create: function () {
+                    if (vm.user.enableOption == 'enabled') {
+                        vm.user.enabled = true;
+                        vm.user.requested = false;
+                    }
+                    if (vm.user.enableOption == 'disabled') {
+                        vm.user.enabled = false;
+                        vm.user.requested = false;
+                    }
+                    if (vm.user.enableOption == 'requested') {
+                        vm.user.requested = true;
+                        vm.user.enabled = false;
+                    }
+
+                    vm.user.alertStatus = this.getAlertStatus()
+                    axios.post(Page.API_POST, vm.user).then(function (response) {
+                        console.log(response.data);
+
+                        if (response.data.success) {
+
+                            Common.alertCallback = function () {
+                                location.href = '/admin/users';
+                            }
+                            Common.alert("success");
+                        } else {
+                            Common.alert(response.data.message);
+                        }
+                    })
+                        .catch(function (error) {
+                            console.log(error.response);
+                        });
+                },
+                update: function () {
+                    if (vm.user.enableOption == 'enabled') {
+                        vm.user.enabled = true;
+                        vm.user.requested = false;
+                    }
+                    if (vm.user.enableOption == 'disabled') {
+                        vm.user.enabled = false;
+                        vm.user.requested = false;
+                    }
+                    if (vm.user.enableOption == 'requested') {
+                        vm.user.requested = true;
+                        vm.user.enabled = false;
+                    }
+
+                    if(vm.user.company.companyType !== 'IN_HOUSE'){
+                        vm.userAccessLevel='regular';
+                    }
+
+                    vm.user.alertStatus = this.getAlertStatus()
+
+                    axios.put(Page.API_PUT, vm.user).then(function (response) {
+                        console.log(response.data);
+
+
+                        if (response.data.success) {
+                            Common.alertCallback = function () {
+                                location.href = '/admin/users';
+                            }
+                            Common.alert("success");
+                        } else {
+                            Common.alert(response.data.message);
+                        }
+                    })
+                        .catch(function (error) {
+                            console.log(error.response);
+                        });
+                },
+
+                callbackCompany: function (company) {
+                    if ('SUPPLIER' == company.companyType) {
+                        vm.user.admin = false;
+                    }
+                    vm.user.company = company;
+                    vm.user.companyId = company.id;
+                    vm.user.company.name = company.name;
+                    this.checkAccessFeature()
+                },
+
+                selectContactDialing: function (country) {
+                    vm.user.contactDialingCountry = country.code;
+                    vm.user.contactDialingCode = country.description;
+                },
+                selectMobileDialing: function (country) {
+                    vm.user.mobileDialingCountry = country.code;
+                    vm.user.mobileDialingCode = country.description;
+                },
+                checkAccessFeature: function () {
+                    try {
+                         console.log('vm.user.enableOption: ', vm.user.enableOption)
+                        console.log(JSON.stringify(vm.user))
+                        if(vm.user.company.companyType !== 'IN_HOUSE'){
+                            vm.userAccessLevel='regular';
+                        }
+                        if (document.getElementById("accessFeature")?.getElementsByClassName('input_checkbox')?.[0]) {
+                            if (vm.user.roleIds.length === 0 && vm.user.company.companyType !== 'IN_HOUSE' && vm.user.enableOption == 'enabled') {
+                                document.getElementById("accessFeature").getElementsByClassName('input_checkbox')[0].required = true
+                            } else {
+                                document.getElementById("accessFeature").getElementsByClassName('input_checkbox')[0].required = false
+                            }
+                        }
+
+                    } catch (ex) { console.log('ex', ex)}
+
+                    var url = Page.API_BASE + "/alert-status?companyType=" + vm.user.company.companyType + "&roleIds=" + vm.user.roleIds.toString()
+                    console.log("url", url)
+                    if (vm.user.id) {
+                        url += "&userId=" + vm.user.id;
+                    }
+                    this.getListAlertStatus(url)
+                },
+                sortAlertType: function (array) {
+                    var i, j, lengthType = this.listAlertType.length, lengthArray = array.length, alertTypes = [];
+                    for (i = 0; i < lengthType; i++) {
+                        for (j = 0; j < lengthArray; j++) {
+                            if (this.listAlertType[i] === array[j].alertType) {
+                                alertTypes.push(array[j]);
+                                break;
+                            }
+                        }
+                    }
+                    return alertTypes;
+                },
+
+                getListAlertStatus: function (url) {
+                    if (timeout) {
+                        clearTimeout(timeout);
+                        timeout = null;
+                    }
+                    function getAlerts() {
+                        vm.listAlertStatus = []
+                        console.log('url ne', url)
+                        axios.get(url).then(function (response) {
+                            if (response.data) {
+                                var lengthRs = response.data.length;
+                                var _rs = vm.sortAlertType(response.data)
+                                console.log('Response', response.data)
+                                console.log("_rs", _rs)
+
+                                var i, chuck = 3, _array = [];
+                                for (i = 0; i < lengthRs; i++) {
+                                    console.log(`_rs ${i}`, _rs[i])
+                                    _rs[i].status = false;
+                                    switch (_rs[i].alertType) {
+                                        case "CYCLE_TIME":
+                                            _rs[i].name = 'Cycle Time';
+                                            break;
+                                        case "DATA_SUBMISSION":
+                                            _rs[i].name = "Data Submission";
+                                            break;
+                                        case "DISCONNECTED":
+                                            _rs[i].name = "Disconnection"
+                                            break;
+                                        case "EFFICIENCY":
+                                            _rs[i].name = "Uptime"
+                                            break;
+                                        case "MAINTENANCE":
+                                            _rs[i].name = "Preventive Maintenance"
+                                            break;
+                                        case "CORRECTIVE_MAINTENANCE":
+                                            _rs[i].name = "Corrective Maintenance"
+                                            break;
+                                        case "MISCONFIGURE":
+                                            _rs[i].name = "Reset"
+                                            break;
+                                        case "RELOCATION":
+                                            _rs[i].name = "Relocation"
+                                            break;
+                                        case "REFURBISHMENT":
+                                            _rs[i].name = "Refurbishment"
+                                            break;
+                                        case "DETACHMENT":
+                                            _rs[i].name = "Detachment"
+                                            break;
+                                        case "DOWNTIME":
+                                            _rs[i].name = "Downtime"
+                                            break;
+                                    }
+                                    _array.push(_rs[i]);
+                                    if ((i !== 0 && i + 1 % chuck === 0) || i === lengthRs - 1) {
+                                        vm.listAlertStatus.push(_array);
+                                        _array = []
+                                    }
+                                }
+                            }
+                        })
+                    }
+                    timeout = setTimeout(getAlerts, 200);
+                },
+                getAlertStatus: function () {
+                    var status = {};
+                    var i, j, lengthItem, length = vm.listAlertStatus.length;
+                    console.log("listAlertStatus", vm.listAlertStatus)
+                    for (i = 0; i < length; i++) {
+                        lengthItem = vm.listAlertStatus[i].length
+                        for (j = 0; j < lengthItem; j++) {
+                            status[vm.listAlertStatus[i][j].alertType] = vm.listAlertStatus[i][j].email == true ? true : (vm.listAlertStatus[i][j].email == "true" ? true : false)
+                        }
+                    }
+                    console.log("status", status)
+
+                    return status;
+                },
+                requireAccessFeature: function () {
+                    intervalCheckAccessFeature = setInterval(function () {
+                        console.log("intervalCheckAccessFeature")
+                        clearInterval(intervalCheckAccessFeature)
+                        // clearInterval(intervalCheckAccessFeature)
+                        setTimeout(function () {
+                                if (document.getElementById("accessFeature")?.getElementsByClassName('input_checkbox')[0]) {
+                                console.log('vm.user.enableOption: ', vm.user.enableOption)
+
+                                if (vm.user.roleIds.length === 0  && vm.user.enableOption == 'enabled') {
+                                    document.getElementById("accessFeature").getElementsByClassName('input_checkbox')[0].required = true
+                                } else {
+                                    document.getElementById("accessFeature").getElementsByClassName('input_checkbox')[0].required = false
+                                }
+                            }
+                            }, 5000)
+
+                    }, 1000)
+
+                },
+                async getResources() {
+                        try {
+                            const messages = await Common.getSystem('messages')
+                            vm.resources = JSON.parse(messages)
+                        } catch (error) {
+                            console.log(error)
+                        }
+                },
+
+                loadAccessLevel(){
+                    vm.userAccessLevel='';
+                    if(vm.user){
+                        if(vm.user.admin){
+                            vm.userAccessLevel='admin';
+                        }else
+                            vm.userAccessLevel='regular';
+
+                        if(vm.user.roleUserData =='ROLE_REST_USER'){
+                            vm.userAccessLevel='ROLE_REST_USER';
+                        }
+
+                    }
+                    console.log('loadAccessLevel ', vm.userAccessLevel);
+                },
+
+                mapAccessLevel: function (value){
+                    this.user.roleUserData='ROLE_WEB_USER';
+                    switch (value) {
+                        case 'admin':
+                            this.user.admin = true;
+                            break;
+                        case 'ROLE_REST_USER':
+                            this.user.roleUserData = 'ROLE_REST_USER';
+                            break;
+                        default:
+                            this.user.admin = false;
+
+                    }
+                    console.log('userAccessLevel ', value);
+                    console.log('this.user.roleUserData ', this.user.roleUserData);
+                }
+            },
+
+            watch: {
+                'user.enableOption': function (vlaue) {
+                    this.checkAccessFeature()
+                },
+                userAccessLevel(value) {
+                    if (value === 'admin') {
+                        this.user.admin = true;
+                    } else {
+                        this.user.admin = false;
+                    }
+                }
+            },
+            computed: {
+                readonly: function () {
+                    return Page.IS_EDIT;
+                },
+                isSSO: function () {
+                    return this.user.ssoId == null ? false : true;
+                },
+                New: function () {
+                    return Page.IS_NEW ? 'New' : 'Edit';
+                }
+            },
+
+            mounted() {
+
+                console.log('user form mounted');
+                console.log('this.originalPlantFilterList: ', this.originalPlantFilterList);
+                console.log('this.plantDataList before: ', this.plantDataList);
+
+                
+                let tempArray = [];
+
+                this.plantDataList.map(item => {
+                    item.selectedRoleList = JSON.parse(JSON.stringify(this.originalPlantFilterList));
+
+                    if(item.selectedRoleIdList.length > 0){
+                        item.selectedRoleList.map( selectedRoleListItem => {
+                            let selectedRoleIdList = JSON.parse(JSON.stringify(item.selectedRoleIdList));
+                            if(selectedRoleIdList.includes(selectedRoleListItem.id)){
+                                selectedRoleListItem.checked = true;
+                            }
+                            // else{
+                            //     selectedRoleListItem.checked = false;
+                            // }
+                        })
+                        
+                    }
+                    console.log('item.selectedRoleList 22: ', item.selectedRoleList)
+                    tempArray.push(item);
+                    // return item;
+                })
+                console.log('tempArray: ', tempArray)
+                console.log('this.plantDataList after: ', this.plantDataList);
+
+                this.$nextTick(function () {
+
+                    var self = this;
+                    axios.get('/api/codes').then(function (response) {
+                        self.codes = response.data;
+                        vm.requireAccessFeature()
+                    });
+
+
+                    // 부모 카테고리 조회
+                    axios.get('/api/roles?size=99999').then( function (response) {
+                        vm.roles = response.data.content.map(value => value.role);
+                        vm.user.accessRequest = false;
+                        if (Page.IS_EDIT) {
+                            // 데이터 조회
+                            axios.get(Page.API_GET).then(async function (response) {
+                                console.log('response12: ', response)
+                                vm.user = response.data;
+                                if(!response.data.mobileNumber){
+                                    axios.get('http://ip-api.com/json').then(response => {
+                                        const selectedPhoneCode = _.find(vm.codes.CountryCode, item => item.code === response.data.countryCode);
+                                        if(!!selectedPhoneCode){
+                                            vm.user.mobileDialingCode = selectedPhoneCode.description;
+                                            vm.user.mobileDialingCountry = response.data.countryCode;
+                                        }
+                                    })
+                                    console.log("listDialCode",  vm.user.mobileDialingCountry, vm.user.mobileDialingCode)
+                                }
+                                if (!response.data.company) {
+                                    vm.user.company = {
+                                        name: '',
+                                    }
+                                }
+                                vm.isAccessRequest = vm.user.accessRequest;
+
+
+                                if (vm.user.requested) {
+                                    vm.user ={
+                                        ...vm.user,
+                                        enableOption: 'requested'
+                                    }
+
+                                } else {
+                                    if (vm.user.enabled == false) {
+                                         vm.user = {
+                                            ...vm.user,
+                                            enableOption: 'disabled'
+                                        }
+
+                                    } else {
+                                         vm.user = {
+                                            ...vm.user,
+                                            enableOption: 'enabled'
+                                        }
+
+                                    }
+                                }
+
+                                // vm.user.lastLoginShow = vm.user.lastLogin ? moment.unix(vm.user.lastLogin).format('YYYY-MM-DD HH:mm:ss') : ''
+                                vm.user.lastLoginShow = vm.user.lastLogin ? vm.convertTimestampToDateWithFormat(vm.user.lastLogin,'YYYY-MM-DD HH:mm:ss') : ''
+
+                                vm.checkAccessFeature()
+                                vm.loadAccessLevel();
+                            });
+                        }
+
+                        if(!vm.user.mobileNumber){
+                            fetch('https://ip2c.org/s')
+                                .then(response => response.text())
+                                .then(response => {
+                                    const result = (response || '').toString();
+
+                                    if (!result || result[0] !== '1') {
+                                        console.log("invalid contry")
+                                    } else {
+                                        const countryCode = result.split(';')[1];
+                                        const selectedPhoneCode = vm.codes.CountryCode.find(item => item.code === countryCode);
+                                        console.log("selectedPhoneCode", selectedPhoneCode)
+                                        if(!!selectedPhoneCode){
+                                            vm.user.mobileDialingCode = selectedPhoneCode.description;
+                                            vm.user.mobileDialingCountry = countryCode;
+                                        }
+                                    }
+                                })
+                        }
+                    });
+                    vm.getResources();
+                })
+            }
+        });
+
+        $(function () {
+            $('.check-all').on('click', function (e) {
+                e.preventDefault();
+                var isChecked = $(this).prop('checked');
+                var $children = $(this).closest('.col-form-label').find('input[type=checkbox]');
+                $children.prop('checked', isChecked);
+
+                vm.checkAll();
+            });
+        });
+
+    </script>
+    <script>
+        window.onload = function() {
+        document.title = 'User' + ' | eMoldino';
+        setTimeout(() => {
+            $("div").removeClass("wave_sidebar");
+            $("div").removeClass("profile_wave1");
+            $("div").removeClass("profile_wave2");
+            $("div").removeClass("profile_wave3");
+            $("div").removeClass("profile_wave4");
+            $("li").removeClass("wave_header");
+            $("img").removeClass("wave_img");
+            document.getElementById("remove_profile").remove();
+            $("div").removeClass("hide_account");
+        }, 200);
+        };
+    </script>
+</th:block>
+
+</html>

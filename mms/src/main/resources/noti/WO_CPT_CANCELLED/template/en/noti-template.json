@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "Work Order completion approval cancelled",
+  "content": "${senderName} (${senderCompanyName}) has cancelled your approval for completing the ${orderTypeName}."
+}

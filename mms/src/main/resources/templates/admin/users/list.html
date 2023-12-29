@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head">
+    <link th:href="'/css/modal-style.css?'+${noCacheVer}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="'/css/data-table.css?'+${noCacheVer}" />
+    <style type="text/css">
+      .customize-btn {
+        background: rgb(214 218 222 / 37%);
+        border-color: transparent;
+      }
+
+      .customize-btn:hover {
+        background: #daeeff;
+      }
+
+      .custom-arrow-tooltip {
+        background: #fff;
+        left: 51%;
+        bottom: -4px;
+        margin-left: -5px;
+        position: absolute;
+        transform: rotate(45deg);
+        width: 8px;
+        height: 8px;
+        box-shadow: 1px 1px 1px rgb(229 223 223 / 50%),
+          1px 1px 1px rgb(229 223 223 / 50%);
+      }
+
+      .ant-tooltip-inner {
+        padding: 0 !important;
+        position: relative;
+      }
+
+      #create-tab-view .btn-custom,
+      #manage-tab-view .btn-custom {
+        width: unset !important;
+      }
+
+      .custom-dropdown-button {
+        height: 34px !important;
+      }
+
+      .btn-custom {
+        width: 100% !important;
+        text-align: left !important;
+      }
+
+      .common-popover {
+        top: 34px !important;
+        left: 9px !important;
+        width: calc(100% - 15px);
+        min-width: unset !important;
+        border-radius: 3px !important;
+        padding: 2px !important;
+      }
+
+      .dropdown-icon-custom {
+        float: right;
+      }
+
+      .dropdown-wrap {
+        top: 0px !important;
+        left: 0px !important;
+        border-radius: 3px !important;
+        padding: 2px !important;
+      }
+
+      .dropdown {
+        /*width: 248% !important;*/
+        width: 100% !important;
+      }
+
+      .img-transition {
+        float: right;
+        margin-top: 8px;
+      }
+
+      .dropdown-toggle::after {
+        margin-left: 91%;
+      }
+
+      .op-user-list .form-group {
+        margin-right: 10px;
+      }
+
+      .op-user-list .form-group label {
+        margin-right: 5px;
+      }
+
+      .pagination {
+        display: none;
+      }
+
+      /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+      .wave1 {
+        height: 852px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 18%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+
+      .wave {
+        height: 121px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 28%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+        visibility: hidden;
+      }
+
+      .card.wave1 div,
+      .card.wave div {
+        display: none;
+      }
+
+      #myProgress {
+        width: 80%;
+        background-color: white;
+        height: 32px;
+        border: 1px solid #615ea9;
+        border-radius: 24px;
+        margin: 0 auto;
+        margin-top: 10px;
+      }
+
+      #myBar {
+        border-top-left-radius: 24px;
+        border-bottom-left-radius: 24px;
+        width: 1%;
+        height: 24px;
+        background-color: #263163;
+        max-width: 92%;
+        margin-top: 3px;
+        margin-left: 4px;
+        min-width: 5%;
+      }
+
+      .change-status-title:hover {
+        color: #000000 !important;
+      }
+
+      .hidden {
+        /* opacity: 0 !important; */
+      }
+
+      .ant-modal-content {
+        /* opacity: 0; */
+        z-index: 3;
+      }
+
+      .fade-out-animate {
+        -webkit-animation: fadeout 0.5s;
+        /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: fadeout 0.5s;
+        /* Firefox < 16 */
+        -ms-animation: fadeout 0.5s;
+        /* Internet Explorer */
+        -o-animation: fadeout 0.5s;
+        /* Opera < 12.1 */
+        animation: fadeout 0.5s;
+        animation-iteration-count: 1;
+      }
+
+      @keyframes fadeout {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+        }
+      }
+
+      /* Firefox < 16 */
+      @-moz-keyframes fadeout {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+        }
+      }
+
+      /* Safari, Chrome and Opera > 12.1 */
+      @-webkit-keyframes fadeout {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+        }
+      }
+
+      /* Internet Explorer */
+      @-ms-keyframes fadeout {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+        }
+      }
+
+      /* Opera < 12.1 */
+      @-o-keyframes fadeout {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          opacity: 0;
+        }
+      }
+
+      .fade-in-animate {
+        -webkit-animation: fadein 0.5s;
+        /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: fadein 0.5s;
+        /* Firefox < 16 */
+        -ms-animation: fadein 0.5s;
+        /* Internet Explorer */
+        -o-animation: fadein 0.5s;
+        /* Opera < 12.1 */
+        animation: fadein 0.5s;
+        animation-iteration-count: 1;
+      }
+
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Firefox < 16 */
+      @-moz-keyframes fadein {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Safari, Chrome and Opera > 12.1 */
+      @-webkit-keyframes fadein {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Internet Explorer */
+      @-ms-keyframes fadein {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Opera < 12.1 */
+      @-o-keyframes fadein {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      .customize-btn:focus {
+        padding: 5px !important;
+      }
+
+      .assign-more .customize-btn:focus {
+        padding: 5px 7px !important;
+      }
+
+      ul.child-item {
+        padding-left: 0 !important;
+        max-height: 185px;
+        overflow: scroll;
+      }
+
+      /*.dropdown-list {*/
+      .child-item li label {
+        font-family: Helvetica Neue, Helvetica, Microsoft Sans Serif, Arial,
+          Arimo;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14.66px;
+        line-height: 17px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0px;
+        color: #595959;
+        height: 32px;
+        padding: 0px 8px;
+        cursor: pointer;
+      }
+
+      /*.child-item li label:hover {*/
+      /*  background: #e6f7ff;*/
+      /*}*/
+
+      .child-item li {
+        margin: -4px 0px;
+        list-style-type: none;
+      }
+
+      .child-item li label input {
+        display: none;
+      }
+
+      .checkboxDisabled::before {
+        background-color: #cecece !important;
+      }
+
+      .checkboxDisabled {
+        border-color: #cecece !important;
+      }
+
+      .child-item li label input:checked + .checkbox-custom {
+        border-color: #0075ff;
+      }
+
+      .child-item li label input:checked + .checkbox-custom::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        background-color: #0075ff;
+      }
+
+      .child-item li label .checkbox-custom {
+        width: 15px;
+        height: 15px;
+        border: 1px solid #979797;
+        border-radius: 1px;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .custom-table-container {
+        overflow-x: auto !important;
+        border: 1px solid rgb(200, 206, 211);
+        border-radius: 3px;
+        margin-bottom: 1rem;
+        border-top-width: 0;
+      }
+    </style>
+  </th:block>
+
+  <th:block layout:fragment="op-content">
+    <style type="text/css">
+      /* .send-disabled {
+            background: #C1C1C1!important;
+            color: #fff!important;
+        }
+        .invite-input {
+            outline: none!important;
+            box-shadow: none!important;
+            border-radius: 1.7px!important;
+            min-height: 100%;
+            transition: all .3s;
+            display: inline-block;
+            width: 100%;
+            height: 32px;
+            padding: 4px 30px 4px 11px;
+            color: rgba(0,0,0,.65);
+            font-size: 14px;
+            line-height: 1.5;
+            background-color: #fff;
+            border: 0.5px solid #909090
+        }
+        textarea.invite-input {
+            max-width: 100%;
+            height: auto;
+            min-height: 32px;
+            vertical-align: bottom;
+            transition: all .3s,height 0s;
+        }
+        .invite-input:hover{
+            border: 0.5px solid #4B4B4B;
+        }
+        .invite-input:focus{
+            border: 1.5px solid #98D1FD;
+        }
+        .errorInviteInput{
+            border: 0.5px solid #EF4444!important;
+        }
+        .ant-modal-body {
+            padding: 0;
+            border-radius: 6px;
+        }
+        .ant-modal-content {
+            border-radius: 6px;
+        }*/
+      .nav-btn {
+        text-align: left;
+        font: 11px;
+        opacity: 1;
+        border-radius: 3px;
+        padding: 6px 8px 6px 8px;
+      }
+
+      .nav-btn-primary {
+        background-color: #3491ff;
+        color: #ffffff;
+        border: none;
+      }
+
+      .nav-btn-light {
+        border: 1px solid #3491ff;
+        color: #3491ff;
+        background-color: #ffffff;
+      }
+
+      .nav-btn-primary:hover {
+        background-color: #3585e5;
+      }
+
+      .nav-btn-primary:active {
+        color: #ffffff;
+        background-color: #3585e5;
+        border: 2px solid #89d1fd;
+      }
+
+      .nav-btn-light:hover {
+        color: #0e65c7;
+        border: 2px solid #deedff;
+        background: #deedff;
+      }
+
+      .nav-btn-light:active {
+        border: 2px solid #89d1ff;
+        color: #0e65c7;
+      }
+    </style>
+    <div id="app" class="op-user-list">
+      <div class="row">
+        <div class="col-lg-12" v-click-outside="hideCalendarPicker">
+          <div class="wave" style="margin-bottom: 1rem">
+            <div>
+              <input type="hidden" v-model="requestParam.sort" />
+
+              <div class="form-row">
+                <div class="col-md-4 mb-3 mb-md-0 col-12">
+                  <common-searchbar
+                    :placeholder="resources['search_by_name_or_email']"
+                    :request-param="requestParam"
+                    :on-search="search"
+                  ></common-searchbar>
+                </div>
+
+                <div class="col-md-2 mb-2 mb-md-0" v-if="isAdmin">
+                  <common-button
+                    :title="Access_Level"
+                    @click="handleaccesslevelToggle"
+                    :is-show="showAccessLevel"
+                  >
+                  </common-button>
+                  <common-select-popover
+                    :is-visible="showAccessLevel"
+                    @close="handlecloseAccessLevel"
+                    class="w-95"
+                  >
+                    <common-select-dropdown
+                      id="access-level"
+                      :searchbox="false"
+                      :class="{show:showAccessLevel}"
+                      :style="{position:'static'}"
+                      :items="AccessLevel"
+                      :checkbox="false"
+                      class="dropdown"
+                      :click-handler="select_access"
+                    ></common-select-dropdown>
+                  </common-select-popover>
+                </div>
+
+                <div class="col-md-2 mb-2 mb-md-0" v-if="!isAdmin">
+                  <common-button
+                    :title="NotAccess_Level"
+                    @click="handlenotadminToggle"
+                    :is-show="showNotAdmin"
+                  >
+                  </common-button>
+                  <common-select-popover
+                    :is-visible="showNotAdmin"
+                    @close="handlecloseNotAdmin"
+                    class="w-95"
+                  >
+                    <common-select-dropdown
+                      id="notaccess-level"
+                      :searchbox="false"
+                      :class="{show:showNotAdmin}"
+                      :style="{position:'static'}"
+                      :items="NotAccessLevel"
+                      :checkbox="false"
+                      class="dropdown"
+                      :click-handler="select_NotAdmin"
+                    ></common-select-dropdown>
+                  </common-select-popover>
+                </div>
+
+                <div class="col-md-2 mb-2 mb-md-0">
+                  <common-button
+                    :title="Status"
+                    @click="handleStatusToggle"
+                    :is-show="ShowStatus"
+                  >
+                  </common-button>
+                  <common-select-popover
+                    :is-visible="ShowStatus"
+                    @close="handlecloseStatus"
+                    class="w-95"
+                  >
+                    <common-select-dropdown
+                      id="status-level"
+                      :searchbox="false"
+                      :class="{show:ShowStatus}"
+                      :style="{position:'static'}"
+                      :items="StatusLevel"
+                      :checkbox="false"
+                      class="dropdown"
+                      :click-handler="select_Status"
+                    ></common-select-dropdown>
+                  </common-select-popover>
+                </div>
+
+                <div class="col-md-4 mb-2 mb-md-0">
+                  <div class="data-table-top-action">
+                    <div
+                      class="assign-more d-flex align-items-center position-relative"
+                    >
+                      <a
+                        id="goToNew"
+                        href="javascript:void(0)"
+                        @click="showInviteUserModal"
+                        class="btn-custom btn-outline-custom-primary"
+                      >
+                        <span th:text="#{invite_user}"></span>
+                      </a>
+                    </div>
+                    <div
+                      class="assign-more d-flex align-items-center position-relative"
+                    >
+                      <a
+                        @click="goToNew"
+                        id="goToNew2"
+                        href="javascript:void(0)"
+                        class="btn-custom btn-custom-primary"
+                      >
+                        <span th:text="#{new_user}"></span>
+                      </a>
+                    </div>
+                    <div
+                      class="assign-more d-flex align-items-center position-relative"
+                    >
+                      <a-popover
+                        v-model="visibleMoreAction"
+                        placement="bottomLeft"
+                        trigger="click"
+                      >
+                        <a-tooltip color="white">
+                          <template slot="title">
+                            <div
+                              style="
+                                padding: 6px 8px;
+                                font-size: 13px;
+                                color: #3491ff;
+                                background: #fff;
+                                border-radius: 4px;
+                                height: 32px;
+                                box-shadow: 0px 0px 4px 1px #e5dfdf;
+                              "
+                            >
+                              More
+                              <div class="custom-arrow-tooltip"></div>
+                            </div>
+                          </template>
+                          <a
+                            style="padding: 6px"
+                            @click.stop="handleToggleMoreActions"
+                            href="javascript:void(0)"
+                            class="customize-hint btn-custom customize-btn btn-outline-custom-primary"
+                          >
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.5002 13.6C7.56133 13.6 6.80021 14.3611 6.80021 15.3C6.80021 16.2389 7.56133 17 8.5002 17C9.43908 17 10.2002 16.2389 10.2002 15.3C10.2002 14.3611 9.43908 13.6 8.5002 13.6V13.6ZM8.5002 6.80003C7.56133 6.80003 6.80021 7.56115 6.80021 8.50003C6.80021 9.4389 7.56133 10.2 8.5002 10.2C9.43908 10.2 10.2002 9.4389 10.2002 8.50003C10.2002 7.56115 9.43908 6.80003 8.5002 6.80003V6.80003ZM8.5002 0C7.56133 0 6.80021 0.761119 6.80021 1.69999C6.80021 2.63887 7.56133 3.39999 8.5002 3.39999C9.43908 3.39999 10.2002 2.63887 10.2002 1.69999C10.2002 0.761119 9.43908 0 8.5002 0V0Z"
+                                fill="#3491FF"
+                              />
+                            </svg>
+                          </a>
+                        </a-tooltip>
+                        <a-menu
+                          v-if="!isTabView"
+                          slot="content"
+                          class="wrapper-action-dropdown"
+                          style="
+                            border-right: unset !important;
+                            max-height: 250px;
+                            overflow: auto;
+                          "
+                        >
+                          <a-menu-item @click="isTabView = true">
+                            <span>Tab view</span>
+                          </a-menu-item>
+                        </a-menu>
+                        <div v-else slot="content">
+                          <ul class="child-item">
+                            <li
+                              v-for="(subItem, index2) in listSelectedTabs"
+                              :key="`${index2}`"
+                            >
+                              <label :for="`dropdown-input-${index2}`">
+                                <template>
+                                  <input
+                                    :id="`dropdown-input-${index2}`"
+                                    type="checkbox"
+                                    :value="subItem.id"
+                                    :checked="subItem.show"
+                                    :disabled="subItem.name === 'All' && subItem.isDefaultTab"
+                                    @change="selectTab(subItem, index2)"
+                                  />
+                                  <div
+                                    class="checkbox-custom"
+                                    :class="{'checkboxDisabled': subItem.name === 'All' && subItem.isDefaultTab}"
+                                  ></div>
+                                </template>
+                                {{ convertCodeToName(subItem) }}
+                              </label>
+                            </li>
+                          </ul>
+                          <ul class="child-item">
+                            <li>
+                              <label>
+                                <a
+                                  href="javascript:void(0)"
+                                  @click="createTabView()"
+                                  >+ Create tab view</a
+                                >
+                              </label>
+                            </li>
+                            <li>
+                              <label>
+                                <a
+                                  href="javascript:void(0)"
+                                  @click="openManageTabView"
+                                  >Manage tab view</a
+                                >
+                              </label>
+                            </li>
+                          </ul>
+                        </div>
+                      </a-popover>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer" style="display: none">
+              <button class="btn btn-sm btn-primary" type="submit">
+                <i class="fa fa-dot-circle-o"></i>
+                <span th:text="#{submit}"></span>
+              </button>
+              <button class="btn btn-sm btn-danger" type="reset">
+                <i class="fa fa-ban"></i> <span th:text="#{reset}"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="wave1">
+            <div class="card-header" style="display: none">
+              <i class="fa fa-align-justify"></i>
+              <span th:text="#{striped_tbl}"></span>
+            </div>
+            <div class="card-overflow-reset">
+              <div class="data-table-tabs">
+                <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                  <li
+                    v-if="tabItem.show || (tabItem.isDefaultTab && tabItem.name === 'All')"
+                    v-for="(tabItem, index) in listSelectedTabs"
+                    class="nav-item"
+                  >
+                    <a
+                      class="nav-link"
+                      :class="{active: checkStatusParam(tabItem)}"
+                      href="javascript:void(0)"
+                      @click.prevent="tab(tabItem)"
+                    >
+                      <div
+                        v-if="tabItem.name && tabItem.name.length > 20"
+                        class="part-name-drop-down one-line"
+                      >
+                        <a-tooltip placement="bottom">
+                          <template slot="title">
+                            <div style="padding: 6px; font-size: 13px">
+                              {{ tabItem.name }}
+                            </div>
+                          </template>
+                          <span> {{ truncateText(tabItem.name, 20) }} </span>
+                        </a-tooltip>
+                      </div>
+                      <span v-else class="part-name-drop-down one-line">
+                        {{ truncateText(tabItem.name,20) }}
+                      </span>
+                      <span class="badge badge-light badge-pill"
+                        >{{ tabItem.totalItem }}</span
+                      >
+                      <span
+                        v-if="tabItem.name !== 'All' || !tabItem.isDefaultTab"
+                        @click.stop="closeTab(tabItem)"
+                        class="close-tab"
+                      >
+                        <svg
+                          width="9"
+                          height="8"
+                          viewBox="0 0 9 8"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8.08333 0.76375L7.31958 0L4.29167 3.02792L1.26375 0L0.5 0.76375L3.52792 3.79167L0.5 6.81958L1.26375 7.58333L4.29167 4.55542L7.31958 7.58333L8.08333 6.81958L5.05542 3.79167L8.08333 0.76375Z"
+                            fill="#888888"
+                          />
+                        </svg>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <table
+                class="table table-responsive-sm table-striped custom-table-container"
+              >
+                <colgroup>
+                  <col />
+                  <col />
+                  <col />
+                  <col />
+                  <col />
+                  <col style="width: 150px" />
+                </colgroup>
+                <thead id="thead-actionbar" class="custom-header-table">
+                  <tr
+                    :class="{'invisible': listChecked.length != 0}"
+                    style="height: 57px"
+                    class="tr-sort"
+                  >
+                    <th class="custom-td">
+                      <div class="custom-td_header">
+                        <select-all
+                          :resources="resources"
+                          :show="true"
+                          :checked="isAll"
+                          :total="total"
+                          :count="results.length"
+                          :unit="['user', 'users']"
+                          @select-all="handleSelectAll('all')"
+                          @select-page="handleSelectAll('page')"
+                          @deselect="handleSelectAll('deselect')"
+                        ></select-all>
+                      </div>
+                    </th>
+                    <th style="width: 63px"></th>
+                    <th
+                      style="padding-left: 0"
+                      class="text-left __sort"
+                      :class="[ {'active': currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']"
+                      @click="sortBy(sortType.NAME)"
+                    >
+                      <span th:text="#{username}"></span
+                      ><span class="__icon-sort"></span>
+                    </th>
+                    <th
+                      class="text-left __sort"
+                      :class="[ {'active': currentSortType === sortType.EMAIL}, isDesc ? 'desc': 'asc']"
+                      @click="sortBy(sortType.EMAIL)"
+                    >
+                      <span th:text="#{email_address}"></span
+                      ><span class="__icon-sort"></span>
+                    </th>
+                    <th
+                      class="text-left __sort"
+                      :class="[ {'active': currentSortType === sortType.COMPANY}, isDesc ? 'desc': 'asc']"
+                      @click="sortBy(sortType.COMPANY)"
+                    >
+                      <span th:text="#{company}"></span
+                      ><span class="__icon-sort"></span>
+                    </th>
+                    <th
+                      class="__sort"
+                      :class="[ {'active': currentSortType === sortType.STATUS}, isDesc ? 'desc': 'asc']"
+                      @click="sortBy(sortType.STATUS)"
+                    >
+                      <span th:text="#{status}"></span
+                      ><span class="__icon-sort"></span>
+                    </th>
+                    <!--                                    <th th:text="#{action}">-->
+                  </tr>
+
+                  <tr
+                    :class="{'d-none zindexNegative': listChecked.length == 0}"
+                    id="action-bar"
+                    class="tr-sort empty-tr"
+                  >
+                    <th class="empty-th">
+                      <div class="first-checkbox-zone2">
+                        <div
+                          class="first-checkbox2"
+                          style="
+                            display: flex;
+                            align-items: center;
+                            padding-left: 0;
+                            width: 110px;
+                          "
+                        >
+                          <div>
+                            <select-all
+                              :resources="resources"
+                              :show="true"
+                              :checked="isAll"
+                              :total="total"
+                              :count="results.length"
+                              :unit="['user', 'users']"
+                              @select-all="handleSelectAll('all')"
+                              @select-page="handleSelectAll('page')"
+                              @deselect="handleSelectAll('deselect')"
+                            ></select-all>
+                          </div>
+                        </div>
+                        <div class="action-bar">
+                          <div
+                            v-if="listChecked.length == 1 "
+                            @click="goToEdit"
+                            class="action-item"
+                          >
+                            <span>Edit</span>
+                            <i class="icon-action edit-icon"></i>
+                          </div>
+                          <div
+                            v-if="listChecked.length == 1 "
+                            @click="showRevisionHistory(listChecked[0])"
+                            class="action-item"
+                          >
+                            <span>View Edit History</span>
+                            <i class="icon-action view-edit-history-icon"></i>
+                          </div>
+                          <div
+                            v-if="listChecked.length == 1 "
+                            class="action-item"
+                            @click="showSystemNoteModal(listChecked[0])"
+                          >
+                            <span>Memo</span>
+                            <i class="icon-action memo-icon"></i>
+                          </div>
+                          <div
+                            v-if="tabCurrent !== 'disabled' && selectedUserType === 'enable'"
+                            class="action-item"
+                            @click.prevent="disable(listCheckedFull)"
+                          >
+                            <span>Disable</span>
+                            <div class="icon-action disable-icon"></div>
+                          </div>
+                          <div
+                            v-if="selectedUserType === 'disabled'"
+                            class="action-item"
+                            @click.prevent="enable(listCheckedFull)"
+                          >
+                            <span>Enable</span>
+                            <div class="icon-action enable-icon"></div>
+                          </div>
+                          <div
+                            v-if="listChecked.length >= 1 && !currentActiveTab.isDefaultTab"
+                            class="action-item"
+                          >
+                            <move-to-action
+                              :type-view="'user'"
+                              :visible-move="visibleMove"
+                              :current-active-tab="currentActiveTab"
+                              :resources="resources"
+                              :list-checked="total === listAllIds.length ? listAllIds : listChecked"
+                              @move-success="moveSuccess"
+                              :list-selected-tabs="listSelectedTabs"
+                              @open-move="visibleMove = true"
+                              @create-tab-view="createTabView"
+                            ></move-to-action>
+                          </div>
+
+                          <div
+                            v-if="listChecked.length >= 1 && !currentActiveTab.isDefaultTab"
+                            class="action-item"
+                            @click="removeFromTab"
+                          >
+                            <span class="mr-1">Remove From Tab</span>
+                            <svg
+                              width="14"
+                              height="13"
+                              viewBox="0 0 14 13"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M2.88267 3.55238C2.78294 3.88285 2.73763 4.35445 2.73763 5.04427V7.95626C2.73763 8.53627 2.76942 8.96538 2.8411 9.28794C2.91142 9.60438 3.01274 9.78411 3.12909 9.90046C3.24544 10.0168 3.42518 10.1182 3.7416 10.1885C4.06417 10.2601 4.49329 10.2919 5.0733 10.2919H9.06863C10.0399 10.2919 10.5581 10.1994 10.8558 10.0216L11.4112 10.9517C10.8311 11.2981 10.0343 11.3753 9.06863 11.3753H5.0733C4.46856 11.3753 3.94564 11.3436 3.50658 11.246C3.06135 11.1471 2.66986 10.9733 2.36306 10.6665C2.05626 10.3597 1.88252 9.96822 1.78357 9.52297C1.686 9.0839 1.6543 8.56103 1.6543 7.95626V5.04427C1.6543 4.33306 1.69776 3.72906 1.84554 3.23938C2.00047 2.72602 2.27596 2.32041 2.73074 2.04883L3.28619 2.97893C3.10601 3.08653 2.97526 3.2456 2.88267 3.55238Z"
+                                fill="#4B4B4B"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M4.89551 2.16667C4.89551 1.86751 5.13802 1.625 5.43717 1.625H5.94939C6.49271 1.625 7.00009 1.89654 7.30148 2.34861L7.74158 3.0088C7.84206 3.15948 8.01117 3.25 8.1923 3.25H10.9306C11.796 3.25 12.4974 3.93312 12.4891 4.81282C12.4882 4.90968 12.4875 4.98977 12.4875 5.044V7.956C12.4875 8.22239 12.4813 8.47075 12.4665 8.70133C12.4474 8.99985 12.1899 9.22637 11.8913 9.20725C11.5928 9.18808 11.3663 8.93057 11.3854 8.632C11.3983 8.43072 11.4042 8.20647 11.4042 7.956V5.044C11.4042 4.9838 11.4049 4.89856 11.4058 4.80263C11.4082 4.53957 11.2081 4.33333 10.9306 4.33333H8.1923C7.64901 4.33333 7.14158 4.0618 6.84019 3.60972L6.40009 2.94954C6.29961 2.79885 6.1305 2.70833 5.94939 2.70833H5.43717C5.13802 2.70833 4.89551 2.46582 4.89551 2.16667Z"
+                                fill="#4B4B4B"
+                              />
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M1.81295 1.24214C2.02448 1.03061 2.36744 1.03061 2.57898 1.24214L12.329 10.9921C12.5405 11.2037 12.5405 11.5467 12.329 11.7582C12.1175 11.9697 11.7745 11.9697 11.563 11.7582L1.81295 2.00818C1.60141 1.79664 1.60141 1.45368 1.81295 1.24214Z"
+                                fill="#4B4B4B"
+                              />
+                            </svg>
+                          </div>
+                          <div v-if="selectedUserType === 'both'">
+                            No batch action is available
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="op-list" style="display: none">
+                  <tr v-for="(result, index, id) in results" :id="result.id">
+                    <td class="custom-td">
+                      <template v-if="listChecked.length >= 0">
+                        <input
+                          @click="(e) => check(e, result)"
+                          :checked="checkSelect(result.id)"
+                          class="checkbox"
+                          type="checkbox"
+                          :id="result.id + 'checkbox'"
+                          :value="result.id"
+                        />
+                        <!--                                            <label class="custom-control-labelx" :for="result.id + 'checkbox'"></label>-->
+                      </template>
+                    </td>
+                    <td>
+                      <div class="avatar">
+                        <!--                                            <img :src="result.gravatar" class="img-avatar" />-->
+                        <img
+                          src="/images/icon/user-avatar.png"
+                          class="img-avatar"
+                        />
+
+                        <span class="avatar-status badge-danger"></span>
+                      </div>
+                    </td>
+                    <td class="text-left">
+                      <div>
+                        {{result.name}}
+
+                        <span
+                          v-if="result.admin"
+                          class="label label-success"
+                          th:text="#{admin}"
+                        ></span>
+                        <span
+                          v-if="result.ssoId != null"
+                          class="label label-warning"
+                          th:text="#{sso}"
+                        ></span>
+                      </div>
+
+                      <div class="small text-muted font-size-11-2">
+                        <span th:text="#{new}"></span> |
+                        <span th:text="#{registered}+' on'"></span>
+                        <!--{{result.createdDate}}-->
+                        {{formatToDate(result.createdAt)}}
+                      </div>
+                    </td>
+                    <td class="text-left">
+                      {{result.email}} {{result.enable}}
+                    </td>
+                    <td class="text-left">
+                      <div v-if="result.company != null">
+                        {{result.company.name}}
+                        <div class="small text-muted font-size-11-2">
+                          {{result.company.companyCode}}
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      style="vertical-align: middle !important"
+                      class="text-center op-status-td"
+                    >
+                      <span
+                        v-if="result.requested"
+                        style="background: #ae0ed6"
+                        class="label label-success"
+                        >Requested</span
+                      >
+                      <span
+                        v-if="!result.requested && result.enabled"
+                        class="label label-success"
+                        th:text="#{enabled}"
+                      ></span>
+                      <span
+                        v-if="!result.requested && !result.enabled"
+                        class="label label-danger"
+                        th:text="#{disabled}"
+                      ></span>
+                    </td>
+                    <!--                                    <td>-->
+                    <!--                                        <a :href="'/admin/users/' + result.id" class="table-action-link edit"-->
+                    <!--                                            title="Edit" @click="search(result.id)">-->
+                    <!--                                            <img src="/images/icon/edit.svg" alt="edit" />-->
+                    <!--                                        </a>-->
+                    <!--                                        &lt;!&ndash; <a-popover v-model="result.familyTool" placement="bottom" trigger="click" class="change-status mx-0 px-0 my-0 py-0">-->
+                    <!--                                            <img src="/images/icon/change-status.svg" height="18" alt="Change status" />-->
+                    <!--                                          <div-->
+                    <!--                                              slot="content"-->
+                    <!--                                              class="dropdown-scroll"-->
+                    <!--                                          >-->
+                    <!--                                            <div class="content-body">-->
+                    <!--                                              <template>-->
+                    <!--                                                <div class="first-layer-wrapper">-->
+                    <!--                                                    <div class="first-layer">-->
+                    <!--                                                      <div style="font-weight: 700;">Change status</div>-->
+                    <!--                                                      <a-menu style="border-right: none ">-->
+                    <!--                                                        <a-menu-item v-if="!result.enabled" class="dropdown_button" @click="enable(result)">Enable</a-menu-item>-->
+                    <!--                                                        <a-menu-item v-if="result.enabled" class="dropdown_button" @click="disable(result)">Disable</a-menu-item>-->
+                    <!--                                                      </a-menu>-->
+                    <!--                                                    </div>-->
+                    <!--                                                  </div>-->
+                    <!--                                              </template>-->
+                    <!--                                            </div>-->
+                    <!--                                          </div>-->
+                    <!--                                        </a-popover> &ndash;&gt;-->
+                    <!--                                        <div class="drowdown d-inline">-->
+                    <!--                                            <a href="javascript:void(0)" title="Change status"-->
+                    <!--                                                @click="changeShow(result.id)" class="table-action-link change-status"-->
+                    <!--                                                data-toggle="dropdown" role="button" aria-haspopup="true"-->
+                    <!--                                                aria-expanded="false">-->
+                    <!--                                                <img src="/images/icon/change-status.svg" alt="Change status" />-->
+                    <!--                                            </a>-->
+                    <!--                                            <ul id="myModal" class="dropdown-menu"-->
+                    <!--                                                :class="[(parseInt(result.id) === parseInt(showDrowdown)) ? 'show' : '']">-->
+                    <!--                                                <li class="dropdown-header"><span class="op-change-status"-->
+                    <!--                                                        th:text="#{change_status}"></span></li>-->
+                    <!--                                                <li v-if="!result.enabled">-->
+                    <!--                                                    <div class="dropdown-item" @click.prevent="enable(result)"><span-->
+                    <!--                                                            th:text="#{enable}"></span></div>-->
+                    <!--                                                </li>-->
+                    <!--                                                <li v-if="result.enabled">-->
+                    <!--                                                    <div class="dropdown-item" @click.prevent="disable(result)"><span-->
+                    <!--                                                            th:text="#{disable}"></span></div>-->
+                    <!--                                                </li>-->
+                    <!--                                            </ul>-->
+                    <!--                                        </div>-->
+
+                    <!--                                        <a href="javascript:void(0)" v-if="result.enabled || !result.requested"-->
+                    <!--                                            @click.prevent="showRevisionHistory(result.id)" title="View edit history"-->
+                    <!--                                            class="table-action-link revision-history">-->
+                    <!--                                            <img src="/images/icon/revision-history.svg" alt="View edit history" />-->
+                    <!--                                        </a>-->
+                    <!--                                        <a href="javascript:void(0)" @click="showSystemNoteModal(result)"-->
+                    <!--                                            title="Add note" class="table-action-link note">-->
+                    <!--                                            <img src="/images/icon/note.svg" alt="Add note" />-->
+                    <!--                                        </a>-->
+                    <!--                                    </td>-->
+                  </tr>
+                </tbody>
+              </table>
+
+              <div
+                class="no-results d-none"
+                th:text="#{no_results}"
+                style="margin-top: -1rem"
+              ></div>
+
+              <div class="row">
+                <div class="col-md-8">
+                  <ul class="pagination">
+                    <li
+                      v-for="(data, index) in pagination"
+                      class="page-item"
+                      :class="{active: data.isActive}"
+                    >
+                      <a class="page-link" @click="paging(data.pageNumber)"
+                        >{{data.text}}</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-auto ml-auto">
+                  <!--                                <a href="/admin/users/new" class="btn btn-primary"><i class="fa fa-plus"></i> <span-->
+                  <!--                                        th:text="#{new_user}"></span> </a>-->
+                </div>
+                <div
+                  v-if="isloginAuditTrailEnabled"
+                  class="col-md-2 col-sm-2 col-xs-2"
+                >
+                  <div
+                    class="col-auto ml-auto"
+                    style="display: flex; justify-content: flex-end"
+                    v-if="hasChecked()"
+                  >
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-success"
+                        @click="downloadTooling(EXPORT_TYPE.XLSX)"
+                        type="button"
+                        id="dropdownMenuButton"
+                      >
+                        <span th:text="#{export}"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#exampleModal"
+                id="toggleExportProgressBar"
+                style="display: none"
+              >
+                <span th:text="#{demo_model}"></span>
+              </button>
+
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+                style="top: 30%"
+              >
+                <div class="modal-dialog" role="document" style="width: 350px">
+                  <div class="modal-content" style="border: none">
+                    <div class="modal-header">
+                      <h5
+                        class="modal-title"
+                        id="exampleModalLabel"
+                        style="font-weight: bold"
+                        th:text="#{exporting_data}"
+                      ></h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                        @click="stopExport"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" style="height: 100px">
+                      <div style="text-align: center">
+                        <p
+                          style="color: #615ea9"
+                          th:text="#{loading}+'...'"
+                        ></p>
+                      </div>
+                      <div id="myProgress">
+                        <div id="myBar" style="display: inline-block"></div>
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 24px;
+                            height: 24px;
+                            background: #615ea9;
+                            margin-left: -16px;
+                            border-radius: 50%;
+                          "
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <revision-history :resources="resources"></revision-history>
+      <system-note
+        system-note-function="USER"
+        :resources="resources"
+      ></system-note>
+      <invite-user :resources="resources"></invite-user>
+      <action-bar-feature feature="ACTION_BAR"></action-bar-feature>
+      <manage-tab-view
+        :resources="resources"
+        :object-type="'USER'"
+        @open-edit="openEdit"
+        @open-duplicate="openDuplicate"
+        @move-success="getTabsByCurrentUser"
+        :trigger-update="triggerUpdateManageTab"
+      ></manage-tab-view>
+      <tab-view-modal
+        :resources="resources"
+        :object-type="'USER'"
+        :all-tooling-list="allToolingList"
+        :page-type="pageType"
+        @edit-success="editSuccess"
+        @create-success="createSuccess"
+      ></tab-view-modal>
+      <toast-alert
+        @close-toast="closeToastAlert"
+        :show="toastAlert.value"
+        :title="toastAlert.title"
+        :content="toastAlert.content"
+        ref-custom="toolingToast"
+      ></toast-alert>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script
+      defer
+      th:src="'/js/scripts/admin/users/list.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

@@ -1,0 +1,11 @@
+{
+    "type": "bar",
+    "label": "Within (sec)",
+    "fill": false,
+    "backgroundColor": "#B1E0EE",
+    "borderColor": "#63C2DE",
+    "borderWidth": 2,
+    "data": [],
+    "yAxisID": "second-y-axis",
+    "stack": "cycleTime"
+}

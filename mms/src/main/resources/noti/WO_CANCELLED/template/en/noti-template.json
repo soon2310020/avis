@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName} cancelled",
+  "content": "${senderName} (${senderCompanyName}) has cancelled Work Order ID ${workOrderId}.",
+  "emailTitle": "${senderName} (${senderCompanyName}) has cancelled Work Order ID ${workOrderId}.",
+  "emailContent": "${senderName} (${senderCompanyName}) has cancelled Work Order ID ${workOrderId}."
+}

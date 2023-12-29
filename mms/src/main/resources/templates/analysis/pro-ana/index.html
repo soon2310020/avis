@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head">
+    <style type="text/css"></style>
+  </th:block>
+  <th:block layout:fragment="op-content">
+    <div id="app">
+      <process-analysis-main></process-analysis-main>
+    </div>
+  </th:block>
+  <th:block layout:fragment="op-script">
+    <script th:src="'/js/scripts/patch-styles.js?'+${noCacheVer}"></script>
+    <script defer src="/js/cdn/pdf.min.js"></script>
+    <script defer src="/js/scripts/hotjar.js"></script>
+  
+    <script
+      defer
+      th:src="'/js/scripts/analysis/pro-ana/index.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

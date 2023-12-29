@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+<th:block layout:fragment="op-head">
+  <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+  <link rel="stylesheet" th:href="'/css/table-dropdown.css?'+${noCacheVer}" />
+  <style>
+    :root {
+      --mr: 8px;
+    }
+    .alert-center{
+      padding-top: 8px;
+      margin-bottom: 24px;
+    }
+    .chart-wrapper .progress {
+      width: 100%;
+    }
+    .chart-wrapper .progress-bar {
+      background-color: #5D43F7;
+    }
+    .chart-wrapper img {
+      max-width: none;
+    }
+    .chart-wrapper .img-zone {
+      width: 50px;
+      height: 50px;
+      padding: 11px;
+      background: #E6E6E6;
+      border-radius: 50%;
+      margin-right: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chart-wrapper:not(.chart-overall):hover {
+      border: 1px solid #5D43F7;
+    }
+    .chart-wrapper.active .img-zone {
+      background: #F2ECFB;
+    }
+    .chart-wrapper {
+      /*position: relative;*/
+      /*margin-top: 30px;*/
+      margin-top: 10px;
+      width: calc(20% - var(--mr));
+      border: 1px solid #fff;
+      border-radius: 4px;
+      /*width: 140px;*/
+    }
+    .chart-wrapper:not(:last-child) {
+      /*margin-right: 36px;*/
+      margin-right: var(--mr);
+    }
+    .chart-wrapper > div {
+      cursor: pointer;
+    }
+
+    .chart-wrapper:not(.chart-overall) > div {
+      /*width: 110px;*/
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      /*background: #F5F6F7;*/
+      box-shadow: 0px 3px 6px rgb(0 0 0 / 16%);
+      border-radius: 4px;
+      filter: grayscale(1);
+      /*border: 4px solid #fff;*/
+      padding: 21px 8px 17px 8px;
+    }
+    .chart-wrapper:not(.chart-overall):hover > div {
+      filter: unset;
+    }
+    .chart-wrapper.active > div {
+      filter: unset!important;
+      outline: 4px solid #ACD2FF;
+      background: #fff;
+    }
+    .chart-wrapper.active .chart-action{
+      background: #DEEDFF;
+      box-shadow: unset;
+      color: #0075FF;
+    }
+    .chart-wrapper.active .chart-name{
+      font-weight: bold;
+    }
+    .chart-wrapper canvas {
+      margin: 0px -30px;
+      display: block;
+      height: 90px;
+      width: 180px;
+      min-height: 95px;
+      max-height: 95px;
+      max-width: 190px;
+      min-width: 190px;
+    }
+    .chart-wrapper .chart-title {
+      font-size: 20px;
+      color: #595959;
+      width: calc(100% - 61px);
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-wrapper .chart-title span {
+      color: #AAAAAA;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .chart-wrapper .chart-name {
+      position: absolute;
+      font-size: 12px;
+      color: #595959;
+      left: 50%;
+      top: -30px;
+      transform: translate(-50%, 0);
+      line-height: 100%;
+      margin-bottom: 11px;
+    }
+    .chart-wrapper .chart-action {
+      position: absolute;
+      font-size: 10px;
+      width: 71px;
+      height: 24px;
+      color: #595959;
+      left: 50%;
+      bottom: -40px;
+      transform: translate(-50%, 0);
+      box-shadow: 0px 4px 8px 1px rgb(0 0 0 / 16%);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .chart-wrapper:not(.active) .chart-action:hover {
+      background: #F1F4F9;
+    }
+    .wave1 {
+      height: 850px;
+      animation: wave 4s infinite linear forwards;
+      -webkit-animation:wave 4s infinite linear forwards;
+      background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+      border:none;
+    }
+
+    .wave {
+      height: 121px;
+      animation: wave 4s infinite linear forwards;
+      -webkit-animation:wave 4s infinite linear forwards;
+      background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+      border: none;
+    }
+    .wave1 .alert-center__item-text-zone {
+      display: none;
+    }
+    .wave1 .alert-center {
+      display: none;
+    }
+    .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{
+      visibility:hidden;
+    }
+    .card.wave div, .card.wave1 div{
+      display: none;
+    }
+
+    /* .hover-icon{
+      width: 110% !important;
+      max-width: 110% !important;
+    } */
+    .card{
+      border: 1px solid #c8ced3;
+    }
+    .img-zone-hover-background{
+      background-color: #F2ECFB !important;
+    }
+
+    @media screen and (max-width: 1399px) {
+      .chart-wrapper {
+        width: calc(25% - var(--mr));
+      }
+    }
+    @media screen and (max-width: 1199px) {
+      .chart-wrapper {
+        width: calc(33.3% - var(--mr));
+      }
+    }
+    @media screen and (max-width: 750px) {
+      .chart-wrapper {
+        width: calc(50% - var(--mr));
+      }
+    }
+  </style>
+  <style>
+    /*style for status column on alert components*/
+    .label-primary {
+      background: #AE0DD5;
+    }
+
+    .label-default {
+      background: #BCBCBC;
+    }
+
+    .label-success {
+      cursor: pointer;
+    }
+
+    .data-submission {
+      padding: 3px 0px;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 10px;
+      display: inline-flex;
+      width: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+    }
+    .select-option {
+      margin-right: 10px;
+      padding: 0px 10px 0px 0px;
+    }
+
+    .activeOption {
+      color: #2da9d6;
+      text-decoration: underline;
+    }
+
+  </style>
+</th:block>
+<th:block layout:fragment="op-content">
+  <div id="app" class="op-user-list  wave1">
+    <div class="alert-center">
+      <b v-text="resources['codelist_center']"></b>
+      <div style="flex-wrap: wrap;width: 100%;" class="d-flex align-items-center justify-content-start">
+        <div v-for="(item, index) in menuList"  :key="index" class="chart-wrapper" :class="{'active': requestParam.objectType === item.menuKey}">
+          <div @click="changeSelect(item.menuKey)" @mouseover="onHover(item.menuKey)"
+               @mouseleave="onHover(null)">
+            <div class="img-zone" :class="{'img-zone-hover-background' :  isHover == item.menuKey}">
+              <img v-show="isHover !== item.menuKey && requestParam.objectType !== item.menuKey" :src="item.iconPathDefault || '/images/icon/part-icon-hover.svg'" alt="">
+              <img v-show="isHover == item.menuKey || requestParam.objectType === item.menuKey" :src="item.iconPath || '/images/icon/part-icon-hover.svg'" alt=""
+                   :class="{'hover-icon' : isHover == item.menuKey}">
+            </div>
+            <div class="chart-title">
+              <b style="width: 110px; line-height: 24px;">{{ item.menuName}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <downtime-codelist v-if="requestParam.objectType=='DOWNTIME'" :resources="resources"></downtime-codelist>
+      <downtime-mainlevel-codelist v-if="requestParam.objectType=='DOWNTIME_MAIN_LEVEL'" :resources="resources"></downtime-mainlevel-codelist>
+      <downtime-sublevel-codelist v-if="requestParam.objectType=='DOWNTIME_SUB_LEVEL'" :resources="resources"></downtime-sublevel-codelist>
+
+    </div>
+
+    <!--        popup-->
+    <revision-history :resources="resources"></revision-history>
+<!--    <system-note :system-note-function="pageType" :resources="resources"></system-note>-->
+    <system-note v-if="requestParam.objectType" :system-note-function="requestParam.objectType" :resources="resources"></system-note>
+
+    <action-bar-feature feature="ACTION_BAR" ></action-bar-feature>
+  </div>
+</th:block>
+<th:block layout:fragment="op-script">
+  <script defer src="/ui/node_modules/chart.js/dist/Chart.min.js"></script>
+  <script defer th:src="'/js/scripts/admin/codelist-center/index.js?'+${noCacheVer}"></script>
+</th:block>

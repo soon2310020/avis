@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-default}"
+>
+    <th:block layout:fragment="op-head">
+        <link rel="stylesheet" th:href="'/css/time-language/style.css?'+${noCacheVer}" />
+        <style type="text/css">
+            .custom-dropdown-button {
+                width: 183px !important;
+            }
+            .wave {
+                width: 100%;
+                height: 360px;
+                animation: wave 4s infinite linear forwards;
+                -webkit-animation: wave 4s infinite linear forwards;
+                background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+                border: none;
+            }
+
+            .sidebar.wave_sidebar div,
+            .tab-support.wave_header div,
+            .tab-insight.wave_header div,
+            .tab-reports.wave_header div,
+            .tab-user.wave_header div {
+                visibility: hidden;
+            }
+            .a.wave div {
+                visibility: hidden !important;
+            }
+            .ant-btn {
+                height: 34px !important;
+            }
+
+            .btn-custom {
+                text-align: left !important;
+            }
+
+            .common-popover {
+                top: 34px !important;
+                min-width: 100px !important;
+                position: static !important;
+                width: 183px !important;
+                border-radius: 3px !important;
+                padding: 2px !important;
+            }
+
+            .dropdown-wrap {
+                top: 0px !important;
+                left: 0px !important;
+                border-radius: 3px !important;
+                padding: 2px !important;
+            }
+
+            .dropdown-icon-custom {
+                float: right;
+            }
+
+            .img-transition {
+                float: right;
+                margin-top: 8px;
+            }
+
+            .dropdown {
+                width: 100% !important;
+            }
+
+            .btn-custom-primary {
+                border: 1px solid rgba(22, 23, 24, 0.13) !important;
+                color: #5c6873 !important;
+                background: #ffffff !important;
+                background-color: #ffffff !important;
+            }
+
+            .btn-custom-primary:hover {
+                background-color: #ffffff !important;
+                color: #5c6873 !important;
+                outline: none !important;
+            }
+
+            .btn-custom-primary:focus {
+                border: 2px solid rgba(17, 237, 245, 0.81) !important;
+            }
+
+            .dropdown-toggle::after {
+                margin-left: 933px;
+            }
+
+            .dropdown-icon-custom {
+                float: right;
+            }
+        </style>
+    </th:block>
+
+    <th:block layout:fragment="op-content">
+        <div id="app" class="a wave" style="background-color: #fff; height: 360px">
+            <div class="time-language-config">
+                <div class="language-config">
+                    <div class="language-title" th:text="#{language}"></div>
+                    <div class="language-body">
+                        <div class="select-title" th:text="#{display_language}"></div>
+                        <common-button :title="language_option" @click="handleLanguageToggle" :is-show="showlanguage"></common-button>
+                        <common-select-popover :is-visible="showlanguage" @close="handlecloselanguage" class="w-95">
+                            <common-select-dropdown
+                                :searchbox="false"
+                                :class="{show:showlanguage}"
+                                :items="languageOptions"
+                                :checkbox="false"
+                                class="dropdown"
+                                :click-handler="selectLanguage"
+                                :set-result="()=>{}"
+                                :id="language"
+                            ></common-select-dropdown>
+                        </common-select-popover>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/js/scripts/admin/time-language/index.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

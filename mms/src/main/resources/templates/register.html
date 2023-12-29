@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="~{layouts/layout-login-ver2}"
+>
+  <th:block layout:fragment="op-head">
+    <script
+      defer
+      th:src="'/js/cdn/fontawesome.js?'+${noCacheVer}"
+      crossorigin="anonymous"
+    ></script>
+    <style type="text/css">
+      .pwd {
+        position: relative;
+      }
+      .p-viewer {
+        z-index: 9999;
+        position: absolute;
+        top: 25%;
+        right: 10px;
+      }
+      .p-viewer-color {
+        color: #5c6873;
+      }
+      .register-form {
+        border: none;
+        border-radius: 1px;
+      }
+
+      .register-form .register-card {
+        border: 1px;
+        border-radius: 1px;
+        background-color: rgba(255 255 255 / 17%);
+      }
+
+      .register-form .register-card__body {
+        color: #fff;
+        padding: 26px 58px;
+      }
+
+      .register-form .register-card__body .title {
+        color: #fff;
+        text-align: center;
+      }
+
+      .register-form .register-card__body .text-muted {
+        color: #fff !important;
+      }
+
+      .register-form .button-actions {
+        display: flex;
+        justify-content: center;
+      }
+
+      .register-form .button-actions button {
+        width: fit-content;
+        margin-left: 4px;
+        margin-right: 4px;
+      }
+
+      .register-form .button-actions .btn-request {
+        background-color: #3491ff;
+        color: #ffffff;
+      }
+
+      .register-form .input-group {
+        margin-bottom: 18px;
+        border-radius: 3px;
+      }
+
+      .register-form .input-group-text {
+        background: #fff;
+        border: 0;
+        border-radius: 3px 0 0 3px !important;
+      }
+
+      .register-form .form-control {
+        border: none;
+        border-color: #fff !important;
+      }
+
+      .register-form .form-control::placeholder,
+      .register-form input.vti__input::placeholder {
+        color: #c4c4c4;
+      }
+    </style>
+  </th:block>
+  <th:block layout:fragment="op-content">
+    <div id="app" class="container register-container">
+      <div class="wave-register" id="wave-register"></div>
+      <form class="needs-validation register-form" @submit.prevent="submit">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card register-card">
+              <div class="card-body register-card__body">
+                <h1 class="title">Request Access</h1>
+                <p class="text-muted">Input your personal information</p>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="required"></div>
+                    <span class="input-group-text">
+                      <i class="icon-user"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    v-model="user.name"
+                    class="form-control"
+                    placeholder="Full Name"
+                    required
+                  />
+                </div>
+
+                <!-- company name -->
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="required"></div>
+                    <span class="input-group-text">
+                      <img width="20" src="/images/icon/factory.svg" />
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    v-model="user.companyName"
+                    class="form-control"
+                    placeholder="Company"
+                    required
+                  />
+                </div>
+
+                <!-- department -->
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="required"></div>
+                    <span class="input-group-text">
+                      <img width="17" src="/images/icon/department.svg" />
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    v-model="user.department"
+                    class="form-control"
+                    placeholder="Department"
+                    required
+                  />
+                </div>
+
+                <!-- position -->
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="required"></div>
+                    <span class="input-group-text">
+                      <img width="20" src="/images/icon/position.svg" />
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    v-model="user.position"
+                    class="form-control"
+                    placeholder="Position"
+                    required
+                  />
+                </div>
+
+                <!-- phone number
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="required"></div>
+                                    <span class="input-group-text">
+                                        <img width="20" src="/images/icon/phone-number.svg" />
+                                    </span>
+                                </div>
+                                <vue-tel-input v-on:country-changed="changeCountryPhone" v-model="user.contactNumber"
+                                    placeholder="Contact Number"
+                                    style="padding: 0.09rem 0rem; border-color: #e4e7ea;" v-bind="bindProps"
+                                    class="form-control" required></vue-tel-input>
+                            </div>
+                            -->
+
+                <!-- mobile number -->
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <img width="20" src="/images/icon/mobile-number.svg" />
+                    </span>
+                  </div>
+                  <vue-tel-input
+                    v-on:country-changed="changeCountryMobile"
+                    placeholder="Mobile Number"
+                    v-model="user.mobileNumber"
+                    style="
+                      padding: 0.09rem 0rem;
+                      border-color: #e4e7ea;
+                      display: inherit;
+                    "
+                    v-bind="bindProps"
+                    class="form-control"
+                  >
+                  </vue-tel-input>
+                  <!-- <input type="text" v-model="user.mobile_number" class="form-control" placeholder="Mobile" required /> -->
+                </div>
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="required"></div>
+                    <span class="input-group-text">
+                      <img width="17" src="/images/icon/email.svg" />
+                    </span>
+                  </div>
+                  <input
+                    type="email"
+                    v-model="user.email"
+                    autocomplete="new-password"
+                    class="form-control"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="required"></div>
+                    <span class="input-group-text">
+                      <i class="icon-lock"></i>
+                    </span>
+                  </div>
+                  <input
+                    :type="type"
+                    v-model="user.password"
+                    class="form-control"
+                    autocomplete="new-password"
+                    placeholder="Password"
+                    @click="typing = true"
+                    @input="password_check"
+                    :pattern="pattern"
+                    style="border-radius: 0.25rem"
+                    required
+                  />
+                  <div class="p-viewer" :class="{'p-viewer-color': true}">
+                    <i
+                      class="fa"
+                      :class="show ? 'fa-eye' : 'fa-eye-slash'"
+                      @click="showPassword"
+                      aria-hidden="true"
+                      style="cursor: pointer"
+                    ></i>
+                  </div>
+                </div>
+                <div style="margin-left: 42px; margin-bottom: 18px">
+                  <p
+                    v-if="typing"
+                    style="
+                      margin-top: 5px;
+                      margin-bottom: 15px;
+                      font-size: 12px;
+                    "
+                  >
+                    Your password must contain at least:
+                  </p>
+                  <p
+                    v-if="typing"
+                    class="frmValidation"
+                    :class="{'frmValidation--passed' : user.password.length > 7}"
+                  >
+                    <i
+                      class="frmIcon fas"
+                      :class="user.password.length > 7 ? 'fa-check-circle' : 'fa-times-circle'"
+                    ></i>
+                    8 characters
+                  </p>
+                  <p
+                    v-if="typing"
+                    class="frmValidation"
+                    :class="{'frmValidation--passed' :has_uppercase }"
+                  >
+                    <i
+                      class="frmIcon fas"
+                      :class="has_uppercase ? 'fa-check-circle' : 'fa-times-circle'"
+                    ></i>
+                    One uppercase letter
+                  </p>
+                  <p
+                    v-if="typing"
+                    class="frmValidation"
+                    :class="{'frmValidation--passed' : has_number }"
+                  >
+                    <i
+                      class="frmIcon fas"
+                      :class="has_number ? 'fa-check-circle' : 'fa-times-circle'"
+                    ></i>
+                    One number
+                  </p>
+                  <p
+                    v-if="typing"
+                    class="frmValidation"
+                    :class="{'frmValidation--passed' : has_special }"
+                  >
+                    <i
+                      class="frmIcon fas"
+                      :class="has_special ? 'fa-check-circle' : 'fa-times-circle'"
+                    ></i>
+                    One special character: .,!@#$%^&*+=_-
+                  </p>
+                </div>
+                <div class="input-group pwd">
+                  <div class="input-group-prepend">
+                    <div class="required"></div>
+                    <span class="input-group-text">
+                      <i class="icon-lock"></i>
+                    </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    v-model="user.repeatPassword"
+                    :type="type"
+                    placeholder="Confirm Password"
+                    required
+                  />
+                  <div
+                    class="p-viewer"
+                    style="border-radius: 0.25rem"
+                    :class="{'p-viewer-color': true}"
+                  >
+                    <i
+                      class="fa"
+                      :class="show ? 'fa-eye' : 'fa-eye-slash'"
+                      @click="showPassword"
+                      aria-hidden="true"
+                      style="cursor: pointer"
+                    ></i>
+                  </div>
+                </div>
+
+                <!-- memo -->
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <img width="17" src="/images/icon/memo.svg" />
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Memo" />
+                </div>
+                <div class="button-actions">
+                  <button
+                    @click="goBack()"
+                    class="btn-custom btn-cancel"
+                    btn-cancel-animation
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn-custom btn-custom-primary">
+                    Request Access
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script defer src="/js/scripts/register.js"></script>
+  </th:block>
+</html>

@@ -1,0 +1,15 @@
+const {
+  ref,
+  reactive,
+  readonly,
+  computed,
+  onMounted,
+  onUnmounted,
+  watch,
+  watchEffect,
+  isRef,
+  unref,
+  toRef,
+  onUpdated,
+  toRefs,
+} = EmoldinoComponents.VueCompositionAPI;

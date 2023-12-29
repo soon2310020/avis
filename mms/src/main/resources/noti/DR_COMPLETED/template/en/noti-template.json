@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${requestType} is completed",
+  "content": "Your {requestId} request is completed."
+}

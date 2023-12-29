@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head">
+    <link
+      rel="stylesheet"
+      th:href="'/css/configuration/style.css?'+${noCacheVer}"
+    />
+    <style type="text/css">
+      /*
+    --------------
+     Wave effect animation
+    --------------
+    */
+      .wave {
+        height: 1700px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 18%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+        visibility: hidden;
+      }
+
+      .a.wave * {
+        visibility: hidden !important;
+      }
+
+      .custom-body {
+        height: 77.7vh;
+      }
+
+      .disable-text {
+        color: #959595 !important;
+      }
+
+      .enable-text:not(h4) {
+        color: #4b4b4b !important;
+      }
+
+      .enable-box {
+        border: 1px solid #afafaf;
+        color: #4b4b4b !important;
+      }
+
+      .disable-box {
+        border: 1px solid #959595;
+        color: #959595 !important;
+      }
+
+      .disable-click {
+        pointer-events: none !important;
+      }
+
+      .disable-checked {
+        color: #959595 !important;
+      }
+    </style>
+    <style type="text/css" scoped>
+      .toggleWrapper {
+        line-height: 16px;
+      }
+
+      h5 {
+        font-weight: bold;
+        color: #4b4b4b;
+      }
+
+      h4 {
+        font-weight: bold;
+        color: #000000;
+        margin: 0;
+      }
+
+      .toggleWrapper input.mobileToggle + .change-checkout-status:after {
+        background: #4b4b4b;
+      }
+
+      .left-header strong {
+        font-size: 1.1rem;
+        font-family: "Helvetica Neue", Helvetica, "Microsoft Sans Serif", Arial,
+          Arimo;
+      }
+
+      .right-header {
+        margin-left: 80px;
+      }
+
+      .config-header h4 {
+        font-size: 16px;
+        font-family: "Helvetica Neue", Helvetica, "Microsoft Sans Serif", Arial,
+          Arimo;
+      }
+
+      .config-body {
+        margin-bottom: 50px;
+      }
+
+      .config-body .config-header {
+        margin-bottom: 15px;
+      }
+
+      .config-area:first-child {
+        padding-top: 44px !important;
+      }
+
+      .config-area:last-child {
+        padding-bottom: 100px;
+      }
+
+      .config-area > div .config-header {
+        margin-bottom: 35px;
+      }
+
+      .config-area label,
+      .config-area input,
+      .config-area span {
+        font-size: 0.875rem;
+      }
+
+      .card .card-body {
+        overflow-x: unset !important;
+      }
+
+      .config-area > div .config-header select.form-control {
+        margin-left: 20px;
+      }
+
+      .tab-element-styles {
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+
+      .tab-button-styles-active,
+      .tab-button-styles-active:active,
+      .tab-button-styles-active:focus,
+      .tab-button-styles-active:hover {
+        background: #3491ff !important;
+        color: #ffffff !important;
+      }
+
+      .tab-button-styles {
+        height: 26px;
+        width: fit-content;
+        background: #ffffff;
+        color: #888888;
+        border: 0.5px solid #d0d0d0;
+        border-radius: 3px;
+        font-family: Helvetica Neue;
+        font-size: 14.66px;
+
+        font-weight: 400;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: center;
+        padding-top: 4px;
+        padding-bottom: 5px;
+      }
+
+      .tab-button-styles:hover,
+      .tab-button-styles:active,
+      .tab-button-styles:focus {
+        background: #ffffff;
+        color: #888888;
+        border: 0.5px solid #d0d0d0;
+        border-radius: 3px;
+      }
+
+      .tab-style {
+        margin-left: -8px;
+      }
+
+      .save-btn:hover {
+        background: #3ea662;
+        border-radius: 3px;
+        color: #ffffff;
+      }
+
+      .save-btn:active {
+        background: #3ea662;
+        border: 2px solid #c3f2d7;
+        color: #ffffff;
+      }
+
+      .cancel-btn:hover {
+        background: #f4f4f4;
+        /* Background Colour/TOOLTIP BKG */
+        color: #595959;
+
+        border: 1px solid #4b4b4b;
+      }
+
+      .cancel-btn:active {
+        background: #f4f4f4;
+        /* Background Colour/Light Grey_Bkg_border */
+        color: #595959;
+
+        border: 2px solid #d6dade;
+      }
+
+      .save-btn,
+      .save-btn:focus {
+        height: 29px;
+        width: 49px;
+        background: #47b576;
+        border-radius: 3px;
+        text-align: center !important;
+        padding: 6px 8px;
+        gap: 10px;
+        font-family: "Helvetica Neue", Helvetica, "Microsoft Sans Serif", Arial,
+          Arimo;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14.66px;
+        line-height: 17px;
+        color: #ffffff;
+      }
+
+      .cancel-btn,
+      .save-btn {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .save-btn.custom-save {
+        width: 49px;
+      }
+
+      .save-btn.custom-save:focus {
+        width: 49px !important;
+        outline: 2px solid #c3f2d7;
+      }
+
+      .cancel-btn.custom-cancel {
+        width: 62px;
+      }
+
+      .cancel-btn.custom-cancel:focus {
+        width: 62px !important;
+        border: 2px solid #d6dade !important;
+      }
+
+      .cancel-btn,
+      .cancel-btn:focus {
+        height: 29px;
+        width: 62px;
+        background: #ffffff;
+        border: 1px solid #d6dade;
+        border-radius: 3px;
+        padding: 6px 8px;
+        gap: 10px;
+        font-family: "Helvetica Neue", Helvetica, "Microsoft Sans Serif", Arial,
+          Arimo;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14.66px;
+        line-height: 17px;
+        color: #595959;
+        margin-right: 10px;
+      }
+
+      .footer-style {
+        padding-bottom: 28px;
+        padding-right: 33px;
+      }
+
+      .row.custom-row {
+        flex-wrap: nowrap;
+        gap: 10px;
+        margin-left: 0px;
+      }
+
+      .row.tab-style {
+        margin-left: 0px;
+        margin-top: 16px;
+      }
+
+      .wrping-top {
+        margin-top: 128px;
+      }
+
+      .tab-btn-alertconfig {
+        padding-left: 7.43px;
+        padding-right: 10.32px;
+      }
+
+      .tab-btn-display {
+        padding-left: 22.61px;
+        padding-right: 24.14px;
+      }
+
+      .tab-btn-production {
+        padding-left: 10.07px;
+        padding-right: 13.68px;
+      }
+
+      .tab-btn-dataform {
+        padding-left: 12.49px;
+        padding-right: 14.26px;
+      }
+      .production-group-button {
+        padding: 20px 0;
+      }
+    </style>
+  </th:block>
+
+  <th:block layout:fragment="op-content">
+    <div id="app" class="a wave" ref="appContainer">
+      <configuration></configuration>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script defer src="/js/scripts/hotjar.js"></script>
+    <script
+      defer
+      th:src="'/js/scripts/admin/configuration/index.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

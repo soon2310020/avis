@@ -1,0 +1,13 @@
+{
+    "type": "line",
+    "label": "Total Part Quantity",
+    "backgroundColor": "#B1E0EE",
+    "fill": false,
+    "borderColor": "#63C2DE",
+    "pointRadius": 2,
+    "pointHoverBackgroundColor": "#fff",
+    "borderWidth": 2,
+    "data": [],
+    "yAxisID": "first-y-axis",
+    "stack": "totalQuantity"
+}

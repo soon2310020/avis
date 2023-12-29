@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+<style type="text/css">
+   .op-user-list .form-group {
+       margin-right: 10px;
+   }
+   .op-user-list .form-group label {
+       margin-right: 5px;
+   }
+
+    .pagination {
+        display:none;
+    }
+    .depth-2 {
+        padding-left: 20px;
+    }
+   .depth-3 {
+           padding-left: 40px;
+       }
+   .depth-4 {
+       padding-left: 60px;
+   }
+
+
+</style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong th:text="#{corrective}"></strong>
+
+                        <div class="card-header-actions">
+                            <span class="card-header-action">
+                                <small class="text-muted"><span  th:text="#{total}+':'"></span> {{total}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" v-model="requestParam.sort" />
+
+                        <div class="form-row">
+                            <div class="mb-3 mb-md-0 col-12 ">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-search"></i></div>
+                                    </div>
+                                    <input type="text" @input="requestParam.query = $event.target.value" @keyup="search" class="form-control" placeholder="Search by Tool ID">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header" style="display:none">
+                        <i class="fa fa-align-justify"></i> Striped Table
+                    </div>
+                    <div class="card-body">
+
+                        <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{active: requestParam.status == 'all'}" href="#" @click.prevent="tab('all')">
+                                    <span th:text="#{all}"></span>
+                                    <span class="badge badge-light badge-pill" v-if="requestParam.status == 'all'">{{ total }}</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown" v-for="code in codes.CorrectiveStatus" v-if="code.enabled">
+                                <a class="nav-link" :class="{active: requestParam.status == code.code}" href="#"@click.prevent="tab(code.code)">{{code.title}}
+                                    <span class="badge badge-light badge-pill" v-if="requestParam.status == code.code">{{ total }}</span>
+                                </a>
+                            </li>
+                        </ul>
+
+
+                        <table class="table table-responsive-sm table-striped">
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col style="width:60px" />
+
+                            </colgroup>
+                            <thead>
+                            <tr class="tr-sort">
+                                <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.TOOLING_ID}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.TOOLING_ID)">Tooling ID<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.COUNTER_ID}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.COUNTER_ID)">Counter<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.FAILURE_TIME}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.FAILURE_TIME)">Failure time<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.REPAIR_TIME}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.REPAIR_TIME)">Repair time<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.TIME_REPAIR}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.TIME_REPAIR)">Time to repair<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.LOCATION}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.LOCATION)">Location<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.STATUS}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.STATUS)">Status<span class="__icon-sort"></span></th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody class="op-list" style="display:none">
+                                <tr v-for="(result, index, id) in results" :id="result.id" >
+                                    <td class="text-left">
+                                        <a href="#" @click.prevent="showChart(result.mold)" style="color:#1aaa55" class="mr-1"><i class="fa fa-bar-chart"></i></a>
+                                        <a :href="'/admin/corrective/' + result.id+ '?details'">
+                                            {{result.mold.equipmentCode}}
+                                        </a>
+                                    </td>
+                                    <td>{{result.mold.counterCode}}</td>
+                                    <td>{{result.failureDate}}</td>
+                                    <td>{{result.repairDate}}</td>
+                                    <td>
+                                        <span v-if="result.timeToRepair">{{result.timeToRepair}}hr</span>
+                                    </td>
+                                    <td>
+                                        <div v-if="result.mold.locationCode">
+                                            <div class="small text-muted">
+                                                <a href="#" @click.prevent="showLocationHistory(result.mold)">{{result.mold.locationCode}}</a>
+                                            </div>
+                                            {{result.mold.locationName}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="label label-danger" v-if="result.correctiveStatus == 'FAILURE'">Failure</span>
+                                        <span class="label label-success" v-if="result.correctiveStatus == 'REPAIRED'">Repaired</span>
+                                    </td>
+                                    <td>
+                                        <a :href="'/admin/corrective/' + result.id" class="btn btn-default" v-if="result.correctiveStatus == 'FAILURE'">Repair</a>
+                                        <a href="#" class="btn btn-default" v-if="result.correctiveStatus == 'REPAIRED'" @click.prevent="changeStatus(result, result.correctiveStatus)">Cancel repair</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="no-results d-none">
+                            No results.
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <ul class="pagination">
+                                    <li v-for="(data, index) in pagination" class="page-item" :class="{active: data.isActive}">
+                                        <a class="page-link"   @click="paging(data.pageNumber)">{{data.text}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <mold-details :resources="resources"></mold-details>
+        <chart-mold :show-file-previewer="showFilePreviewer" :resources="resources"></chart-mold>
+        <location-history :resources="resources"></location-history>
+        <message-form :resources="resources"></message-form>
+        <message-details :resources="resources"></message-details>
+
+    </div>
+
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer src="/js/chart-mold/container.js"></script>
+    <script defer src="/js/chart-mold/point.js"></script>
+    <script defer src="/js/chart-mold/shape.js"></script>
+    <script defer src="/js/chart-mold/graph-element.js"></script>
+    <script defer src="/js/chart-mold/hourly-chart.js"></script>
+    <script defer src="/js/chart-mold/cycle-time-hourly-chart.js"></script>
+    <script defer src="/js/chart-mold/temperature-hourly-chart.js"></script>
+    <script defer src="/ui/node_modules/chart.js/dist/Chart.min.js"></script>
+
+    <script defer th:src="'/js/scripts/admin/corrective/list.js?'+${noCacheVer}"></script>
+</th:block>
+</html>

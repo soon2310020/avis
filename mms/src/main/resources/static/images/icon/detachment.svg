@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-detachment);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-detachment">
+      <rect width="134" height="134"/>
+    </clipPath>
+  </defs>
+  <g id="detachment" class="cls-1">
+    <g id="Group_54" data-name="Group 54" transform="translate(-4.018 -3.803)">
+      <path id="Path_39" data-name="Path 39" class="cls-2" d="M130.768,80.507c-1.4-.129-2.816-.2-4.25-.2a45.5,45.5,0,0,0-45.5,45.5c0,1.519.078,3.019.223,4.5h49.527Z"/>
+      <path id="Path_40" data-name="Path 40" class="cls-2" d="M12.018,11.8V112.3H62.991c-.145-1.481-.223-2.981-.223-4.5a45.5,45.5,0,0,1,45.5-45.5c1.434,0,2.85.075,4.25.2V11.8Zm54.49,54.381L28.489,58.069a1.383,1.383,0,0,1-1.064-1.638l1.409-6.662A1.382,1.382,0,0,1,30.472,48.7l12.5,2.643L20.847,29.224,31.189,18.882,53.311,41l-2.643-12.5a1.381,1.381,0,0,1,1.066-1.637L58.4,25.461a1.381,1.381,0,0,1,1.637,1.063l8.115,38.02A1.382,1.382,0,0,1,66.508,66.184Z"/>
+    </g>
+  </g>
+</svg>

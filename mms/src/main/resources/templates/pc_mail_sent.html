@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="~{layouts/layout-login-ver2}"
+>
+  <th:block layout:fragment="op-head">
+    <style>
+      .card-custom {
+        width: 592px;
+      }
+      .card {
+        background-color: rgba(255 255 255 / 17%) !important;
+        border: none !important;
+        border-radius: 0px !important;
+      }
+
+      .mt-3 {
+        margin-top: 2rem !important;
+      }
+
+      ul {
+        list-style: none;
+        font-weight: 400;
+        padding-left: 35px;
+        font-size: 16px;
+        line-height: 30px;
+
+        color: #ffffff;
+      }
+
+      .text-muted {
+        margin-top: 1.7rem !important;
+        color: #ffffff !important;
+        padding: 0px 74px;
+        font-size: 16px !important;
+        line-height: 28px;
+        margin-bottom: 28px !important;
+      }
+
+      ul li::before {
+        content: "\2022";
+        line-height: 30px;
+        color: #ffffff;
+        font-weight: 900;
+        display: inline-block;
+        font-size: 16px;
+        width: 1em;
+      }
+      .btn-primary.custom-btn {
+        background: #3491ff;
+        border-color: #3491ff;
+        border-radius: 3px;
+        font-size: 14.66px;
+        /*line-height: normal;*/
+        text-align: center;
+        line-height: 17px;
+
+        color: #ffffff;
+      }
+
+      .btn-primary.custom-btn:hover {
+        background: #3585e5;
+        border-color: #3585e5;
+      }
+
+      .btn-primary.custom-btn:focus {
+        background: #3585e5;
+        border-color: #3585e5;
+        outline: 2px solid #deedff;
+        box-shadow: none;
+      }
+
+      .main-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        width: 100%;
+      }
+      .footer-custom {
+        margin-top: 45px;
+        margin-left: 28px;
+        margin-bottom: 10px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 173.8%;
+        color: #ffffff;
+      }
+
+      .custom-hyperlink {
+        color: #3491ff !important;
+        cursor: pointer;
+      }
+
+      .custom-hyperlink:hover {
+        color: #3585e5 !important;
+        border-bottom: 1px solid;
+        cursor: pointer;
+      }
+    </style>
+  </th:block>
+
+  <th:block layout:fragment="op-content">
+    <div id="app" class="main-card">
+      <div class="card-custom">
+        <div class="card">
+          <div class="card-body px-0 pt-0">
+            <div class="ph" th:text="${email}" style="display: none"></div>
+
+            <div class="text-primary text-center mt-4">
+              <img
+                width="96.8px"
+                height="84.17px"
+                src="/images/icon/mailsent.svg"
+              />
+            </div>
+
+            <p class="text-muted text-center mt-3">
+              A request email has been sent to your registered mailbox:
+              <b th:text="${email}"></b>. Please follow the instruction in the
+              email to reset your password
+            </p>
+
+            <div class="text-primary text-center">
+              <a href="/login" class="btn btn-primary custom-btn"
+                >Back to Login</a
+              >
+            </div>
+
+            <p class="footer-custom">No email from eMoldino?</p>
+
+            <ul class="">
+              <li>Check your Spam or Junk folders</li>
+              <li>
+                Tap
+                <span v-on:click="resend()" class="custom-hyperlink"
+                  >Resend</span
+                >
+                to request another email
+              </li>
+              <li>
+                Try
+                <a href="/api/users/fpassword" class="custom-hyperlink">
+                  another email address
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script
+      defer
+      th:src="'/js/scripts/pc_mail_sent.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

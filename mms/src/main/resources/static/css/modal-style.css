@@ -1,0 +1,124 @@
+.custom-modal-title {
+    width: 550px;
+    /*height: 61px;*/
+    border-radius: 6px 6px 0 0;
+    background: #f5f8ff;
+    color: #4b4b4b;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    align-items: end;
+    /*padding: 23px 31.5px 13px 30px;*/
+    padding: 0px 0px;
+    padding-top: 8px;
+}
+
+.custom-modal-title .modal-title {
+    font-weight: bold;
+    margin-top: 12px;
+    margin-left: 30px;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.custom-modal-title .t-close-button {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-right: 17px;
+}
+
+.custom-modal-title .t-close-button {
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+}
+
+.t-icon-close {
+    width: 12px;
+    height: 12px;
+    /*line-height: 12px;*/
+    background-image: url('/images/icon/black-close-12.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.t-icon-close-8 {
+    width: 8px;
+    height: 8px;
+    /*line-height: 12px;*/
+    background-image: url('/images/icon/black-close-8.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.head-line {
+    position: absolute;
+    background: #52a1ff;
+    height: 8px;
+    border-radius: 6px 6px 0 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+.custom-select-invite .ant-select-selection {
+    border: 0.5px solid #909090!important;
+    box-shadow: none!important;
+    border-radius: 1.7px;
+}
+.custom-select-invite.ant-select-open .ant-select-selection {
+    border: 2px solid #98D1FD!important;
+    box-shadow: none!important;
+}
+
+.custom-select-invite .ant-select-selection .ant-select-selection__placeholder
+{
+    color: #c9c9c9 !important;
+}
+
+.custom-select-invite .ant-select-selection:hover:not(.custom-select-invite.ant-select-open .ant-select-selection ) {
+    border: 0.5px solid #4b4b4b !important;
+}
+.custom-select-invite .ant-select-selection:hover .ant-select-selection__placeholder {
+    color: #4b4b4b !important;
+}
+
+/*
+.custom-select-invite.ant-select-open .ant-select-selection:hover {
+    border: 0.5px solid #98D1FD!important;
+    box-shadow: none!important;
+}
+*/
+
+.btn-invite.primary-animation {
+    animation: primary-active-green 0.7s;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+}
+@keyframes primary-active-green {
+    0%   {
+
+    }
+    33%   {
+        box-shadow: 0 0 0 2px #A1E8BF;
+        text-decoration: none!important;
+    }
+    66%   {
+        box-shadow: 0 0 0 2px #A1E8BF;
+        text-decoration: none!important;
+    }
+    100%   {
+
+    }
+}
+
+.d-modal-body {
+    padding: 30px 12px;
+    overflow-y: auto;
+    max-height: calc(100% - 100px);
+}
+

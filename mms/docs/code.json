@@ -1,0 +1,1732 @@
+{
+  "MaintenanceStatus": [
+    {
+      "code": "UPCOMING",
+      "title": "점검대상"
+    },
+    {
+      "code": "OVERDUE",
+      "title": "점검기간 초과"
+    },
+    {
+      "code": "SENT",
+      "title": "점검중"
+    },
+    {
+      "code": "DONE",
+      "title": "점검완료"
+    }
+  ],
+  "RoleType": [
+    {
+      "code": "ROLE",
+      "title": "일반"
+    },
+    {
+      "code": "ROLE_MENU",
+      "title": "Access Feature"
+    },
+    {
+      "code": "ROLE_GROUP",
+      "title": "Tooling Access Group"
+    }
+  ],
+  "OperatingStatus": [
+    {
+      "code": "WORKING",
+      "title": "작동중"
+    },
+    {
+      "code": "IDLE",
+      "title": "대기중"
+    },
+    {
+      "code": "NOT_WORKING",
+      "title": "동작안함."
+    },
+    {
+      "code": "DISCONNECTED",
+      "title": "통신안됨(이탈)"
+    }
+  ],
+  "EfficiencyStatus": [
+    {
+      "code": "WITHIN_TOLERANCE",
+      "title": "Within Tolerance"
+    },
+    {
+      "code": "OUTSIDE_L1",
+      "title": "Outside L1"
+    },
+    {
+      "code": "OUTSIDE_L2",
+      "title": "Outside L2"
+    }
+  ],
+  "CountryCode": [
+    {
+      "code": "AF",
+      "title": "Afghanistan",
+      "description": "93"
+    },
+    {
+      "code": "AL",
+      "title": "Albania",
+      "description": "355"
+    },
+    {
+      "code": "DZ",
+      "title": "Algeria",
+      "description": "213"
+    },
+    {
+      "code": "AS",
+      "title": "American Samoa",
+      "description": "1"
+    },
+    {
+      "code": "AD",
+      "title": "Andorra",
+      "description": "376"
+    },
+    {
+      "code": "AO",
+      "title": "Angola",
+      "description": "244"
+    },
+    {
+      "code": "AI",
+      "title": "Anguilla",
+      "description": "1"
+    },
+    {
+      "code": "AG",
+      "title": "Antigua",
+      "description": "1"
+    },
+    {
+      "code": "AR",
+      "title": "Argentina",
+      "description": "54"
+    },
+    {
+      "code": "AM",
+      "title": "Armenia",
+      "description": "374"
+    },
+    {
+      "code": "AW",
+      "title": "Aruba",
+      "description": "297"
+    },
+    {
+      "code": "AU",
+      "title": "Australia",
+      "description": "61"
+    },
+    {
+      "code": "AT",
+      "title": "Austria",
+      "description": "43"
+    },
+    {
+      "code": "AZ",
+      "title": "Azerbaijan",
+      "description": "994"
+    },
+    {
+      "code": "BH",
+      "title": "Bahrain",
+      "description": "973"
+    },
+    {
+      "code": "BD",
+      "title": "Bangladesh",
+      "description": "880"
+    },
+    {
+      "code": "BB",
+      "title": "Barbados",
+      "description": "1"
+    },
+    {
+      "code": "BY",
+      "title": "Belarus",
+      "description": "375"
+    },
+    {
+      "code": "BE",
+      "title": "Belgium",
+      "description": "32"
+    },
+    {
+      "code": "BZ",
+      "title": "Belize",
+      "description": "501"
+    },
+    {
+      "code": "BJ",
+      "title": "Benin",
+      "description": "229"
+    },
+    {
+      "code": "BM",
+      "title": "Bermuda",
+      "description": "1"
+    },
+    {
+      "code": "BT",
+      "title": "Bhutan",
+      "description": "975"
+    },
+    {
+      "code": "BO",
+      "title": "Bolivia",
+      "description": "591"
+    },
+    {
+      "code": "BQ",
+      "title": "Bonaire, Sint Eustatius and Saba",
+      "description": "599"
+    },
+    {
+      "code": "BA",
+      "title": "Bosnia and Herzegovina",
+      "description": "387"
+    },
+    {
+      "code": "BW",
+      "title": "Botswana",
+      "description": "267"
+    },
+    {
+      "code": "BR",
+      "title": "Brazil",
+      "description": "55"
+    },
+    {
+      "code": "IO",
+      "title": "British Indian Ocean Territory",
+      "description": "246"
+    },
+    {
+      "code": "VG",
+      "title": "British Virgin Islands",
+      "description": "1"
+    },
+    {
+      "code": "BN",
+      "title": "Brunei",
+      "description": "673"
+    },
+    {
+      "code": "BG",
+      "title": "Bulgaria",
+      "description": "359"
+    },
+    {
+      "code": "BF",
+      "title": "Burkina Faso",
+      "description": "226"
+    },
+    {
+      "code": "BI",
+      "title": "Burundi",
+      "description": "257"
+    },
+    {
+      "code": "KH",
+      "title": "Cambodia",
+      "description": "855"
+    },
+    {
+      "code": "CM",
+      "title": "Cameroon",
+      "description": "237"
+    },
+    {
+      "code": "CA",
+      "title": "Canada",
+      "description": "1"
+    },
+    {
+      "code": "CV",
+      "title": "Cape Verde",
+      "description": "238"
+    },
+    {
+      "code": "KY",
+      "title": "Cayman Islands",
+      "description": "1"
+    },
+    {
+      "code": "CF",
+      "title": "Central African Republic",
+      "description": "236"
+    },
+    {
+      "code": "TD",
+      "title": "Chad",
+      "description": "235"
+    },
+    {
+      "code": "CL",
+      "title": "Chile",
+      "description": "56"
+    },
+    {
+      "code": "CN",
+      "title": "China",
+      "description": "86"
+    },
+    {
+      "code": "CO",
+      "title": "Colombia",
+      "description": "57"
+    },
+    {
+      "code": "KM",
+      "title": "Comoros",
+      "description": "269"
+    },
+    {
+      "code": "CK",
+      "title": "Cook Islands",
+      "description": "682"
+    },
+    {
+      "code": "CR",
+      "title": "Costa Rica",
+      "description": "506"
+    },
+    {
+      "code": "CI",
+      "title": "Côte d'Ivoire",
+      "description": "225"
+    },
+    {
+      "code": "HR",
+      "title": "Croatia",
+      "description": "385"
+    },
+    {
+      "code": "CU",
+      "title": "Cuba",
+      "description": "53"
+    },
+    {
+      "code": "CW",
+      "title": "Curaçao",
+      "description": "599"
+    },
+    {
+      "code": "CY",
+      "title": "Cyprus",
+      "description": "357"
+    },
+    {
+      "code": "CZ",
+      "title": "Czech Republic",
+      "description": "420"
+    },
+    {
+      "code": "CD",
+      "title": "Democratic Republic of the Congo",
+      "description": "243"
+    },
+    {
+      "code": "DK",
+      "title": "Denmark",
+      "description": "45"
+    },
+    {
+      "code": "DJ",
+      "title": "Djibouti",
+      "description": "253"
+    },
+    {
+      "code": "DM",
+      "title": "Dominica",
+      "description": "1"
+    },
+    {
+      "code": "DO",
+      "title": "Dominican Republic",
+      "description": "1"
+    },
+    {
+      "code": "EC",
+      "title": "Ecuador",
+      "description": "593"
+    },
+    {
+      "code": "EG",
+      "title": "Egypt",
+      "description": "20"
+    },
+    {
+      "code": "SV",
+      "title": "El Salvador",
+      "description": "503"
+    },
+    {
+      "code": "GQ",
+      "title": "Equatorial Guinea",
+      "description": "240"
+    },
+    {
+      "code": "ER",
+      "title": "Eritrea",
+      "description": "291"
+    },
+    {
+      "code": "EE",
+      "title": "Estonia",
+      "description": "372"
+    },
+    {
+      "code": "ET",
+      "title": "Ethiopia",
+      "description": "251"
+    },
+    {
+      "code": "FK",
+      "title": "Falkland Islands",
+      "description": "500"
+    },
+    {
+      "code": "FO",
+      "title": "Faroe Islands",
+      "description": "298"
+    },
+    {
+      "code": "FM",
+      "title": "Federated States of Micronesia",
+      "description": "691"
+    },
+    {
+      "code": "FJ",
+      "title": "Fiji",
+      "description": "679"
+    },
+    {
+      "code": "FI",
+      "title": "Finland",
+      "description": "358"
+    },
+    {
+      "code": "FR",
+      "title": "France",
+      "description": "33"
+    },
+    {
+      "code": "GF",
+      "title": "French Guiana",
+      "description": "594"
+    },
+    {
+      "code": "PF",
+      "title": "French Polynesia",
+      "description": "689"
+    },
+    {
+      "code": "GA",
+      "title": "Gabon",
+      "description": "241"
+    },
+    {
+      "code": "GE",
+      "title": "Georgia",
+      "description": "995"
+    },
+    {
+      "code": "DE",
+      "title": "Germany",
+      "description": "49"
+    },
+    {
+      "code": "GH",
+      "title": "Ghana",
+      "description": "233"
+    },
+    {
+      "code": "GI",
+      "title": "Gibraltar",
+      "description": "350"
+    },
+    {
+      "code": "GR",
+      "title": "Greece",
+      "description": "30"
+    },
+    {
+      "code": "GL",
+      "title": "Greenland",
+      "description": "299"
+    },
+    {
+      "code": "GD",
+      "title": "Grenada",
+      "description": "1"
+    },
+    {
+      "code": "GP",
+      "title": "Guadeloupe",
+      "description": "590"
+    },
+    {
+      "code": "GU",
+      "title": "Guam",
+      "description": "1"
+    },
+    {
+      "code": "GT",
+      "title": "Guatemala",
+      "description": "502"
+    },
+    {
+      "code": "GG",
+      "title": "Guernsey",
+      "description": "44"
+    },
+    {
+      "code": "GN",
+      "title": "Guinea",
+      "description": "224"
+    },
+    {
+      "code": "GW",
+      "title": "Guinea-Bissau",
+      "description": "245"
+    },
+    {
+      "code": "GY",
+      "title": "Guyana",
+      "description": "592"
+    },
+    {
+      "code": "HT",
+      "title": "Haiti",
+      "description": "509"
+    },
+    {
+      "code": "HN",
+      "title": "Honduras",
+      "description": "504"
+    },
+    {
+      "code": "HK",
+      "title": "Hong Kong",
+      "description": "852"
+    },
+    {
+      "code": "HU",
+      "title": "Hungary",
+      "description": "36"
+    },
+    {
+      "code": "IS",
+      "title": "Iceland",
+      "description": "354"
+    },
+    {
+      "code": "IN",
+      "title": "India",
+      "description": "91"
+    },
+    {
+      "code": "ID",
+      "title": "Indonesia",
+      "description": "62"
+    },
+    {
+      "code": "IR",
+      "title": "Iran",
+      "description": "98"
+    },
+    {
+      "code": "IQ",
+      "title": "Iraq",
+      "description": "964"
+    },
+    {
+      "code": "IE",
+      "title": "Ireland",
+      "description": "353"
+    },
+    {
+      "code": "IM",
+      "title": "Isle Of Man",
+      "description": "44"
+    },
+    {
+      "code": "IL",
+      "title": "Israel",
+      "description": "972"
+    },
+    {
+      "code": "IT",
+      "title": "Italy",
+      "description": "39"
+    },
+    {
+      "code": "JM",
+      "title": "Jamaica",
+      "description": "1"
+    },
+    {
+      "code": "JP",
+      "title": "Japan",
+      "description": "81"
+    },
+    {
+      "code": "JE",
+      "title": "Jersey",
+      "description": "44"
+    },
+    {
+      "code": "JO",
+      "title": "Jordan",
+      "description": "962"
+    },
+    {
+      "code": "KZ",
+      "title": "Kazakhstan",
+      "description": "7"
+    },
+    {
+      "code": "KE",
+      "title": "Kenya",
+      "description": "254"
+    },
+    {
+      "code": "KI",
+      "title": "Kiribati",
+      "description": "686"
+    },
+    {
+      "code": "KW",
+      "title": "Kuwait",
+      "description": "965"
+    },
+    {
+      "code": "KG",
+      "title": "Kyrgyzstan",
+      "description": "996"
+    },
+    {
+      "code": "LA",
+      "title": "Laos",
+      "description": "856"
+    },
+    {
+      "code": "LV",
+      "title": "Latvia",
+      "description": "371"
+    },
+    {
+      "code": "LB",
+      "title": "Lebanon",
+      "description": "961"
+    },
+    {
+      "code": "LS",
+      "title": "Lesotho",
+      "description": "266"
+    },
+    {
+      "code": "LR",
+      "title": "Liberia",
+      "description": "231"
+    },
+    {
+      "code": "LY",
+      "title": "Libya",
+      "description": "218"
+    },
+    {
+      "code": "LI",
+      "title": "Liechtenstein",
+      "description": "423"
+    },
+    {
+      "code": "LT",
+      "title": "Lithuania",
+      "description": "370"
+    },
+    {
+      "code": "LU",
+      "title": "Luxembourg",
+      "description": "352"
+    },
+    {
+      "code": "MO",
+      "title": "Macau",
+      "description": "853"
+    },
+    {
+      "code": "MK",
+      "title": "Macedonia",
+      "description": "389"
+    },
+    {
+      "code": "MG",
+      "title": "Madagascar",
+      "description": "261"
+    },
+    {
+      "code": "MW",
+      "title": "Malawi",
+      "description": "265"
+    },
+    {
+      "code": "MY",
+      "title": "Malaysia",
+      "description": "60"
+    },
+    {
+      "code": "MV",
+      "title": "Maldives",
+      "description": "960"
+    },
+    {
+      "code": "ML",
+      "title": "Mali",
+      "description": "223"
+    },
+    {
+      "code": "MT",
+      "title": "Malta",
+      "description": "356"
+    },
+    {
+      "code": "MH",
+      "title": "Marshall Islands",
+      "description": "692"
+    },
+    {
+      "code": "MQ",
+      "title": "Martinique",
+      "description": "596"
+    },
+    {
+      "code": "MR",
+      "title": "Mauritania",
+      "description": "222"
+    },
+    {
+      "code": "MU",
+      "title": "Mauritius",
+      "description": "230"
+    },
+    {
+      "code": "YT",
+      "title": "Mayotte",
+      "description": "262"
+    },
+    {
+      "code": "MX",
+      "title": "Mexico",
+      "description": "52"
+    },
+    {
+      "code": "MD",
+      "title": "Moldova",
+      "description": "373"
+    },
+    {
+      "code": "MC",
+      "title": "Monaco",
+      "description": "377"
+    },
+    {
+      "code": "MN",
+      "title": "Mongolia",
+      "description": "976"
+    },
+    {
+      "code": "ME",
+      "title": "Montenegro",
+      "description": "382"
+    },
+    {
+      "code": "MS",
+      "title": "Montserrat",
+      "description": "1"
+    },
+    {
+      "code": "MA",
+      "title": "Morocco",
+      "description": "212"
+    },
+    {
+      "code": "MZ",
+      "title": "Mozambique",
+      "description": "258"
+    },
+    {
+      "code": "MM",
+      "title": "Myanmar",
+      "description": "95"
+    },
+    {
+      "code": "NA",
+      "title": "Namibia",
+      "description": "264"
+    },
+    {
+      "code": "NR",
+      "title": "Nauru",
+      "description": "674"
+    },
+    {
+      "code": "NP",
+      "title": "Nepal",
+      "description": "977"
+    },
+    {
+      "code": "NL",
+      "title": "Netherlands",
+      "description": "31"
+    },
+    {
+      "code": "NC",
+      "title": "New Caledonia",
+      "description": "687"
+    },
+    {
+      "code": "NZ",
+      "title": "New Zealand",
+      "description": "64"
+    },
+    {
+      "code": "NI",
+      "title": "Nicaragua",
+      "description": "505"
+    },
+    {
+      "code": "NE",
+      "title": "Niger",
+      "description": "227"
+    },
+    {
+      "code": "NG",
+      "title": "Nigeria",
+      "description": "234"
+    },
+    {
+      "code": "NU",
+      "title": "Niue",
+      "description": "683"
+    },
+    {
+      "code": "NF",
+      "title": "Norfolk Island",
+      "description": "672"
+    },
+    {
+      "code": "KP",
+      "title": "North Korea",
+      "description": "850"
+    },
+    {
+      "code": "MP",
+      "title": "Northern Mariana Islands",
+      "description": "1"
+    },
+    {
+      "code": "NO",
+      "title": "Norway",
+      "description": "47"
+    },
+    {
+      "code": "OM",
+      "title": "Oman",
+      "description": "968"
+    },
+    {
+      "code": "PK",
+      "title": "Pakistan",
+      "description": "92"
+    },
+    {
+      "code": "PW",
+      "title": "Palau",
+      "description": "680"
+    },
+    {
+      "code": "PS",
+      "title": "Palestine",
+      "description": "970"
+    },
+    {
+      "code": "PA",
+      "title": "Panama",
+      "description": "507"
+    },
+    {
+      "code": "PG",
+      "title": "Papua New Guinea",
+      "description": "675"
+    },
+    {
+      "code": "PY",
+      "title": "Paraguay",
+      "description": "595"
+    },
+    {
+      "code": "PE",
+      "title": "Peru",
+      "description": "51"
+    },
+    {
+      "code": "PH",
+      "title": "Philippines",
+      "description": "63"
+    },
+    {
+      "code": "PL",
+      "title": "Poland",
+      "description": "48"
+    },
+    {
+      "code": "PT",
+      "title": "Portugal",
+      "description": "351"
+    },
+    {
+      "code": "PR",
+      "title": "Puerto Rico",
+      "description": "1"
+    },
+    {
+      "code": "QA",
+      "title": "Qatar",
+      "description": "974"
+    },
+    {
+      "code": "CG",
+      "title": "Republic of the Congo",
+      "description": "242"
+    },
+    {
+      "code": "RE",
+      "title": "Réunion",
+      "description": "262"
+    },
+    {
+      "code": "RO",
+      "title": "Romania",
+      "description": "40"
+    },
+    {
+      "code": "RU",
+      "title": "Russia",
+      "description": "7"
+    },
+    {
+      "code": "RW",
+      "title": "Rwanda",
+      "description": "250"
+    },
+    {
+      "code": "SH",
+      "title": "Saint Helena",
+      "description": "290"
+    },
+    {
+      "code": "KN",
+      "title": "Saint Kitts and Nevis",
+      "description": "1"
+    },
+    {
+      "code": "PM",
+      "title": "Saint Pierre and Miquelon",
+      "description": "508"
+    },
+    {
+      "code": "VC",
+      "title": "Saint Vincent and the Grenadines",
+      "description": "1"
+    },
+    {
+      "code": "WS",
+      "title": "Samoa",
+      "description": "685"
+    },
+    {
+      "code": "SM",
+      "title": "San Marino",
+      "description": "378"
+    },
+    {
+      "code": "ST",
+      "title": "Sao Tome and Principe",
+      "description": "239"
+    },
+    {
+      "code": "SA",
+      "title": "Saudi Arabia",
+      "description": "966"
+    },
+    {
+      "code": "SN",
+      "title": "Senegal",
+      "description": "221"
+    },
+    {
+      "code": "RS",
+      "title": "Serbia",
+      "description": "381"
+    },
+    {
+      "code": "SC",
+      "title": "Seychelles",
+      "description": "248"
+    },
+    {
+      "code": "SL",
+      "title": "Sierra Leone",
+      "description": "232"
+    },
+    {
+      "code": "SG",
+      "title": "Singapore",
+      "description": "65"
+    },
+    {
+      "code": "SX",
+      "title": "Sint Maarten",
+      "description": "1"
+    },
+    {
+      "code": "SK",
+      "title": "Slovakia",
+      "description": "421"
+    },
+    {
+      "code": "SI",
+      "title": "Slovenia",
+      "description": "386"
+    },
+    {
+      "code": "SB",
+      "title": "Solomon Islands",
+      "description": "677"
+    },
+    {
+      "code": "SO",
+      "title": "Somalia",
+      "description": "252"
+    },
+    {
+      "code": "ZA",
+      "title": "South Africa",
+      "description": "27"
+    },
+    {
+      "code": "KR",
+      "title": "South Korea",
+      "description": "82"
+    },
+    {
+      "code": "SS",
+      "title": "South Sudan",
+      "description": "211"
+    },
+    {
+      "code": "ES",
+      "title": "Spain",
+      "description": "34"
+    },
+    {
+      "code": "LK",
+      "title": "Sri Lanka",
+      "description": "94"
+    },
+    {
+      "code": "LC",
+      "title": "St. Lucia",
+      "description": "1"
+    },
+    {
+      "code": "SD",
+      "title": "Sudan",
+      "description": "249"
+    },
+    {
+      "code": "SR",
+      "title": "Suriname",
+      "description": "597"
+    },
+    {
+      "code": "SZ",
+      "title": "Swaziland",
+      "description": "268"
+    },
+    {
+      "code": "SE",
+      "title": "Sweden",
+      "description": "46"
+    },
+    {
+      "code": "CH",
+      "title": "Switzerland",
+      "description": "41"
+    },
+    {
+      "code": "SY",
+      "title": "Syria",
+      "description": "963"
+    },
+    {
+      "code": "TW",
+      "title": "Taiwan",
+      "description": "886"
+    },
+    {
+      "code": "TJ",
+      "title": "Tajikistan",
+      "description": "992"
+    },
+    {
+      "code": "TZ",
+      "title": "Tanzania",
+      "description": "255"
+    },
+    {
+      "code": "TH",
+      "title": "Thailand",
+      "description": "66"
+    },
+    {
+      "code": "BS",
+      "title": "The Bahamas",
+      "description": "1"
+    },
+    {
+      "code": "GM",
+      "title": "The Gambia",
+      "description": "220"
+    },
+    {
+      "code": "TL",
+      "title": "Timor-Leste",
+      "description": "670"
+    },
+    {
+      "code": "TG",
+      "title": "Togo",
+      "description": "228"
+    },
+    {
+      "code": "TK",
+      "title": "Tokelau",
+      "description": "690"
+    },
+    {
+      "code": "TO",
+      "title": "Tonga",
+      "description": "676"
+    },
+    {
+      "code": "TT",
+      "title": "Trinidad and Tobago",
+      "description": "1"
+    },
+    {
+      "code": "TN",
+      "title": "Tunisia",
+      "description": "216"
+    },
+    {
+      "code": "TR",
+      "title": "Turkey",
+      "description": "90"
+    },
+    {
+      "code": "TM",
+      "title": "Turkmenistan",
+      "description": "993"
+    },
+    {
+      "code": "TC",
+      "title": "Turks and Caicos Islands",
+      "description": "1"
+    },
+    {
+      "code": "TV",
+      "title": "Tuvalu",
+      "description": "688"
+    },
+    {
+      "code": "UG",
+      "title": "Uganda",
+      "description": "256"
+    },
+    {
+      "code": "UA",
+      "title": "Ukraine",
+      "description": "380"
+    },
+    {
+      "code": "AE",
+      "title": "United Arab Emirates",
+      "description": "971"
+    },
+    {
+      "code": "GB",
+      "title": "United Kingdom",
+      "description": "44"
+    },
+    {
+      "code": "US",
+      "title": "United States",
+      "description": "1"
+    },
+    {
+      "code": "UY",
+      "title": "Uruguay",
+      "description": "598"
+    },
+    {
+      "code": "VI",
+      "title": "US Virgin Islands",
+      "description": "1"
+    },
+    {
+      "code": "UZ",
+      "title": "Uzbekistan",
+      "description": "998"
+    },
+    {
+      "code": "VU",
+      "title": "Vanuatu",
+      "description": "678"
+    },
+    {
+      "code": "VE",
+      "title": "Venezuela",
+      "description": "58"
+    },
+    {
+      "code": "VN",
+      "title": "Vietnam",
+      "description": "84"
+    },
+    {
+      "code": "WF",
+      "title": "Wallis and Futuna",
+      "description": "681"
+    },
+    {
+      "code": "EH",
+      "title": "Western Sahara",
+      "description": "212"
+    },
+    {
+      "code": "YE",
+      "title": "Yemen",
+      "description": "967"
+    },
+    {
+      "code": "ZM",
+      "title": "Zambia",
+      "description": "260"
+    }
+  ],
+  "ToolingCondition": [
+    {
+      "code": "GOOD",
+      "title": "Good"
+    },
+    {
+      "code": "FAIR",
+      "title": "Fair"
+    },
+    {
+      "code": "POOR",
+      "title": "Poor"
+    }
+  ],
+  "SizeUnit": [
+    {
+      "code": "INCH",
+      "title": "Inch"
+    },
+    {
+      "code": "FOOT",
+      "title": "Foot"
+    },
+    {
+      "code": "YARD",
+      "title": "Yard"
+    },
+    {
+      "code": "MM",
+      "title": "mm"
+    },
+    {
+      "code": "CM",
+      "title": "cm"
+    },
+    {
+      "code": "M",
+      "title": "m"
+    }
+  ],
+  "CompanyType": [
+    {
+      "code": "IN_HOUSE",
+      "title": "In-house"
+    },
+    {
+      "code": "TOOL_MAKER",
+      "title": "Tool maker"
+    },
+    {
+      "code": "SUPPLIER",
+      "title": "Supplier"
+    }
+  ],
+  "UserType": [
+    {
+      "code": "SYSTEM",
+      "title": "시스템관리자"
+    },
+    {
+      "code": "HQ",
+      "title": "Headquarter"
+    },
+    {
+      "code": "OUTSOURCING",
+      "title": "금형 외주 제작사"
+    },
+    {
+      "code": "SUPPLIER",
+      "title": "부품 제조 협력사"
+    }
+  ],
+  "EquipmentType": [
+    {
+      "code": "TERMINAL",
+      "title": "터미널"
+    },
+    {
+      "code": "COUNTER",
+      "title": "카운터"
+    },
+    {
+      "code": "MOLD",
+      "title": "금형"
+    }
+  ],
+  "MessageType": [
+    {
+      "code": "EMAIL",
+      "title": "Email"
+    },
+    {
+      "code": "SMS",
+      "title": "SMS"
+    },
+    {
+      "code": "MMS",
+      "title": "MMS"
+    }
+  ],
+  "CorrectiveStatus": [
+    {
+      "code": "FAILURE",
+      "title": "Failure"
+    },
+    {
+      "code": "REPAIRED",
+      "title": "Repaired"
+    }
+  ],
+  "EquipmentStatus": [
+    {
+      "code": "AVAILABLE",
+      "title": "Available"
+    },
+    {
+      "code": "INSTALLED",
+      "title": "Installed"
+    },
+    {
+      "code": "FAILURE",
+      "title": "Failure"
+    },
+    {
+      "code": "DISCARDED",
+      "title": "Discarded"
+    }
+  ],
+  "AlertType": [
+    {
+      "code": "RELOCATION",
+      "title": "Relocation"
+    },
+    {
+      "code": "DISCONNECTED",
+      "title": "Disconnected"
+    },
+    {
+      "code": "CYCLE_TIME",
+      "title": "Cycle Time"
+    },
+    {
+      "code": "MAINTENANCE",
+      "title": "Maintenance"
+    },
+    {
+      "code": "EFFICIENCY",
+      "title": "Efficiency"
+    },
+    {
+      "code": "MISCONFIGURE",
+      "title": "Misconfigure"
+    },
+    {
+      "code": "TERMINAL_DISCONNECTED",
+      "title": "Disconnected"
+    },
+    {
+      "code": "COUNTER_MISWORKING",
+      "title": "Counter Misworking"
+    },
+    {
+      "code": "TOOL_MISWORKING",
+      "title": "Tool Misworking"
+    }
+  ],
+  "AccessType": [
+    {
+      "code": "ADMIN_MENU",
+      "title": "Admin menu access. (Not Admin)"
+    }
+  ],
+  "MisconfigureStatus": [
+    {
+      "code": "MISCONFIGURED",
+      "title": "Misconfigured"
+    },
+    {
+      "code": "CONFIRMED",
+      "title": "Confirmed"
+    }
+  ],
+  "MoldLocationStatus": [
+    {
+      "code": "CHANGED",
+      "title": "위치변경"
+    },
+    {
+      "code": "CONFIRMED",
+      "title": "확인완료"
+    }
+  ],
+  "BatteryStatus": [
+    {
+      "code": "HIGH",
+      "title": "High"
+    },
+    {
+      "code": "LOW",
+      "title": "Low"
+    },
+    {
+      "code": "EMPTY",
+      "title": "Empty"
+    }
+  ],
+  "UseageType": [
+    {
+      "code": "AFTERMARKET",
+      "title": "Aftermarket"
+    },
+    {
+      "code": "TO_MARKET",
+      "title": "To-Market"
+    },
+    {
+      "code": "BACKUP",
+      "title": "Backup"
+    }
+  ],
+  "PeriodType": [
+    {
+      "code": "THIS_MONTH",
+      "title": "This month"
+    },
+    {
+      "code": "RECENT_MONTH",
+      "title": "Recent 1 month"
+    },
+    {
+      "code": "THIS_YEAR",
+      "title": "This year"
+    },
+    {
+      "code": "RECENT_YEAR",
+      "title": "Recent 1 year"
+    }
+  ],
+  "BatchStatus": [
+    {
+      "code": "PENDING",
+      "title": "Pending"
+    },
+    {
+      "code": "IN_PROGRESS",
+      "title": "In Progress"
+    },
+    {
+      "code": "COMPLETED",
+      "title": "Completed"
+    }
+  ],
+  "DateViewType": [
+    {
+      "code": "DAY",
+      "title": "Day"
+    },
+    {
+      "code": "WEEK",
+      "title": "Week"
+    },
+    {
+      "code": "MONTH",
+      "title": "Month"
+    },
+    {
+      "code": "YEAR",
+      "title": "Year"
+    }
+  ],
+  "CurrencyType": [
+    {
+      "code": "USD",
+      "title": "$",
+      "description": "United States dollar"
+    },
+    {
+      "code": "EUR",
+      "title": "€",
+      "description": "Euro"
+    },
+    {
+      "code": "JPY",
+      "title": "¥",
+      "description": "Japanese yen"
+    },
+    {
+      "code": "GBP",
+      "title": "£",
+      "description": "Pound sterling"
+    },
+    {
+      "code": "AUD",
+      "title": "A$",
+      "description": "Australian dollar"
+    },
+    {
+      "code": "CAD",
+      "title": "C$",
+      "description": "Canadian dollar"
+    },
+    {
+      "code": "CHF",
+      "title": "Fr",
+      "description": "Swiss franc"
+    },
+    {
+      "code": "CNY",
+      "title": "元",
+      "description": "Renminbi"
+    },
+    {
+      "code": "SEK",
+      "title": "kr",
+      "description": "Swedish krona"
+    },
+    {
+      "code": "NZD",
+      "title": "NZ$",
+      "description": "New Zealand dollar"
+    },
+    {
+      "code": "MXN",
+      "title": "$",
+      "description": "Mexican peso"
+    },
+    {
+      "code": "SGD",
+      "title": "S$",
+      "description": "Singapore dollar"
+    },
+    {
+      "code": "HKD",
+      "title": "HK$",
+      "description": "Hong Kong dollar"
+    },
+    {
+      "code": "NOK",
+      "title": "kr",
+      "description": "Norwegian krone"
+    },
+    {
+      "code": "KRW",
+      "title": "₩",
+      "description": "South Korean won"
+    },
+    {
+      "code": "TRY",
+      "title": "₺",
+      "description": "Turkish lira"
+    },
+    {
+      "code": "RUB",
+      "title": "₽",
+      "description": "Russian ruble"
+    },
+    {
+      "code": "INR",
+      "title": "₹",
+      "description": "Indian rupee"
+    },
+    {
+      "code": "BRL",
+      "title": "R$",
+      "description": "Brazilian real"
+    },
+    {
+      "code": "ZAR",
+      "title": "R",
+      "description": "South African rand"
+    }
+  ],
+  "RunnerType": [
+    {
+      "code": "HOT",
+      "title": "Hot Runner"
+    },
+    {
+      "code": "COLD",
+      "title": "Cold Runner"
+    }
+  ],
+  "NotificationStatus": [
+    {
+      "code": "ALERT",
+      "title": "Alert"
+    },
+    {
+      "code": "CONFIRMED",
+      "title": "Confirmed"
+    }
+  ],
+  "ChartDataType": [
+    {
+      "code": "QUANTITY",
+      "title": "Quantity"
+    },
+    {
+      "code": "CYCLE_TIME",
+      "title": "Cycle Time"
+    },
+    {
+      "code": "UPTIME",
+      "title": "Uptime"
+    }
+  ],
+  "CycleTimeStatus": [
+    {
+      "code": "WITHIN_TOLERANCE",
+      "title": "Within Tolerance"
+    },
+    {
+      "code": "OUTSIDE_L1",
+      "title": "Outside L1"
+    },
+    {
+      "code": "OUTSIDE_L2",
+      "title": "Outside L2"
+    }
+  ],
+  "WeightUnit": [
+    {
+      "code": "OUNCES",
+      "title": "Ounces"
+    },
+    {
+      "code": "POUNDS",
+      "title": "Pounds"
+    },
+    {
+      "code": "GRAMS",
+      "title": "Grams"
+    },
+    {
+      "code": "KILOGRAMS",
+      "title": "Kilograms"
+    }
+  ],
+  "TemperatureUnit": [
+    {
+      "code": "CELSIUS",
+      "title": "°C"
+    },
+    {
+      "code": "FAHRENHEIT",
+      "title": "°F"
+    }
+  ],
+  "PresetStatus": [
+    {
+      "code": "READY",
+      "title": "적용대기"
+    },
+    {
+      "code": "CANCELED",
+      "title": "취소됨"
+    },
+    {
+      "code": "APPLIED",
+      "title": "적용완료"
+    }
+  ],
+  "IpType": [
+    {
+      "code": "DYNAMIC",
+      "title": "Dynamic"
+    },
+    {
+      "code": "STATIC",
+      "title": "Static"
+    }
+  ],
+  "StorageType": [
+    {
+      "code": "MOLD",
+      "title": "Mold install photo"
+    },
+    {
+      "code": "MOLD_MAINTENANCE_DOCUMENT",
+      "title": "Mold Maintenance Document "
+    },
+    {
+      "code": "MOLD_COUNTER",
+      "title": "Mold and Counter install photo"
+    },
+    {
+      "code": "MOLD_CORRECTIVE",
+      "title": "Mold corrective photo"
+    },
+    {
+      "code": "TERMINAL",
+      "title": "Terminal installation photo"
+    }
+  ]
+}

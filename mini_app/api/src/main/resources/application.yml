@@ -1,0 +1,142 @@
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.stg: DEBUG
+  file:
+    name: /home/mb-bancas-tool/log/api-server.log
+
+spring:
+  profiles:
+    active: default
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL:jdbc:postgresql://ati-dev-postgres.postgres.database.azure.com:5432/bancas?currentSchema=bancas_tool_dev&reWriteBatchedInserts=true}
+    username: ${POSTGRES_USER:bancas@ati-dev-postgres}
+    password: ${POSTGRES_PASSWORD:Tr5MSZZn8BHIRLUJ}
+    platform: postgresql
+    hikari:
+      idle-timeout: ${HIKARY_IDLE_TIMEOUT:2400000}
+      maximum-pool-size: ${HIKARY_POOL_SIZE:100}
+      minimum-idle: ${HIKARY_MIN_IDLE:10}
+      max-lifetime: ${HIKARY_MAX_LIFETIME:2400000}
+      connection-timeout: ${HIKARY_CONNECTION_TIMEOUT:2400000}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL82Dialect
+        naming:
+          physical-strategy: com.stg.config.jpa.PhysicalNamingStrategyImpl
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        show_sql: false
+        hbm2ddl:
+          auto: update
+        default_schema: bancas_tool_dev
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/master.xml
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+
+  oauth:
+    keyStorePath: ${KEY_STORE_PATH:/config/miniapp.jks}
+    keyStorePassword: ${KEY_STORE_PASSWORD:gts123}
+    keyStoreAlias: ${KEY_STORE_ALIAS:miniapp}
+#  redis #
+  redis:
+    host: ${REDIS_HOST:dev-brood.redis.cache.windows.net}
+    port: ${REDIS_PORT:6380}
+    password: ${REDIS_PASSWORD:rTbMmizFVaHGmVkLZIyCPDRxU6aKNdCNijWcuaQgtTo=}
+    ssl: ${REDIS_SSL:true}
+    database: ${REDIS_DATABASE:8}
+
+server:
+  port: 8080
+
+web:
+  origin:
+    api: ${BANCAS-ORIGIN-API:https://bancas.tool.be.uat.mb-innovationlab.com/bancas/api}
+    webview: ${BANCAS-ORIGIN-WEBVIEW:https://bancas.tool.fe.uat.mb-innovationlab.com/bancas/home}
+
+security:
+  internal:
+    x-auth-token: tool-crm_x-auth-token_secret
+  sale-tool-mbal:
+    user: ${BASIC_USER:6bc68a5666c5}
+    password: ${BASIC_PASSWORD:4fc1ed6ad1cb43b6aae44f4399bd1431}
+  web:
+    # eg: "*" || http://123.123.123.114,http://123.123.123.115,http://123.123.123.116
+    cors-mapping: "*"
+
+jwt:
+  accessTokenValiditySeconds: 300
+  refreshTokenValiditySeconds: 86400
+
+apache-components:
+  http-client:
+    socket-timeout: 600000 # 10 minutes
+    connection-request-timeout: 2000
+    connection-timeout: 20000 # 20s
+  connection-pool:
+    max-connection-per-route: 10
+    max-connection: 10
+    time-to-live-in-seconds: 50
+
+# api3rd #
+api3rd:
+  crm:
+    host: ${CRM_HOST:https://api-sandbox.mbbank.com.vn}
+    client_id: ${CRM_CLIENT_ID:crm_bancas_service}
+    client_secret: ${CRM_CLIENT_SECRET:XYUl8CYVV9TpmbsC90f8xTpoTLP1OtUP}
+    basic_value: ${CRM_BASIC_VALUE:bFBvanFQMUNROVlPV0RLMkdRV2ZwbG5uZ0RzT0JNSFo6eHZUQjk3R0pMdVJEc2FWVg==}
+  mbal:
+    #DEV
+#    host: ${MBAL_HOST:https://api-dev.mbageas.org}
+#    client_id: ${MBAL_CLIENT_ID_UL3:mwcsXt9yKhm4ksgX}
+#    client_secret: ${MBAL_CLIENT_SECRET_UL3:4xKJG%%SB*z$btTLakZ(QgnLzrIaEq8L}
+    #UAT
+    host: ${MBAL_HOST:https://api-uat.mbageas.org}
+    client_id: ${MBAL_CLIENT_ID_UL3:9Ldjne6MwOM6hDLx}
+    client_secret: ${MBAL_CLIENT_SECRET_UL3:kR$EN57x?c!4LmkYcisxDC36HrJ??Mk@}
+#    refer-direct:
+#      client_id: ${MBAL_CLIENT_ID_UL3:dyrKV0DxhAvF1re9}
+#      client_secret: ${MBAL_CLIENT_SECRET_UL3:eQKx8cciafH@X674nkzTkPxxMBzpQ!?6}
+
+  mbal_v2:
+    host: ${MBAL_V2_HOST:https://dev-po.mbageas.life:5557}
+    client_id: ${MBAL_V2_CLIENT_ID:MBAPP01}
+    client_secret: ${MBAL_V2_CLIENT_SECRET:123456a@}
+    endpoint_prefix: ${MBAL_V2_ENDPOINT_PREFIX:/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_legancy_mb&receiverParty=&receiverService=&interfaceNamespace=urn:mbageas:erp:fs-pm}
+  mic:
+    host: ${MIC_HOST:https://test-dly-api.mic.vn}
+    merchant-secret: ${MIC_MERCHANT_SECRET:bWljdm4yMDIxIw==}
+    dvi-code: ${MIC_DVI_CODE:MB_SO_2}
+    nsd: ${MIC_NSD:MB_SO_MBAL}
+    pas: ${MIC_PAS:MICVN2022#}
+    #bank_account: ${MIC_BANK_ACCOUNT:9695558866346}
+    #account_name: ${MIC_ACCOUNT_NAME:NGUYEN VAN A}
+    #transfer_fee: ${MIC_TRANSFER_FEE:0}
+  mic-sandbox:
+    host: ${MIC_HOST_SANDBOX:https://api-sandbox-external.mic.vn}
+    username: ${MIC_USERNAME_SANDBOX:MB_SO_MBAL}
+    password: ${MIC_PASSWORD_SANDBOX:MICVN2022#}
+    client_id: ${MIC_CLIENT_ID_SANDBOX:api_portal_client}
+    client_secret: ${MIC_CLIENT_SECRET_SANDBOX:fEQ0K5fA9Mg1nNFBTEP0EkZonQ3XmQMw}
+  ocr:
+    keycloak:
+      host: https://api-sandbox.mbbank.com.vn
+      client_id: ecm-ocr-center-web
+      username: ocr_center_user01
+      password: 123456
+    host: https://uatocronline.mbbank.com.vn
+    from_system: CRM_BANCAS
+    business: CRM_BANCAS_GTTT
+    device_id: PC
+    user: DUCHV
+
+import:
+  rm-refresh: false
+
+schedule:
+  direct-submit-retry: ${DIRECT_SUBMIT_LEAD:0 0/10 * * * ?}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-mobile-default}"
+>
+    <th:block layout:fragment="op-head">
+        <style>
+            .button-border {
+                border: 1.58px solid #a6a6a6;
+                border-radius: 12px;
+                width: 285px;
+                margin: auto;
+            }
+            .download-text {
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 20px;
+                text-align: center;
+                color: #000000;
+                margin-top: 36.13px;
+                margin-bottom: 9.55px;
+            }
+            .tap-text {
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 18px;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                color: #000000;
+                margin: 15px auto auto;
+                width: 285px;
+            }
+            .directly-text {
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 18px;
+                align-items: center;
+                text-align: center;
+                color: #3491ff;
+                margin-top: 54px;
+            }
+        </style>
+    </th:block>
+    <th:block layout:fragment="op-content">
+        <div id="downloadApp" style="margin-left: -15px; margin-right: -15px">
+            <div class="download-text" v-text="downloadTextHeader"></div>
+            <a v-if="platform == 'ios'" href="https://apps.apple.com/us/app/emoldino/id1556560534" target="_blank">
+                <div class="button-border">
+                    <view-download-ios></view-download-ios>
+                </div>
+            </a>
+            <a v-else-if="platform == 'android' && country =='China' " href="https://www.emoldino.com/androidapk">
+                <div class="button-border">
+                    <download-china-apk :is-mobile="true"></download-china-apk>
+                </div>
+            </a>
+            <a v-else href="https://play.google.com/store/apps/details?id=com.emoldino" target="_blank">
+                <div class="button-border">
+                    <view-download-android></view-download-android>
+                </div>
+            </a>
+
+            <div class="tap-text" v-text="downloadInstruction"></div>
+
+            <a v-if="platform == 'android' && country != 'China' " href="https://www.emoldino.com/androidapk">
+                <div class="directly-text">Download the APK directly by clicking here.</div>
+            </a>
+
+            <div style="position: absolute; bottom: 133px; left: 0; width: 100%">
+                <download-client-info :mobile="true"></download-client-info>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/js/scripts/front/download-app/index.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

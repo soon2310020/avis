@@ -1,0 +1,49 @@
+{
+    "tdList": [
+        {
+            "toolingId": "T-003",
+            "insights": "Reaches end of life cycle on ",
+            "insightsDate": "2022-04-24",
+            "value": 992466,
+            "total": 1000000,
+            "percent": 99.2,
+            "priority": "high"
+        },
+        {
+            "toolingId": "T-004",
+            "insights": "Reaches end of life cycle on ",
+            "insightsDate": "2022-05-26",
+            "value": 975460,
+            "total": 1000000,
+            "percent": 97.5,
+            "priority": "high"
+        },
+        {
+            "toolingId": "T-005",
+            "insights": "Reaches end of life cycle on ",
+            "insightsDate": "2022-06-23",
+            "value": 552538,
+            "total": 1000000,
+            "percent": 55.3,
+            "priority": "high"
+        },
+        {
+            "toolingId": "T-006",
+            "insights": "Reaches end of life cycle on ",
+            "insightsDate": "2022-05-05",
+            "value": 620233,
+            "total": 1000000,
+            "percent": 62,
+            "priority": "low"
+        },
+        {
+            "toolingId": "T-007",
+            "insights": "Reaches end of life cycle on ",
+            "insightsDate": "2022-09-16",
+            "value": 255116,
+            "total": 1000000,
+            "percent": 25.5,
+            "priority": "low"
+        }
+    ]
+}

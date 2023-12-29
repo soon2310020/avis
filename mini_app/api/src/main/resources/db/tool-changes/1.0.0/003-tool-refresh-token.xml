@@ -1,0 +1,42 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp"
+              dbms="postgresql"/>
+
+    <changeSet id="2023-03-13-create-tool_manage_token-table" author="Ha Nguyen">
+
+        <createTable tableName="tool_refresh_token">
+
+            <column name="token" type="varchar(36)">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="expired_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="username" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2023-05-08-scheduler-lock-table" author="Ben">
+        <createTable tableName="shedlock">
+            <column name="name" type="VARCHAR(64)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="lock_until" type="TIMESTAMP(3)" value="NULL"/>
+            <column name="locked_at" type="TIMESTAMP(3)" value="NULL"/>
+            <column name="locked_by" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

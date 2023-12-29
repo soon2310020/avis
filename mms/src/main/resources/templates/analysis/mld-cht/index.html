@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-default}"
+>
+    <th:block layout:fragment="op-head">
+        <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+        <link rel="stylesheet" th:href="'/css/table-dropdown.css?'+${noCacheVer}" />
+        <style type="text/css">
+            .op-user-list .form-group {
+                margin-right: 10px;
+            }
+            .op-user-list .form-group label {
+                margin-right: 5px;
+            }
+
+            .pagination {
+                display: none;
+            }
+
+            .depth-2 {
+                padding-left: 20px;
+            }
+
+            .depth-3 {
+                padding-left: 40px;
+            }
+
+            .depth-4 {
+                padding-left: 60px;
+            }
+
+            .selectbox {
+                position: relative;
+                width: 50px;
+                height: 32px;
+                margin-right: 5px;
+                border: 1px solid #e4e7ea;
+                border-radius: 0.25rem;
+                cursor: pointer;
+                background-color: #fff;
+                z-index: 1;
+                -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+                -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+                transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+            }
+
+            .selectbox.focus {
+                border-color: #66afe9;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+            }
+
+            .selectbox:before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: 5px;
+                width: 0;
+                height: 0;
+                margin-top: -1px;
+                border: solid #5c6873;
+                border-width: 0 0.8px 0.8px 0;
+                color: #e4e7ea;
+                display: inline-block;
+                padding: 2px;
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+            }
+
+            .selectbox label {
+                position: absolute;
+                padding: 0.5em 0.5em;
+                color: #333;
+                z-index: -1;
+            }
+
+            .selectbox select {
+                width: 100%;
+                height: auto;
+                line-height: normal;
+                font-family: inherit;
+                padding: 0.8em 0.5em;
+                border: 0;
+                opacity: 0;
+                filter: alpha(opacity=0);
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+            }
+
+            .select {
+                width: 50px;
+                height: 32px;
+                margin-right: 5px;
+                border: 1px solid #e4e7ea;
+                border-radius: 0.25rem;
+                background-color: #fff;
+                color: #5c6873;
+            }
+
+            .id-input {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.765625rem;
+                border-radius: 0.25rem;
+                flex: 1;
+                width: 1px;
+                border: 1px solid #e4e7ea;
+            }
+
+            .input-group-2 {
+                padding: 0px;
+                align-items: center;
+            }
+
+            .data-submission {
+                padding: 3px 0px;
+                color: #fff;
+                border-radius: 5px;
+                font-size: 10px;
+                display: inline-flex;
+                width: 65px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: auto;
+            }
+
+            .container {
+                display: block;
+                position: relative;
+                margin: 0;
+            }
+
+            .container input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            .checkmark-custom {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 13px;
+                width: 13px;
+                background-color: #eee;
+                border: 1px solid lightgray;
+                border-radius: 3px;
+            }
+
+            .checkmark-custom-2 {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 13px;
+                width: 13px;
+                background-color: #eee;
+                border: 1px solid lightgray;
+                border-radius: 3px;
+            }
+
+            .checkmark-custom:after {
+                content: '';
+                position: absolute;
+                display: none;
+            }
+
+            .checkmark-custom-2:after {
+                content: '';
+                position: absolute;
+                display: none;
+            }
+
+            .container input:checked ~ .checkmark-custom:after {
+                display: block;
+            }
+
+            .container input:checked ~ .checkmark-custom-2:after {
+                display: block;
+            }
+
+            .container .checkmark-custom:after {
+                left: 3px;
+                top: 1px;
+                width: 5px;
+                height: 8px;
+                border: solid red;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+
+            .container .checkmark-custom-2:after {
+                left: 2px;
+                top: 4px;
+                width: 5px;
+                height: 3px;
+                border: solid red;
+                border-width: 0 7px 0px 0;
+            }
+
+            .import-tooling-icon {
+                height: 15px;
+                padding-right: 6px;
+                transform: translateY(-3px);
+            }
+
+            /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+            .wave1 {
+                height: 700px;
+                animation: wave 4s infinite linear forwards;
+                -webkit-animation: wave 4s infinite linear forwards;
+                background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+                border: none;
+            }
+
+            .wave {
+                height: 166px;
+                animation: wave 4s infinite linear forwards;
+                -webkit-animation: wave 4s infinite linear forwards;
+                background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+                border: none;
+            }
+
+            .sidebar.wave_sidebar div,
+            .tab-support.wave_header div,
+            .tab-insight.wave_header div,
+            .tab-reports.wave_header div,
+            .tab-user.wave_header div {
+                visibility: hidden;
+            }
+
+            .card.wave div,
+            .card.wave1 div {
+                display: none;
+            }
+
+            .single-part {
+                padding: 10px 31px 10px 30px;
+                text-align: left;
+                min-width: 100%;
+                width: fit-content;
+            }
+
+            .active-part {
+                position: relative;
+                background-color: #e5f7ed;
+            }
+
+            .dropdown-parts {
+                position: absolute;
+                padding: 4px 4px 4px 5px;
+                background-color: #ffffff;
+                box-shadow: 0px 3px 6px #00000029;
+                width: auto;
+                z-index: 3;
+                left: 50%;
+                transform: translate(-50%, 0);
+            }
+
+            .arrow {
+                transition-property: transform;
+                transition-duration: 0.2s;
+                transition-timing-function: linear;
+            }
+
+            .arrow-active {
+                transform: rotate(180deg);
+            }
+
+            .tag-active {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 0;
+                width: 55px;
+                background-color: #e5f7ed;
+                border-top: 16px solid #5d5d5d;
+                border-left: 12px solid transparent;
+                border-right: 0px solid transparent;
+                z-index: 1;
+                z-index: 1;
+            }
+
+            .text-active {
+                position: absolute;
+                text-align: right;
+                width: 55px;
+                line-height: 16px;
+                font-size: 11px;
+                z-index: 2;
+                color: #ffffff;
+                top: 0;
+                right: 2px;
+            }
+
+            .part-name-drop-down {
+                white-space: nowrap;
+                line-height: 17px;
+                margin: 0px;
+                font-size: 14px;
+            }
+
+            .one-line {
+                white-space: nowrap;
+            }
+            .plus-circle {
+                color: #ffffff;
+                font-size: 11px;
+                /* padding: 3px 4px 4px 2px; */
+                border-radius: 19px;
+                background-color: #43a1fc;
+                width: 19px;
+                height: 19px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .avatar-item {
+                width: 33px;
+                height: 33px;
+                padding: 1px;
+                font-weight: 500;
+                font-size: 15px;
+                background: #aeacf9;
+                border-radius: 99%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-transform: capitalize;
+                margin: 5px;
+                cursor: pointer;
+            }
+
+            .nameGroup {
+                display: flex;
+                flex-flow: row wrap;
+                position: relative;
+                margin-left: -10px;
+            }
+
+            /* .hidden{
+      display: none;
+    } */
+            #myProgress {
+                width: 80%;
+                background-color: white;
+                height: 32px;
+                border: 1px solid #615ea9;
+                border-radius: 24px;
+                margin: 0 auto;
+                margin-top: 10px;
+            }
+
+            #myBar {
+                border-top-left-radius: 24px;
+                border-bottom-left-radius: 24px;
+                width: 1%;
+                height: 24px;
+                background-color: #263163;
+                max-width: 92%;
+                margin-top: 3px;
+                margin-left: 4px;
+                min-width: 5%;
+            }
+            .change-status-title:hover {
+                color: #000000 !important;
+            }
+            .hidden {
+                opacity: 0 !important;
+            }
+            .ant-modal-content {
+                opacity: 0;
+                z-index: 3;
+            }
+            .fade-out-animate {
+                -webkit-animation: fadeout 0.5s; /* Safari, Chrome and Opera > 12.1 */
+                -moz-animation: fadeout 0.5s; /* Firefox < 16 */
+                -ms-animation: fadeout 0.5s; /* Internet Explorer */
+                -o-animation: fadeout 0.5s; /* Opera < 12.1 */
+                animation: fadeout 0.5s;
+                animation-iteration-count: 1;
+            }
+            @keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+
+            /* Firefox < 16 */
+            @-moz-keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+
+            /* Safari, Chrome and Opera > 12.1 */
+            @-webkit-keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+
+            /* Internet Explorer */
+            @-ms-keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+
+            /* Opera < 12.1 */
+            @-o-keyframes fadeout {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+            .fade-in-animate {
+                -webkit-animation: fadein 0.5s; /* Safari, Chrome and Opera > 12.1 */
+                -moz-animation: fadein 0.5s; /* Firefox < 16 */
+                -ms-animation: fadein 0.5s; /* Internet Explorer */
+                -o-animation: fadein 0.5s; /* Opera < 12.1 */
+                animation: fadein 0.5s;
+                animation-iteration-count: 1;
+            }
+            @keyframes fadein {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* Firefox < 16 */
+            @-moz-keyframes fadein {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* Safari, Chrome and Opera > 12.1 */
+            @-webkit-keyframes fadein {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* Internet Explorer */
+            @-ms-keyframes fadein {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* Opera < 12.1 */
+            @-o-keyframes fadein {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
+    </th:block>
+
+    <th:block layout:fragment="op-content">
+        <div id="app" class="op-user-list">
+            <mld-cht-page></mld-cht-page>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer src="/js/cdn/pdf.min.js"></script>
+        <script defer src="/js/scripts/hotjar.js"></script>
+        <script defer src="/js/scripts/analysis/mld-cht/list.js"></script>
+        
+        <script defer th:src="'/js/scripts/analysis/mld-cht/module-shim.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

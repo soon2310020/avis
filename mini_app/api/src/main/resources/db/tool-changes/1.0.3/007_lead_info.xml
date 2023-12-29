@@ -1,0 +1,181 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql" />
+
+    <changeSet id="2023-10-20-create-lead_info-table" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="lead_info" />
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="lead_info_seq" startValue="1000" incrementBy="1" />
+
+        <createTable tableName="lead_info">
+            <column name="id" type="bigint" defaultValueComputed="nextval('lead_info_seq')">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+
+            <column name="lead_id" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)" />
+            <column name="last_modified_date" type="timestamp" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2023-10-25-create-lead_activity-table" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="lead_activity" />
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="lead_activity_seq" startValue="1000" incrementBy="1" />
+
+        <createTable tableName="lead_activity">
+            <column name="id" type="bigint" defaultValueComputed="nextval('lead_activity_seq')">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+
+            <column name="action" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="title" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="lead_name" type="varchar(256)">
+                <constraints nullable="true" />
+            </column>
+            <column name="customer_name" type="varchar(256)">
+                <constraints nullable="true" />
+            </column>
+            <column name="start_date" type="timestamp">
+                <!--<constraints nullable="false" />-->
+            </column>
+            <column name="end_date" type="timestamp">
+                <!--<constraints nullable="false" />-->
+            </column>
+            <column name="note" type="clob">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="lead_info_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)" />
+            <column name="last_modified_date" type="timestamp" />
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_lead_activity_info"
+            referencedTableName="lead_info" baseColumnNames="lead_info_id" baseTableName="lead_activity"
+            referencedColumnNames="id" />
+
+    </changeSet>
+
+    <changeSet id="2023-10-24-potential_customer_refer-add-lead_info_id" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer_refer" />
+        </preConditions>
+        
+        <addColumn tableName="potential_customer_refer">
+            <column name="lead_info_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+        
+        <addForeignKeyConstraint constraintName="fk_potential_customer_refer_lead_info"
+            referencedTableName="lead_info" baseColumnNames="lead_info_id" baseTableName="potential_customer_refer"
+            referencedColumnNames="id" />
+
+    </changeSet>
+    
+    <changeSet id="2023-10-24-potential_customer_direct-add-lead_info_id" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer_direct" />
+        </preConditions>
+        
+        <addColumn tableName="potential_customer_direct">
+            <column name="lead_info_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+        
+        <addForeignKeyConstraint constraintName="fk_potential_customer_direct_lead_info"
+            referencedTableName="lead_info" baseColumnNames="lead_info_id" baseTableName="potential_customer_direct"
+            referencedColumnNames="id" />
+
+    </changeSet>
+    
+    <changeSet id="2023-10-25-lead_info-add-status_detail" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="lead_info" />
+        </preConditions>
+        
+        <addColumn tableName="lead_info">
+            <column name="status_detail" type="clob">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+    
+    <changeSet id="2023-12-10-set-remark-lead_info" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="lead_info"/>
+        </preConditions>
+        
+        <setTableRemarks tableName="lead_info" remarks="Trạng thái lead"/>
+        <setColumnRemarks tableName="lead_info" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="lead_info" columnName="lead_id" remarks="Lead ID"/>
+        <setColumnRemarks tableName="lead_info" columnName="status" remarks="Trạng thái mới nhất"/>
+        <setColumnRemarks tableName="lead_info" columnName="status_detail" remarks="Lịch sử trạng thái"/>
+        <setColumnRemarks tableName="lead_info" columnName="created_by" remarks="Người tạo"/>
+        <setColumnRemarks tableName="lead_info" columnName="created_date" remarks="Thời điểm tạo"/>
+        <setColumnRemarks tableName="lead_info" columnName="last_modified_by" remarks="Người cập nhật"/>
+        <setColumnRemarks tableName="lead_info" columnName="last_modified_date" remarks="Thời điểm cập nhật gần nhất"/>
+    </changeSet>
+    
+    <changeSet id="2023-12-10-set-remark-lead_activity" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="lead_activity"/>
+        </preConditions>
+        
+        <setTableRemarks tableName="lead_activity" remarks="Chi tiết trạng thái lead"/>
+        <setColumnRemarks tableName="lead_activity" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="lead_activity" columnName="lead_info_id" remarks="Lead info ID"/>
+        <setColumnRemarks tableName="lead_activity" columnName="action" remarks="Hoạt động thay đổi trạng thái"/>
+        <setColumnRemarks tableName="lead_activity" columnName="title" remarks="Tiêu đề"/>
+        <setColumnRemarks tableName="lead_activity" columnName="lead_name" remarks="Tên lead"/>
+        <setColumnRemarks tableName="lead_activity" columnName="customer_name" remarks="Tên khách hàng"/>
+        <setColumnRemarks tableName="lead_activity" columnName="start_date" remarks="Thời điểm bắt đầu"/>
+        <setColumnRemarks tableName="lead_activity" columnName="end_date" remarks="Thời điểm kết thúc"/>
+        <setColumnRemarks tableName="lead_activity" columnName="note" remarks="Ghi chú"/>
+        <setColumnRemarks tableName="lead_activity" columnName="created_by" remarks="Người tạo"/>
+        <setColumnRemarks tableName="lead_activity" columnName="created_date" remarks="Thời điểm tạo"/>
+        <setColumnRemarks tableName="lead_activity" columnName="last_modified_by" remarks="Người cập nhật"/>
+        <setColumnRemarks tableName="lead_activity" columnName="last_modified_date" remarks="Thời điểm cập nhật gần nhất"/>
+    </changeSet>
+    
+</databaseChangeLog>

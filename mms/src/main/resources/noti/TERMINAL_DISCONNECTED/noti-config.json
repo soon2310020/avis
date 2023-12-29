@@ -1,0 +1,10 @@
+{
+  "notiPriority": "HIGH",
+  "description": "Terminal Disconnection Alert",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/common/alr#DISCONNECTED?tabType=TERMINAL&id=${id}"
+}

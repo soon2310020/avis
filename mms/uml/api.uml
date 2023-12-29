@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/kepha/Emoldino/mms/server/mms-dev/src/main/java/saleson/api</OriginalElement>
+  <nodes>
+    <node x="1833.0" y="2011.0">saleson.api.chart.payload.MapSearchPayload</node>
+    <node x="1085.0" y="2163.0">saleson.api.configuration.payload.AllConfigPayload</node>
+    <node x="1158.0" y="709.0">saleson.api.machine.MachineRepository</node>
+    <node x="1465.0" y="1859.0">saleson.api.role.RoleGraphRepository</node>
+    <node x="380.0" y="942.0">saleson.api.endLifeCycle.StatisticsAccumulatingShotRepository</node>
+    <node x="1244.5" y="314.0">saleson.api.mold.MoldCycleTimeRepositoryCustom</node>
+    <node x="593.0" y="1251.0">saleson.api.dataCompletionRate.payload.DataCompletionRatePayload</node>
+    <node x="509.0" y="1707.0">saleson.api.chart.UserContentRepository</node>
+    <node x="1118.0" y="866.0">saleson.api.topic.TopicRepository</node>
+    <node x="124.0" y="157.0">saleson.api.dataCompletionRate.DataCompletionRateRepositoryCustom</node>
+    <node x="2077.0" y="1631.0">saleson.api.data.registration.DataRegistrationService</node>
+    <node x="2340.0" y="1251.0">saleson.api.configuration.CustomFieldValueController</node>
+    <node x="1922.0" y="395.0">saleson.api.mold.MoldCorrectiveRepositoryImpl</node>
+    <node x="452.0" y="2087.0">saleson.api.systemNote.SystemNoteService</node>
+    <node x="731.0" y="942.0">saleson.api.configuration.RefurbishmentPointConfigRepository</node>
+    <node x="2018.0" y="2087.0">saleson.api.versioning.service.PartVersionService</node>
+    <node x="1705.0" y="1859.0">saleson.api.integration.IntegrationController</node>
+    <node x="747.0" y="1783.0">saleson.api.onboarding.OnBoardingController</node>
+    <node x="162.0" y="81.0">saleson.api.terminal.payload.TerminalPayload</node>
+    <node x="2287.0" y="81.0">saleson.api.dataCompletionRate.DataCompletionOrderRepository</node>
+    <node x="1414.0" y="1935.0">saleson.api.notification.payload.NotificationPayload</node>
+    <node x="929.0" y="238.0">saleson.api.rejectedPart.RejectedPartDetailsRepository</node>
+    <node x="1552.0" y="2467.0">saleson.api.mold.payload.PartData</node>
+    <node x="553.0" y="1479.0">saleson.api.machine.payload.PerformancePreDoneData</node>
+    <node x="1739.0" y="1783.0">saleson.api.machine.payload.MachineMoldPayload</node>
+    <node x="2402.0" y="1555.0">saleson.api.topic.payload.CorrespondencePayload</node>
+    <node x="124.5" y="314.0">saleson.api.data.registration.DataRegistrationRepositoryCustom</node>
+    <node x="1394.0" y="785.0">saleson.api.mold.MoldRepositoryCustom</node>
+    <node x="1645.0" y="1935.0">saleson.api.accessHierachy.payload.AccessMoldPayload</node>
+    <node x="908.0" y="866.0">saleson.api.topic.TopicRepositoryImpl</node>
+    <node x="2362.0" y="2163.0">saleson.api.machine.payload.MachinePayload</node>
+    <node x="1941.0" y="628.0">saleson.api.statistics.StatisticsRepositoryCustom</node>
+    <node x="2191.0" y="1479.0">saleson.api.machine.payload.MachineStatisticsPayload</node>
+    <node x="1433.0" y="1327.0">saleson.api.versioning.repositories.CompanyVersionRepository</node>
+    <node x="1572.0" y="2087.0">saleson.api.location.LocationController</node>
+    <node x="1047.0" y="2467.0">saleson.api.user.payload.UserParam</node>
+    <node x="676.0" y="2087.0">saleson.api.integration.IntergrationService</node>
+    <node x="836.0" y="2239.0">saleson.api.menu.MenuRepository</node>
+    <node x="1581.0" y="1099.0">saleson.api.broadcastNotification.BroadcastNotificationController</node>
+    <node x="11.0" y="1023.0">saleson.api.filter.DashboardGeneralFilterRepositoryImpl</node>
+    <node x="2109.0" y="238.0">saleson.api.machine.MachineStatisticsRepository</node>
+    <node x="1411.0" y="2315.0">saleson.api.counter.CounterService</node>
+    <node x="1909.0" y="866.0">saleson.api.user.UserRepositoryImpl</node>
+    <node x="288.0" y="1327.0">saleson.api.endLifeCycle.MoldEndLifeCycleController</node>
+    <node x="1118.0" y="1403.0">saleson.api.versioning.repositories.TerminalVersionRepository</node>
+    <node x="1963.0" y="81.0">saleson.api.dataCompletionRate.DataCompletionOrderRepositoryImpl</node>
+    <node x="1515.0" y="2163.0">saleson.api.resource.ResourceHandler</node>
+    <node x="1219.0" y="1175.0">saleson.api.dataCompletionRate.payload.DataCompletionOrderPayload</node>
+    <node x="1780.0" y="314.0">saleson.api.mold.MoldCorrectiveRepositoryCustom</node>
+    <node x="1044.0" y="2239.0">saleson.api.configuration.payload.ColumnEnabled</node>
+    <node x="1717.0" y="1327.0">saleson.api.machine.MachineStatisticsController</node>
+    <node x="995.0" y="1783.0">saleson.api.accessHierachy.AccessMoldRepository</node>
+    <node x="2276.0" y="2239.0">saleson.api.machine.MachineService</node>
+    <node x="0.0" y="1555.0">saleson.api.role.payload.DashboardGroupPayload</node>
+    <node x="268.0" y="1555.0">saleson.api.mold.MoldEfficiencyRepository</node>
+    <node x="1952.0" y="1403.0">saleson.api.versioning.repositories.LocationVersionRepository</node>
+    <node x="1699.0" y="2391.0">saleson.api.topic.TopicService</node>
+    <node x="926.0" y="709.0">saleson.api.machine.MachineRepositoryImpl</node>
+    <node x="1375.0" y="1479.0">saleson.api.accessHierachy.AccessHierarchyController</node>
+    <node x="709.0" y="1935.0">saleson.api.configuration.payload.CustomFieldPayload</node>
+    <node x="2282.0" y="552.0">saleson.api.company.CompanyRepositoryImpl</node>
+    <node x="355.0" y="2467.0">saleson.api.user.UserService</node>
+    <node x="848.0" y="395.0">saleson.api.accessHierachy.AccessHierarchyRepository</node>
+    <node x="1364.5" y="0.0">saleson.api.machine.MachineMoldMatchingHistoryRepositoryCustom</node>
+    <node x="764.0" y="552.0">saleson.api.rejectedPart.ProducedPartRepositoryImpl</node>
+    <node x="2074.0" y="552.0">saleson.api.company.CompanyRepository</node>
+    <node x="178.0" y="2467.0">saleson.api.auth.AuthService</node>
+    <node x="0.0" y="1783.0">saleson.api.versioning.repositories.UserVersionRepository</node>
+    <node x="1148.0" y="1327.0">saleson.api.role.DashboardGroupRepository</node>
+    <node x="560.0" y="1403.0">saleson.api.mold.MoldDisconnectRepository</node>
+    <node x="246.0" y="1859.0">saleson.api.notification.NotificationController</node>
+    <node x="1217.0" y="2467.0">saleson.api.role.payload.RoleParam</node>
+    <node x="1880.0" y="2391.0">saleson.api.role.payload.RolePayload</node>
+    <node x="2106.5" y="0.0">saleson.api.dataCompletionRate.DataCompletionOrderRepositoryCustom</node>
+    <node x="2061.0" y="2391.0">saleson.api.user.payload.UserPayload</node>
+    <node x="1470.0" y="1251.0">saleson.api.configuration.TimeLanguageConfigService</node>
+    <node x="1772.0" y="1707.0">saleson.api.configuration.payload.GeneralConfigPayload</node>
+    <node x="0.0" y="2391.0">saleson.api.mold.payload.ExportPayload</node>
+    <node x="762.0" y="1707.0">saleson.api.statistics.StatisticsPartRepository</node>
+    <node x="1515.0" y="2391.0">saleson.api.menu.MenuService</node>
+    <node x="83.5" y="628.0">saleson.api.machine.RiskLevelRepositoryCustom</node>
+    <node x="2075.0" y="709.0">saleson.api.statistics.StatisticsRepository</node>
+    <node x="839.0" y="1403.0">saleson.api.topic.CorrespondenceRepository</node>
+    <node x="1268.0" y="1707.0">saleson.api.accessHierachy.AccessHierarchyService</node>
+    <node x="827.0" y="1479.0">saleson.api.versioning.repositories.CounterVersionRepository</node>
+    <node x="1417.0" y="942.0">saleson.api.accessHierachy.AccessCompanyRelationRepository</node>
+    <node x="1872.0" y="1555.0">saleson.api.endLifeCycle.MoldEndLifeCycleService</node>
+    <node x="685.0" y="866.0">saleson.api.counter.CounterRepository</node>
+    <node x="900.0" y="2087.0">saleson.api.machine.MachineController</node>
+    <node x="255.0" y="1707.0">saleson.api.auth.AccessTokenRepository</node>
+    <node x="1467.5" y="628.0">saleson.api.terminal.TerminalRepositoryCustom</node>
+    <node x="653.0" y="2163.0">saleson.api.company.payload.CompanyPayload</node>
+    <node x="1502.0" y="866.0">saleson.api.mold.MoldRepositoryImpl</node>
+    <node x="1985.0" y="1783.0">saleson.api.versioning.repositories.PartVersionRepository</node>
+    <node x="1999.0" y="1327.0">saleson.api.configuration.ColumnTableConfigService</node>
+    <node x="2338.0" y="1935.0">saleson.api.user.UserAlertRepository</node>
+    <node x="536.0" y="1555.0">saleson.api.report.ReportCapacityController</node>
+    <node x="1844.0" y="709.0">saleson.api.statistics.StatisticsRepositoryImpl</node>
+    <node x="736.0" y="1859.0">saleson.api.configuration.GeneralConfigService</node>
+    <node x="460.0" y="2011.0">saleson.api.configuration.payload.AlertConfigPayload</node>
+    <node x="1124.0" y="2087.0">saleson.api.terminal.TerminalController</node>
+    <node x="1587.0" y="709.0">saleson.api.terminal.TerminalRepositoryImpl</node>
+    <node x="231.0" y="866.0">saleson.api.location.LocationRepository</node>
+    <node x="0.0" y="1935.0">saleson.api.endLifeCycle.payload.EndLifeCyclePayload</node>
+    <node x="2242.0" y="2391.0">saleson.api.chart.ChartService</node>
+    <node x="1793.0" y="552.0">saleson.api.onboarding.OnBoardingRepositoryImpl</node>
+    <node x="0.0" y="2239.0">saleson.api.statistics.payload.StatisticsPayload</node>
+    <node x="285.0" y="238.0">saleson.api.dataCompletionRate.DataCompletionRateRepositoryImpl</node>
+    <node x="209.0" y="2239.0">saleson.api.preset.PresetRepository</node>
+    <node x="1876.0" y="1935.0">saleson.api.mold.MoldPartRepository</node>
+    <node x="1521.0" y="1175.0">saleson.api.terminal.TerminalDisconnectRepository</node>
+    <node x="0.0" y="2163.0">saleson.api.user.payload.UserInvitePayload</node>
+    <node x="491.0" y="1859.0">saleson.api.systemNote.SystemNoteController</node>
+    <node x="522.0" y="1631.0">saleson.api.configuration.EnableConfigRepository</node>
+    <node x="2078.0" y="942.0">saleson.api.configuration.RefurbishmentPointConfigService</node>
+    <node x="297.0" y="1251.0">saleson.api.configuration.payload.RefurbishmentConfigPayload</node>
+    <node x="2240.0" y="2087.0">saleson.api.counter.CounterController</node>
+    <node x="0.0" y="1175.0">saleson.api.machine.payload.MachineAvailabilityConfigDTO</node>
+    <node x="1302.0" y="1631.0">saleson.api.accessHierachy.payload.AccessHierarchyPayload</node>
+    <node x="954.0" y="2391.0">saleson.api.topic.payload.TopicPayload</node>
+    <node x="277.0" y="1479.0">saleson.api.report.payload.ProductivitySearchPayload</node>
+    <node x="237.0" y="1935.0">saleson.api.rejectedPart.payload.RejectedPartPayload</node>
+    <node x="689.0" y="314.0">saleson.api.accessHierachy.AccessHierarchyRepositoryCustom</node>
+    <node x="576.0" y="2391.0">saleson.api.user.payload.LoginRequest</node>
+    <node x="2280.0" y="1327.0">saleson.api.checklist.ChecklistVersionRepository</node>
+    <node x="1101.0" y="1479.0">saleson.api.configuration.CurrencyConfigRepository</node>
+    <node x="1243.0" y="1783.0">saleson.api.systemNote.SystemNoteRepository</node>
+    <node x="2107.0" y="1935.0">saleson.api.systemNote.payload.SystemNotePayload</node>
+    <node x="1823.0" y="1175.0">saleson.api.dataCompletionRate.payload.DataCompletionGroupByType</node>
+    <node x="194.0" y="2391.0">saleson.api.part.PartController</node>
+    <node x="640.0" y="1099.0">saleson.api.configuration.TimeLanguageConfigRepository</node>
+    <node x="237.0" y="552.0">saleson.api.mold.MoldLocationRepositoryImpl</node>
+    <node x="2229.0" y="1403.0">saleson.api.dataCompletionRate.DataCompletionController</node>
+    <node x="0.0" y="1707.0">saleson.api.versioning.repositories.MoldVersionRepository</node>
+    <node x="1142.0" y="2391.0">saleson.api.chart.payload.ChartPayload</node>
+    <node x="782.0" y="1631.0">saleson.api.versioning.service.CompanyVersionService</node>
+    <node x="1760.0" y="1251.0">saleson.api.broadcastNotification.BroadcastNotificationService</node>
+    <node x="347.0" y="81.0">saleson.api.counter.payload.CounterPayload</node>
+    <node x="1313.0" y="552.0">saleson.api.statistics.StatisticsWutRepository</node>
+    <node x="2022.0" y="1707.0">saleson.api.rejectedPart.RejectedPartController</node>
+    <node x="1920.0" y="1479.0">saleson.api.configuration.CurrencyConfigController</node>
+    <node x="2337.0" y="866.0">saleson.api.part.PartRepository</node>
+    <node x="1945.5" y="157.0">saleson.api.machine.MachineStatisticsRepositoryCustom</node>
+    <node x="0.0" y="2011.0">saleson.api.statistics.StatisticsWutService</node>
+    <node x="249.0" y="1783.0">saleson.api.versioning.repositories.RoleVersionRepository</node>
+    <node x="0.0" y="1403.0">saleson.api.versioning.repositories.ReversionHistoryRepository</node>
+    <node x="1496.0" y="238.0">saleson.api.mold.MoldMaintenanceRepositoryImpl</node>
+    <node x="994.5" y="785.0">saleson.api.topic.TopicRepositoryCustom</node>
+    <node x="1042.0" y="1631.0">saleson.api.machine.payload.MachineStatisticsDetails</node>
+    <node x="528.0" y="81.0">saleson.api.filestorage.payload.MultiFileStoragePayload</node>
+    <node x="1736.0" y="866.0">saleson.api.user.UserRepository</node>
+    <node x="2185.0" y="1859.0">saleson.api.dataCompletionRate.payload.DataCompletionItem</node>
+    <node x="2460.0" y="2087.0">saleson.api.user.support.UserAlertSerializer</node>
+    <node x="0.0" y="1327.0">saleson.api.configuration.payload.ColumnTableConfigPayload</node>
+    <node x="0.0" y="552.0">saleson.api.mold.MoldLocationRepository</node>
+    <node x="862.0" y="1327.0">saleson.api.dataCompletionRate.DataCompletionRateService</node>
+    <node x="1795.0" y="2087.0">saleson.api.statistics.StatisticsController</node>
+    <node x="97.0" y="785.0">saleson.api.location.LocationRepositoryCustom</node>
+    <node x="552.5" y="785.0">saleson.api.counter.CounterRepositoryCustom</node>
+    <node x="1945.0" y="1859.0">saleson.api.filestorage.FileStorageController</node>
+    <node x="876.0" y="2467.0">saleson.api.part.PartService</node>
+    <node x="1323.0" y="866.0">saleson.api.mold.MoldRepository</node>
+    <node x="1661.5" y="471.0">saleson.api.onboarding.OnBoardingRepositoryCustom</node>
+    <node x="1054.0" y="552.0">saleson.api.statistics.StatisticsWutRepositoryImpl</node>
+    <node x="204.0" y="709.0">saleson.api.machine.RiskLevelRepositoryImpl</node>
+    <node x="2424.0" y="1859.0">saleson.api.versioning.VersioningController</node>
+    <node x="1015.0" y="1707.0">saleson.api.versioning.service.LocationVersionService</node>
+    <node x="442.0" y="0.0">saleson.api.equipment.payload.EquipmentPayload</node>
+    <node x="1675.0" y="395.0">saleson.api.mold.MoldCorrectiveRepository</node>
+    <node x="1343.5" y="157.0">saleson.api.mold.MoldMaintenanceRepositoryCustom</node>
+    <node x="1727.0" y="2163.0">saleson.api.category.payload.CategoryRequest</node>
+    <node x="418.0" y="2239.0">saleson.api.location.payload.LocationPayload</node>
+    <node x="1385.0" y="709.0">saleson.api.terminal.TerminalRepository</node>
+    <node x="2123.0" y="1175.0">saleson.api.broadcastNotification.payload.BroadcastNotificationPayload</node>
+    <node x="2423.0" y="2391.0">saleson.api.mold.MoldService</node>
+    <node x="966.0" y="81.0">saleson.api.terminal.payload.TerminalAlertPayload</node>
+    <node x="689.0" y="2011.0">saleson.api.rejectedPart.RejectedPartService</node>
+    <node x="1456.0" y="2239.0">saleson.api.menu.MenuController</node>
+    <node x="1080.0" y="942.0">saleson.api.mold.payload.DataSubmissionConfirmListPayload</node>
+    <node x="1250.0" y="2239.0">saleson.api.preset.PresetController</node>
+    <node x="2272.0" y="1707.0">saleson.api.configuration.CurrencyConfigService</node>
+    <node x="0.0" y="866.0">saleson.api.location.LocationRepositoryImpl</node>
+    <node x="2231.0" y="1783.0">saleson.api.configuration.AlertConfigRepository</node>
+    <node x="979.0" y="1859.0">saleson.api.machine.payload.PerformanceRawData</node>
+    <node x="2287.0" y="2011.0">saleson.api.checklist.ChecklistController</node>
+    <node x="1610.0" y="2315.0">saleson.api.dataCompletionRate.payload.CategoryClone</node>
+    <node x="1558.0" y="81.0">saleson.api.machine.MachineMoldMatchingHistoryRepositoryImpl</node>
+    <node x="498.0" y="1783.0">saleson.api.configuration.CustomFieldController</node>
+    <node x="286.0" y="395.0">saleson.api.data.registration.DataRegistrationRepository</node>
+    <node x="918.0" y="2011.0">saleson.api.integration.payload.TransactionPayload</node>
+    <node x="765.0" y="81.0">saleson.api.filestorage.payload.FileStoragePayload</node>
+    <node x="758.5" y="157.0">saleson.api.rejectedPart.RejectedPartDetailsRepositoryCustom</node>
+    <node x="473.0" y="1935.0">saleson.api.location.ContinentRepository</node>
+    <node x="0.0" y="238.0">saleson.api.dataCompletionRate.DataCompletionRateRepository</node>
+    <node x="457.0" y="866.0">saleson.api.counter.CounterRepositoryImpl</node>
+    <node x="0.0" y="1631.0">saleson.api.role.DashboardGroupService</node>
+    <node x="280.0" y="1403.0">saleson.api.versioning.repositories.CategoryVersionRepository</node>
+    <node x="886.0" y="1251.0">saleson.api.mold.MoldMisconfigureRepository</node>
+    <node x="2137.0" y="866.0">saleson.api.part.PartRepositoryImpl</node>
+    <node x="0.0" y="2315.0">saleson.api.chart.ChartController</node>
+    <node x="1939.0" y="2163.0">saleson.api.checklist.payload.ChecklistPayload</node>
+    <node x="944.0" y="1935.0">saleson.api.user.UserInviteRepository</node>
+    <node x="625.0" y="238.0">saleson.api.rejectedPart.RejectedPartDetailsRepositoryImpl</node>
+    <node x="436.0" y="2163.0">saleson.api.versioning.service.VersioningService</node>
+    <node x="808.0" y="2315.0">saleson.api.code.CodeController</node>
+    <node x="954.0" y="1099.0">saleson.api.broadcastNotification.BroadcastNotificationRepository</node>
+    <node x="667.0" y="709.0">saleson.api.category.CategoryRepositoryImpl</node>
+    <node x="1402.0" y="395.0">saleson.api.mold.MoldCycleTimeRepository</node>
+    <node x="230.0" y="2011.0">saleson.api.company.CompanyController</node>
+    <node x="916.0" y="1175.0">saleson.api.endLifeCycle.MoldRefurbishmentRepository</node>
+    <node x="804.0" y="1555.0">saleson.api.mold.MoldAuthorityRepository</node>
+    <node x="1165.0" y="471.0">saleson.api.statistics.StatisticsWutRepositoryCustom</node>
+    <node x="307.0" y="1175.0">saleson.api.configuration.ColumnTableConfigRepository</node>
+    <node x="612.0" y="1175.0">saleson.api.filter.DashboardGeneralFilterService</node>
+    <node x="529.0" y="2467.0">saleson.api.role.RoleService</node>
+    <node x="1708.0" y="2467.0">saleson.api.machine.payload.AvgOEE</node>
+    <node x="1605.0" y="2011.0">saleson.api.configuration.CustomFieldService</node>
+    <node x="567.0" y="395.0">saleson.api.accessHierachy.AccessHierarchyRepositoryImpl</node>
+    <node x="575.0" y="1327.0">saleson.api.mold.MoldDetachmentRepository</node>
+    <node x="1491.0" y="1783.0">saleson.api.notification.NotificationRepository</node>
+    <node x="386.0" y="2391.0">saleson.api.log.LogController</node>
+    <node x="202.0" y="2315.0">saleson.api.location.LocationService</node>
+    <node x="404.0" y="2315.0">saleson.api.statistics.StatisticsService</node>
+    <node x="1348.0" y="2087.0">saleson.api.notification.NotificationService</node>
+    <node x="2151.0" y="2163.0">saleson.api.user.UserInviteService</node>
+    <node x="261.0" y="1631.0">saleson.api.machine.MachineStatisticsService</node>
+    <node x="1009.0" y="2315.0">saleson.api.mold.MoldController</node>
+    <node x="1396.0" y="1403.0">saleson.api.data.registration.DataRegistrationController</node>
+    <node x="1750.0" y="942.0">saleson.api.filter.DashboardGeneralFilterRepository</node>
+    <node x="0.0" y="2087.0">saleson.api.resource.ResourceController</node>
+    <node x="1179.0" y="1251.0">saleson.api.configuration.CustomFieldValueRepository</node>
+    <node x="1147.0" y="2011.0">saleson.api.checklist.ChecklistRepository</node>
+    <node x="1179.0" y="1935.0">saleson.api.configuration.OPConfigRepository</node>
+    <node x="606.0" y="2315.0">saleson.api.topic.TopicController</node>
+    <node x="1567.0" y="552.0">saleson.api.onboarding.OnBoardingRepository</node>
+    <node x="2204.0" y="2315.0">saleson.api.user.UserController</node>
+    <node x="765.0" y="2391.0">saleson.api.report.ReportService</node>
+    <node x="1023.5" y="628.0">saleson.api.machine.MachineRepositoryCustom</node>
+    <node x="1819.0" y="238.0">saleson.api.machine.MachineStatisticsRepositoryImpl</node>
+    <node x="1071.0" y="1555.0">saleson.api.statistics.StatisticsPresetRepository</node>
+    <node x="1661.0" y="2239.0">saleson.api.category.CategoryService</node>
+    <node x="0.0" y="1479.0">saleson.api.mold.MoldDownTimeRepository</node>
+    <node x="2050.0" y="1251.0">saleson.api.endLifeCycle.MoldEndLifeCycleRepository</node>
+    <node x="1892.0" y="1099.0">saleson.api.mold.MoldDowntimeEventRepository</node>
+    <node x="529.0" y="552.0">saleson.api.rejectedPart.ProducedPartRepository</node>
+    <node x="1648.0" y="1479.0">saleson.api.dataCompletionRate.payload.DataCompletionOrderLite</node>
+    <node x="703.0" y="2467.0">saleson.api.dataCompletionRate.payload.MoldClone</node>
+    <node x="1228.0" y="238.0">saleson.api.mold.MoldMaintenanceRepository</node>
+    <node x="1376.0" y="2011.0">saleson.api.chart.UserContentService</node>
+    <node x="0.0" y="942.0">saleson.api.filter.DashboardGeneralFilterRepositoryCustom</node>
+    <node x="2060.0" y="2011.0">saleson.api.onboarding.OnBoardingService</node>
+    <node x="0.0" y="2467.0">saleson.api.part.payload.PartPayload</node>
+    <node x="1222.0" y="1859.0">saleson.api.configuration.payload.EnableConfigPayload</node>
+    <node x="1520.0" y="1707.0">saleson.api.configuration.CustomFieldRepository</node>
+    <node x="1674.0" y="1403.0">saleson.api.versioning.repositories.MachineVersionRepository</node>
+    <node x="1387.0" y="2467.0">saleson.api.machine.payload.DetailOEE</node>
+    <node x="2334.0" y="1631.0">saleson.api.versioning.service.CategoryVersionService</node>
+    <node x="1210.0" y="2315.0">saleson.api.category.payload.CategoryParam</node>
+    <node x="1866.0" y="2239.0">saleson.api.company.payload.CompanyParam</node>
+    <node x="0.0" y="1859.0">saleson.api.mold.DynamicExportService</node>
+    <node x="325.0" y="1099.0">saleson.api.mold.payload.DataSubmissionConfirmPayload</node>
+    <node x="628.0" y="471.0">saleson.api.rejectedPart.ProducedPartRepositoryCustom</node>
+    <node x="2071.0" y="2239.0">saleson.api.checklist.ChecklistService</node>
+    <node x="218.0" y="2163.0">saleson.api.configuration.payload.OPConfigPayload</node>
+    <node x="1338.0" y="1555.0">saleson.api.configuration.CustomFieldValueService</node>
+    <node x="1268.0" y="1099.0">saleson.api.mold.MoldDataSubmissionRepository</node>
+    <node x="1208.0" y="81.0">saleson.api.machine.MachineMoldMatchingHistoryRepository</node>
+    <node x="0.0" y="395.0">saleson.api.data.registration.DataRegistrationRepositoryImpl</node>
+    <node x="226.0" y="2087.0">saleson.api.category.CategoryController</node>
+    <node x="1561.0" y="1631.0">saleson.api.chart.payload.DashboardFilterPayload</node>
+    <node x="1780.5" y="785.0">saleson.api.user.UserRepositoryCustom</node>
+    <node x="627.0" y="2239.0">saleson.api.company.CompanyService</node>
+    <node x="0.0" y="1251.0">saleson.api.configuration.payload.TimeLanguageConfigPayload</node>
+    <node x="1124.0" y="395.0">saleson.api.mold.MoldCycleTimeRepositoryImpl</node>
+    <node x="1605.0" y="1555.0">saleson.api.configuration.GeneralConfigRepository</node>
+    <node x="463.0" y="709.0">saleson.api.category.CategoryRepository</node>
+    <node x="2159.5" y="471.0">saleson.api.company.CompanyRepositoryCustom</node>
+    <node x="0.0" y="709.0">saleson.api.machine.RiskLevelRepository</node>
+    <node x="1819.0" y="1631.0">saleson.api.mold.payload.SwitchMoldPartPayload</node>
+    <node x="2138.0" y="1555.0">saleson.api.configuration.GeneralConfigController</node>
+    <node x="100.0" y="471.0">saleson.api.mold.MoldLocationRepositoryCustom</node>
+    <node x="2479.0" y="2239.0">saleson.api.terminal.TerminalService</node>
+    <node x="2399.0" y="2315.0">saleson.api.role.RoleController</node>
+    <node x="869.0" y="2163.0">saleson.api.role.RoleGraphService</node>
+    <node x="2218.5" y="785.0">saleson.api.part.PartRepositoryCustom</node>
+    <node x="0.0" y="81.0">saleson.api.mold.payload.MoldPayload</node>
+    <node x="546.5" y="628.0">saleson.api.category.CategoryRepositoryCustom</node>
+    <node x="2203.0" y="1099.0">saleson.api.filter.payload.DashboardGeneralFilterPayload</node>
+    <node x="1300.0" y="2163.0">saleson.api.chart.dto.SearchResultType</node>
+    <node x="0.0" y="1099.0">saleson.api.filter.DashboardGeneralFilterController</node>
+    <node x="1808.0" y="2315.0">saleson.api.auth.AuthController</node>
+    <node x="2006.0" y="2315.0">saleson.api.role.RoleRepository</node>
+    <node x="1330.0" y="2391.0">saleson.api.preset.PresetService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="saleson.api.statistics.StatisticsWutRepositoryImpl" target="saleson.api.statistics.StatisticsWutRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1173.5" y="527.0" />
+      <point x="1230.25" y="527.0" />
+      <point x="-65.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.part.PartRepositoryImpl" target="saleson.api.part.PartRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2227.0" y="841.0" />
+      <point x="2269.0" y="841.0" />
+      <point x="-50.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.company.CompanyRepository" target="saleson.api.company.CompanyRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2168.0" y="527.0" />
+      <point x="2219.5" y="527.0" />
+      <point x="-60.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.location.LocationRepositoryImpl" target="saleson.api.location.LocationRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="105.5" y="841.0" />
+      <point x="155.25" y="841.0" />
+      <point x="-58.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.machine.MachineMoldMatchingHistoryRepositoryImpl" target="saleson.api.machine.MachineMoldMatchingHistoryRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1738.0" y="56.0" />
+      <point x="1651.0" y="56.0" />
+      <point x="95.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.terminal.TerminalRepository" target="saleson.api.terminal.TerminalRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1476.0" y="684.0" />
+      <point x="1526.0" y="684.0" />
+      <point x="-58.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.statistics.StatisticsWutRepository" target="saleson.api.statistics.StatisticsWutRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1417.5" y="527.0" />
+      <point x="1360.75" y="527.0" />
+      <point x="65.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.machine.RiskLevelRepositoryImpl" target="saleson.api.machine.RiskLevelRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="311.0" y="684.0" />
+      <point x="260.5" y="684.0" />
+      <point x="59.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.user.UserRepositoryImpl" target="saleson.api.user.UserRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2000.5" y="841.0" />
+      <point x="1969.5" y="841.0" />
+      <point x="63.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.counter.payload.CounterPayload" target="saleson.api.equipment.payload.EquipmentPayload" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="427.5" y="56.0" />
+      <point x="532.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldCorrectiveRepository" target="saleson.api.mold.MoldCorrectiveRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1788.5" y="370.0" />
+      <point x="1849.75" y="370.0" />
+      <point x="-69.75" y="15.5" />
+    </edge>
+    <edge source="saleson.api.accessHierachy.AccessHierarchyRepository" target="saleson.api.accessHierachy.AccessHierarchyRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="963.5" y="370.0" />
+      <point x="901.25" y="370.0" />
+      <point x="70.75" y="15.5" />
+    </edge>
+    <edge source="saleson.api.rejectedPart.RejectedPartDetailsRepository" target="saleson.api.rejectedPart.RejectedPartDetailsRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1056.0" y="213.0" />
+      <point x="988.0" y="213.0" />
+      <point x="76.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.dataCompletionRate.DataCompletionOrderRepository" target="saleson.api.dataCompletionRate.DataCompletionOrderRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2424.0" y="56.0" />
+      <point x="2351.0" y="56.0" />
+      <point x="81.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldCycleTimeRepositoryImpl" target="saleson.api.mold.MoldCycleTimeRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1253.0" y="370.0" />
+      <point x="1314.5" y="370.0" />
+      <point x="-70.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.statistics.StatisticsRepository" target="saleson.api.statistics.StatisticsRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2165.5" y="684.0" />
+      <point x="2115.75" y="684.0" />
+      <point x="58.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldLocationRepository" target="saleson.api.mold.MoldLocationRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="108.5" y="527.0" />
+      <point x="167.25" y="527.0" />
+      <point x="-67.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.location.LocationRepository" target="saleson.api.location.LocationRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="321.5" y="841.0" />
+      <point x="271.75" y="841.0" />
+      <point x="58.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.filestorage.payload.FileStoragePayload" target="saleson.api.equipment.payload.EquipmentPayload" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="855.5" y="56.0" />
+      <point x="532.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.terminal.payload.TerminalAlertPayload" target="saleson.api.equipment.payload.EquipmentPayload" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1064.5" y="56.0" />
+      <point x="532.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.machine.MachineMoldMatchingHistoryRepository" target="saleson.api.machine.MachineMoldMatchingHistoryRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1373.0" y="56.0" />
+      <point x="1460.0" y="56.0" />
+      <point x="-95.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.machine.MachineStatisticsRepositoryImpl" target="saleson.api.machine.MachineStatisticsRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1954.0" y="213.0" />
+      <point x="2018.5" y="213.0" />
+      <point x="-73.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.accessHierachy.AccessHierarchyRepositoryImpl" target="saleson.api.accessHierachy.AccessHierarchyRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="697.5" y="370.0" />
+      <point x="759.75" y="370.0" />
+      <point x="-70.75" y="15.5" />
+    </edge>
+    <edge source="saleson.api.topic.TopicRepository" target="saleson.api.topic.TopicRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1198.0" y="841.0" />
+      <point x="1153.5" y="841.0" />
+      <point x="53.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.topic.TopicRepositoryImpl" target="saleson.api.topic.TopicRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1003.0" y="841.0" />
+      <point x="1047.5" y="841.0" />
+      <point x="-53.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.onboarding.OnBoardingRepositoryImpl" target="saleson.api.onboarding.OnBoardingRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1911.0" y="527.0" />
+      <point x="1855.0" y="527.0" />
+      <point x="64.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldRepository" target="saleson.api.mold.MoldRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1402.5" y="841.0" />
+      <point x="1446.75" y="841.0" />
+      <point x="-52.75" y="15.5" />
+    </edge>
+    <edge source="saleson.api.data.registration.DataRegistrationRepositoryImpl" target="saleson.api.data.registration.DataRegistrationRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="133.0" y="370.0" />
+      <point x="196.5" y="370.0" />
+      <point x="-72.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.onboarding.OnBoardingRepository" target="saleson.api.onboarding.OnBoardingRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1670.0" y="527.0" />
+      <point x="1726.0" y="527.0" />
+      <point x="-64.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldCorrectiveRepositoryImpl" target="saleson.api.mold.MoldCorrectiveRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2050.5" y="370.0" />
+      <point x="1989.25" y="370.0" />
+      <point x="69.75" y="15.5" />
+    </edge>
+    <edge source="saleson.api.rejectedPart.ProducedPartRepositoryImpl" target="saleson.api.rejectedPart.ProducedPartRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="886.5" y="527.0" />
+      <point x="828.25" y="527.0" />
+      <point x="66.75" y="15.5" />
+    </edge>
+    <edge source="saleson.api.category.CategoryRepository" target="saleson.api.category.CategoryRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="555.0" y="684.0" />
+      <point x="605.5" y="684.0" />
+      <point x="-59.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.data.registration.DataRegistrationRepository" target="saleson.api.data.registration.DataRegistrationRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="404.0" y="370.0" />
+      <point x="340.5" y="370.0" />
+      <point x="72.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.machine.MachineStatisticsRepository" target="saleson.api.machine.MachineStatisticsRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2229.0" y="213.0" />
+      <point x="2164.5" y="213.0" />
+      <point x="73.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.rejectedPart.RejectedPartDetailsRepositoryImpl" target="saleson.api.rejectedPart.RejectedPartDetailsRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="767.0" y="213.0" />
+      <point x="835.0" y="213.0" />
+      <point x="-76.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldLocationRepositoryImpl" target="saleson.api.mold.MoldLocationRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="360.5" y="527.0" />
+      <point x="301.75" y="527.0" />
+      <point x="67.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.terminal.TerminalRepositoryImpl" target="saleson.api.terminal.TerminalRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1693.0" y="684.0" />
+      <point x="1643.0" y="684.0" />
+      <point x="58.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.filestorage.payload.MultiFileStoragePayload" target="saleson.api.equipment.payload.EquipmentPayload" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="636.5" y="56.0" />
+      <point x="532.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.category.CategoryRepositoryImpl" target="saleson.api.category.CategoryRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="774.0" y="684.0" />
+      <point x="723.5" y="684.0" />
+      <point x="59.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.dataCompletionRate.DataCompletionOrderRepositoryImpl" target="saleson.api.dataCompletionRate.DataCompletionOrderRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2115.0" y="56.0" />
+      <point x="2188.0" y="56.0" />
+      <point x="-81.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.payload.MoldPayload" target="saleson.api.equipment.payload.EquipmentPayload" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="71.0" y="56.0" />
+      <point x="532.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldCycleTimeRepository" target="saleson.api.mold.MoldCycleTimeRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1516.0" y="370.0" />
+      <point x="1454.5" y="370.0" />
+      <point x="70.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.part.PartRepository" target="saleson.api.part.PartRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2412.0" y="841.0" />
+      <point x="2370.0" y="841.0" />
+      <point x="50.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.company.CompanyRepositoryImpl" target="saleson.api.company.CompanyRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="2391.0" y="527.0" />
+      <point x="2339.5" y="527.0" />
+      <point x="60.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.dataCompletionRate.DataCompletionRateRepositoryImpl" target="saleson.api.dataCompletionRate.DataCompletionRateRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="432.5" y="213.0" />
+      <point x="361.75" y="213.0" />
+      <point x="79.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.rejectedPart.ProducedPartRepository" target="saleson.api.rejectedPart.ProducedPartRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="636.5" y="527.0" />
+      <point x="694.75" y="527.0" />
+      <point x="-66.75" y="15.5" />
+    </edge>
+    <edge source="saleson.api.statistics.StatisticsRepositoryImpl" target="saleson.api.statistics.StatisticsRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1949.5" y="684.0" />
+      <point x="1999.25" y="684.0" />
+      <point x="-58.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.machine.RiskLevelRepository" target="saleson.api.machine.RiskLevelRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="92.0" y="684.0" />
+      <point x="142.5" y="684.0" />
+      <point x="-59.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldRepositoryImpl" target="saleson.api.mold.MoldRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1596.5" y="841.0" />
+      <point x="1552.25" y="841.0" />
+      <point x="52.75" y="15.5" />
+    </edge>
+    <edge source="saleson.api.dataCompletionRate.DataCompletionRateRepository" target="saleson.api.dataCompletionRate.DataCompletionRateRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="132.5" y="213.0" />
+      <point x="203.25" y="213.0" />
+      <point x="-79.25" y="15.5" />
+    </edge>
+    <edge source="saleson.api.counter.CounterRepository" target="saleson.api.counter.CounterRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="774.0" y="841.0" />
+      <point x="725.0" y="841.0" />
+      <point x="57.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.machine.MachineRepositoryImpl" target="saleson.api.machine.MachineRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1032.0" y="684.0" />
+      <point x="1082.0" y="684.0" />
+      <point x="-58.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.user.UserRepository" target="saleson.api.user.UserRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1812.5" y="841.0" />
+      <point x="1843.5" y="841.0" />
+      <point x="-63.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldMaintenanceRepositoryImpl" target="saleson.api.mold.MoldMaintenanceRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1635.0" y="213.0" />
+      <point x="1568.5" y="213.0" />
+      <point x="75.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.filter.DashboardGeneralFilterRepositoryImpl" target="saleson.api.filter.DashboardGeneralFilterRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.terminal.payload.TerminalPayload" target="saleson.api.equipment.payload.EquipmentPayload" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="244.5" y="56.0" />
+      <point x="532.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.machine.MachineRepository" target="saleson.api.machine.MachineRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1249.0" y="684.0" />
+      <point x="1199.0" y="684.0" />
+      <point x="58.5" y="15.5" />
+    </edge>
+    <edge source="saleson.api.mold.MoldMaintenanceRepository" target="saleson.api.mold.MoldMaintenanceRepositoryCustom" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="1352.0" y="213.0" />
+      <point x="1418.5" y="213.0" />
+      <point x="-75.0" y="15.5" />
+    </edge>
+    <edge source="saleson.api.counter.CounterRepositoryImpl" target="saleson.api.counter.CounterRepositoryCustom" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="561.0" y="841.0" />
+      <point x="610.0" y="841.0" />
+      <point x="-57.5" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.9632644956314536" showDependencies="false" x="1295.2681902529544" y="320.1508936419572" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

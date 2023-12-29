@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+    <link rel="stylesheet" th:href="'/css/table-dropdown.css?'+${noCacheVer}" />
+    <link rel="stylesheet" th:href="'/css/reject-rate/style.css?'+${noCacheVer}" />
+    <style type="text/css">
+        .nav-item2:first-child {
+            width: 130px
+        }
+
+        .op-user-list .form-group {
+            margin-right: 10px;
+        }
+
+        .op-user-list .form-group label {
+            margin-right: 5px;
+        }
+
+        .pagination {
+            display: none;
+        }
+
+        .wave1 {
+            height: 900px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation: wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+            border: none;
+        }
+
+        .wave {
+            height: 121px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation: wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+            border: none;
+        }
+
+        .sidebar.wave_sidebar div,
+        .tab-support.wave_header div,
+        .tab-insight.wave_header div,
+        .tab-reports.wave_header div,
+        .tab-user.wave_header div {
+            visibility: hidden;
+        }
+
+        .titleCase {
+            text-transform: lowercase;
+        }
+
+        .titleCase::first-letter {
+            text-transform: uppercase;
+        }
+
+        .card.wave div,
+        .card.wave1 div {
+            display: none;
+        }
+
+        .hour-bar {
+            width: 168px;
+            height: 9px;
+            background-color: #C4C4C4;
+            border-radius: 5px;
+        }
+
+        .actual-hour-bar {
+            height: 9px;
+            background-color: #3491FB;
+            border-radius: 5px;
+        }
+
+        .actual-hour-text {
+            position: relative;
+            text-decoration: none !important;
+        }
+
+        .actual-hour-text-active {
+            color: #006CFF !important;
+        }
+
+        .actual-hour-icon {
+            position: absolute;
+            top: 0;
+            right: -12px;
+        }
+
+        .actual-hour-icon-active {
+            position: absolute;
+            top: -2px;
+            right: -15px;
+        }
+
+        .actual-hour-popup {
+            position: absolute;
+            width: 347px;
+            border: 1px solid #C8CED3;
+            background-color: #FFF;
+            border-radius: 3px;
+            box-shadow: 0px 3px 6px #00000029;
+            z-index: 3;
+            left: 50%;
+            transform: translate(-70%, 0);
+            padding: 13px 8px 18px 25px;
+            color: #13599B;
+            cursor: auto;
+            text-transform: none;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .actual-hour-popup-title {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .actual-hour-popup-content {
+            position: relative;
+        }
+
+        .actual-hour-popup-close {
+            cursor: pointer;
+            position: absolute;
+            top: -5px;
+            right: 0;
+        }
+
+        .actual-hour-popup-sub-title {
+            display: flex;
+            align-items: center;
+        }
+        .downtime-note{
+            margin: 10px 0;
+        }
+        .actual-hour-popup-type {
+            padding: 2px 8px;
+            border: 2px solid #13599B;
+            border-radius: 25px;
+            background-color: #FFF;
+            margin-left: 10px;
+            line-height: 14px;
+        }
+
+        .gap {
+            margin-bottom: 30px;
+        }
+
+        .right-tool {
+            display: flex;
+            border: none;
+            bottom: 5px;
+        }
+
+        .tool-wrapper {
+            position: unset;
+            margin-left: 8px;
+        }
+
+        .tool-wrapper .ant-input {
+            background-color: #FFF;
+            width: 85px;
+            height: 33px;
+        }
+
+        .tool-wrapper .date-filter svg {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave">
+                    <div class="card-header">
+                        <strong th:text="#{machine_availability}"></strong>
+
+                        <div class="card-header-actions">
+                            <span class="card-header-action">
+                                <small class="text-muted"><span th:text="#{total}+':'"></span> {{total}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body card-overflow-reset">
+                        <input type="hidden" v-model="requestParam.sort" />
+                        <div class="form-row">
+                            <div class="col-md-12 col-12">
+                                <div class="form-row">
+                                    <div class="col-md-12 mb-12 mb-md-0 col-12">
+                                        <!-- <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-search"></i></div>
+                                            </div>
+                                            <input v-model="requestParam.query" type="text"
+                                                @input="requestParam.query = $event.target.value" @keyup="search"
+                                                class="form-control" th:placeholder="#{search_by_columns_shown}">
+                                        </div> -->
+                                        <common-searchbar
+                                            :placeholder="resources['search_by_columns_shown']"
+                                            :request-param="requestParam"
+                                            :on-search="search"
+                                        ></common-searchbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="display:none">
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> <span th:text="#{submit}"></span></button>
+                        <button class="btn btn-sm btn-danger" type="reset">
+                            <i class="fa fa-ban"></i> <span th:text="#{reset}"></span></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave1">
+                    <div class="card-header" style="display:none">
+                        <i class="fa fa-align-justify"></i> <span th:text="#{striped_tbl}"></span>
+                    </div>
+                    <div class="card-body card-overflow-reset">
+                        <div class="card-tool">
+                            <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                                <li class="nav-item nav-item2 dropdown" v-for="tabOption in tabOptions">
+                                    <a class="nav-link" :class="{active: requestParam.status === tabOption.value}"
+                                        href="#" @click.prevent="tab(tabOption.value)">{{tabOption.label}}
+                                        <span class="badge badge-light badge-pill"
+                                            v-if="requestParam.status === tabOption.value">{{ total }}</span>
+                                    </a>
+                                </li>
+                                <!--
+                                <li class="nav-item nav-item2">
+                                    <a class="nav-link" :class="{active: requestParam.status == 'DELETED'}" href="#"
+                                       @click.prevent="tab('DELETED')"><span th:text="#{deleted}"></span>
+                                        <span class="badge badge-light badge-pill" v-if="requestParam.status == 'DELETED'">{{ total }}</span>
+                                    </a>
+                                </li>
+    -->
+                                <!--                            <show-columns style="position: absolute; right: 20px;" @reset-columns-list="handleResetColumnsListSelected" @change-value-checkbox="handleChangeValueCheckBox" :all-columns-list="allColumnList" v-if="Object.entries(resources).length" :resources="resources"></show-columns>-->
+                                <!-- <div style="position: absolute; right: 20px;">
+                                    <a @click="openModal('PLANNED_DOWNTIME')"  href="javascript:void(0)" class="btn-custom btn-outline-custom-primary">
+                                    <span style="margin-right: 2px;">
+                                      Add Downtime
+                                    </span>
+                                  </a>
+                                  <date-filter @change-date="filterWithDate"></date-filter>
+                                </div> -->
+
+                            </ul>
+                            <div class="right-tool">
+                                <!-- <a @click="openModal('PLANNED_DOWNTIME')"  href="javascript:void(0)" class="btn-custom btn-outline-custom-primary">
+                                    <span style="margin-right: 2px;">
+                                      Add Downtime
+                                    </span>
+                                  </a> -->
+                                <div class="tool-wrapper">
+                                    <date-filter @change-date="filterWithDate"></date-filter>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <table class="table table-responsive-sm table-striped" style="background-color: #FFF;">
+                            <!--
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col style="width:130px" />
+
+                            </colgroup>
+-->
+                            <thead id="thead-actionbar" class="custom-header-table">
+                                <tr :class="{'invisible': listChecked.length != 0}" class="header-s tr-sort">
+                                    <th class="custom-td">
+                                        <div class="custom-td_header">
+                                            <input id="checkbox-all" class="checkbox" type="checkbox" v-model="isAll"
+                                                @change="select" />
+                                        </div>
+                                    </th>
+                                    <th v-for="(item, index) in allColumnList" v-if="item.enabled" :key="index"
+                                        :class="[{__sort: item.sortable, active: currentSortType === item.sortField}, isDesc ? 'desc': 'asc',item.field === 'enabled' ? '': 'text-left']"
+                                        @click="sortBy(item.sortField)">
+                                        <span>{{item.label}}</span>
+                                        <span v-if="item.sortable" class="__icon-sort"></span>
+                                    </th>
+                                    <!--                                    <th><span th:text="#{action}"></span></th>-->
+                                </tr>
+
+                                <tr :class="{'d-none zindexNegative': listChecked.length == 0}" id="action-bar"
+                                    class="tr-sort empty-tr">
+                                    <th class="empty-th">
+                                        <div class="first-checkbox-zone2">
+                                            <div class="first-checkbox2"
+                                                style="display: flex;align-items: center;padding-left: 0;width: 110px;">
+                                                <div>
+                                                    <input id="checkbox-all-2" class="checkbox" type="checkbox"
+                                                        v-model="isAll" @change="select" />
+                                                </div>
+                                            </div>
+                                            <div class="action-bar">
+                                                <template v-if="listChecked.length > 1">
+                                                    <div>
+                                                        No batch action is available
+                                                    </div>
+                                                </template>
+                                                <template v-if="listChecked.length == 1">
+                                                    <div @click="openModal('PLANNED_DOWNTIME')" class="action-item">
+                                                        <span>Add planned downtime</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10.791"
+                                                            height="10.791" viewBox="0 0 10.791 10.791">
+                                                            <g id="Icon_ionic-md-add-circle-outline"
+                                                                data-name="Icon ionic-md-add-circle-outline"
+                                                                transform="translate(-3.375 -3.375)">
+                                                                <path id="Path_2003" data-name="Path 2003"
+                                                                    d="M16.027,13.8H13.8v2.231H12.707V13.8H10.477V12.707h2.231V10.477H13.8v2.231h2.231Z"
+                                                                    transform="translate(-4.482 -4.482)"
+                                                                    fill="#595959" />
+                                                                <path id="Path_2004" data-name="Path 2004"
+                                                                    d="M8.77,4.464A4.3,4.3,0,1,1,5.725,5.725,4.288,4.288,0,0,1,8.77,4.464m0-1.089a5.4,5.4,0,1,0,5.4,5.4,5.394,5.394,0,0,0-5.4-5.4Z"
+                                                                    fill="#595959" />
+                                                            </g>
+                                                        </svg>
+
+
+                                                    </div>
+                                                    <div @click="openModal('UNPLANNED_DOWNTIME')" class="action-item">
+                                                        <span>Add unplanned downtime</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10.791"
+                                                            height="10.791" viewBox="0 0 10.791 10.791">
+                                                            <g id="Icon_ionic-md-add-circle-outline"
+                                                                data-name="Icon ionic-md-add-circle-outline"
+                                                                transform="translate(-3.375 -3.375)">
+                                                                <path id="Path_2003" data-name="Path 2003"
+                                                                    d="M16.027,13.8H13.8v2.231H12.707V13.8H10.477V12.707h2.231V10.477H13.8v2.231h2.231Z"
+                                                                    transform="translate(-4.482 -4.482)"
+                                                                    fill="#595959" />
+                                                                <path id="Path_2004" data-name="Path 2004"
+                                                                    d="M8.77,4.464A4.3,4.3,0,1,1,5.725,5.725,4.288,4.288,0,0,1,8.77,4.464m0-1.089a5.4,5.4,0,1,0,5.4,5.4,5.394,5.394,0,0,0-5.4-5.4Z"
+                                                                    fill="#595959" />
+                                                            </g>
+                                                        </svg>
+
+                                                    </div>
+                                                    <div @click="openModal('DAILY_WORKING_HOUR')" class="action-item">
+                                                        <span>Edit daily work hours</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="10"
+                                                            height="10" viewBox="0 0 10 10">
+                                                            <defs>
+                                                                <clipPath id="clip-path">
+                                                                    <rect id="Rectangle_24" data-name="Rectangle 24"
+                                                                        width="10" height="10" fill="none" />
+                                                                </clipPath>
+                                                            </defs>
+                                                            <g id="Group_98" data-name="Group 98"
+                                                                clip-path="url(#clip-path)">
+                                                                <g id="Group_105" data-name="Group 105"
+                                                                    transform="translate(0 0)">
+                                                                    <path id="Union_28" data-name="Union 28"
+                                                                        d="M0,9.7l.048-.736L.118,7.914l0,0L6.291,1.745,8.255,3.709,2.084,9.88l0,0-1.053.069L.3,10H.279A.279.279,0,0,1,0,9.7ZM6.96,1.077,7.955.082a.279.279,0,0,1,.395,0L9.918,1.651a.279.279,0,0,1,0,.394l-.995.995Z"
+                                                                        fill="#595959" stroke="rgba(89,89,89,0)"
+                                                                        stroke-miterlimit="10" stroke-width="1" />
+                                                                </g>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                </template>
+
+                                            </div>
+                                        </div>
+                            </thead>
+                            <tbody class="op-list" style="display:none">
+                                <tr v-for="(result, index, id) in results" :id="result.id">
+                                    <td class="custom-td">
+                                        <template v-if="listChecked.length >= 0">
+                                            <input @click="(e) => check(e, result)" :checked="checkSelect(result.machine.id)"
+                                                class="checkbox" type="checkbox" :id="result.id + 'checkbox'"
+                                                :value="result.machine.id">
+                                            <!--                                            <label class="custom-control-labelx" :for="result.id + 'checkbox'"></label>-->
+                                        </template>
+                                    </td>
+                                    <template v-for="(column, columnIndex) in allColumnList" v-if="column.enabled">
+                                        <td v-if="column.field === 'machineCode'" class="text-left">
+                                            <div>
+                                                <a href="#" @click.prevent="showMachineDetails(result.machine)">
+                                                    {{result.machine.machineCode}}
+                                                </a>
+                                            </div>
+                                            <!-- <div class="small text-muted font-size-11-2">
+                                                <span th:text="#{registered}+':'"></span>
+                                                {{formatToDate(result.createdAt)}}
+                                            </div> -->
+                                        </td>
+                                        <!-- <td class="titleCase text-left" v-else-if="column.field === 'dailyWorkingHour'">
+                                            {{`${result.dailyWorkingHour > 0 ? result.dailyWorkingHour : ''} ${result.dailyWorkingHour > 1 ? "hrs" : result.dailyWorkingHour == 1 ? "hr" : ' '}` }}{{` ${result.dailyWorkingHourMinute > 0 ? result.dailyWorkingHourMinute + '  min' : '-'}`}}{{ result[`${column.field}Minute`] == 0 && result[column.field] == 0 ? '-' : ''}}
+                                        </td> -->
+                                        <td class="titleCase text-left"
+                                            v-else-if="['plannedDowntime','unplannedDowntime','dailyWorkingHour'].includes(column.field)">
+                                            {{`${result[column.field] > 0 ? result[column.field] : ''} ${result[column.field] > 1 ? "hrs" : result[column.field] == 1 ? "hr" : ' '}` }}{{` ${result[`${column.field}Minute`] > 1 ? result[`${column.field}Minute`] + ' mins' : result[`${column.field}Minute`] == 1 ? result[`${column.field}Minute`] + ' min' : ''}`}}{{ result[`${column.field}Minute`] == 0 && result[column.field] == 0 ? '-' : ''}}
+                                        </td>
+                                        <!-- <td style="vertical-align: middle!important;" class="text-center op-status-td" v-else-if="column.field === 'enabled'">
+                                            <span v-if="result.enabled" class="label label-success" th:text="#{enabled}"></span>
+                                            <span v-if="!result.enabled" class="label label-danger" th:text="#{disabled}"></span>
+                                        </td> -->
+                                        <!-- <td class="text-left" v-else-if="column.isCustomField">
+                                            {{customFieldValue(result,column.field)}}
+                                        </td> -->
+                                        <td class="titleCase text-left"
+                                            v-else-if="column.field === 'actualWorkingHour'">
+                                            <a class="actual-hour-text" @click="showPopup(index)"
+                                                @mousemove="handleMouseOver(index)" @mouseleave="handleMouseLeave"
+                                                href="javascript:void(0)"
+                                                :class="{'actual-hour-text-active' : isClicked && openingPopup == index}">
+                                                <span>{{`${result[column.field]} ${result[column.field] > 1 ? "hrs" : "hr"}` }}{{` ${result[`${column.field}Minute`] > 1 ? result[`${column.field}Minute`] + ' mins' : result[`${column.field}Minute`] == 1 ? result[`${column.field}Minute`] + ' min' : ''}`}}</span>
+                                                <svg v-if="(isClicked || isHover) && openingPopup == index"
+                                                    class="actual-hour-icon-active" xmlns="http://www.w3.org/2000/svg"
+                                                    width="10.534" height="9.572" viewBox="0 0 10.534 9.572">
+                                                    <g id="Group_8686" data-name="Group 8686"
+                                                        transform="translate(-184.625 -209.875)">
+                                                        <g id="Group_445" data-name="Group 445"
+                                                            transform="translate(185 211.875)">
+                                                            <g id="Rectangle_584" data-name="Rectangle 584"
+                                                                transform="translate(4.159 -2)" fill="none"
+                                                                stroke="#006cff" stroke-width="0.75">
+                                                                <rect width="6" height="6" rx="1" stroke="none" />
+                                                                <rect x="0.375" y="0.375" width="5.25" height="5.25"
+                                                                    rx="0.625" fill="none" />
+                                                            </g>
+                                                            <path id="Path_732" data-name="Path 732" d="M0,2.979v4H4"
+                                                                transform="translate(0 0.218)" fill="none"
+                                                                stroke="#006cff" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="0.75" />
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                                <svg v-else class="actual-hour-icon" xmlns="http://www.w3.org/2000/svg"
+                                                    width="7.534" height="7.572" viewBox="0 0 7.534 7.572">
+                                                    <g id="Group_8686" data-name="Group 8686"
+                                                        transform="translate(-184.625 -211.875)">
+                                                        <g id="Group_445" data-name="Group 445"
+                                                            transform="translate(185 211.875)">
+                                                            <g id="Rectangle_584" data-name="Rectangle 584"
+                                                                transform="translate(1.159 0)" fill="none"
+                                                                stroke="#3491ff" stroke-width="0.75">
+                                                                <rect width="6" height="6" rx="1" stroke="none" />
+                                                                <rect x="0.375" y="0.375" width="5.25" height="5.25"
+                                                                    rx="0.625" fill="none" />
+                                                            </g>
+                                                            <path id="Path_732" data-name="Path 732" d="M0,2.979v4H4"
+                                                                transform="translate(0 0.218)" fill="none"
+                                                                stroke="#3491ff" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="0.75" />
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                                <div v-if="isClicked && openingPopup == index" id="actual-hour-popup"
+                                                    v-click-outside="closeDropDown" class="actual-hour-popup" @click="stopEvent">
+                                                    <div class="actual-hour-popup-content">
+                                                        <svg id="Group_8882" @click="closeDropDown"
+                                                            class="actual-hour-popup-close" data-name="Group 8882"
+                                                            xmlns="http://www.w3.org/2000/svg" width="8" height="8"
+                                                            viewBox="0 0 8 8">
+                                                            <path id="Path_2194" data-name="Path 2194"
+                                                                d="M0,0H1.616V9.7H0Z"
+                                                                transform="translate(6.857 0) rotate(45)" />
+                                                            <path id="Path_2195" data-name="Path 2195"
+                                                                d="M0,0H1.616V9.7H0Z"
+                                                                transform="translate(8 6.857) rotate(135)" />
+                                                        </svg>
+                                                        <template v-if="result.downtimeItems != null && result.downtimeItems.length > 0">
+                                                            <template
+                                                                v-if="
+                                                                getNoteItemByType(result, 'PLANNED_DOWNTIME') != null &&
+                                                                getNoteItemByType(result, 'PLANNED_DOWNTIME').length > 0
+                                                                "
+                                                            >
+                                                                <p class="actual-hour-popup-title">Planned Downtime</p>
+                                                                <div class="gap">
+                                                                <div class="downtime-note"
+                                                                    v-for="(item, index) in getNoteItemByType(result,
+                                                                    'PLANNED_DOWNTIME'
+                                                                    )"
+                                                                    :key="index"
+                                                                >
+                                                                    <div class="actual-hour-popup-sub-title">
+                                                                    {{
+                                                                        `${item.hour > 0 ? item.hour : ""} ${
+                                                                        item.hour > 1
+                                                                            ? "hrs"
+                                                                            : item.hour == 1
+                                                                            ? "hr"
+                                                                            : " "
+                                                                        }`
+                                                                    }}
+                                                                    {{ item.minute > 1 ? item.minute + '  mins' : item.minute == 1 ? item.minute + '  min' :''}}
+                                                                    {{
+                                                                        `[${
+                                                                        item.hourFrom > 9
+                                                                            ? item.hourFrom
+                                                                            : "0" + item.hourFrom
+                                                                        }:${
+                                                                        item.minuteFrom > 9
+                                                                            ? item.minuteFrom
+                                                                            : "0" + item.minuteFrom
+                                                                        } - ${
+                                                                        item.hourTo > 9 ? item.hourTo : "0" + item.hourTo
+                                                                        }:${
+                                                                        item.minuteTo > 9
+                                                                            ? item.minuteTo
+                                                                            : "0" + item.minuteTo
+                                                                        }]`
+                                                                    }}
+                                                                    <div class="actual-hour-popup-type">
+                                                                        {{ item.reason }}
+                                                                    </div>
+                                                                    </div>
+                                                                    <div class="actual-hour-popup-sub-content">
+                                                                    {{ item.note }}
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </template>
+                                                            <template
+                                                                v-if="
+                                                                getNoteItemByType(result, 'UNPLANNED_DOWNTIME') != null &&
+                                                                getNoteItemByType(result, 'UNPLANNED_DOWNTIME').length > 0
+                                                                "
+                                                            >
+                                                                <p class="actual-hour-popup-title">Unplanned Downtime</p>
+
+                                                                <div class="downtime-note"
+                                                                v-for="(item, index) in getNoteItemByType(result,
+                                                                    'UNPLANNED_DOWNTIME'
+                                                                )"
+                                                                :key="index"
+                                                                >
+                                                                <div class="actual-hour-popup-sub-title">
+                                                                    {{
+                                                                    `${item.hour > 0 ? item.hour : ""} ${
+                                                                        item.hour > 1 ? "hrs" : item.hour == 1 ? "hr" : " "
+                                                                    }`
+                                                                    }}
+                                                                    {{ item.minute > 1 ? item.minute + '  mins' : item.minute == 1 ? item.minute + '  min' :''}}
+                                                                    {{
+                                                                    `[${
+                                                                        item.hourFrom > 9
+                                                                        ? item.hourFrom
+                                                                        : "0" + item.hourFrom
+                                                                    }:${
+                                                                        item.minuteFrom > 9
+                                                                        ? item.minuteFrom
+                                                                        : "0" + item.minuteFrom
+                                                                    } - ${
+                                                                        item.hourTo > 9 ? item.hourTo : "0" + item.hourTo
+                                                                    }:${
+                                                                        item.minuteTo > 9
+                                                                        ? item.minuteTo
+                                                                        : "0" + item.minuteTo
+                                                                    }]`
+                                                                    }}
+                                                                    <div class="actual-hour-popup-type">
+                                                                    {{ item.reason }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="actual-hour-popup-sub-content">
+                                                                    {{ item.note }}
+                                                                </div>
+                                                                </div>
+                                                            </template>
+                                                            <!-- <div v-for="(item, index) in result.downtimeItems" :key="index">
+                                                            <p class="actual-hour-popup-title">{{item.type == "UNPLANNED_DOWNTIME" ? 'Unplanned Downtime' : item.type == "PLANNED_DOWNTIME" ? 'Planned Downtime' : ''}}</p>
+                                                            <div
+                                                              class="gap"
+                                                            >
+                                                                  <div class="actual-hour-popup-sub-title">
+                                                                    {{`${item.hour > 0 ? item.hour : ''} ${item.hour > 1 ? "hrs" : item.hour == 1 ? "hr" : ' '}` }}
+                                                                    {{`${item.minute} min`}}
+                                                                    <div class="actual-hour-popup-type">
+                                                                      {{ item.reason }}
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="actual-hour-popup-sub-content">
+                                                                    {{ item.note }}
+                                                                  </div>
+                                                                </div>
+                                                              </div> -->
+                                                        </template>
+                                                        <template v-if="result.downtimeItems == null || result.downtimeItems.length == 0">
+                                                            <p class="actual-hour-popup-title"
+                                                                style="text-align: left;">Notice</p>
+                                                            <div>
+                                                                <div class="actual-hour-popup-sub-content">
+                                                                    Planned or unplanned downtime has not yet been added
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </a>
+
+                                            <div class="hour-bar">
+                                                <div class="actual-hour-bar"
+                                                    :style="{ width: (+result.actualWorkingHourDecimal * 7)+ 'px' }"></div>
+                                            </div>
+                                        </td>
+                                        <td class="titleCase text-left" v-else>
+                                            {{result[column.field]}}
+                                        </td>
+                                    </template>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="no-results d-none" th:text="#{no_results}"></div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="pagination">
+                                    <li v-for="(data, index) in pagination" class="page-item"
+                                        :class="{active: data.isActive}">
+                                        <a class="page-link" @click="paging(data.pageNumber)">{{data.text}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- <div class="col-auto ml-auto">
+                                <div class="custom-dropdown-parent">
+                                    <a @click.prevent="openDropdown" href="javascript:void(0)" v-click-outside="changeDropdown" id="dropdown-parent" class="btn-custom btn-outline-custom-primary animationOutline">
+                                        <span th:text="#{action}" style="margin-right: 2px;"></span>
+                                        <img v-show="dropdownOpening" class="custom-dropdown" style="transform: unset;width: 9pt;height: 4.5pt;vertical-align: baseline;" src="/images/icon/dropdown-up.svg" alt="">
+                                        <img v-show="dropdownOpening" class="custom-dropdown-hover" style="transform: unset;width: 9pt;height: 4.5pt;vertical-align: baseline;" src="/images/icon/dropdown-up-hover.svg" alt="">
+                                        <img v-show="!dropdownOpening" class="custom-dropdown" style="transform: unset;width: 9pt;height: 4.5pt;vertical-align: baseline;" src="/images/icon/dropdown.svg" alt="">
+                                        <img v-show="!dropdownOpening" class="custom-dropdown-hover" style="transform: unset;width: 9pt;height: 4.5pt;vertical-align: baseline;" src="/images/icon/dropdown-hover.svg" alt="">
+                                    </a>
+                                    <div v-if="dropdownOpening" class="custom-dropdown-child" style="border: 0.5px solid #9A999A;color: #9A999A;margin: 6px 0 0 0;">
+                                        <div class="custom-dropdown-item">
+                                            <div @click="showDrawer" th:text="#{create_new_property}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a style="margin-left: 4px;" href="/admin/machines/new" class="btn-custom btn-custom-primary animationPrimary">
+                                    <span>Create Machine</span>
+                                </a>
+                            </div> -->
+                        </div>
+                        <!-- <create-property-drawer :resources="resources" :visible="visible" @open="showDrawer()" @close="closeDrawer()" is-type="MACHINE" /> -->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <machine-details :resources="resources"></machine-details>
+        <machine-availability-details :resources="resources"></machine-availability-details>
+        <revision-history :resources="resources"></revision-history>
+        <system-note system-note-function="MACHINE_SETTING" :resources="resources"></system-note>
+        <delete-popup :confirm-delete="confirmDelete" :is-show-warning-again="isShowWarningAgain" :list="listChecked"
+            :resources="resources" :name="'Machine'"></delete-popup>
+        <action-bar-feature feature="ACTION_BAR"></action-bar-feature>
+        <company-details :resources="resources"></company-details>
+        <machine-availability-modal :resources="resources" :update-table="paging"></machine-availability-modal>
+    </div>
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/machine-availability/list.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

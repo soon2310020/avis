@@ -1,0 +1,38 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="tag-empty" author="alan">
+        <tagDatabase tag="empty"/>
+    </changeSet>
+    <!--<include file="tool-changes/1.0.0/001-tool-quotation.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.0/002-tool-quotation-detail.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.0/003-tool-refresh-token.xml" relativeToChangelogFile="true"/>-->
+    <include file="tool-changes/1.0.1/001_transfer-quotation.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.1/002_transfer-quotation-detail.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.1/003_transfer-refresh-token.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.1/create-address.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/data/address/import-data-address.xml" relativeToChangelogFile="true"/>
+
+    <include file="tool-changes/1.1.0/insert-data-for-combo.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.2/000-third_party_log.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.2/001-release-e-app.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.2/002-add-mic-insurance.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/data/insurance.package/insert-manager_insurance-package.xml" relativeToChangelogFile="true"/>
+
+    <include file="tool-changes/1.0.3/000-alter_third_party_log.xml" relativeToChangelogFile="true"/>
+	<include file="tool-changes/1.0.3/001_update-refresh-token.xml" relativeToChangelogFile="true"/>
+	<include file="tool-changes/1.0.3/002_potential_customer.xml" relativeToChangelogFile="true"/>
+	<include file="tool-changes/1.0.3/003_potential_customer_refer.xml" relativeToChangelogFile="true"/>
+	<include file="tool-changes/1.0.3/004_potential_customer_direct.xml" relativeToChangelogFile="true"/>
+	
+	<!-- Load mbal sale information -->
+	<include file="tool-changes/1.0.3/005_sale_information.xml" relativeToChangelogFile="true"/>
+	<include file="tool-changes/1.0.3/006_load_sale_information.xml" relativeToChangelogFile="true"/>
+	<!-- Load mbal sale information -->
+	
+    <include file="tool-changes/1.0.3/007_lead_info.xml" relativeToChangelogFile="true"/>
+    <include file="tool-changes/1.0.3/008_request_log.xml" relativeToChangelogFile="true"/>
+    
+</databaseChangeLog>

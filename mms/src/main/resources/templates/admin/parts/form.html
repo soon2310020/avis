@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head">
+    <style type="text/css">
+      li > label > .badge-require {
+        width: unset;
+        background-color: transparent;
+      }
+      @media screen and (max-width: 1700px) {
+        .popover-style {
+          width: 97.5% !important;
+        }
+        .product-style {
+          width: 91.5% !important;
+          min-width: unset !important;
+        }
+      }
+
+      @media screen and (max-width: 1300px) {
+        .popover-style {
+          width: 96.6% !important;
+        }
+        .product-style {
+          width: 89% !important;
+          min-width: unset !important;
+        }
+      }
+
+      .dropdown-wrap {
+        width: 100% !important;
+      }
+      .op-menus {
+      }
+
+      .op-menus li {
+        list-style: none;
+      }
+
+      .op-menus > ul {
+        padding-left: 10px;
+        -webkit-padding-start: 10px;
+      }
+
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+        visibility: hidden !important;
+      }
+
+      .hide_account {
+        display: none !important;
+      }
+    </style>
+    <style scoped>
+      .dropdown-project-list {
+        box-shadow: unset !important;
+        background: unset !important;
+        position: relative !important;
+        z-index: unset !important;
+        top: unset !important;
+        left: unset !important;
+      }
+
+      .input-wrap {
+        position: relative;
+        display: inline-block;
+      }
+
+      .input-wrap input#projectName {
+        background-color: #fff;
+        width: 150px;
+      }
+
+      .input-wrap::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 13px;
+        height: 13px;
+        right: 10px;
+        top: calc(50% - 3px);
+        transform: translateY(-50%) rotate(0);
+        background-color: #909090;
+        mask-image: url(/images/icon/down-active.svg);
+        -webkit-mask-image: url(/images/icon/down-active.svg);
+        mask-size: contain;
+        -webkit-mask-size: contain;
+      }
+
+      .input-wrap.drop::before {
+        transform: translateY(-50%);
+      }
+
+      label.col-form-label.quantity-required {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      label.col-form-label.quantity-required span {
+        padding-right: 8px;
+      }
+
+      .ant-btn.btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+      .ant-btn.btn-primary {
+        color: #fff;
+        background-color: #20a8d8;
+        border-color: #20a8d8;
+      }
+      .size-unit-dropdown .dropdown-list li:not(.foot):not(.yard) label::after {
+        content: "3";
+        font-size: 10px;
+        height: 95%;
+      }
+      .size-unit-dropdown-button:not(.foot):not(.yard) span {
+        display: flex;
+      }
+      .size-unit-dropdown-button:not(.foot):not(.yard) span::after {
+        content: "3";
+        font-size: 10px;
+        height: 100%;
+        margin-top: -5px;
+      }
+    </style>
+  </th:block>
+
+  <th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list">
+      <div class="hide_account alert alert-dark" role="alert">
+        <h5 v-if="isCreate" class="alert-heading mb-0">
+          <i class="fa fa-user"></i> <span th th:text="#{new_part}"></span>
+        </h5>
+        <h5 v-else class="alert-heading mb-0">
+          <i class="fa fa-user"></i> <span th th:text="#{edit_part}"></span>
+        </h5>
+      </div>
+
+      <form class="needs-validation" @submit.prevent="submit">
+        <!-- disabled autocomplete by browsers -->
+        <input
+          autocomplete="false"
+          name="hidden"
+          type="text"
+          style="display: none"
+        />
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card profile_wave" id="remove_profile"></div>
+            <div class="card wave_part">
+              <div class="card-header">
+                <strong th:text="#{part}"></strong>
+              </div>
+              <div class="card-body">
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="categoryName">
+                    <span th:text="#{category_name}"></span>
+                    <span class="avatar-status badge-danger"></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      type="text"
+                      id="categoryName"
+                      v-model="part.categoryName"
+                      class="form-control"
+                      th:placeholder="#{category_name}"
+                      :required="isRequiredField('categoryName')"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-md-2">
+                    <label class="col-form-label" for="projectName">
+                      <span th:text="#{project_name}"></span>
+                      <span class="avatar-status badge-danger"></span>
+                    </label>
+                  </div>
+
+                  <div class="col-md-10">
+                    <common-button
+                      placeholder="Select Product Name"
+                      :title="project_name"
+                      @click="handleClickProjectSelect"
+                      :is-show="showListProjects"
+                    ></common-button>
+
+                    <common-select-popover
+                      :is-visible="showListProjects"
+                      @close="showListProjects = false"
+                      class="popover-style"
+                    >
+                      <common-select-dropdown
+                        id="product-name"
+                        :class="{show:showListProjects}"
+                        :style="{position:'static'}"
+                        :placeholder="'Search product details'"
+                        class="dropdown-project-list"
+                        :searchbox="false"
+                        :items="listProjects"
+                        :click-handler="selectProject"
+                      >
+                      </common-select-dropdown>
+                    </common-select-popover>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="partCode">
+                    <span th:text="#{part_id}"></span>
+                    <span class="avatar-status badge-danger"></span
+                  ></label>
+                  <div class="col-md-10">
+                    <input
+                      type="text"
+                      id="partCode"
+                      v-model="part.partCode"
+                      class="form-control"
+                      th:placeholder="#{part_id}"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="name"
+                    ><span th:text="#{part_name}"></span
+                    ><span class="avatar-status badge-danger"></span
+                  ></label>
+                  <div class="col-md-10">
+                    <input
+                      type="text"
+                      id="name"
+                      v-model="part.name"
+                      class="form-control"
+                      th:placeholder="#{part_name}"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div
+                  class="form-group row"
+                  v-if="!checkDeletePart['resinCode']"
+                >
+                  <label class="col-md-2 col-form-label" for="resinCode">
+                    <span th:text="#{part_resin_code}"></span>
+                    <a-tooltip placement="bottomLeft" style="vertical-align: 0">
+                      <template slot="title">
+                        Enter your resin or material type code here.
+                      </template>
+                      <a-icon
+                        type="info-circle"
+                        class="custom-icon-info"
+                      ></a-icon>
+                    </a-tooltip>
+                    <span class="avatar-status badge-danger"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('resinCode')"
+                    ></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      type="text"
+                      id="resinCode"
+                      v-model="part.resinCode"
+                      class="form-control"
+                      th:placeholder="#{part_resin_code}"
+                      :required="isRequiredField('resinCode')"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="form-group row"
+                  v-if="!checkDeletePart['resinGrade']"
+                >
+                  <label class="col-md-2 col-form-label" for="resinCode">
+                    <span th:text="#{part_resin_grade}"></span>
+                    <span class="avatar-status badge-danger"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('resinGrade')"
+                    ></span
+                  ></label>
+                  <div class="col-md-10">
+                    <input
+                      type="text"
+                      id="resinGrade"
+                      v-model="part.resinGrade"
+                      class="form-control"
+                      th:placeholder="#{part_resin_grade}"
+                      :required="isRequiredField('resinGrade')"
+                    />
+                  </div>
+                </div>
+
+                <div
+                  class="form-group row"
+                  v-if="!checkDeletePart['designRevision']"
+                >
+                  <label class="col-md-2 col-form-label" for="designRevision"
+                    ><span th:text="#{design_revision_level}"></span
+                    ><span class="avatar-status badge-danger"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('designRevision')"
+                    ></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      type="text"
+                      id="designRevision"
+                      v-model="part.designRevision"
+                      class="form-control"
+                      th:placeholder="#{design_revision_level}"
+                      :required="isRequiredField('designRevision')"
+                    />
+                  </div>
+                </div>
+
+                <div v-if="showQuantityRequired" class="form-group row">
+                  <label
+                    class="col-md-2 col-form-label quantity-required"
+                    for="quantityRequired"
+                  >
+                    <span th:text="#{quantity_required}"></span>
+                    <a-tooltip placement="bottomLeft">
+                      <template slot="title">
+                        Quantity of this part required to assemble 1 project.
+                      </template>
+                      <a-icon
+                        type="info-circle"
+                        class="custom-icon-info"
+                      ></a-icon>
+                    </a-tooltip>
+                    <span class="avatar-status badge-danger"></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      type="number"
+                      id="quantityRequired"
+                      min="1"
+                      v-model="part.quantityRequired"
+                      class="form-control"
+                      placeholder=""
+                      :required="isRequiredField('quantityRequired')"
+                      style="width: 135px"
+                      @keypress="handleInputNumber($event)"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row" v-if="!checkDeletePart['size']">
+                  <label class="col-md-2 col-form-label" for="size"
+                    ><span th:text="#{part_volume}+' (W x D x H)'"></span>
+                    <span class="avatar-status badge-danger"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('size')"
+                    ></span>
+                  </label>
+                  <div class="col-md-7">
+                    <input
+                      type="text"
+                      id="size"
+                      v-model="part.size"
+                      class="form-control"
+                      th:placeholder="#{part_volume}+' (W x D x H)'"
+                      :required="isRequiredField('size')"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <common-button
+                      class="size-unit-dropdown-button"
+                      :class="`${product_name}`"
+                      :title="product_name"
+                      @click="handleTogleProductName"
+                      :is-show="showProductName"
+                    >
+                    </common-button>
+                    <common-select-popover
+                      :is-visible="showProductName"
+                      @close="closeProductName"
+                      class="w-95 product-style"
+                    >
+                      <common-select-dropdown
+                        id="product-name"
+                        :searchbox="false"
+                        :class="{show:showProductName}"
+                        class="size-unit-dropdown"
+                        :style="{position:'static'}"
+                        :items="productNameList"
+                        :item-class-key="'title'"
+                        :checkbox="false"
+                        :click-handler="selectProductName"
+                      ></common-select-dropdown>
+                    </common-select-popover>
+                  </div>
+                </div>
+                <div class="form-group row" v-if="!checkDeletePart['weight']">
+                  <label class="col-md-2 col-form-label" for="weight">
+                    <span th:text="#{part_weight}"></span>
+                    <span class="avatar-status badge-danger"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('weight')"
+                    ></span>
+                  </label>
+                  <div class="col-md-7">
+                    <input
+                      type="number"
+                      min="0.0"
+                      id="weight"
+                      v-model="part.weight"
+                      class="form-control"
+                      step="any"
+                      th:placeholder="#{part_weight}"
+                      :required="isRequiredField('weight')"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <common-button
+                      :title="weight_unit"
+                      @click="handleTogleWeightUnit"
+                      :is-show="showWeightUnit"
+                    >
+                    </common-button>
+                    <common-select-popover
+                      :is-visible="showWeightUnit"
+                      @close="closeWeightUnit"
+                      class="w-95 product-style"
+                    >
+                      <common-select-dropdown
+                        id="weight-unit"
+                        :searchbox="false"
+                        :class="{show:showWeightUnit}"
+                        :style="{position:'static'}"
+                        :items="weightUnitList"
+                        :checkbox="false"
+                        :click-handler="selectWeightUnit"
+                      ></common-select-dropdown>
+                    </common-select-popover>
+                  </div>
+                </div>
+                <div
+                  class="form-group row"
+                  v-if="!checkDeletePart['weeklyDemand']"
+                >
+                  <label class="col-md-2 col-form-label" for="designRevision">
+                    <span v-text="resources['weekly_demand']"></span>
+                    <span class="avatar-status badge-danger"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('weeklyDemand')"
+                    ></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      type="number"
+                      id="weeklyDemand"
+                      v-model="part.weeklyDemand"
+                      min="0"
+                      max="99999999"
+                      class="form-control"
+                      placeholder="Weekly Demand"
+                      :required="isRequiredField('weeklyDemand')"
+                      @keypress="handleInputNumber($event)"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="form-group row"
+                  v-if="!checkDeletePart['partPictureFile']"
+                >
+                  <label class="col-md-2 col-form-label" for="partPictureFile"
+                    ><span th:text="#{part_picture}"></span
+                    ><span class="avatar-status badge-danger"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('partPictureFile')"
+                    ></span>
+                  </label>
+                  <div class="col-md-10">
+                    <div class="op-upload-button-wrap">
+                      <button
+                        id="partPictureFile"
+                        class="btn btn-outline-success"
+                        th:text="#{upload_photo}"
+                      ></button>
+                      <input
+                        type="file"
+                        ref="fileupload"
+                        id="files1"
+                        @change="selectedThirdFiles"
+                        style="height: 40px; width: 100%"
+                        accept=".gif, .jpg, .jpeg, .png, .doc, .zip, .pdf, .docx, .xls, .xlsx, .ppt, .pptx"
+                        :required="isRequiredField('partPictureFile',true)"
+                      />
+                    </div>
+                    <preview-images-system
+                      :is-viewing="false"
+                      @delete-uploaded-img="deleteFileStorage"
+                      @delete-img="deleteThirdFiles"
+                      :images="thirdFiles"
+                      :images-uploaded="partPictureFiles"
+                      :file-types="fileTypes.PART_PICTURE"
+                    ></preview-images-system>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label
+                    class="col-md-2 col-form-label"
+                    th:text="#{enable}"
+                  ></label>
+                  <div class="col-md-10 col-form-label">
+                    <div class="form-check form-check-inline mr-3">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          v-model="part.enabled"
+                          class="form-check-input"
+                          value="true"
+                          name="enabled"
+                        />
+                        <span th:text="#{enable}"></span>
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          v-model="part.enabled"
+                          class="form-check-input"
+                          value="false"
+                          name="disabled"
+                        />
+                        <span th:text="#{disable}"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  v-for="(item, index) in customFieldList"
+                  :key="index"
+                  class="form-group row"
+                >
+                  <label
+                    class="col-md-2 col-form-label"
+                    :for="'customFieldList' + index"
+                  >
+                    {{ item.fieldName }}
+                    <span class="avatar-status"></span>
+                    <span class="badge-require" v-if="item.required"></span>
+                  </label>
+                  <div class="col-md-10">
+                    <input
+                      :id="'customFieldList' + index"
+                      type="text"
+                      v-model="item.defaultInputValue"
+                      class="form-control"
+                      :placeholder="item.fieldName"
+                      :required="item.required"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card wave_save">
+              <div class="card-body text-center">
+                <button
+                  class="btn btn-primary"
+                  th:text="#{save_changes}"
+                ></button>
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  @click="cancel"
+                  th:text="#{cancel}"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </th:block>
+
+  <th:block layout:fragment="op-script">
+    <script
+      defer
+      th:src="'/js/scripts/admin/parts/form.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

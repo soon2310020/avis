@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- Create a table to store import information -->
+    <changeSet id="2023-11-14_create_employee_import_history_table" author="SONTC">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="mb_employee_import_history"/>
+            </not>
+        </preConditions>
+        <createTable tableName="mb_employee_import_history">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="file_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="error_line" type="clob">
+                <constraints nullable="true"/>
+            </column>
+            <column name="error_detail" type="clob">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="current_timestamp">
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2023-11-17_alter_employee_import_history_table" author="SONTC">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mb_employee_import_history"/>
+        </preConditions>
+
+        <addColumn tableName="mb_employee_import_history">
+            <column name="created_by" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2023-12-12_alter_employee_import_history_table" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mb_employee_import_history"/>
+        </preConditions>
+
+        <addColumn tableName="mb_employee_import_history">
+            <column name="total_success" type="int" defaultValueNumeric="0"/>
+            <column name="total_failed" type="int" defaultValueNumeric="0"/>
+        </addColumn>
+
+        <renameColumn tableName="mb_employee_import_history"
+                      oldColumnName="error_detail" newColumnName="error_sys_detail"
+                      columnDataType="clob" remarks="Lỗi hệ thống"
+        />
+    </changeSet>
+</databaseChangeLog>

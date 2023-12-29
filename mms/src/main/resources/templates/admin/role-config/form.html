@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <script th:src="'/js/cdn/339dae8907.js?'+${noCacheVer}" crossorigin="anonymous"></script>
+    <style type="text/css">
+        .sidebar.wave_sidebar div,
+        .tab-support.wave_header div,
+        .tab-insight.wave_header div,
+        .tab-reports.wave_header div,
+        .tab-user.wave_header div {
+            visibility: hidden !important;
+        }
+
+        .hide_account {
+            display: none !important;
+        }
+
+        .button-cancel{
+  width: 70px;
+  padding: 0px;
+  height: 32px;
+text-align: center;
+  color: #595959;
+  /* UI Properties */
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #D6DADE;
+  border-radius: 3px;
+  opacity: 1;
+}
+.button-cancel:hover{
+  width: 70px;
+  height: 32px;
+  padding: 0px;
+text-align: center;
+  color: #000000;
+  /* UI Properties */
+  background: #F4F4F4 0% 0% no-repeat padding-box;
+  border: 1px solid #595959;
+  border-radius: 3px;
+  opacity: 1;
+}
+
+.button-cancel:focus{
+  width: 70px;
+  padding: 0px;
+  outline: none !important;
+  box-shadow: none;
+  height: 32px;
+text-align: center;
+  color: #000000;
+  /* UI Properties */
+  background: #F4F4F4 0% 0% no-repeat padding-box;
+  border: 2px solid #D6DADE;
+  border-radius: 3px;
+  opacity: 1;
+}
+
+
+        .pwd {
+            position: relative;
+        }
+
+        .fa {
+            width: 10px;
+            margin-right: 12px;
+            color: #575A5C;
+        }
+
+        .alert-heading span {
+            color: #575A5C;
+        }
+
+        .btn {
+            font-size: 16px;
+        }
+
+        ::placeholder {
+            color: #73808F;
+            font-size: 14px;
+        }
+
+        .card-header-custom {
+            border-bottom: none;
+        }
+
+        .card-header {
+            padding: 0.75rem 1.8rem !important;
+        }
+
+        .row {
+            flex-wrap: nowrap;
+        }
+
+        .location-btn {
+            width: 133px;
+            height: 32px;
+            border: 1px solid #48B46E;
+            color: #48B46E;
+            border-radius: 4px;
+            opacity: 1;
+        }
+
+        .header-edit {
+            background-color: #D5D7D8;
+            border-color: transparent;
+        }
+ .create-button-custom{
+  width: 100px;
+  height: 32px;
+  padding: 0px;
+  text-align: center;
+  border:  1px solid #3491FF;
+  margin-left: 3px;
+  background: #3491FF 0% 0% no-repeat padding-box;
+  border-radius: 3px;
+  opacity: 1;
+}
+.create-button-custom:hover{
+  width: 100px;
+  height: 32px;
+  padding: 0px;
+  text-align: center;
+  margin-left: 3px;
+  background: #3585E5 0% 0% no-repeat padding-box;
+  border-radius: 3px;
+  opacity: 1;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+  box-shadow: none;
+  background: #3585E5 0% 0% no-repeat padding-box !important;
+}
+
+.btn-primary.create-button-custom:focus{
+  outline: none !important;
+  box-shadow: none !important;
+  width: 100px;
+  height: 32px;
+  padding: 0px;
+  text-align: center;
+  border:  2px solid #DEEDFF;
+  margin-left: 3px;
+  background: #3585E5 0% 0% no-repeat padding-box !important;
+  border-radius: 3px;
+  opacity: 1;
+}
+.disable-class {
+    background-color: #C4C4C4 !important;
+    border: none;
+    cursor: initial;
+    opacity: 1 !important;
+    height: 32px;
+    margin-left: 3px;
+    padding: 3px 7px 4px 7px;
+}
+.location-text-fields {
+           width: 100%;
+           height: 36px;
+           border: 1px solid #D5D7D8;
+           border-radius: 4px;
+           opacity: 1;
+}
+
+        .input-text-fields {
+            width: 100%;
+            height: 36px;
+            border: 1px solid #D5D7D8;
+            border-radius: 4px;
+            opacity: 1;
+        }
+
+        .p-viewer {
+            z-index: 9999;
+            position: absolute;
+            top: 25%;
+            right: 23px;
+        }
+
+        .col-md-2 {
+            position: relative;
+            width: 100%;
+            min-height: 1px;
+            padding-left: 28px;
+        }
+
+        .col-form-label {
+            width: 150px;
+            color: #7F7F7F;
+        }
+
+        .form-control-custom {
+  color: #5c6873;
+  background-color: #fff;
+  border: 1px solid #D5D7D8; 
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control-custom::-ms-expand {
+  background-color: transparent;
+  border: 0;
+}
+
+.form-control-custom:hover {
+  background-color: #fff;
+  border: 0.5px solid #4B4B4B !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.form-control-custom:focus {
+  background-color: #fff;
+  border: 1.5px solid #98D1FD !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.form-control-custom::-webkit-input-placeholder {
+  color: #C9C9C9;
+  opacity: 1;
+}
+
+.form-control-custom::-moz-placeholder {
+  color: #C9C9C9;
+  opacity: 1;
+}
+
+.form-control-custom:-ms-input-placeholder {
+  color: #C9C9C9;
+  opacity: 1;
+}
+
+.form-control-custom::-ms-input-placeholder {
+  color: #C9C9C9;
+  opacity: 1;
+}
+
+.form-control-custom::placeholder {
+  color: #C9C9C9;
+  opacity: 1;
+}
+        .validate{
+            color:red;
+        }
+        .validateClass{
+            border: 1px solid red;
+        }
+        .validateClass:focus{
+            border-color: red;
+            outline: 0;
+            box-shadow: none !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list">
+
+        <div class="hide_account alert alert-dark header-edit" role="alert">
+            <h5 class="alert-heading mb-0"><i class="fa fa-user"></i>
+                <span th:text="#{new_role}"></span>
+            </h5>
+        </div>
+
+        <form class="needs-validation" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave1">
+                        <div class="card-header">
+                            <strong th:text="#{account}"></strong>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group px-4 row">
+                                <label class="col-form-label" for="role_name">
+                                    <span th:text="#{role_name}"></span>
+                                    <span class="avatar-status badge-danger"></span>
+                                </label>
+                                <div class="w-100">
+                                    <input type="text" id="role_name" v-model="role.name" @input="validate" :class="validateR ? 'validateClass' : 'form-control-custom'"
+                                        class="form-control input-text-fields" :readonly="false" placeholder="Enter Role"
+                                        required>
+                                    <div v-show="validateR" class="validate">
+                                        Role should only be alphabetic without space.
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="form-group px-4 row"></div>
+                            <div class="form-group px-4 row">
+                                <label class="col-form-label" for="description" th:text="#{description}"></label>
+                                <div class="w-100">
+                                    <input type="text" id="description" v-model="role.description"
+                                        class="form-control form-control-custom  input-text-fields" :readonly="false"
+                                        placeholder="Enter Description">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card profile_wave4">
+                        <div class="card-body text-center">
+                            <button type="button" class="btn btn-default btn-default button-cancel " onclick="history.back()"
+                                th:text="#{cancel}"></button>
+                            <button type="button" @click="submit" class="btn btn-primary" :disabled="disable" :class="disable ? 'disable-class' : 'create-button-custom' "
+                                th:text="#{new_role}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/hotjar.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/scripts/admin/role-config/form.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

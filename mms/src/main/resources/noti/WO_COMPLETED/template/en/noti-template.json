@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName} completed",
+  "content": "${senderName} (${senderCompanyName}) has completed ${orderTypeDesc}.",
+  "emailTitle": "${senderName} (${senderCompanyName}) has completed ${orderTypeDesc}.",
+  "emailContent": "${senderName} (${senderCompanyName}) has completed ${orderTypeDesc}."
+}

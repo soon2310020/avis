@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/layout-default}"
+>
+    <th:block layout:fragment="op-head">
+        <style type="text/css">
+            .label-blue {
+                background: #2e5cfe;
+            }
+
+            .wave1 {
+                height: 1360px;
+                animation: wave 4s infinite linear forwards;
+                -webkit-animation: wave 4s infinite linear forwards;
+                background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+                border: none;
+            }
+            .a div {
+                display: none !important;
+            }
+
+            .wave {
+                height: 121px;
+                animation: wave 4s infinite linear forwards;
+                -webkit-animation: wave 4s infinite linear forwards;
+                background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+                border: none;
+            }
+            .sidebar.wave_sidebar div,
+            .tab-support.wave_header div,
+            .tab-insight.wave_header div,
+            .tab-reports.wave_header div,
+            .tab-user.wave_header div {
+                visibility: hidden;
+            }
+            .card.wave div,
+            .card.wave1 div {
+                display: none;
+            }
+        </style>
+    </th:block>
+
+    <th:block layout:fragment="op-content">
+        <div id="app">
+            <div class="row">
+                <div class="col-md-12" id="remove1">
+                    <div class="card wave"></div>
+                </div>
+            </div>
+            <div class="row" id="remove2">
+                <div class="col-lg-12">
+                    <div class="card wave1"></div>
+                </div>
+            </div>
+            <tabs-table
+                :input-headers="getHeaders()"
+                :input-tabs="getTabs()"
+                :search-placeholder="resources['search_by_ticket_id_subject_creator_or_company']"
+                :input-request-param="requestParam"
+                :title="resources['support_center']"
+                :tab-param="tabParam"
+                :resources="resources"
+            >
+                <template slot="item" scope="props">
+                    <div class="tr text-center">
+                        <div class="td">
+                            <span class="label label-blue" v-if="props.item.status === 'NEW'">New</span>
+                            <span class="label label-primary" v-if="props.item.status === 'IN_PROGRESS'">In Progress</span>
+                            <span class="label label-success" v-if="props.item.status === 'RESOLVED'">Resolved</span>
+                        </div>
+                        <div class="td">{{ props.item.topicId }}</div>
+                        <div class="td"><a :href="getDetailLink(props)">{{ props.item.subject }}</a></div>
+                        <div class="td">
+                            <span>{{ props.item.creator.name }}</span><br />
+                            <span>{{ props.item.creator.email }}</span>
+                        </div>
+                        <div class="td">{{ props.item.creator.company.name }}</div>
+                        <div class="td">
+                            <span th:text="#{last_modified}"></span><br />
+                            <span>{{ getRelatedTime(props.item.updatedAt) }}</span>
+                        </div>
+                        <div class="td">
+                            <span>{{ countReplyLabel(props) }}</span><br />
+                            <template v-if="props.item.numberOfReply > 0">
+                                <a :href="getDetailLink(props)" th:text="#{last_reply}"></a>
+                                <span> {{ getRelatedTime(props.item.lastReplyAt) }}</span>
+                                by
+                                <span>
+                                    <span>{{ props.item.lastReplyBy && props.item.lastReplyBy.name }}</span>
+                                </span>
+                                <br />
+                            </template>
+                            <span
+                                class="label label-blue"
+                                v-if="(props.item.numberOfReply === 0 || props.item.lastReplyIsQuestion) && props.item.status !== 'RESOLVED'"
+                                th:text="#{awaiting_reply}"
+                            ></span>
+                        </div>
+                    </div>
+                </template>
+                <template slot="right-pagination">
+                    <a href="/support/customer-support/new" class="btn btn-primary"
+                        ><i class="fa fa-plus"></i> <span th:text="#{new_topic}"></span>
+                    </a>
+                </template>
+            </tabs-table>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/js/scripts/hotjar.js?'+${noCacheVer}"></script>
+        <script defer th:src="'/js/scripts/front/support/list.js?'+${noCacheVer}"></script>
+    </th:block>
+</html>

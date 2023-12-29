@@ -1,0 +1,214 @@
+<html>
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <style>
+
+        .header {
+
+        }
+
+        .content {
+            margin-top: 50px;
+        }
+
+        .footer {
+            margin-top: 50px;
+        }
+
+        table {
+            border-collapse: collapse
+        }
+
+        .content tr td {
+            border: 1px solid #000000;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        td {
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .footer tr td {
+            min-width: 60px;
+            border: 1px solid #000000;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .title-data {
+            background: #c00000;
+            color: white;
+            font-weight: 600;
+            padding: 10px;
+            border: 1px solid #000;
+            max-width: 300px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .data {
+            text-align: center;
+            border: 1px solid #000;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .data-price {
+            text-align: right;
+            border: 1px solid #000;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .data-text-left {
+            text-align: left;
+            border: 1px solid #000;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .data-text-right{
+            text-align: right;
+            border: 1px solid #000;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .data-footer {
+            border: 1px solid #000;
+            background-color: #c00000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .data-footer-price {
+            border: 1px solid #000;
+            background-color: #c00000;
+            color: #fff;
+            padding: 10px;
+            text-align: right;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div style="display: flex; justify-content: center">
+    <div style="text-align: left">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAS0AAACnCAMAAABzYfrWAAAAmVBMVEX////UACn76e3TABbRAArRAADSABPsqLDxucHUACfUACXTACLusrrTAB7TABzSABj+9/nRAAf75+v87/LhbHrzxcv54eX22tz0zNLqm6TywMffYnHlg47plZ/98vT/+vvlgIvnjZj21drurrbbSVv10dbYLETWIDnroardU2Tic4DaO1DjeIXmiZTgZnTYNUncTV7VEzHdWmmbBpxIAAAM30lEQVR4nO2dCVO7SBOHcwA6ICAmJl451JgYo8b4/T/cktPAPAMNxvfdrZqnaqv2Xw4Bfpmju6d70mhYLBaLxWKxWCwWi8VisVgsFovFYrFYLBaLxWKxWCwWi8VisVgsFovlf8eo1euv6XX+30/y72bUf36Yz/zYcVMSL1ot3l5fLv/iTpctnStu2oGmKdKvku6UMtz/+Qr+KHjl1tlcpQoFvlLNDUr5QeQl4eS2X3hhpzUSPvkP925bw33GpufQtN32msI7veHl7kvBp7tnJZ95+TzxvHAnUxYVeM500DJc2HqP0n44uRM++/4qT+kES27c9KGxcou/wj2jFV39c6vzRP+rV6xW5yF0ApRqJ5jf9uY3dOWZO79rDV8+3Hml/vXYptskL9j4I6bG8aPoTi8uXey97v9+7sBfi9QafXhxgVQ7wcJkca1deubuOlVnaugYzMqne0RdbNzDF/ZnojuNSWoV7aetymqdN9ulWm0I3Emu91+lYnXbrrO8bowi2Xe94QIecf0SMU/di4Bauz3JrWb0vYSfP29fSa3Rp4vfMxImD5mLu/P0v+DufO62GteufCzy66ePeYvNz1DceCC40xP2y+RnVqmkVmuGk4IJ5c2ejq5O0rHZba6fKR2QyblUrKfE8PH+FNtfOtT5DY2z4Jx3PIirqNWPDN+yET85TJCNjnu17lvnz0s3HULzD6la3cj06QkuJY1uSI0lQ3FKA6d91CsrqNVvy0fhHpW87YfcVToA01efbuez+we8h07HvKaE33jFDY6nmMftMT3qxco7MofkarXC6mKlvcvdD8bR+v/SkThZrf81K7Pp9gw842dnXuQIXEMFQ3FAlko4P2ohV2tadRhuXsj9MSQm6eDrqkbf/Vh3NNEa1TAsUzvavLIOcHZ1Db7SD0u6lXNsSovVejd/xzKx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"/>
+    </div>
+    <div style="text-align: center">
+        <div>
+            <h3>AVIS CAR LICENSE</h3></div>
+        <div>
+            <h3>AN HOA PHAT RENT A CAR COMPANY LIMITED</h3>
+        </div>
+        <div>
+            <h3>5th Floor - 11 Pham Hung Street - My Dinh 2 Ward- Nam Tu Liem Dist - Ha Noi - Viet Nam</h3>
+            <h3>Brand Ho Chi Minh - 44 Vu Tong Phan Street - An Phu Ward – Thu Duc City - Ho Chi Minh City - Viet
+                Nam</h3>
+        </div>
+        <div>
+            <h1>PAYMENT REQUEST IN {{month}} {{year}}</h1>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="header">
+    <table>
+        <tr>
+            <td>Tên khách hàng: {{customerName}}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: 600">Admin: {{adminName}}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: 600">User: {{userName}}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: 600">Địa chỉ: {{customerAddress}}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: 600">Từ ngày: {{from}} đến ngày {{to}}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: 600">Tài xế: {{driverName}}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: 600">Biển KS: {{vehicleNumberPlate}}</td>
+        </tr>
+    </table>
+</div>
+<div class="content">
+    <table>
+        <tr>
+            <td class="title-data" style="width: 50px; text-align: center"><b>STT</b></td>
+            <td class="title-data" style="width: 60px; text-align: center"><b>Thứ</b></td>
+            <td class="title-data" style="width: 120px; text-align: center"><b>Ngày</b></td>
+            <td class="title-data" style="width: 120px; text-align: center"><b>Người sử dụng</b></td>
+            <td class="title-data" style="width: 100px;text-align: center"><b>Bộ phận</b></td>
+            <td class="title-data" style="width: 600px;text-align: center"><b>Hành trình chuyến đi</b></td>
+            <td class="title-data" style="width: 80px;text-align: center"><b>Số km KH sử dụng (có lái)</b></td>
+            <td class="title-data" style="width: 80px;text-align: center"><b>Số km KH sử dụng (tự lái)</b></td>
+            <td class="title-data" style="width: 200px; text-align: center"><b>Thời gian làm việc (GPS)</b></td>
+            <td class="title-data" style="width: 80px; text-align: center"><b>Over time</b></td>
+            <td class="title-data" style="width: 80px; text-align: center"><b>Over km (Km)</b></td>
+            <td class="title-data" style="width: 80px;text-align: center"><b>Over km tự lái (Km)</b></td>
+            <td class="title-data" style="width: 30px; text-align: center"><b>Overnight (đêm)</b></td>
+            <td class="title-data" style="width: 30px; text-align: center"><b>Ngày lễ</b></td>
+            <td class="title-data" style="width: 30px;text-align: center"><b>Cuối tuần</b></td>
+            <td class="title-data" style="width: 30px;text-align: center"><b>Có lái</b></td>
+            <td class="title-data" style="width: 30px;text-align: center"><b>Tự lái</b></td>
+<!--            <td class="title-data" style="width: 120px;text-align: center"><b>Tài xế</b></td>-->
+<!--            <td class="title-data" style="width: 100px;text-align: center"><b>Biển KS</b></td>-->
+            <td class="title-data" style="width: 120px;text-align: center"><b>Chi phí đỗ xe (VNĐ)</b></td>
+            <td class="title-data" style="width: 120px;text-align: center"><b>Chi phí cầu đường (VNĐ)</b></td>
+        </tr>
+        {{dataValue}}
+        <tr>
+            <td class="data-footer"></td>
+            <td class="data-footer"><b>Total</b></td>
+            <td class="data-footer"></td>
+            <td class="data-footer"></td>
+            <td class="data-footer"></td>
+            <td class="data-footer"></td>
+            <td class="data-footer"><b>{{totalKmUse}}</b></td>
+            <td class="data-footer">{{totalKmSelf}}</td>
+            <td class="data-footer"></td>
+            <td class="data-footer"><b>{{totalOverTime}}</b></td>
+            <td class="data-footer"><b>{{totalOverKm}}</b></td>
+            <td class="data-footer"><b>{{totalOverKmSelf}}</b></td>
+            <td class="data-footer"><b>{{totalOvernight}}</b></td>
+            <td class="data-footer"></td>
+            <td class="data-footer"></td>
+            <td class="data-footer"></td>
+            <td class="data-footer"></td>
+<!--            <td class="data-footer"></td>-->
+<!--            <td class="data-footer"></td>-->
+            <td class="data-footer-price"><b>{{totalParkingFee}}</b></td>
+            <td class="data-footer-price"><b>{{totalTollsFee}}</b></td>
+        </tr>
+    </table>
+</div>
+
+<div class="footer">
+    <table>
+        <tr>
+            <td class="title-data"></td>
+            <td class="title-data"><b>Đơn giá</b></td>
+            <td class="title-data"><b>Số lượng</b></td>
+            <td class="title-data"><b>Đơn vị</b></td>
+            <td class="title-data"><b>Thành tiền</b></td>
+        </tr>
+        {{dataFooter}}
+    </table>
+</div>
+
+</body>
+</html>

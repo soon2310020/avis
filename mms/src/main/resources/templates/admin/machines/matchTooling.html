@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <style type="text/css">
+        .op-menus {}
+
+        .op-menus li {
+            list-style: none;
+        }
+
+        .op-menus>ul {
+            padding-left: 10px;
+            -webkit-padding-start: 10px;
+
+        }
+
+        .sidebar.wave_sidebar div,
+        .tab-support.wave_header div,
+        .tab-insight.wave_header div,
+        .tab-reports.wave_header div,
+        .tab-user.wave_header div {
+            visibility: hidden !important;
+        }
+
+        .hide_account {
+            display: none !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+
+        <div class="hide_account alert alert-dark" role="alert">
+            <h5 class="alert-heading mb-0"><i class="fa fa-user"></i> <span>Match with Tooling</span>
+                <span>Machine</span>
+            </h5>
+        </div>
+
+        <form class="needs-validation" @submit.prevent="submit">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave" id="remove_profile"> </div>
+                    <div class="card wave_location">
+                        <div class="card-header">
+                            <strong th:text="#{machine}">Machine</strong>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="machine-code" th:text="#{machine_id}">
+                                    <span class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10">
+                                    <input v-model="machine.machineCode" type="text" id="machine-code" class="form-control" placeholder="Machine ID" required :readonly="check==true">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="check==true">
+                                <label class="col-md-2 col-form-label col-12">Tooling ID
+                                    <span class="avatar-status badge-danger"></span>
+                                </label>
+                                <div class="col-md-7 col-12">
+                                    <input  type="text"  v-model="equipmentCode"
+                                            readonly="readonly" class="form-control" required>
+                                </div>
+                                <div class="col-md-3 tooling-search-button col-12" >
+                                    <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                            data-target="#op-mold-search" >Tooling Search</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" th:text="#{company}">
+                                    <span class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-5">
+                                    <input type="hidden" v-model="machine.companyId">
+                                    <input type="text" v-model="machine.companyName" readonly="readonly" class="form-control" required>
+                                </div>
+                                <div class="col-md-5" v-if="check==false">
+                                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#op-company-search" th:text="#{company_search}"></button>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" th:text="#{location}">
+                                    <span class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-5">
+                                    <input type="hidden" v-model="machine.locationId">
+                                    <input type="text" v-model="machine.locationName" readonly="readonly" class="form-control" required>
+                                </div>
+                                <div class="col-md-5" v-if="check==false">
+                                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#op-location-search" th:text="#{location_search}"></button>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="line" th:text="#{line}">Line
+                                    <span v-if="isRequiredField('Line')" class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10">
+                                    <input v-model="machine.line" :readonly="check==true" type="text" id="line" class="form-control" placeholder="Line" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="machine-maker" th:text="#{machine_maker}">Machine Maker</label>
+                                <div class="col-md-10">
+                                    <input v-model="machine.machineMaker" :readonly="check==true" type="text" id="machine-maker" class="form-control" placeholder="Machine Maker">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="machine-type" th:text="#{machine_type}">Machine Type</label>
+                                <div class="col-md-10">
+                                    <input v-model="machine.machineType" :readonly="check==true" type="text" id="machine-type" class="form-control" placeholder="Machine Type">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="machine-model" th:text="#{machine_model}">Machine Model</label>
+                                <div class="col-md-10">
+                                    <input v-model="machine.machineModel" :readonly="check==true" type="text" id="machine-model" class="form-control" placeholder="Machine Model">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="machine-tonnage" th:text="#{machine_tonnage}">Machine Tonnage (ton)</label>
+                                <div class="col-md-10">
+                                    <input v-model="machine.machineTonnage" :readonly="check==true" min="1" type="number" id="machine-tonnage" class="form-control" @input="searchChangeFunc($event)" placeholder="Machine Tonnage (ton)">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label"><span th:text="#{engineer_in_charge}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('engineers')"></span>
+                                </label>
+                                <div class="col-md-10" th:placeholder="#{engineer_in_charge}">
+                                    <engineer-charge-dropdown
+                                            :check="check"
+                                            :set-result="handleChange"
+                                            :checkedList="checkedList"
+                                            :default-value="engineerIndex"
+                                            :items="engineerList"
+                                            :required="isRequiredField('engineers')"
+                                            :resources="resources">
+                                    </engineer-charge-dropdown>
+                                </div>
+                            </div>
+
+                            <div v-for="(item, index) in customFieldList" :key="index" class="form-group row">
+                                <label class="col-md-2 col-form-label" :for="'customFieldList' + index">
+                                    {{ item.fieldName }}
+                                    <span class="avatar-status"></span>
+                                    <span class="badge-require" v-if="item.required"></span>
+                                </label>
+                                <div class="col-md-10">
+                                    <input :id="'customFieldList' + index" type="text" v-model="item.defaultInputValue" class="form-control" :placeholder="item.fieldName" :required="item.required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card wave_save">
+                        <div class="card-body text-center">
+                            <button type="submit" class="btn btn-primary" th:text="#{save_changes}"></button>
+                            <button type="button" class="btn btn-default" @click="cancel()" th:text="#{cancel}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        <!-- Modal -->
+        <mold-search :resources="resources" :call-from="'match-tooling'"></mold-search>
+        <company-search :resources="resources"></company-search>
+        <location-search :resources="resources"></location-search>
+
+    </div>
+
+    .
+</th:block>
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/machines/matchTooling.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

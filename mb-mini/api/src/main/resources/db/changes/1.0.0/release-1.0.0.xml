@@ -1,0 +1,276 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2022-12-28-user-table" author="Ben">
+        <createTable tableName="user">
+
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="first_name" type="VARCHAR(255)">
+            </column>
+
+            <column name="last_name" type="VARCHAR(255)">
+            </column>
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="non_locked" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="enabled" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="role" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="creation_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_updated_timestamp" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2022-12-28-credential-tables" author="ben">
+        <createTable tableName="credential">
+            <column name="id" type="BIGINT" autoIncrement="true" startWith="1">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="credential_type" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="non_expired" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="email_and_password_credential">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="FK_EAPC_C_id"
+                                 baseTableName="email_and_password_credential"
+                                 baseColumnNames="id"
+                                 referencedTableName="credential"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="FK_C_U_user_id"
+                                 baseTableName="credential"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+
+        <addUniqueConstraint tableName="email_and_password_credential" columnNames="email"/>
+
+    </changeSet>
+
+    <changeSet id="tag-1-0-0" author="Ben">
+        <tagDatabase tag="1.0.0"/>
+    </changeSet>
+
+    <changeSet id="29-12-create-table-feature" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="feature_user"/>
+            </not>
+        </preConditions>
+        <createTable tableName="feature_user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="feature" type="varchar(400)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="feature_user"
+                                 constraintName="FK_Feature_User_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+    </changeSet>
+
+    <changeSet id="03-01-create-table-black_list_token" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="black_list_token"/>
+            </not>
+        </preConditions>
+        <createTable tableName="black_list_token">
+            <column name="jti" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="04-01-create-table-feature" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="feature"/>
+            </not>
+        </preConditions>
+        <createTable tableName="feature">
+            <column name="id" type="Integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <loadData
+                file="db/data/feature.csv"
+                separator=";"
+                tableName="feature"/>
+    </changeSet>
+
+    <changeSet id="07-01-create-table-customer" author="Tv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="customer"/>
+            </not>
+        </preConditions>
+        <createTable tableName="customer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="first_name" type="VARCHAR(45)">
+            </column>
+
+             <column name="last_name" type="VARCHAR(45)">
+            </column>
+
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="gender" type="VARCHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="birthday" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="insurance_participation" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="date_participation" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="phone_number" type="VARCHAR(11)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="identification" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="nationality" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="job" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="address" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="07-01-create-table-service_info" author="Tv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="service_information"/>
+            </not>
+        </preConditions>
+        <createTable tableName="service_information">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name_insurance" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="bmh_gcn_number" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="hsycbh_number" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="hdbh_gcnbh_number" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="duration" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="contract_value" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="issuer" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="release_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fkrhu0lbaaviolek7ffeq2acnv7"
+                                 baseTableName="service_information"
+                                 baseColumnNames="customer_id"
+                                 referencedTableName="customer"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2023-02-17-insert-new-feature" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="feature"/>
+        </preConditions>
+        <sqlFile path="db/data/insert_new_feature.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+</databaseChangeLog>

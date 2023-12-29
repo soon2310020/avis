@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName} modification approved",
+  "content": "${senderName} (${senderCompanyName}) has approved your change request for the ${orderTypeName}."
+}

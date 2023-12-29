@@ -1,0 +1,25 @@
+# appspec.yml
+
+version:  0.0
+os:  linux
+files:
+    - source: /
+      destination: /home/emoldino/mms/mms/
+      owner: root
+
+permissions:
+  - object: /
+    pattern: "**"
+    mode : 755
+    owner: root
+    group: root
+
+hooks:
+  ApplicationStop:
+    - location: scripts/shutdown.sh
+      timeout: 40
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/deploy.sh
+      timeout: 40
+      runas: root

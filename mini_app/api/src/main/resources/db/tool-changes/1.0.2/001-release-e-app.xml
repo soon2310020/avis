@@ -1,0 +1,192 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--UPDATE::quotation_header -->
+    <changeSet id="2023-07-21-alter-quotation_header-add_uuid" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="quotation_header" columnName="uuid"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="quotation_header">
+            <column name="uuid" type="uuid" defaultValue="gen_random_uuid()">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2023-07-20:alter-quotation_header:add_field" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="quotation_header" columnName="process_id"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="quotation_header">
+            <column name="process_id" type="bigint" remarks="Id tiến trình bảo hiểm"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2023-08-03:alter_quotation_header" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="quotation_header" columnName="raw_data"/>
+            </not>
+            <not>
+                <columnExists tableName="quotation_header" columnName="healths"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="quotation_header">
+            <column name="raw_data" type="jsonb">
+            </column>
+        </addColumn>
+        <addColumn tableName="quotation_header">
+            <column name="healths" type="jsonb">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-07-24:alter-quotation_header-add_state" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="quotation_header" columnName="state"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="quotation_header">
+            <column name="state" type="VARCHAR(15)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2023-08-02:create_index-quotation_header" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists tableName="quotation_header" indexName="index_process_id_created_by"/>
+            </not>
+        </preConditions>
+        <createIndex indexName="index_process_id_created_by" tableName="quotation_header">
+            <column name="process_id"/>
+            <column name="created_by"/>
+        </createIndex>
+    </changeSet>
+
+    <!--CREATE::quotation_supporter -->
+    <changeSet id="2023-07-24:create_quotation_supporter" author="VinhCv2">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="quotation_supporter"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="quotation_supporter">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="code" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+            </column>
+
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"
+                    defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-07-24:alter-quotation_header_sale_id" author="VinhCv2">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="quotation_supporter"/>
+            <not>
+                <columnExists tableName="quotation_header" columnName="sale_id"/>
+            </not>
+            <not>
+                <columnExists tableName="quotation_header" columnName="referrer_id"/>
+            </not>
+            <not>
+                <columnExists tableName="quotation_header" columnName="supporter_id"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="quotation_header">
+            <column name="sale_id" type="bigint" remarks="Id lực lượng bán hàng"/>
+        </addColumn>
+        <addColumn tableName="quotation_header">
+            <column name="referrer_id" type="bigint"/>
+        </addColumn>
+        <addColumn tableName="quotation_header">
+            <column name="supporter_id" type="bigint"/>
+        </addColumn>
+
+        <addForeignKeyConstraint
+                constraintName="fk__quotation_support_sale"
+                baseTableName="quotation_header" baseColumnNames="sale_id"
+                referencedTableName="quotation_supporter" referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                constraintName="fk__quotation_support_referrer"
+                baseTableName="quotation_header" baseColumnNames="referrer_id"
+                referencedTableName="quotation_supporter" referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                constraintName="fk__quotation_support_supporter"
+                baseTableName="quotation_header" baseColumnNames="supporter_id"
+                referencedTableName="quotation_supporter" referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <changeSet id="2023-08-21:alter-quotation_supporter" author="VinhCv2">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="quotation_supporter"/>
+            <not>
+                <columnExists tableName="quotation_supporter" columnName="email"/>
+            </not>
+            <not>
+                <columnExists tableName="quotation_supporter" columnName="phone"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="quotation_supporter">
+            <column name="email" type="varchar(255)"/>
+        </addColumn>
+        <addColumn tableName="quotation_supporter">
+            <column name="phone" type="varchar(12)"/>
+        </addColumn>
+        <addColumn tableName="quotation_supporter">
+            <column name="branch_code" type="varchar(150)"/>
+        </addColumn>
+        <addColumn tableName="quotation_supporter">
+            <column name="branch_name" type="varchar(250)"/>
+        </addColumn>
+        <addColumn tableName="quotation_supporter">
+            <column name="department_code" type="varchar(200)"/>
+        </addColumn>
+        <addColumn tableName="quotation_supporter">
+            <column name="department_name" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-11-02:alter_quotation_header" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="quotation_header" columnName="mic_healths"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="quotation_header">
+            <column name="mic_healths" type="jsonb">
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

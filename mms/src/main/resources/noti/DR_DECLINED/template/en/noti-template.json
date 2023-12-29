@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${requestType} is declined",
+  "content": "Your {requestId} request is declined by {senderName} from {senderCompanyName}."
+}

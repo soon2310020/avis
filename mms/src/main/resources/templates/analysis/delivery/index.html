@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout-default}"
+>
+  <th:block layout:fragment="op-head">
+    <style>
+      .wave1 {
+        height: 850px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 18%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+
+      .wave {
+        height: 121px;
+        animation: wave 4s infinite linear forwards;
+        -webkit-animation: wave 4s infinite linear forwards;
+        background: linear-gradient(
+          to right,
+          #fcfcfc 8%,
+          #ededed 28%,
+          #fcfcfc 33%
+        );
+        border: none;
+      }
+      .wave1 .alert-center__item-text-zone {
+        display: none;
+      }
+      .wave1 .alert-center {
+        display: none;
+      }
+      .sidebar.wave_sidebar div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+        visibility: hidden;
+      }
+      .card.wave div,
+      .card.wave1 div {
+        display: none;
+      }
+    </style>
+  </th:block>
+  <th:block layout:fragment="op-content">
+    <div id="app" class="op-user-list wave1">
+      <delivery-page :resources="resources"></delivery-page>
+    </div>
+  </th:block>
+  <th:block layout:fragment="op-script">
+    <script
+      defer
+      th:src="'/js/scripts/analysis/delivery/module-shim.js?'+${noCacheVer}"
+    ></script>
+  </th:block>
+</html>

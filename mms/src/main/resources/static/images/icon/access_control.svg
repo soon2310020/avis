@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-Access_Control);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-Access_Control">
+      <rect width="134" height="134"/>
+    </clipPath>
+  </defs>
+  <g id="Access_Control" data-name="Access Control" class="cls-1">
+    <path id="Path_55" data-name="Path 55" class="cls-2" d="M129.522,80h-24.51l-19-19H97.339a1.344,1.344,0,0,0,1.344-1.344V8.344A1.344,1.344,0,0,0,97.339,7H46.027a1.344,1.344,0,0,0-1.344,1.344V59.656A1.344,1.344,0,0,0,46.027,61H57.355l-19,19H12.21a1.344,1.344,0,0,0-1.344,1.344v51.312A1.344,1.344,0,0,0,12.21,134H63.522a1.344,1.344,0,0,0,1.344-1.344V81.344A1.344,1.344,0,0,0,63.522,80H44.011l19-19H80.355l19,19H78.21a1.344,1.344,0,0,0-1.344,1.344v51.312A1.344,1.344,0,0,0,78.21,134h51.312a1.344,1.344,0,0,0,1.344-1.344V81.344A1.344,1.344,0,0,0,129.522,80Z" transform="translate(-3.866 -3)"/>
+  </g>
+</svg>

@@ -1,0 +1,189 @@
+.label-status {
+    border-radius: 10px;
+    padding: 5px 8px;
+}
+.btn-action {
+    padding: 0.1rem 0.75rem;
+    font-weight: 600;
+}
+
+.btn-action.active {
+    color: #FFF;
+    background: #3566E9;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #FFF;
+}
+
+.form-control[readonly] {
+    background: #FFF;
+}
+.select-year {
+    position: relative;
+}
+
+.calendar-picker {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+}
+.calendar-icon {
+    height: 15px;
+    cursor: pointer;
+}
+/* life cycle modal */
+#op-life-cycle-modal .modal-body {
+    padding: 1rem;
+    background: #EFF1F5;
+}
+.element-container {
+    background: #FFF;
+    margin-top: 1rem;
+}
+.element-container:first-child {
+    margin-top: 0;
+}
+.element-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1.2rem;
+    border-bottom: 1px solid #EFF1F5;
+    align-items: center;
+}
+.header-title {
+    font-size: 1.2rem;
+    color: #3566E9;
+    font-weight: 600;
+
+}
+
+.header-action button {
+    color: #FFF;
+    background: #3566E9;
+    font-weight: 600;
+}
+.element-body {
+    padding: 0.75rem 1.2rem;
+}
+.insight-detail .element-body {
+
+}
+
+
+.insight-item {
+    margin-top: 1.2rem;
+}
+
+.insight-item:first-child {
+    margin-top: 0;
+}
+.insight-item .item-title {
+    font-weight: 600;
+    color: #3566E9;
+}
+.insight-item .item-value {
+    font-size: 0.75rem;
+}
+
+/* Dynamic data */
+.header-action {
+    display: flex;
+    align-items: center;
+}
+.start-date-wrapper {
+    margin-right: 15px;
+}
+
+.time-picker-wrapper {
+    /*display: flex;*/
+    display: none;
+    align-items: center;
+    color: #3566E9;
+}
+
+.time-picker-wrapper .label-title {
+    margin-right: 5px;
+    width: 90px;
+}
+.end-date-wrapper .label-title {
+    width: 80px;
+}
+.bootstrap-datetimepicker-widget {
+    min-width: 250px;
+}
+
+.time-picker-wrapper input {
+
+}
+.time-picker-wrapper i {
+
+}
+/* End dynamic data */
+/* communication history */
+.communication-history .element-body {
+    padding: 1.5rem 2.5rem;
+}
+.conversation {
+    padding-bottom:  3rem;
+    border-bottom: 2px solid #CDCDCD;
+}
+.qa-item {
+    display: flex;
+    padding-top: 20px;
+    line-height: 1.6rem;
+}
+
+.qa-item:first-child {
+    padding-top: 0;
+}
+
+.qa-item .typo-picture {
+    padding-right: 10px;
+}
+
+.qa-item .typo-picture .typo-content {
+    width: 30px;
+    height: 30px;
+    background: #CDCDCD;
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.qa-item.answer .typo-picture .typo-content {
+    background: #20a8d8;
+}
+.attach-icon {
+    height: 12px;
+}
+.rotate-90 {
+    -webkit-transform:rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.qa-item .item-content .item-time {
+    color: #AAA;
+}
+
+.communication-history .message-form {
+    margin-bottom: 1rem;
+}
+
+.submit-card {
+    padding: 0.75rem 1.25rem;
+}
+/* end communication history */
+/* end life cycle modal */

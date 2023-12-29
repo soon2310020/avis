@@ -1,0 +1,57 @@
+version: "2.0"
+services:
+  api-gateway:
+    image: api-gateway
+    container_name: api-gateway
+    build:
+      context: .
+      args:
+        JAR_PATH: jar/api-gateway.jar
+    ports:
+      - ${API_GATEWAY_PORT}:${API_GATEWAY_PORT}
+    volumes:
+      - ${LOG_DIR}:${LOG_DIR}
+    env_file:
+      - ${ENV_FILE}
+
+  avis-api-service:
+    image: avis-api-service
+    container_name: avis-api-service
+    build:
+      context: .
+      args:
+        JAR_PATH: jar/avis-api-service.jar
+    ports:
+      - ${WEB_API_PORT}:${WEB_API_PORT}
+    volumes:
+      - ${LOG_DIR}:${LOG_DIR}
+    env_file:
+      - ${ENV_FILE}
+
+  avis-mobile-api-service:
+    image: avis-mobile-api-service
+    container_name: avis-mobile-api-service
+    build:
+      context: .
+      args:
+        JAR_PATH: jar/avis-mobile-api-service.jar
+    ports:
+      - ${MOBILE_API_PORT}:${MOBILE_API_PORT}
+    volumes:
+      - ${LOG_DIR}:${LOG_DIR}
+    env_file:
+      - ${ENV_FILE}
+
+  avis-authen-center:
+    image: avis-authen-center
+    container_name: avis-authen-center
+    build:
+      context: .
+      args:
+        JAR_PATH: jar/avis-authen-center.jar
+    ports:
+      - ${AUTH_API_PORT}:${AUTH_API_PORT}
+    volumes:
+      - ${LOG_DIR}:${LOG_DIR}
+    env_file:
+      - ${ENV_FILE}

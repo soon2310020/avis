@@ -1,0 +1,12 @@
+{
+  "Enabled": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "Disabled": {
+    "input": {
+      "enabled": false
+    }
+  }
+}

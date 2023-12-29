@@ -1,0 +1,10 @@
+{
+  "notiPriority": "MEDIUM",
+  "description": "Requestor cancelled the Work Order",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/admin/work-order?popup=WO_CANCELLED&id=${id}"
+}

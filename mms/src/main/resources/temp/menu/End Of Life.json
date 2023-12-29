@@ -1,0 +1,8 @@
+{
+  "path": "Asset/LIFE CYCLE",
+  "position": -1,
+  "message": "end_of_life",
+  "url": "/asset/tol-eol",
+  "icon": "/images/icon/end-of-life.svg",
+  "hidden": false
+}

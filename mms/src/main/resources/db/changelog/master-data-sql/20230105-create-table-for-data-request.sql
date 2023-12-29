@@ -1,0 +1,66 @@
+BEGIN;
+
+DROP TABLE IF EXISTS `DATA_REQUEST_USER`;
+CREATE TABLE `DATA_REQUEST_USER`
+(
+    `ID`                        BIGINT NOT NULL AUTO_INCREMENT,
+    `DATA_REQUEST_ID`           bigint(20) DEFAULT NULL,
+    `USER_ID`                   bigint(20) DEFAULT NULL,
+    `CREATED_AT`                datetime DEFAULT NOW(),
+    `UPDATED_AT`                datetime DEFAULT NOW(),
+    `CREATED_BY`                bigint(20) DEFAULT NULL,
+    `UPDATED_BY`                bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = INNODB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4;
+
+
+DROP TABLE IF EXISTS `DATA_REQUEST_OBJECT`;
+CREATE TABLE `DATA_REQUEST_OBJECT`
+(
+    `ID`                        BIGINT NOT NULL AUTO_INCREMENT,
+    `DATA_REQUEST_ID`           bigint(20) DEFAULT NULL,
+    `OBJECT_ID`                 bigint(20) DEFAULT NULL,
+    `OBJECT_TYPE`               VARCHAR(50)   DEFAULT NULL,
+    `CREATED_AT`                datetime DEFAULT NOW(),
+    `UPDATED_AT`                datetime DEFAULT NOW(),
+    `CREATED_BY`                bigint(20) DEFAULT NULL,
+    `UPDATED_BY`                bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = INNODB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4;
+
+DROP TABLE IF EXISTS `DATA_REQUEST`;
+CREATE TABLE `DATA_REQUEST`
+(
+    `ID`                        BIGINT NOT NULL AUTO_INCREMENT,
+    `REQUEST_ID`                VARCHAR(50) DEFAULT NULL,
+    `REQUEST_ID_INDEX`          BIGINT DEFAULT NULL,
+    `REQUEST_DATA_TYPE`         VARCHAR(50) DEFAULT NULL,
+    `DUE_DATE`                  DATETIME    DEFAULT NULL,
+    `REQUEST_DATE`              DATETIME    DEFAULT NULL,
+    `DETAIL`                    LONGTEXT    DEFAULT NULL,
+    `CANCEL_REASON`             LONGTEXT    DEFAULT NULL,
+    `DECLINE_REASON`            LONGTEXT    DEFAULT NULL,
+    `DATA_REQUEST_STATUS`       VARCHAR(50)    DEFAULT NULL,
+    `CREATED_BY_ID`             INT  DEFAULT NULL,
+    `NUMBER_COMPANY_REQUEST`    INT  DEFAULT NULL,
+    `NUMBER_LOCATION_REQUEST`   INT  DEFAULT NULL,
+    `NUMBER_PART_REQUEST`       INT  DEFAULT NULL,
+    `NUMBER_MOLD_REQUEST`       INT  DEFAULT NULL,
+    `NUMBER_MACHINE_REQUEST`    INT  DEFAULT NULL,
+    `CREATED_AT`                datetime DEFAULT NOW(),
+    `UPDATED_AT`                datetime DEFAULT NOW(),
+    `CREATED_BY`                bigint(20) DEFAULT NULL,
+    `UPDATED_BY`                bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = INNODB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4;
+
+
+
+
+COMMIT;

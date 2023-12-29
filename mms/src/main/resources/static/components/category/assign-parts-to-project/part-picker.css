@@ -1,0 +1,52 @@
+.part-picker {
+    position: absolute;
+    top: 100%;
+    left: 15px;
+    min-width: 463px;
+    padding: 6px 8px;
+    z-index: 100;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: 300ms ease;
+}
+
+.icon-search {
+    background-image: url("/images/icon/category/material-search.svg");
+    width: 16.42px;
+    height: 16.42px;
+    display: block;
+}
+
+ul.search-list__parts {
+    list-style: none;
+    padding: 0;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+ul.search-list__parts li {
+    line-height: 32px;
+    font-size: 1rem;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 3px;
+    transition: 300ms;
+    cursor: pointer;
+}
+
+ul.search-list__parts li:hover {
+    background-color: #E6F7FF;
+}
+
+.part-picker.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}

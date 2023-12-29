@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-counter);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-counter">
+      <rect width="134" height="134"/>
+    </clipPath>
+  </defs>
+  <g id="counter" class="cls-1">
+    <g id="Group_85" data-name="Group 85" transform="translate(-6.285 -5.803)">
+      <rect id="Rectangle_17" data-name="Rectangle 17" class="cls-2" width="79" height="23" rx="0.984" transform="translate(33.535 15.803)"/>
+      <path id="Path_76" data-name="Path 76" class="cls-2" d="M111.71,85.055a.63.63,0,0,0,.575-.623V48.18a1.71,1.71,0,0,0-1.71-1.71H35a1.711,1.711,0,0,0-1.711,1.71v36.8c.084,0,.166-.012.25-.012a12.5,12.5,0,1,1,0,25c-.084,0-.166-.011-.25-.013v18.8A1.711,1.711,0,0,0,35,130.47h75.579a1.71,1.71,0,0,0,1.71-1.711V110.427a.539.539,0,0,0-.5-.534,12.484,12.484,0,0,1-.08-24.838ZM95.285,69.949a.854.854,0,0,1-.854.854H51.14a.854.854,0,0,1-.855-.854V54.658a.855.855,0,0,1,.855-.855H94.431a.854.854,0,0,1,.854.855Z"/>
+    </g>
+  </g>
+</svg>

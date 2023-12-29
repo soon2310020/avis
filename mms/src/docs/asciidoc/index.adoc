@@ -1,0 +1,184 @@
+= eShotLink REST API Docs
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+[[overview]]
+== Overview
+eShotLink REST API
+
+[[overview-http-verbs]]
+=== Http verbs
+Below table summarises the use of HTTP methods discussed above.
+
+|===
+| Method | CRUD
+
+| `GET`
+| Read
+
+| `POST`
+| Create
+
+| `PUT`
+| Update/Replace
+
+| `DELETE`
+| Delete
+|===
+
+[[overview-http-status-codes]]
+=== Http status codes
+
+The HTTP Status Codes used by the API.
+
+|===
+| HTTP Status Code | Description
+
+| `200 OK`
+| Successful.
+
+| `201 Created`
+| Created.
+
+| `400 Bad Request`
+| Bad input parameter. Error message should indicate which one and why.
+
+| `401 Unauthorized`
+| The client passed in the invalid Auth token. Client should refresh the token and then try again.
+
+| `404 Not Found`
+| Resource not found.
+
+| `405 Method Not Allowed`
+| The resource doesn't support the specified HTTP verb.
+
+| `500 Internal Server Error`
+| Servers are not working as expected. The request is probably valid but needs to be requested again later.
+|===
+
+
+
+
+[[auth]]
+== Authentication
+[[oauth-token]]
+=== Access Token
+An Access Token is a credential that can be used by an application to access an API. Access Tokens can be either an opaque string or a JSON web token. They inform the API that the bearer of the token has been authorized to access the API and perform specific actions specified by the scope that has been granted.
+
+Access Tokens should be used as a Bearer credential and transmitted in an HTTP Authorization header to the API.
+
+operation::oauth-token[snippets='request-headers,request-parameters,curl-request,http-request,response-fields,http-response']
+
+////
+[[auth-me]]
+=== Account
+클라이언트 ID와 password, 회원ID, 비밀번호를 입력하여 엑세스토큰(AccessToken)을 발급 받을 수 있습니다.
+
+operation::auth-me[snippets='request-headers,curl-request,http-request,response-fields,http-response']
+////
+
+
+
+[[tooling]]
+== Tooling
+
+
+[[tooling-list]]
+=== List
+
+====
+*GET /apis/molds*
+====
+
+operation::tooling-list[snippets='request-headers,request-fields,curl-request,http-request,response-fields,http-response']
+
+
+[[tooling-get]]
+=== Details
+
+====
+*GET /apis/molds/{id}
+====
+
+
+===== Path variable
+|===
+| PathVariable | Type | Description
+
+| {id}
+| Number
+| Tooling ID
+|===
+
+operation::tooling-get[snippets='request-headers,request-fields,curl-request,http-request,response-fields,http-response']
+
+
+[[tooling-report]]
+=== Report
+
+====
+*GET /apis/molds/report
+====
+
+operation::tooling-report[snippets='request-headers,request-fields,curl-request,http-request,response-fields,http-response']
+
+
+
+[[parts]]
+== Parts
+
+[[parts-list]]
+=== List
+====
+*GET /apis/parts*
+====
+
+operation::parts-list[snippets='request-headers,curl-request,http-request,response-fields,http-response']
+
+[[parts-get]]
+=== Details
+
+====
+*GET /apis/parts/{id}
+====
+
+
+===== Path variable
+|===
+| PathVariable | Type | Description
+
+| {id}
+| Number
+| Part ID
+|===
+operation::parts-get[snippets='request-headers,curl-request,http-request,response-fields,http-response']
+
+
+[[parts-report]]
+=== Report
+
+====
+*GET /apis/parts/report
+====
+
+operation::parts-report[snippets='request-headers,request-fields,curl-request,http-request,response-fields,http-response']
+
+
+
+
+////
+[[codes]]
+== 공통코드
+
+[[codes-list]]
+=== 코드 목록 (전체)
+operation::codes-list[snippets='curl-request,http-request,response-fields,http-response']
+
+[[codes-get]]
+=== 코드 상세 조회
+operation::codes-get[snippets='curl-request,http-request,response-fields,http-response']
+////

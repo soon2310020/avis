@@ -1,0 +1,16 @@
+*
+
+!*.html
+!*.vue
+!*.js
+!*.json
+!*.css
+
+!*/
+
+**/build
+**/node_modules
+**/dist
+**/cdn
+**/external
+**/templates

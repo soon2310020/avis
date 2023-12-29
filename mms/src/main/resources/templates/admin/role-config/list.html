@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <link href="/css/modal-style.css" rel="stylesheet">
+
+    <style type="text/css">
+        .op-user-list .form-group {
+            margin-right: 10px;
+        }
+
+        .first-checkbox-zone2 {
+
+            padding: 5px !important;
+        }
+
+        .nav-link {
+            text-align: center !important;
+        }
+
+        .action-bar .action-item {
+
+            margin-left: 0.7rem !important;
+        }
+
+        tr {
+            height: 56px !important;
+        }
+
+        .icon-action {
+            margin-left: 0px !important;
+        }
+
+        .customStyle {
+            font: normal normal normal 16px/17px Helvetica;
+        }
+
+        .table th, .table td {
+            padding: 0.75rem !important;
+        }
+
+        .sub-text-field {
+            text-align: left;
+            font: normal normal normal 11px/13px Helvetica Neue;
+            letter-spacing: 0px;
+            color: #3D4247;
+            opacity: 1;
+        }
+
+        .op-user-list .form-group label {
+            margin-right: 5px;
+        }
+
+        .pagination {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .wave1 {
+            height: 852px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation: wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+            border: none;
+        }
+
+        .wave {
+            height: 121px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation: wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+            border: none;
+        }
+
+        .sidebar.wave_sidebar div,
+        .tab-support.wave_header div,
+        .tab-insight.wave_header div,
+        .tab-reports.wave_header div,
+        .tab-user.wave_header div {
+            visibility: hidden;
+        }
+
+        .card.wave1 div,
+        .card.wave div {
+            display: none;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+    <style type="text/css">
+        .sort {
+            margin: 10px;
+            width: 10px;
+            height: 10px;
+        }
+
+        .nav-btn {
+            text-align: left;
+            font-size: 11px;
+            opacity: 1;
+            border-radius: 3px;
+            padding: 6px 8px 6px 8px;
+        }
+
+        .nav-btn-primary {
+            background-color: #3491FF;
+            color: #FFFFFF;
+            border: none;
+        }
+
+        .nav-link {
+            font-size: 13px;
+        }
+
+        .nav-btn-light {
+            border: 1px solid #3491FF;
+            color: #3491FF;
+            background-color: #FFFFFF;
+        }
+
+        .nav-btn-primary:hover {
+            background-color: #3585E5;
+        }
+
+        .nav-btn-primary:active {
+            color: #FFFFFF;
+            background-color: #3585E5;
+            border: 2px solid #89D1FD;
+        }
+
+        .nav-btn-light:hover {
+            color: #0E65C7;
+            border: 2px solid #DEEDFF;
+            background: #DEEDFF;
+        }
+
+        .nav-btn-light:active {
+            border: 2px solid #89D1FF;
+            color: #0E65C7;
+        }
+    </style>
+    <div id="app" class="op-user-list">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave">
+                    <div class="card-header">
+                        <strong th:text="#{role_config}"></strong>
+
+                        <div class="card-header-actions">
+                            <span class="card-header-action">
+                                <small class="text-muted"><span th:text="#{total}+':'"></span> {{totalValues}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" v-model="requestParam.sort"/>
+
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3 mb-md-0 col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-search"></i></div>
+                                    </div>
+                                    <input type="text" v-model="requestParam1.query"
+                                           @input="requestParam1.query = $event.target.value" @keyup="search"
+                                           class="form-control" th:placeholder="#{search_by_name_or_id}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave1">
+                    <div class="card-header" style="display:none">
+                        <i class="fa fa-align-justify"></i> <span th:text="#{striped_tbl}"></span>
+                    </div>
+                    <div style="position: relative" class="card-body">
+                        <div class="card-header-wrapper">
+                            <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                                <li style="width: 90px" class="nav-item" v-if="isAdmin">
+                                    <a class="nav-link" :class="{active: requestParam.companyType == 'admin'}" href="#"
+                                       @click.prevent="tab('admin')"><span th:text="#{all}"> </span>
+                                        <span class="badge badge-light badge-pill"
+                                              v-if="requestParam.companyType == 'admin'">{{ total }}</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item dropdown ">
+                                    <a class="nav-link" :class="{active: requestParam.companyType == ''}" href="#"
+                                       @click.prevent="tabToDisable('disabled')"><span th:text="#{disabled}">
+                                        </span>
+                                        <span class="badge badge-light badge-pill"
+                                              v-if="tabCurrent == 'disabled'">{{ total }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+<!--                            <div class="nav-item" style="position: absolute;right: 18px;top: 19px;" v-if="isAdmin">-->
+<!--                                <a @click="goToNew" id="goToNew2" href="javascript:void(0)"-->
+<!--                                   class="btn-custom btn-custom-primary">-->
+<!--                                    <span th:text="#{new_role}"></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+                        </div>
+                        <table class="table table-responsive-sm table-striped">
+                            <colgroup>
+                                <col/>
+                                <col/>
+                                <col/>
+                                <col/>
+                                <col/>
+
+                            </colgroup>
+                            <thead id="thead-actionbar" class="custom-header-table">
+                            <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px" class="tr-sort">
+                                <th class="custom-td">
+                                    <div class="custom-td_header">
+                                        <input id="checkbox-all" class="checkbox" type="checkbox" v-model="isAll"
+                                               @change="select"/>
+                                    </div>
+                                </th>
+                                <th class="__sort text-left"
+                                    :class="[ {'active': currentValue === 'name'}, isDesc ? 'desc': 'asc']"
+                                    @click="sortBy('name')">
+                                    <span>Name</span>
+                                    <span>
+                                        <!-- <img src="../../images/icon/awsome-sort.svg" class="sort"/> -->
+                                        <span class="__icon-sort"></span>
+                                        </span>
+                                </th>
+                                <th class="__sort text-left"
+                                    :class="[ {'active': currentValue === 'description'}, isDesc ? 'desc': 'asc']"
+                                    @click="sortBy('description')">
+                                    <span th:text="#{role_description}"></span>
+                                    <span>
+                                        <!-- <img src="../../images/icon/awsome-sort.svg" class="sort"/> -->
+                                        <span class="__icon-sort"></span>
+                                    </span>
+                                </th>
+                            </tr>
+
+                            <tr :class="{'d-none zindexNegative': listChecked.length == 0}" id="action-bar"
+                                class="tr-sort empty-tr">
+                                <th class="empty-th">
+                                    <div class="first-checkbox-zone2">
+                                        <div class="first-checkbox2"
+                                             style="display: flex;align-items: center;padding-left: 0;width: 110px;">
+                                            <div>
+                                                <input id="checkbox-all-2" class="checkbox" type="checkbox"
+                                                       v-model="isAll" @change="select"/>
+                                            </div>
+                                        </div>
+                                        <div class="action-bar">
+                                            <div v-if="listChecked.length == 1 && tabCurrent !== 'disabled' "
+                                                 @click="goToEdit" class="action-item">
+                                                <span class="customStyle">Edit Role</span>
+                                                <i class="icon-action edit-icon"></i>
+                                            </div>
+                                            <div v-if="tabCurrent !== 'disabled'" class="action-item"
+                                                 @click.prevent="disable">
+                                                <span class="customStyle">Disable Role</span>
+                                                <div class="icon-action disable-icon"></div>
+                                            </div>
+                                            <div v-if="tabCurrent == 'disabled'" class="action-item"
+                                                 @click.prevent="enable">
+                                                <span class="customStyle">Enable Role</span>
+                                                <div class="icon-action enable-icon"></div>
+                                            </div>
+
+                                            <div v-if="listChecked.length == 1 && tabCurrent != 'disabled'"
+                                                 class="action-item" @click="showUserRoleConfig">
+                                                <span>Role-User Configuration</span>
+                                                <div class="icon-action userRoleConfig-icon"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="op-list">
+                            <tr v-for="(result, index) in list" :id="result.id">
+                                <td class="custom-td">
+                                    <template v-if="listChecked.length >= 0">
+                                        <input @click="(e) => check(e, result)" :checked="checkSelect(result.id)"
+                                               class="checkbox"
+                                               type="checkbox" :id="result.id + 'checkbox'" :value="result.id">
+
+                                    </template>
+                                </td>
+                                <td class="text-left">
+                                    <div>
+                                        {{result.name}}
+                                    </div>
+                                </td>
+                                <td class="text-left">
+                                    <div>
+                                        {{result.description}}
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row" v-show="tabCurrent !== 'disabled'">
+                            <div class="col-md-8">
+                                <ul style="margin-bottom: 0px" class="pagination">
+                                    <li v-for="(data,index) in pagination" class="page-item"
+                                        :class="{active: data.isActive}">
+                                        <a :key="index" class="page-link" @click.prevent="paging(data.pageNumber)">{{data.text}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row" v-show="tabCurrent === 'disabled'">
+                            <div class="col-md-8">
+                                <ul style="margin-bottom: 0px" class="pagination">
+                                    <li v-for="(data,index) in pagination1" class="page-item"
+                                        :class="{active: data.isActive}">
+                                        <a :key="index" class="page-link" @click.prevent="paging1(data.pageNumber)">{{data.text}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <edit-role-config @parentmethod="getUpdatedData"></edit-role-config>
+        <user-role-config :resources="resources"></user-role-config>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/hotjar.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/scripts/admin/role-config/list.js?'+${noCacheVer}"></script>
+
+    <style scoped>
+        /* .op-user-list{
+            font-size: 14px;
+        } */
+
+        .icon-action {
+            background-size: 10px 10px;
+        }
+    </style>
+</th:block>
+
+</html>

@@ -1,0 +1,75 @@
+
+.ant-time-picker-panel {
+  z-index: 5900 !important;
+}
+
+.select-graph-group {
+  width: 152px;
+  height: 32px;
+  margin-right: 10px;
+}
+
+.custom-table-tooltip {
+  width: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 13px;
+}
+
+.custom-table-tooltip td,
+.custom-table-tooltip th {
+  padding: 0 1rem 0 0.25rem;
+  border: 1px solid white;
+  /*max-width: 150px;*/
+  /* -webkit-line-clamp: 2; */
+}
+
+.custom-table-tooltip tr:first-child td,
+.custom-table-tooltip tr:first-child th {
+  border-top: 0;
+  white-space: nowrap;
+}
+
+.custom-table-tooltip tr td:first-child,
+.custom-table-tooltip tr th:first-child {
+  border-left: 0;
+}
+
+.custom-table-tooltip tr:last-child td,
+.custom-table-tooltip tr:last-child th {
+  border-bottom: 0;
+}
+
+.custom-table-tooltip tr td:last-child,
+.custom-table-tooltip tr th:last-child {
+  border-right: 0;
+}
+
+.ant-tooltip-inner {
+  width: fit-content !important;
+}
+
+
+#chartjs-tooltip {
+  border-radius: 6px;
+  color: #ffffff;
+}
+#chartjs-tooltip::before {
+  content: "";
+  position: absolute;
+  left: 25%;
+  top: -10px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid rgba(0, 0, 0, 0);
+  border-right: 5px solid rgba(0, 0, 0, 0);
+  border-bottom: 10px solid rgba(51, 51, 51, 1);
+  transform: translateX(-50%);
+}
+/*
+
+#hourly-chart-wrapper {
+  position: static !important;
+}
+*/

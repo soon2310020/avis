@@ -1,0 +1,202 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql" />
+
+    <changeSet id="2024-09-23-create-potential_customer-table" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="potential_customer" />
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="potential_customer_seq" startValue="1000" incrementBy="1" />
+
+        <createTable tableName="potential_customer">
+            <column name="id" type="bigint" defaultValueComputed="nextval('potential_customer_seq')">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+
+            <column name="full_name" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="identification_type" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="identification_id" type="varchar(25)">
+                <constraints nullable="false" />
+            </column>
+            <column name="dob" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="gender" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone_number" type="varchar(12)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)" />
+            <column name="last_modified_date" type="timestamp" />
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2023-10-04-potential_customer-add-cared_product" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer" columnName="cared_product" />
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer">
+            <column name="cared_product" type="jsonb">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-10-04-potential_customer-add-occupation_id" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer" columnName="occupation_id" />
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer">
+            <column name="occupation_id" type="int">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-10-04-potential_customer-add-note" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer" columnName="note" />
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer">
+            <column name="note" type="clob">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-10-04-remove-constraints-potential_customer" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer"/>
+        </preConditions>
+
+        <dropNotNullConstraint tableName="potential_customer" columnName="identification_type" />
+        <dropNotNullConstraint tableName="potential_customer" columnName="identification_id" />
+        <dropNotNullConstraint tableName="potential_customer" columnName="email" />
+        <dropNotNullConstraint tableName="potential_customer" columnName="phone_number" />
+
+    </changeSet>
+    
+    <changeSet id="2023-10-14-potential_customer-add-lead_partner_id" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer"/>
+        </preConditions>
+
+        <addColumn tableName="potential_customer">
+            <column name="lead_partner_id" type="varchar(100)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+        <addColumn tableName="potential_customer">
+            <column name="sync_crm" type="boolean" defaultValue="false">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-10-31-potential_customer-rename" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="potential_customer" columnName="lead_partner_id" />
+        </preConditions>
+
+        <renameColumn tableName="potential_customer" oldColumnName="lead_partner_id" newColumnName="crm_id" />
+
+        <modifyDataType tableName="potential_customer" columnName="crm_id" newDataType="varchar(50)" />
+
+    </changeSet>
+    
+    <changeSet id="2023-11-01-potential_customer-add-input_amount" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer" columnName="input_amount"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer">
+            <column name="input_amount" type="decimal">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+    
+    <changeSet id="2023-11-01-potential_customer-add-raw" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="potential_customer" columnName="raw"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="potential_customer">
+            <column name="raw" type="bool" defaultValue="false">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+    </changeSet>
+    
+    
+    <changeSet id="2023-12-10-set-remark-potential_customer" author="HaNST">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="potential_customer"/>
+        </preConditions>
+        
+        <setTableRemarks tableName="potential_customer" remarks="Thông tin khách hàng tiềm năng"/>
+        <setColumnRemarks tableName="potential_customer" columnName="id" remarks="ID"/>
+        <setColumnRemarks tableName="potential_customer" columnName="full_name" remarks="Họ tên khách hàng"/>
+        <setColumnRemarks tableName="potential_customer" columnName="identification_type" remarks="Loại giấy tờ tùy thân"/>
+        <setColumnRemarks tableName="potential_customer" columnName="identification_id" remarks="Số giấy tờ tùy thân"/>
+        <setColumnRemarks tableName="potential_customer" columnName="dob" remarks="Ngày sinh"/>
+        <setColumnRemarks tableName="potential_customer" columnName="email" remarks="Email"/>
+        <setColumnRemarks tableName="potential_customer" columnName="gender" remarks="Giới tính"/>
+        <setColumnRemarks tableName="potential_customer" columnName="phone_number" remarks="Số điện thoại"/>
+        <setColumnRemarks tableName="potential_customer" columnName="input_amount" remarks="Số tiền có thể chi trả"/>
+        <setColumnRemarks tableName="potential_customer" columnName="raw" remarks="Trạng thái nháp"/>
+        <setColumnRemarks tableName="potential_customer" columnName="note" remarks="Ghi chú"/>
+        <setColumnRemarks tableName="potential_customer" columnName="occupation_id" remarks="ID nghề nghiệp"/>
+        <setColumnRemarks tableName="potential_customer" columnName="crm_id" remarks="ID khách hàng trên CRM"/>
+        <setColumnRemarks tableName="potential_customer" columnName="sync_crm" remarks="Trạng thái đồng bộ với CRM"/>
+        <setColumnRemarks tableName="potential_customer" columnName="created_by" remarks="Người tạo"/>
+        <setColumnRemarks tableName="potential_customer" columnName="created_date" remarks="Thời điểm tạo"/>
+        <setColumnRemarks tableName="potential_customer" columnName="last_modified_by" remarks="Người cập nhật"/>
+        <setColumnRemarks tableName="potential_customer" columnName="last_modified_date" remarks="Thời điểm cập nhật gần nhất"/>
+        <setColumnRemarks tableName="potential_customer" columnName="cared_product" remarks="Sản phẩm quan tâm"/>
+    </changeSet>
+
+</databaseChangeLog>

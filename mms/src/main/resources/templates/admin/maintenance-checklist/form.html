@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+  <link rel="stylesheet" th:href="'/css/maintenance-checklist/form.css?'+${noCacheVer}" />
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+
+        <div class="hide_account alert alert-dark" role="alert">
+            <h5 class="alert-heading mb-0"><i class="fa fa-user"></i>
+                <span v-if="title =='New'" th:text="#{new_maintenance_checklist}"></span>
+                <span v-else-if="title == 'Edit'" th:text="#{edit_maintenance_checklist}"></span>
+            </h5>
+        </div>
+
+        <div class="needs-validation">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave" id="remove_profile"> </div>
+                    <div class="card profile_wave1">
+                        <div class="card-header">
+                            <strong th:text="#{maintenance_checklist}"></strong>
+                        </div>
+                        <div class="card-body">
+                          <div class="form-group row">
+                            <label class="col-md-2 col-form-label">
+                              <span th:text="#{company}"></span>
+                              <span class="badge-require"></span>
+                            </label>
+                            <div class="col-md-8">
+                              <input type="hidden">
+                              <input type="text" readonly="readonly" v-model="form.company.name"
+                                     class="form-control">
+                            </div>
+                            <div class="col-md-2 text-right">
+                              <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                      data-target="#op-company-search" th:text="#{company_search}"></button>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="checklistId">
+                              <span th:text="#{checklist_id}"></span>
+                              <span class="badge-require"></span>
+                            </label>
+                            <div class="col-md-10">
+                              <input type="text" id="checklistId" v-model="form.checklistCode" class="form-control" />
+                            </div>
+                          </div>
+                          <div class="form-below">
+                            <label style="margin-bottom: 10px">
+                              <span v-text="resources['checklist']"></span>
+                              <span class="badge-require"></span>
+                            </label>
+                            <form action="" class="btn radio-confirm-modal" v-for="(addedChecklist, index) in checklists" :key="'added-' + index">
+                              <span>{{ index + 1 }}.</span>
+                              <span class="reason-edit-label" v-if="focusChecklistIndex !== index"> {{ checklists[index].content }}</span>
+                              <input v-else v-model="checklists[index].tmpContent" :ref="'checklist-' + index" class="form-control reason-edit-input" :class="{focus: isFocusClass(index)}" @keypress="inputChecklist($event, addedChecklist)"/>
+                              <span class="checklist-action">
+                                <span class="checklist-edit action-item" v-if="focusChecklistIndex !== index"  @click="focusChecklist(index)">
+                                  <img src="/images/checklist/pencil.svg" class="icon-primary" alt="edit" />
+                                  <img src="/images/checklist/pencil-hover.svg" class="icon-hover" alt="edit" />
+                                </span>
+                                <span class="checklist-delete action-item" v-if="focusChecklistIndex !== index"  @click="deleteChecklist(index)">
+                                  <img src="/images/checklist/trash.svg" class="icon-primary" alt="delete" />
+                                  <img src="/images/checklist/trash-hover.svg" class="icon-hover" alt="delete" />
+                                </span>
+                                  <button hidden type="submit" :ref="'btn-checklist-' + index"></button>
+                                <span class="checklist-confirm-edit" v-if="focusChecklistIndex === index"  @click="confirmEditChecklist(addedChecklist, index)">
+                                  <img src="/images/checklist/check.svg" alt="confirm-edit" />
+                                </span>
+                                <span class="checklist-cancel-edit" v-if="focusChecklistIndex === index"  @click="cancelEditChecklist(addedChecklist, index)">
+                                  <img src="/images/checklist/close.svg" alt="cancel-edit" />
+                                </span>
+                                <span class="checklist-confirm" v-if="false" @click="confirmChecklist(addedChecklist)">
+                                  <img src="/images/icon/checked.svg" alt="checked" />
+                                </span>
+                              </span>
+                            </form>
+                            <div class="btn radio-confirm-modal" style="color: #298BFF" @click="addChecklist" v-if="!isFocusChecklistInput">
+                              <span style="font-size: 12px; font-weight: bold; margin-right: 12px">+</span>
+                              <span th:text="#{add_checklist_item}"></span>
+                            </div>
+                          </div>
+                          <!--<div class="form-group row">
+                            <label class="col-md-2 col-form-label"><span th:text="#{enable}"></span></label>
+                            <div class="col-md-10 col-form-label">
+                              <div class="form-check form-check-inline mr-3">
+                                <input type="radio" class="form-check-input" id="radio1"
+                                       v-model="form.enabled" :value="true">
+                                <label class="form-check-label" for="radio1" th:text="#{enable}"></label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" id="radio2"
+                                       v-model="form.enabled" :value="false">
+                                <label class="form-check-label" for="radio2" th:text="#{disable}"></label>
+                              </div>
+                            </div>
+                          </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card profile_wave4">
+                        <div class="card-body text-center">
+                            <button type="submit" class="btn btn-primary" th:text="#{save_changes}" @click="submitChecklist"></button>
+                            <button type="button" class="btn btn-default" @click="callbackMessageForm" th:text="#{cancel}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <company-search :resources="resources"></company-search>
+    </div>
+</th:block>
+
+<th:block layout:fragment="op-script">
+  <script defer th:src="'/js/scripts/admin/maintenance-checklist/form.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

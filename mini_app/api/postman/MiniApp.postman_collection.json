@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "e55a2534-1787-4d37-8747-2e6a6d657fde",
+		"name": "MiniApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Occupations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjc5MDYwOTU5LCJleHAiOjE2NzkwNjEyNTl9.q2UAAuPYbsAuQ7py3Z3zYLP9GNc4Glwih80loquHkT7yFdRVnivEV7p8tOk6aMWNlfAXtxB8JuAxO19MBE9VGPKzkYWpZ5qxAe1hl5dg5l5WOi8xMwe9_8mg1sWNIcOTJQNLvLkwtSKdpR4DMZh2tZM5NWbEsabTk7r0jHJHHP08xgkSOSdGrfmnIDNJbGzkxfSDmANGIBIkWHpDGoa7IeKACrtkoZuh8t423_gB9Q3nrz7m0KdAXpuu7UxF93VD-jJ2P0kHlS8ixT8XumaKm6pqve4OURdKPU-Mtfuqh6hx3aYYqZm3R7O1-aTad7NnragNapdqZgR663ZEp2aCJQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/occupations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"occupations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Quotation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjc5MzE3Nzg4LCJleHAiOjE2NzkzMTgwODh9.SI_8hrkLETlzm6_Tu3yRiN3Vg5qlTbKAy-mZtVep37BwzX8GZJghuI0ZQkkjl_5Dd_WTMXhufUUPq2VYQmhKqe4nJW2ZHRMvIBs8uEaEGAANsNbKFGqUYmUgiL8Cmk4jNBFEf5wWCuqBY7QVPaS6yySp9Jm1r-RLF0YyLYUjUm9WndEBeh2mHGQMWZASQ_Qi7xY53mWs6DEebXRUg8aoyIkbbu00nyIGtRjYxSnm5YRhG1d5c3CyQrYSWp_1XomSSEAK5jRoHjCTtEs67A-GX8KQauTrzfMxcibG8H95nXHssw6rxbiD5J21G7-JEzASO905Zai4FhLmfnW2-QOwaw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customer\": {\r\n    \"dob\": \"1992-02-02\",\r\n    \"full_name\": \"Nguyễn Ngọc Thành\",\r\n    \"gender\": \"MALE\",\r\n    \"identification_id\": \"122222222\",\r\n    \"identification_type\": \"NATIONAL_ID\",\r\n    \"married\": true,\r\n    \"occupation_id\": 15,\r\n    \"phone_number\": \"0322222222\"\r\n  },\r\n  \"assured\": {\r\n    \"dob\": \"2006-01-01\",\r\n    \"full_name\": \"Nguyễn Ngọc Đạt\",\r\n    \"married\": false,\r\n    \"phone_number\": \"0333333321\",\r\n    \"gender\": \"MALE\",\r\n    \"identification_id\": \"123123123\",\r\n    \"identification_type\": \"NATIONAL_ID\",\r\n    \"occupation_id\": 393,\r\n    \"additional_products\": []\r\n  },\r\n  \"additional_assureds\": [],\r\n  \"customer_is_assured\": false,\r\n  \"package_benefit_type\": \"BASIC\",\r\n  \"package_payment_period\": \"ANNUAL\",\r\n  \"package_sum_assured\": 140800000,\r\n  \"package_periodic_premium\": 50000000,\r\n  \"package_policy_term\": 10,\r\n  \"package_premium_term\": 10,\r\n  \"type\": \"ULSP\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/quotation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"quotation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify CRM token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"TOKEN\", pm.response.json().access_token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\" : \"test@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/crm/verify",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"crm",
+						"verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get quotation detail",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjc5NDA3MjI5LCJleHAiOjE2Nzk0MDc1Mjl9.XI6on6FpaMwRX_SE9Vr6vGT4y3hi3u79LOmn54sgZoeq2pqCeBO62LbLxg2w4Hn1deu1haV-Sc3I7T24z0rHO4-wyXPMH3nrU2s_iHrin8-dlsW0x1-qgeraGRGF047KBqgbJLWJH0Ga3zNMtEzif7z7UfYDHXD6a05VhKH5JwLR28VmdJrZZ5yH16ZVQnPOiCVV_Lh0BLXtLn2VqmcNW5C8VcxsrIdV5kSBvIHwcquqz-NQLwX2mmlyCb4IBx2IucAqebOVNyUknRN-SBOLnkHq_BwyrU7w4fGP_Rj7B5JCk1oGX3iWAVR7VbqI3Pgsfay9aP0iREwBlM2L4HyC7g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/quotation/1001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"quotation",
+						"1001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Quatuons",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJUZXN0IiwianRpIjoiN2NhMTI2MjgtNDBhNi00MDQxLTkxYWQtMTMzMjAxNDZjMGI4IiwiY2xpZW50X2lkIjoiYmVuaG9zdCJ9.EyG3_OfGFzsrnLmea6BvdHlcyMfdroJz8cf9csDjpk0AcTUoWmBrd05jMWTpEBIKYuokuEvFScMmIAAOu_c8W8FqYfujGaEPEtCOHoRzTfz0v1vyEfU7EqpAaglFi1npQTF_7XJx8lXnVTYipikR3_RtrcTcyTUwqx7qD9pGibRovZCpDiUUv4YvvKAmEwTGDtpVnMiklfGfwPdfbDHp9hFVnqYsg0YkJX2q1IDAH_dc398LD3zIusQMhA2N1uH12izDzSwu-M1t7tXXbO4hINyHun0JFFB7Mte8nG8z97T9hgZDzRUMeXYmVybLGUqrwEJWk47s2Obl5wbQFDWHhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/quotation/search?size=30&q=03",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"quotation",
+						"search"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "30"
+						},
+						{
+							"key": "name",
+							"value": "B",
+							"disabled": true
+						},
+						{
+							"key": "q",
+							"value": "03"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete quotation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJUZXN0IiwianRpIjoiN2NhMTI2MjgtNDBhNi00MDQxLTkxYWQtMTMzMjAxNDZjMGI4IiwiY2xpZW50X2lkIjoiYmVuaG9zdCJ9.EyG3_OfGFzsrnLmea6BvdHlcyMfdroJz8cf9csDjpk0AcTUoWmBrd05jMWTpEBIKYuokuEvFScMmIAAOu_c8W8FqYfujGaEPEtCOHoRzTfz0v1vyEfU7EqpAaglFi1npQTF_7XJx8lXnVTYipikR3_RtrcTcyTUwqx7qD9pGibRovZCpDiUUv4YvvKAmEwTGDtpVnMiklfGfwPdfbDHp9hFVnqYsg0YkJX2q1IDAH_dc398LD3zIusQMhA2N1uH12izDzSwu-M1t7tXXbO4hINyHun0JFFB7Mte8nG8z97T9hgZDzRUMeXYmVybLGUqrwEJWk47s2Obl5wbQFDWHhg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[1013, 1011]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/quotation/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"quotation",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/auth/refresh?token=49564345-6e89-4717-821d-2842012eb1fa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"auth",
+						"refresh"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "49564345-6e89-4717-821d-2842012eb1fa"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download PDF",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjc5MDY0NzIyLCJleHAiOjE2NzkwNjUwMjJ9.MoST-5LX7J-G6Ultiwzeyj7uDACRz-pP3Sggw6AK2cB_BeIHTDduN-oPuz4p6bmozcLrRXyCzSVddbx1G4OqdNdXdHLX54nOc3d1OTdvQpnezYBx-TixkHIfHdtryZVn_v2U20q-tUfjqksNnywF7BhplEorSp0DOfSvDPgkuTDo6bgCsiANWtgGbT3g6mdB-kJL3f2_Iac47zkJglYY_h817Qic_s1BztSZWExC2OGytpSRXWQtntNVE_KW35Jd5kJT-QSN1CuSreF6dU8V9uAVHHPKLAwJaOG-6J3e773MkOkhO1EHlQqMq3SXq1pR9LnV0wf1c5Ck9QK5uNcdHg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/quotation/1025/download",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"quotation",
+						"1025",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save quotation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJUZXN0IiwiaWF0IjoxNjc5NDA3MjI5LCJleHAiOjE2Nzk0MDc1Mjl9.XI6on6FpaMwRX_SE9Vr6vGT4y3hi3u79LOmn54sgZoeq2pqCeBO62LbLxg2w4Hn1deu1haV-Sc3I7T24z0rHO4-wyXPMH3nrU2s_iHrin8-dlsW0x1-qgeraGRGF047KBqgbJLWJH0Ga3zNMtEzif7z7UfYDHXD6a05VhKH5JwLR28VmdJrZZ5yH16ZVQnPOiCVV_Lh0BLXtLn2VqmcNW5C8VcxsrIdV5kSBvIHwcquqz-NQLwX2mmlyCb4IBx2IucAqebOVNyUknRN-SBOLnkHq_BwyrU7w4fGP_Rj7B5JCk1oGX3iWAVR7VbqI3Pgsfay9aP0iREwBlM2L4HyC7g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/quotation/1001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"quotation",
+						"1001"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

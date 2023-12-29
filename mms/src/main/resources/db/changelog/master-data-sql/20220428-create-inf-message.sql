@@ -1,0 +1,39 @@
+DROP TABLE IF EXISTS `INF_MESSAGE`;
+
+CREATE TABLE INF_MESSAGE (
+	ID bigint not null auto_increment,
+	
+	REQUEST_ID varchar(50),
+	TENANT_ID varchar(20),
+	`TYPE` varchar(20),
+	CORRELATION_DATA longtext,
+	INF_DIRECTION varchar(10),
+	PROC_STATUS varchar(20),
+	PROC_ERROR_ID bigint,
+	
+	REQ_TYPE varchar(20),
+	REQ_CHANNEL_NAME varchar(50),
+	REQ_TARGET_INFO varchar(1000),
+	REQ_MESSAGE_CLASS_NAME varchar(200),
+	REQ_MESSAGE longtext,
+	
+	INVOKATION_COUNT integer,
+	LAST_INVOKATION_TIME datetime,
+	
+	HEARTBEAT_COUNT integer,
+	LAST_HEARTBEAT_TIME datetime,
+	
+	RESP_TYPE varchar(20),
+	RESP_CHANNEL_NAME varchar(50),
+	RESP_TARGET_INFO varchar(1000),
+	RESP_MESSAGE longtext,
+	
+	CREATED_AT datetime,
+	UPDATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+) CHARSET=utf8;
+
+CREATE INDEX IX_INF_MESSAGE ON INF_MESSAGE (
+	REQUEST_ID
+);

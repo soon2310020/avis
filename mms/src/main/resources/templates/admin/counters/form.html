@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+<th:block layout:fragment="op-head">
+    <style type="text/css">
+        .op-menus {}
+
+        .op-menus li {
+            list-style: none;
+        }
+
+        .op-menus>ul {
+            padding-left: 10px;
+            -webkit-padding-start: 10px;
+
+        }
+
+        .title-scan {
+            font-size: 6px;
+            text-align: center;
+        }
+
+        .scan-button {
+            margin-left: 10px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .tooling-search-button {
+                display: flex;
+                /*justify-content: flex-end;*/
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tooling-search-button {
+                margin-top: 20px;
+            }
+        }
+        .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{
+            visibility:hidden !important;
+        }
+        .hide_account{
+            display: none !important;
+        }
+        [type='file'],
+        [type='image'] {
+            cursor: pointer;
+        }
+        [type='file']::-webkit-file-upload-button {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+
+        .downtime-date-time {
+            display: flex;
+        }
+        .downtime-date-time .new-content-detail, .downtime-date-time .ant-calendar-picker-input {
+            width: 100%;
+        }
+
+        .ant-input:not(.tool-wrapper .ant-input) {
+            font-size: 14px;
+            color: #3491fb;
+            text-decoration: none;
+            background-color: #f5f5f5;
+            border: none;
+            line-height: 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            text-align: left !important;
+        }
+        .ant-calendar-picker-icon {
+            left: 10px;
+        }
+        .ant-input {
+            padding: 9px 0 9px 35px;
+            width: 340px;
+            height: 35px;
+            margin-right: 10px;
+        }
+        .custom-dropdown{
+          width: fit-content;
+        }
+        .custom-dropdown .custom-dropdown-button{
+          min-width: 145px;
+          justify-content: space-between;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+
+        <div class="hide_account alert alert-dark" role="alert">
+            <h5 class="alert-heading mb-0"><i class="fa fa-user"></i>
+                <span v-if="isNew" th:text="#{install_counter}"></span>
+                <span v-else th:text="#{edit_counter}"></span>
+            </h5>
+        </div>
+
+        <form class="needs-validation" @submit.prevent="submit">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave" id="remove_profile"> </div>
+                    <div class="card wave_counter1">
+                        <div class="card-header">
+                            <strong th:text="#{counter}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label col-12" for="counter-id">
+                                    <span>{{resources['counter_id']}}</span>
+                                    <span class="badge-require"></span>
+                                </label>
+
+                                <div style="display: flex;" class="col-md-10 col-12">
+                                    <input type="text" id="counter-id" v-model="counter.equipmentCode"
+                                        :readonly="readonly || hasParam" class="form-control" th:placeholder="#{counter_id}"
+                                        required>
+                                    <input type="hidden" v-model="counter.equipmentStatus">
+                                    <div v-if="isShowQrScan" v-on:click="openQrScan" class="scan-button">
+                                        <img height="20" width="20" src="/images/common/qr-code.png" />
+                                        <div class="title-scan" th:text="#{scan_counter}"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label col-12" for="location"  th:text="#{tooling_id}"><span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-7 col-12">
+                                    <input type="hidden" v-model="counter.moldId">
+                                    <input th:placeholder="#{tooling_id}" type="text" id="location"
+                                        v-model="toolingShow" readonly="readonly" class="form-control">
+                                </div>
+                                <div class="col-md-3 tooling-search-button col-12" v-if="isNewPage">
+                                    <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                        data-target="#op-mold-search" th:text="#{tooling_search}"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card wave_counter2">
+                        <div class="card-header">
+                            <strong th:text="#{installation_info}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label col-12" for="preset" th:text="#{preset}"> <span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10 col-12">
+                                    <input type="number" id="preset" min="0" max="99999999"
+                                        oninput="Common.maxLength(this, 8)" v-model="counter.presetCount"
+                                        :readonly="readonly" class="form-control" th:placeholder="#{preset}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label col-12" for="installedAt" th:text="#{installation_date}"> <span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10 col-12">
+                                    <a-date-picker v-model="installedAtValue" format="YYYY-MM-DD (dddd)" @change="onChangeInstalledAt"
+                                                   th:placeholder="#{installation_date}"
+                                                   :disabled="readonly"
+                                    >
+                                      <svg
+                                              slot="suffixIcon"
+                                              xmlns="http://www.w3.org/2000/svg"
+                                              width="14.188"
+                                              height="14.426"
+                                              viewBox="0 0 14.188 14.426"
+                                      >
+                                        <g
+                                                id="Component_1_9"
+                                                data-name="Component 1 – 9"
+                                                transform="translate(0.25 0.25)"
+                                        >
+                                          <path
+                                                  id="Subtraction_4"
+                                                  data-name="Subtraction 4"
+                                                  d="M6.678,11.635H0V10.471L.005,2.327V1.164h1.74V0H2.909V1.164H7.562V0H8.726V1.164h1.745v5.7a4.073,4.073,0,0,0-1.164.243V4.072H1.164v6.4H6.651a4.147,4.147,0,0,0,.026,1.162ZM4.415,9.308h0L2.592,7.562l.317-.339L4.415,8.789,7.6,5.6l.339.269L4.416,9.308Z"
+                                                  transform="translate(0 0)"
+                                                  fill="#9d9d9d"
+                                                  stroke="#9d9d9d"
+                                                  stroke-width="0.5"
+                                          />
+                                          <path
+                                                  id="Subtraction_2"
+                                                  data-name="Subtraction 2"
+                                                  d="M3.217,6.433A3.217,3.217,0,1,1,6.433,3.217,3.22,3.22,0,0,1,3.217,6.433Zm0-4.871a.3.3,0,0,0-.3.3V3.9a.3.3,0,0,0,.163.265l1.359.679a.3.3,0,0,0,.4-.132.3.3,0,0,0-.133-.4l-1.195-.6V1.858A.3.3,0,0,0,3.217,1.562Z"
+                                                  transform="translate(7.504 7.742)"
+                                                  fill="#9d9d9d"
+                                          />
+                                        </g>
+                                      </svg>
+                                    </a-date-picker>
+
+<!--                                    <input type="text" id="installedAt" v-model="counter.installedAt"
+                                        :readonly="readonly" class="form-control" th:placeholder="#{installation_date}">-->
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="currentUser?.company?.companyCode?.toLowerCase() == 'emoldino'">
+                                <label class="col-md-2 col-form-label col-12" for="installedAt" th:text="#{subscription_term}"> <span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10 col-12">
+                                    <custom-dropdown
+                                            :list-item="listTerms"
+                                            :title-field="'title'"
+                                            :default-title="'value'"
+                                            :default-item="subscriptionTermSelected"
+                                            @change="handleChangeTerm"
+                                    ></custom-dropdown>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label col-12" for="installedBy" th:text="#{installation_personnel}">
+                                    <span class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10 col-12">
+                                    <input type="text" id="installedBy" v-model="counter.installedBy"
+                                        :readonly="readonly" class="form-control" th:placeholder="#{installation_personnel}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label col-12" for="file" th:text="#{document}"> <span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10 col-12">
+<!--                                    <button class="op-upload-button-wrap btn btn-outline-success" v-if="isNewPage">-->
+<!--                                        <span th:text="#{upload_files}"></span>-->
+<!--                                        <input type="file" id="file" @change="selectedFile" multiple accept="image/*" />-->
+<!--                                    </button>-->
+
+
+<!--                                    <div>-->
+<!--                                        <button v-for="file in files" class="btn btn-outline-dark btn-sm mr-1"-->
+<!--                                            disabled="disabled">-->
+<!--                                            {{file.name}}-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+
+<!--                                    <div>-->
+
+<!--                                        <img v-for="file in counterFiles" :src="file.saveLocation" class="mr-1 mb-1"-->
+<!--                                            style="max-width: 100%; border: 1px solid #ccc;" />-->
+
+<!--                                    </div>-->
+                                    <div class="op-upload-button-wrap">
+                                        <button id="partPictureFile" class="btn btn-outline-success" th:text="#{upload_photo}"></button>
+                                        <input type="file" id="file" ref="fileupload" @change="selectedThirdFiles" style="height: 40px;width: 100%" accept=".gif, .jpg, .jpeg, .png, .doc, .zip, .pdf, .docx, .xls, .xlsx, .ppt, .pptx" />
+                                    </div>
+                                    <preview-images-system
+                                            :is-viewing="false"
+                                            @delete-uploaded-img="deleteFileStorage"
+                                            @delete-img="deleteThirdFiles"
+                                            :images="thirdFiles"
+                                            :images-uploaded="partPictureFiles"
+                                            :file-types="fileTypes.TERMINAL_PICTURE"
+                                    ></preview-images-system>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label col-12" for="textarea-input" th:text="#{memo}"></label>
+                                <div class="col-md-10 col-12">
+                                    <textarea class="form-control" id="textarea-input" v-model="counter.memo"
+                                        :readonly="readonly" name="textarea-input" rows="3"
+                                              th:placeholder="#{memo}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card wave_save">
+                        <div class="card-body text-center">
+                            <button type="button" class="btn btn-primary" v-if="isEditPage" @click="cancel()" th:text="#{save_changes}"></button>
+                            <button type="submit" class="btn btn-primary" v-if="isNewPage" th:text="#{install_counter}"></button>
+                            <button type="button" class="btn btn-default" v-if="isNewPage" @click="cancel()" th:text="#{cancel}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        <!-- Modal -->
+        <mold-search :resources="resources"></mold-search>
+        <qr-scan :resources="resources"></qr-scan>
+        <confirm-modal :resources="resources"></confirm-modal>
+        <terminal-details :resources="resources"></terminal-details>
+
+        <preset-form :resources="resources"></preset-form>
+
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/counters/form.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

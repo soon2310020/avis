@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tooling-pdf" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="7fe09ca6-e479-4860-aa61-81f46d848a45">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="styleHeader" mode="Opaque" forecolor="#000000" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#C8CED3"/>
+			<bottomPen lineWidth="1" lineColor="#C8CED3"/>
+		</box>
+	</style>
+	<style name="styleTD" mode="Opaque" forecolor="#000000" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#C8CED3"/>
+			<bottomPen lineWidth="0.5" lineColor="#C8CED3"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 1]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F2F2F2"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="dataListMold" uuid="c5f9c31e-6091-4dfd-a257-9a3ae9aa29e3">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="toolingID" class="java.lang.String"/>
+		<field name="counter" class="java.lang.String"/>
+		<field name="location" class="java.lang.String"/>
+		<field name="lastShot" class="java.lang.String"/>
+		<field name="cycleTime" class="java.lang.String"/>
+		<field name="op" class="java.lang.String"/>
+		<field name="status" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="labelTooling" class="java.lang.String"/>
+	<parameter name="dataListMold" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="59" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="802" height="50" uuid="3c1ca7aa-741c-4cdd-ae48-d5ba51eb49db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{labelTooling}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="249" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="0" width="802" height="249" uuid="00e8a7ac-e19c-466e-b84d-15cdd1323d08">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="styleHeader"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="styleTD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataListMold" uuid="eb44bd7f-23cd-43fe-bd47-0dd2bf2ed333">
+						<dataSourceExpression><![CDATA[$P{dataListMold}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="140" uuid="4d967446-7e54-4cf6-9eb2-b5098c50c3e5">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="styleHeader" height="30" rowSpan="1">
+							<staticText>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="30" uuid="b01ed64b-c3c7-447d-9629-febb52ebed6c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial Unicode MS" size="13" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Tooling ID]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="styleTD" height="30">
+							<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+							<textField  isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="130" height="20" uuid="0b07165a-2e85-43c7-9715-2d8ed9fcb32e"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineColor="#FFFFFF"/>
+								</box>
+								<textElement>
+									<font fontName="Arial Unicode MS" size="11" pdfEncoding="Identity-H"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{toolingID}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="aca4e768-a894-4bac-bcd7-87714fd5805f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="styleHeader" height="30" rowSpan="1">
+							<staticText>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="30" uuid="74270dd5-fa8a-4e89-b044-fe85bb5a9b5a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial Unicode MS" size="13" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Counter]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="styleTD" height="30">
+							<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" uuid="4c6ebdf0-2959-483a-88c7-e71341ccf620"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Arial Unicode MS" size="11" pdfEncoding="Identity-H"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{counter}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="130" uuid="a2867fed-ed59-4147-b02a-c5b295a8001d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="styleHeader" height="30" rowSpan="1">
+							<staticText>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="130" height="30" uuid="5b1a6d0d-d438-4281-b2cb-ced333aa2c31"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial Unicode MS" size="13" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Location]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="styleTD" height="30">
+							<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+							<textField  isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="20" uuid="2f17ff42-82f5-4be3-b1c6-5444d962793a"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Arial Unicode MS" size="11" pdfEncoding="Identity-H"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="8de13ab5-55d6-47b1-a512-220a42ac97e4">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="styleHeader" height="30" rowSpan="1">
+							<staticText>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="110" height="30" uuid="d2d8004b-1f2f-4cc5-8079-77d9ba750387"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial Unicode MS" size="13" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Last Shot]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="styleTD" height="30">
+							<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+							<textField  isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="ea0b3c3d-c7ca-4d84-a27f-1843a722e0c2"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Arial Unicode MS" size="11" pdfEncoding="Identity-H"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{lastShot}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="3c04b323-2aa8-4552-a3fc-7299950a3b41">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="styleHeader" height="30" rowSpan="1">
+							<staticText>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="110" height="30" uuid="78d7df26-9869-4563-a696-405d7ef7b689"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial Unicode MS" size="13" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Cycle Time (sec)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="styleTD" height="30">
+							<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+							<textField  isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="5ac09749-e217-4d70-b470-19c61074d3dd"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Arial Unicode MS" size="11" pdfEncoding="Identity-H"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cycleTime}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="9fcf605d-1c8d-40d8-92f4-4fdd7630b1a4">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="styleHeader" height="30" rowSpan="1">
+							<staticText>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="110" height="30" uuid="78d7df26-9869-4563-a696-405d7ef7b689"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial Unicode MS" size="13" isBold="true"/>
+								</textElement>
+								<text><![CDATA[OP]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="styleTD" height="30">
+							<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+							<textField  isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="52d72d27-dfa8-4052-a15d-c5d1ea35bdcd"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Arial Unicode MS" size="11" pdfEncoding="Identity-H"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{op}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="56da1a7d-f3a5-4a4b-9b24-7e1768dd17e0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="styleHeader" height="30" rowSpan="1">
+							<staticText>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="30" uuid="ff5f6d40-ede8-4ce0-b128-9405e197cd72"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial Unicode MS" size="13" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Status]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="styleTD" height="30">
+							<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+							<textField  isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="90" height="20" uuid="812bd0f4-b8dc-47d0-894c-1763aa6307dc"/>
+								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+									<pen lineColor="#FFFFFF"/>
+								</box>
+								<textElement textAlignment="Center">
+									<font fontName="Arial Unicode MS" size="11" pdfEncoding="Identity-H"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

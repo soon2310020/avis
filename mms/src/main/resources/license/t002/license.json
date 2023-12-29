@@ -1,0 +1,8 @@
+{
+  "excludeMenus": [
+    "CM1060:Codelist Center",
+    "AS1050:Work Order",
+    "AN6010:Process Analysis",
+    "SC6060:Part Quality Risk"
+  ]
+}

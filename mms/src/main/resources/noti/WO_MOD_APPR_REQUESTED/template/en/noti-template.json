@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName} modification requested",
+  "content": "${senderName} (${senderCompanyName}) has requested a change in your Work Order request.",
+  "emailTitle": "Edit request is sent to you by ${senderName} (${senderCompanyName}).",
+  "emailContent": "Edit request to Work Order ID ${workOrderId} by ${senderName} (${senderCompanyName})."
+}

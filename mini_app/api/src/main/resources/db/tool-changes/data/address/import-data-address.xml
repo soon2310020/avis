@@ -1,0 +1,55 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!-- import-data -->
+    <changeSet id="2023-08-28:import-data-address" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="address_province"/>
+            <tableExists tableName="address_district"/>
+            <tableExists tableName="address_ward"/>
+        </preConditions>
+
+        <sqlFile path="address_province_202308281155.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="address_district_202308281158.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="address_ward_202308281200.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="2023-10-19:alter-address-tables_add_root_name" author="SonTC">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="address_district" columnName="root_name"/>
+            </not>
+            <not>
+                <columnExists tableName="address_province" columnName="root_name"/>
+            </not>
+            <not>
+                <columnExists tableName="address_ward" columnName="root_name"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="address_province">
+            <column name="root_name" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="address_district">
+            <column name="root_name" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="address_ward">
+            <column name="root_name" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2023-11-30:update-data-root-name-address" author="SONTC">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="address_province"/>
+            <tableExists tableName="address_district"/>
+            <tableExists tableName="address_ward"/>
+            <columnExists tableName="address_ward" columnName="root_name"/>
+            <columnExists tableName="address_province" columnName="root_name"/>
+            <columnExists tableName="address_district" columnName="root_name"/>
+        </preConditions>
+
+        <sqlFile path="update_address_province_root_name_data.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="update_address_district_root_name_data.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="update_address_ward_root_name_data.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+</databaseChangeLog>

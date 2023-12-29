@@ -1,0 +1,20 @@
+package vn.com.twendie.avis.queue.constant;
+
+public class QueueConstant {
+
+    public interface RoutingKeys {
+
+        String UPLOAD_IMAGE_START_TRIP = "UPLOAD_IMAGE_START_TRIP";
+        String UPLOAD_IMAGE_CUSTOMER_GET_IN = "UPLOAD_IMAGE_CUSTOMER_GET_IN";
+        String UPLOAD_IMAGE_CUSTOMER_GET_OUT = "UPLOAD_IMAGE_CUSTOMER_GET_OUT";
+        String UPLOAD_IMAGE_FINISH_TRIP = "UPLOAD_IMAGE_FINISH_TRIP";
+
+        String UPLOAD_IMAGE_JOURNEY_DIARY_COST = "UPLOAD_IMAGE_JOURNEY_DIARY_COST";
+
+        String UPDATE_TOTAL_KM_GPS_JOURNEY_DIARY = "UPDATE_TOTAL_KM_GPS_JOURNEY_DIARY";
+
+        String PUSH_NOTIFICATION = "PUSH_NOTIFICATION";
+
+    }
+
+}

@@ -1,0 +1,10 @@
+{
+  "notiPriority": "MEDIUM",
+  "description": "New user requesting access",
+  "webEnabled": true,
+  "mobileEnabled": false,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/admin/users?status=requested"
+}

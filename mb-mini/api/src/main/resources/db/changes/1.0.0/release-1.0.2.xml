@@ -1,0 +1,1528 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="13-01-create-table-mbal_package" author="Ben">
+        <createTable tableName="mbal_package">
+
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="insurance_fee" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="str_insurance_fee" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="insurance_fee_str" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="package_code" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_code" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="death_benefit" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="str_death_benefit" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="14-01-create-table-mic_package" author="Ben">
+        <createTable tableName="mic_package">
+
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="main_one" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_two" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_one" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_two" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_three" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_four" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_five" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_six" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_seven" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_one" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_one_one" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_one_two" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_two" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_three" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_four" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="14-01-create-table-insurance_package" author="Ben">
+        <createTable tableName="insurance_package">
+
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="package_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="total_fee" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_benefit" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="issuer" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_package_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_one" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_two" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_three" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_four" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mbal_package_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_fee_payment_time" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_periodic_fee_payment" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mbal_fee_payment_time" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mbal_periodic_fee_payment" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_IP_MBAL_package_id"
+                                 baseTableName="insurance_package"
+                                 baseColumnNames="mbal_package_id"
+                                 referencedTableName="mbal_package"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="FK_IP_MIC_package_id"
+                                 baseTableName="insurance_package"
+                                 baseColumnNames="mic_package_id"
+                                 referencedTableName="mic_package"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+
+    <changeSet id="14-01-create-table-insurance_contract" author="Ben">
+        <createTable tableName="insurance_contract">
+
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="insurance_package_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="active_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="str_insurance_fee" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_contract_num" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mbal_contract_num" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_fee_payment_time" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_periodic_fee_payment" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mbal_fee_payment_time" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mbal_periodic_fee_payment" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="insurance_contract"
+                                 constraintName="FK_contract_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="customer"/>
+        <addForeignKeyConstraint baseColumnNames="insurance_package_id"
+                                 baseTableName="insurance_contract"
+                                 constraintName="FK_contract_insurance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_package"/>
+
+    </changeSet>
+
+    <changeSet id="14-01-create-table-insurance_request" author="Ben">
+        <createTable tableName="insurance_request">
+
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="insurance_package_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="question_one" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="question_two" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="question_three" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="other_question" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="insurance_request"
+                                 constraintName="FK_request_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="customer"/>
+        <addForeignKeyConstraint baseColumnNames="insurance_package_id"
+                                 baseTableName="insurance_request"
+                                 constraintName="FK_request_insurance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_package"/>
+
+    </changeSet>
+
+    <changeSet id="15-01-create-table-illustration_table" author="Ben">
+
+        <createTable tableName="illustration_table">
+
+            <column name="illustration_number" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="package_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="insurance_package_id" type="INTEGER">/>
+            </column>
+
+            <column name="mbal_package_id" type="INTEGER">/>
+            </column>
+
+            <column name="mic_package_id" type="INTEGER">/>
+            </column>
+
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="package_code" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="death_no_accident_from" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="str_death_no_accident_from" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="death_no_accident_to" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="str_death_no_accident_to" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="death_accident" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="str_death_accident" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="death_accident_yes_traffic" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="death_accident_no_traffic" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sup_inpatient_hospital_fee" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="insurance_fee" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="base_insurance_fee" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="topup_insurance_fee" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pay_frequency" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_frequency" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="hs_time_frequency" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hscr_fee" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="illustration_table"
+                                 constraintName="FK_illustration_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="customer"/>
+        <addForeignKeyConstraint baseColumnNames="insurance_package_id"
+                                 baseTableName="illustration_table"
+                                 constraintName="FK_illustration_insurance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_package"/>
+        <addForeignKeyConstraint baseColumnNames="mbal_package_id"
+                                 baseTableName="illustration_table"
+                                 constraintName="FK_mbal_package_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="mbal_package"/>
+        <addForeignKeyConstraint baseColumnNames="mic_package_id"
+                                 baseTableName="illustration_table"
+                                 constraintName="FK_mic_package_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="mic_package"/>
+
+    </changeSet>
+
+    <changeSet id="15-01-create-table-pav_table" author="Ben">
+        <createTable tableName="pav_table">
+
+            <column name="package_code" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age_insured" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="illustrated_account_value" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="illustrated_refundvalue" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="committedaccount_value" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="committed_refund_value" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="insurance_fee" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="death_benefit" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="illustration_number" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="number_of_contract_year" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addPrimaryKey tableName="pav_table" columnNames="illustration_number, number_of_contract_year"/>
+        <addForeignKeyConstraint constraintName="FK_pav_table_illustration_illustration_number"
+                                 baseTableName="pav_table"
+                                 baseColumnNames="illustration_number"
+                                 referencedTableName="illustration_table"
+                                 referencedColumnNames="illustration_number"/>
+
+    </changeSet>
+
+    <changeSet id="15-01-set-unique-column-mb-id" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="customer" columnName="mb_id"/>
+        </preConditions>
+        <addUniqueConstraint tableName="customer" columnNames="mb_id"/>
+    </changeSet>
+
+    <changeSet id="15-01-create-table-insurance_payment" author="Ben">
+        <createTable tableName="insurance_payment">
+
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_fee" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mbal_insurance_fee" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_insurance_fee" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fee_payment_time" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="periodic_fee_payment" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="auto_pay" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="installment" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="rm_name" type="VARCHAR(50)">
+            </column>
+
+            <column name="rm_code" type="VARCHAR(50)">
+            </column>
+
+            <column name="presenter_phone" type="VARCHAR(50)">
+            </column>
+            <column name="root_account" type="VARCHAR(50)">
+            </column>
+            <column name="transaction_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tran_status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="update_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="insurance_payment"
+                                 constraintName="FK_request_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="customer"/>
+
+    </changeSet>
+
+    <changeSet id="16-01-set-unique-column-name-table-mic_package" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="mic_package" columnName="name"/>
+        </preConditions>
+        <addUniqueConstraint tableName="mic_package" columnNames="name"/>
+    </changeSet>
+
+    <changeSet id="16-01-add-column-table-mbal_package" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="mbal_package" columnName="logo"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="mbal_package">
+            <column name="logo" type="VARCHAR(255)" remarks="Url logo gói bảo hiểm"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="16-01-add-column-table-insurance_contract" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_contract" columnName="logo"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_contract">
+            <column name="logo" type="VARCHAR(255)" remarks="Url logo gói bảo hiểm"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="17-01-add-column-table-insurance_contract" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_contract"/>
+        </preConditions>
+        <addColumn tableName="insurance_contract">
+            <column name="package_type" type="VARCHAR(50)" defaultValue="FIX_COMBO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_package_id" type="INTEGER">
+            </column>
+            <column name="mbal_package_id" type="INTEGER"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="mbal_package_id"
+                                 baseTableName="insurance_contract"
+                                 constraintName="FK_contract_mbal_package_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="mbal_package"/>
+        <addForeignKeyConstraint baseColumnNames="mic_package_id"
+                                 baseTableName="insurance_contract"
+                                 constraintName="FK_contract_mic_package_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="mic_package"/>
+    </changeSet>
+
+    <changeSet id="17-01-add-column-table-mbal_package" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="mbal_package" columnName="payfrq_cd"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="mbal_package">
+            <column name="payfrq_cd" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-02-03-insert-mic-insurance-package" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableIsEmpty tableName="mic_package"/>
+            <tableIsEmpty tableName="mbal_package"/>
+            <tableIsEmpty tableName="insurance_package"/>
+        </preConditions>
+        <sqlFile path="db/data/insert_mic_insurance_package.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="04-02-add-column-table-insurance_request" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_request"/>
+        </preConditions>
+        <addColumn tableName="insurance_request">
+            <column name="package_type" type="VARCHAR(50)" defaultValue="FIX_COMBO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mic_package_id" type="INTEGER">
+            </column>
+            <column name="mbal_package_id" type="INTEGER"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="mbal_package_id"
+                                 baseTableName="insurance_request"
+                                 constraintName="FK_request_mbal_package_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="mbal_package"/>
+        <addForeignKeyConstraint baseColumnNames="mic_package_id"
+                                 baseTableName="insurance_request"
+                                 constraintName="FK_request_mic_package_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="mic_package"/>
+        <dropNotNullConstraint tableName="insurance_request" columnName="insurance_package_id"/>
+    </changeSet>
+
+    <changeSet id="2023-02-07-create-table-baas_pay_on_behalf" author="DatVQ">
+        <createTable tableName="baas_pay_on_behalf">
+
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="insurance_payment_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="transaction_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_message_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="error_code" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tran_status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ft_number" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="update_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="insurance_payment_id"
+                                 baseTableName="baas_pay_on_behalf"
+                                 constraintName="FK_payment-baas-pay-on-behalf-id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_payment"/>
+
+    </changeSet>
+
+    <changeSet id="2023-02-09-create-question_response-table" author="Ben">
+        <createTable tableName="question_response">
+            <column name="insurance_request_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="property_key" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="property_value" type="jsonb">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="question_response" columnNames="insurance_request_id, property_key"/>
+
+        <addForeignKeyConstraint baseTableName="question_response" baseColumnNames="insurance_request_id"
+                                 constraintName="FK_question_response_insurance_request"
+                                 referencedTableName="insurance_request"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2023-02-09-update-insurance_request-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="insurance_request"/>
+        </preConditions>
+        <dropColumn tableName="insurance_request">
+            <column name="question_one" type="BOOLEAN"></column>
+            <column name="question_two" type="BOOLEAN"></column>
+            <column name="question_three" type="BOOLEAN"></column>
+            <column name="other_question" type="BOOLEAN"></column>
+        </dropColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-02-12-token_request-tables" author="Ben">
+        <createTable tableName="refresh_token">
+            <column name="token" type="VARCHAR(255)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="mb_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="issued_at" type="DATETIME"/>
+            <column name="expires_at" type="DATETIME"/>
+        </createTable>
+
+        <createTable tableName="access_token_id">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="refresh_token_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ati" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expires_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-02-12-update-customer-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="customer"/>
+        </preConditions>
+        <addColumn tableName="customer">
+            <column name="full_name" type="VARCHAR(50)">
+            </column>
+            <column name="id_card_type" type="VARCHAR(50)">
+            </column>
+        </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-02-13-update-illustration_table-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="illustration_table"/>
+        </preConditions>
+        <dropColumn tableName="illustration_table">
+            <column name="hs_time_frequency" type="VARCHAR(100)">
+            </column>
+            <column name="hscr_fee" type="VARCHAR(100)">
+            </column>
+        </dropColumn>
+
+    </changeSet>
+
+    <changeSet id="2023-02-14-update-customer-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="customer"/>
+        </preConditions>
+        <dropNotNullConstraint tableName="customer" columnName="email"></dropNotNullConstraint>
+    </changeSet>
+
+    <changeSet id="2023-02-17-update-baas_pay_on_behalf-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="baas_pay_on_behalf"/>
+        </preConditions>
+        <dropNotNullConstraint tableName="baas_pay_on_behalf" columnName="tran_status"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="baas_pay_on_behalf" columnName="ft_number"></dropNotNullConstraint>
+    </changeSet>
+
+    <changeSet id="18-02-add-column-mic_amount-table-insurance_contract" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_contract" columnName="mic_amount"/>
+                <columnExists tableName="insurance_contract" columnName="mbal_amount"/>
+                <columnExists tableName="insurance_contract" columnName="mbal_app_no"/>
+                <columnExists tableName="insurance_contract" columnName="transaction_id"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_contract">
+            <column name="mic_amount" type="VARCHAR(50)"/>
+            <column name="mbal_amount" type="VARCHAR(50)"/>
+            <column name="mbal_app_no" type="VARCHAR(50)"/>
+            <column name="transaction_id" type="VARCHAR(50)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="18-02-renameColumn-column-mbal_contract_num-table-insurance_contract" author="DatVQ">
+        <renameColumn columnDataType="VARCHAR(45)"
+                      newColumnName="mbal_policy_number"
+                      oldColumnName="mbal_contract_num"
+                      remarks="So HDBH MBAL"
+                      tableName="insurance_contract"/>
+        <renameColumn tableName="insurance_contract" oldColumnName="active_date" newColumnName="mic_issue_date"/>
+        <renameColumn tableName="insurance_contract" oldColumnName="creation_time" newColumnName="mbal_issue_date"/>
+    </changeSet>
+
+    <changeSet id="18-02-remove-constraints-nullable-insurance_package_id" author="DatVQ">
+        <dropNotNullConstraint tableName="insurance_contract" columnName="insurance_package_id" columnDataType="INTEGER"/>
+    </changeSet>
+
+    <changeSet id="2023-02-19-update-insurance_contract-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="insurance_contract"/>
+        </preConditions>
+        <dropNotNullConstraint tableName="insurance_contract" columnName="mbal_issue_date"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="insurance_contract" columnName="insurance_package_id"></dropNotNullConstraint>
+        <addNotNullConstraint tableName="insurance_contract" columnName="transaction_id"></addNotNullConstraint>
+    </changeSet>
+
+    <changeSet id="2023-02-21-update-illustration_table-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="illustration_table"/>
+        </preConditions>
+        <dropNotNullConstraint tableName="illustration_table" columnName="topup_insurance_fee"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="illustration_table" columnName="pay_frequency"></dropNotNullConstraint>
+        <dropNotNullConstraint tableName="illustration_table" columnName="time_frequency"></dropNotNullConstraint>
+    </changeSet>
+
+    <changeSet id="2023-02-22-update-baas_pay_on_behalf-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="baas_pay_on_behalf"/>
+        </preConditions>
+        <dropNotNullConstraint tableName="baas_pay_on_behalf" columnName="error_code"></dropNotNullConstraint>
+        <addColumn tableName="baas_pay_on_behalf">
+            <column name="detail_error_message" type="VARCHAR(1000)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-02-22-add/rename-baas_pay_on_behalf-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="baas_pay_on_behalf"/>
+        </preConditions>
+        <renameColumn tableName="baas_pay_on_behalf" oldColumnName="transaction_id" newColumnName="baas_transaction_id"/>
+        <addColumn tableName="baas_pay_on_behalf">
+            <column name="mb_transaction_id" type="VARCHAR(50)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-02-25-update-illustration_table-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="illustration_table"/>
+        </preConditions>
+        <dropNotNullConstraint tableName="illustration_table" columnName="sup_inpatient_hospital_fee"></dropNotNullConstraint>
+    </changeSet>
+
+    <changeSet id="2023-02-26-update-insurance_contract-table" author="Ben">
+        <preConditions>
+            <tableExists tableName="insurance_contract"/>
+        </preConditions>
+        <dropNotNullConstraint tableName="insurance_contract" columnName="mbal_policy_number"></dropNotNullConstraint>
+    </changeSet>
+
+    <changeSet id="2023-02-27-add-column-type-table-insurance_package" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_package" columnName="type"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_package">
+            <column name="type" type="VARCHAR(50)" remarks="Loại gói bảo hiểm: FREE_STYLE, FIX_COMBO"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-04-13-add-column-table-insurance_package" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_package" columnName="category"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_package">
+            <column name="category" type="VARCHAR(255)" remarks="Loại gói 5 năm, 10 năm (HAPPY, HEALTHY)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-02-27-insert-insurance-package-8" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_package"/>
+        </preConditions>
+        <sqlFile path="db/data/insert_insurance_package_8.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-02-28-update_mbal_package_name" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_package"/>
+        </preConditions>
+        <sqlFile path="db/data/update_mbal_package_name.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-03-01-update_total_benefit_insurance_package" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_package"/>
+        </preConditions>
+        <sqlFile path="db/data/update_total_benefit_insurance_package.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-03-01-create-table-import_occupation_history" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="import_occupation_history"/>
+            </not>
+        </preConditions>
+        <createTable tableName="import_occupation_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="filename" type="VARCHAR(255)"/>
+
+            <column name="row_number" type="int"/>
+
+            <column name="error_row" type="VARCHAR"/>
+
+            <column name="creation_time" type="datetime"/>
+
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="-2023-03-04-add-column-table-insurance_payment" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_payment" columnName="control_state"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="control_state" type="VARCHAR(255)" defaultValue="WAITING" remarks="Trạng thái đối soát"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-03-06-email_and_password_credential_reset-tables" author="Ben">
+        <createTable tableName="email_and_password_credential_reset">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email_and_password_credential_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valid_from" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valid_until" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="verification_token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="email_and_password_credential_reset_status">
+            <column name="id" type="BIGINT" autoIncrement="true" startWith="1">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="email_and_password_credential_reset_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_timestamp" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="email_and_password_credential_reset"
+                                 baseColumnNames="email_and_password_credential_id"
+                                 constraintName="FK_EAPCR_UAPC_email_and_password_credential_id"
+                                 referencedTableName="email_and_password_credential"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="email_and_password_credential_reset_status"
+                                 baseColumnNames="email_and_password_credential_reset_id"
+                                 constraintName="FK_EAPCRS_UAPCR_email_and_password_credential_reset_id"
+                                 referencedTableName="email_and_password_credential_reset"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2023-03-06-add-unique-table-package_photo" author="DatVQ">
+        <addUniqueConstraint tableName="package_photo" columnNames="type"/>
+    </changeSet>
+
+    <changeSet id="2023-03-07-add-column-full_name-table-user" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="user" columnName="full_name"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="user">
+            <column name="full_name" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-03-09-change-size-column-table-customer" author="Ben">
+        <modifyDataType
+                columnName="address"
+                newDataType="varchar(500)"
+                tableName="customer"/>
+        <modifyDataType
+                columnName="phone_number"
+                newDataType="varchar(20)"
+                tableName="customer"/>
+    </changeSet>
+
+    <changeSet id="2023-03-12-add-column-insurance_contract-table" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_contract" columnName="mbal_product_name"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_contract">
+            <column name="mbal_product_name" type="VARCHAR(50)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-03-20-add-column-insurance_contract-table" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_contract" columnName="mb_reference_number"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_contract">
+            <column name="mb_reference_number" type="VARCHAR(50)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20-03-add-column-table-insurance_request" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_request" columnName="illustration_number"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_request">
+            <column name="illustration_number" type="VARCHAR(50)"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="illustration_number"
+                                 baseTableName="insurance_request"
+                                 constraintName="FK_request_illustration_table_id"
+                                 referencedColumnNames="illustration_number"
+                                 referencedTableName="illustration_table"/>
+    </changeSet>
+
+    <changeSet id="2023-03-019-create-log_error-table" author="DatVQ">
+        <createTable tableName="log_error">
+            <column name="id" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="method" type="VARCHAR(20)"/>
+            <column name="path" type="VARCHAR(200)"/>
+            <column name="payload" type="jsonb">
+            </column>
+            <column name="code" type="INTEGER">
+            </column>
+            <column name="error_message" type="VARCHAR(1000)">
+            </column>
+            <column name="send_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="received_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="host_party" type="VARCHAR(20)"/>
+        </createTable>
+
+    </changeSet>
+    <changeSet id="2023-03-22-add-column-customer-table" author="Ben">
+        <addColumn tableName="customer">
+            <column name="id_issued_place" type="VARCHAR(50)"/>
+            <column name="identification_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-02-22-add-column-baas_pay_on_behalf-table" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="baas_pay_on_behalf"/>
+            <not>
+                <columnExists tableName="baas_pay_on_behalf" columnName="status"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="baas_pay_on_behalf">
+            <column name="status" type="VARCHAR(20)" defaultValue="FAIL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mbal_hook_status" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-02-23-scheduler-lock-table" author="Ben">
+        <createTable tableName="shedlock">
+            <column name="name" type="VARCHAR(64)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="lock_until" type="TIMESTAMP(3)" value="NULL"/>
+            <column name="locked_at" type="TIMESTAMP(3)" value="NULL"/>
+            <column name="locked_by" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-03-24-update_baas_on_behalf_status" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="baas_pay_on_behalf"/>
+        </preConditions>
+        <sqlFile path="db/data/update_baas_on_behalf_status.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-03-25-add-column-table-illustration_table" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="illustration_table" columnName="mix_insurance_fee"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="illustration_table">
+            <column name="mix_insurance_fee" type="VARCHAR(100)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-03-31-update_benefit_insurance_package" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableIsEmpty tableName="insurance_package" />
+            </not>
+        </preConditions>
+        <sqlFile path="db/data/update_benefit_insurance_package.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-03-31-update_baas_pay_on_behalf" author="BEN">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableIsEmpty tableName="baas_pay_on_behalf" />
+            </not>
+        </preConditions>
+        <sqlFile path="db/data/ignore-retry-with-old-data-baas.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-03-31-add-column-table-insurance_payment" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_payment" columnName="insurance_request_id"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="insurance_request_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="insurance_request_id"
+                                 baseTableName="insurance_payment"
+                                 constraintName="FK_insurance_payment_insurance_request_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_request"/>
+    </changeSet>
+
+    <changeSet id="2023-04-05-add-column-bs-table-illustration_table" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="illustration_table" columnName="bs1"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="illustration_table">
+            <column name="bs1" type="VARCHAR(20)" defaultValue="K"/>
+            <column name="bs2" type="VARCHAR(20)" defaultValue="K"/>
+            <column name="bs3" type="VARCHAR(20)" defaultValue="K"/>
+            <column name="bs4" type="VARCHAR(20)" defaultValue="K"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="07-04-create-table-ic_import" author="DatVQ">
+        <createTable tableName="ic_import">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_name" type="VARCHAR(100)"/>
+            <column name="standard_contract" type="VARCHAR(100)"/>
+            <column name="status" type="INTEGER"/>
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="2023-04-08-create-table-import_ic_history" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="import_ic_history"/>
+            </not>
+        </preConditions>
+        <createTable tableName="import_ic_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="filename" type="VARCHAR(255)"/>
+
+            <column name="row_number" type="int"/>
+
+            <column name="error_row" type="VARCHAR"/>
+
+            <column name="creation_time" type="datetime"/>
+
+            <column name="status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-04-13-refactor-insurance_package-table" author="BEN">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_package"/>
+        </preConditions>
+
+        <dropForeignKeyConstraint baseTableName="insurance_package" constraintName="FK_IP_MBAL_package_id"/>
+        <dropForeignKeyConstraint baseTableName="insurance_package" constraintName="FK_IP_MIC_package_id"/>
+        <dropNotNullConstraint tableName="insurance_package" columnName="mbal_package_id"/>
+        <dropNotNullConstraint tableName="insurance_package" columnName="mic_package_id"/>
+    </changeSet>
+
+    <changeSet id="2023-04-13-insert_healthy_mbal_packages_and_insurance_packages.sql" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_package"/>
+            <tableExists tableName="insurance_package"/>
+        </preConditions>
+        <sqlFile path="db/data/insert_healthy_mbal_packages_and_insurance_packages.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="-2023-04-13-add-column-table-insurance_payment" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_payment"/>
+        </preConditions>
+        <addColumn tableName="insurance_payment">
+            <column name="ic_name" type="VARCHAR(100)" />
+            <column name="ic_code" type="VARCHAR(20)" />
+            <column name="support_name" type="VARCHAR(100)" />
+            <column name="support_code" type="VARCHAR(20)" />
+            <column name="branch_name" type="VARCHAR(255)" />
+            <column name="branch_code" type="VARCHAR(20)" />
+            <column name="department_name" type="VARCHAR(255)" />
+            <column name="department_code" type="VARCHAR(50)" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-04-14-update_insurance_request_and_insurance_contract" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_request"/>
+            <tableExists tableName="insurance_contract"/>
+        </preConditions>
+        <sqlFile path="db/data/update_insurance_request_and_insurance_contract.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-04-17-update-illustration_table" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="illustration_table"/>
+        </preConditions>
+        <sqlFile path="db/data/update_illustration_table.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-04-17-update_death_benefit_mbal_package" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_package"/>
+        </preConditions>
+        <sqlFile path="db/data/update_death_benefit_mbal_package.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-05-08-update_total_benefit_insurance_package" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_package"/>
+        </preConditions>
+        <sqlFile path="db/data/update_total_benefit_insurance_package_0508.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+
+    <changeSet id="2023-05-13-add-source-table-customer" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="customer" columnName="source"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="customer">
+            <column name="source" type="VARCHAR(50)" remarks="Nguồn khách hàng Mini app (null), MBAL, OneID"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-05-13-add-source-table-insurance_contract" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_contract" columnName="source"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_contract">
+            <column name="source" type="VARCHAR(50)" remarks="Nguồn hợp đồng Mini app (null), MBAL, OneID"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-05-14-create-table-product_mbal" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="product_mbal"/>
+            </not>
+        </preConditions>
+        <createTable tableName="product_mbal">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="product_code" type="VARCHAR(100)"/>
+
+            <column name="product_name" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="coverage_year" type="INT"/>
+
+            <column name="start_date" type="VARCHAR(100)"/>
+
+            <column name="end_date" type="VARCHAR(100)"/>
+
+            <column name="sum_insured" type="BIGINT"/>
+            <column name="main" type="boolean"/>
+
+            <column name="insurance_contract_id" type="BIGINT"/>
+
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="insurance_contract_id"
+                                 baseTableName="product_mbal"
+                                 constraintName="FK_product_mbal_product_mbal_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance_contract"/>
+    </changeSet>
+
+    <changeSet id="2023-05-14-create-table-insured_mbal" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="insured_mbal"/>
+            </not>
+        </preConditions>
+        <createTable tableName="insured_mbal">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="full_name" type="VARCHAR(100)"/>
+
+            <column name="identification" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="id_card_type" type="VARCHAR(50)"/>
+
+            <column name="address" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="gender" type="INT">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="birthday" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="email" type="VARCHAR(45)"/>
+
+            <column name="phone_number" type="VARCHAR(11)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="bp_number" type="VARCHAR(45)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="product_mbal_id" type="BIGINT"/>
+
+            <column name="creation_time" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="product_mbal_id"
+                                 baseTableName="insured_mbal"
+                                 constraintName="FK_insured_mbal_product_mbal_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_mbal"/>
+    </changeSet>
+
+    <changeSet id="2023-05-13-add-status-table-insurance_contract" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_contract" columnName="status"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_contract">
+            <column name="status" type="VARCHAR(50)" remarks="Trạng thái hợp đồng"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-05-19-add-column-table-insurance_contract" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="insurance_contract" columnName="coverage_year"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="insurance_contract">
+            <column name="coverage_year" type="INT" remarks="Thời hạn bảo hiểm"/>
+            <column name="start_date" type="VARCHAR(100)" remarks="Ngày bắt đầu hiệu lực"/>
+            <column name="end_date" type="VARCHAR(100)" remarks="Ngày hết hạn"/>
+            <column name="sum_insured" type="BIGINT" remarks="Số tiền bảo hiểm"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-05-20-add-id_issued_place-table-insured_mbal" author="DatVQ">
+        <addColumn tableName="insured_mbal">
+            <column name="id_issued_place" type="VARCHAR(200)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-05-25-add-mbal_package.sql" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_package"/>
+        </preConditions>
+        <sqlFile path="db/data/add_mbal_package_main_100.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-05-24-add-column-mbal_package-table" author="Ben">
+        <addColumn tableName="mbal_package">
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-05-25-set_deactivate_mbal_packages.sql" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="mbal_package"/>
+        </preConditions>
+        <sqlFile path="db/data/set_active_mbal_packages.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-05-20-add-id_issued_place-table-insured_mbal" author="DatVQ">
+        <addColumn tableName="insured_mbal">
+            <column name="id_issued_place" type="VARCHAR(200)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2023-05-25-add-insurance_package.sql" author="Ben">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="insurance_package"/>
+        </preConditions>
+        <sqlFile path="db/data/add_insurance_package_data.sql"
+                 encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="2023-05-25-create-table-identification" author="DatVQ">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="identification"/>
+            </not>
+        </preConditions>
+        <createTable tableName="identification">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="identification" type="VARCHAR(255)"/>
+
+            <column name="type" type="VARCHAR(255)"/>
+
+            <column name="issue_place" type="VARCHAR(255)"/>
+
+            <column name="issue_date" type="DATETIME"/>
+
+            <column name="expiry_date" type="DATETIME"/>
+
+            <column name="creation_time" type="DATETIME"/>
+
+            <column name="customer_id" type="BIGINT"/>
+
+            <column name="insured_mbal_id" type="BIGINT"/>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="customer_id"
+                                 baseTableName="identification"
+                                 constraintName="FK_identification_customer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="customer"/>
+
+        <addForeignKeyConstraint baseColumnNames="insured_mbal_id"
+                                 baseTableName="identification"
+                                 constraintName="FK_identification_insured_mbal_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insured_mbal"/>
+
+    </changeSet>
+
+</databaseChangeLog>

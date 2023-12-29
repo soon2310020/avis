@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <th:block th:fragment="op-script-login">
+    <div
+      id="op-alert"
+      aria-hidden="true"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      style="z-index: 9000"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Notification</h5>
+            <button
+              type="button"
+              class="close custom-close-btn"
+              data-dismiss="modal"
+              aria-label="Close"
+              onclick="Common.alertCallbackClose()"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary op-modal-ok"
+              data-dismiss="modal"
+              onclick="Common.alertCallback()"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: none" th:value="${noCacheVer}" id="noCacheVerId"></div>
+    <script
+      defer
+      th:if="${@environment.getProperty('spring.profiles.active') == 'developer'}"
+      th:src="'/js/cdn/vue-2.6.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:if="${@environment.getProperty('spring.profiles.active') != 'developer'}"
+      th:src="'/js/cdn/vue-prod.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/scripts/fragments/vueCompositionAPI.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/js/scripts/fragments/loadGoogleMap.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/ui/node_modules/jquery/dist/jquery.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/bootstrap/dist/js/bootstrap.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/pace-progress/pace.min.js?'+${noCacheVer}"
+    ></script>
+
+    <script defer th:src="'/js/cdn/fuse.min.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/axios/dist/axios.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/vue-tel-input/dist/vue-tel-input.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/tempusdominus-bootstrap-4/node_modules/moment/min/moment.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/cdn/lodash.js?'+${noCacheVer}"></script>
+
+    <script defer th:src="'/js/op.vue.js?'+${noCacheVer}"></script>
+
+    <script
+      defer
+      th:src="'/js/scripts/fragments/axiosTokenHeader.js?'+${noCacheVer}"
+    ></script>
+
+    <script defer th:src="'/js/op.common.js?'+${noCacheVer}"></script>
+
+    <th:block layout:fragment="op-script"></th:block>
+  </th:block>
+</html>

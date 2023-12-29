@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName}",
+  "content": "${senderName} (${senderCompanyName}) has assigned ${orderTypeDesc} to you.",
+  "emailTitle": "You have been assigned a Work Order by ${senderName} (${senderCompanyName}).",
+  "emailContent": "You have been assigned a Work Order by ${senderName} (${senderCompanyName})."
+}

@@ -1,0 +1,16 @@
+# buildspec.yml
+
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "START FROM YML FILE "
+      - ./gradlew build --exclude-task test --exclude-task asciidoctor
+      - echo "Gradle Build Finished"
+
+artifacts:
+  files:
+    - appspec.yml
+    - scripts/**
+    - build/libs/mms-1.0.0.jar

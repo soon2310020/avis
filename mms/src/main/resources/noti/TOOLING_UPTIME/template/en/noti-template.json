@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "Uptime Alert",
+  "content": "Summary of  Uptime Alerts for ${dateString}",
+  "emailTitle": "Alerts for ${dateString}",
+  "emailContent": "Summary of  Uptime Alerts for ${dateString}"
+}

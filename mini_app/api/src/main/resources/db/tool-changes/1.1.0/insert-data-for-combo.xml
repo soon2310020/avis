@@ -1,0 +1,13 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2023-11-01-combo-insert-data" author="ducdq">
+        <sqlFile path="/001-mic-fee.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="/002-combo-suggestion.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="/003-user-combo.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+</databaseChangeLog>

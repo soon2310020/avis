@@ -1,0 +1,111 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <changeSet id="2023-07-28-tool-quotation-detail" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="quotation_detail"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="quotation_detail_seq" startValue="1000" incrementBy="1"/>
+
+        <createTable tableName="quotation_detail">
+
+            <column name="id" type="bigint" defaultValueComputed="nextval('quotation_detail_seq')">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="quotation_header_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="policy_year" type="int">
+            </column>
+
+            <column name="insured_age" type="int">
+            </column>
+
+            <column name="base_premium" type="decimal">
+            </column>
+
+            <column name="topup_premium" type="decimal">
+            </column>
+
+            <column name="withdrawal" type="decimal">
+            </column>
+
+            <column name="selected_rate_base_value" type="decimal">
+            </column>
+
+            <column name="selected_rate_topup_value" type="decimal">
+            </column>
+
+            <column name="selected_rate_account_value" type="decimal">
+            </column>
+
+            <column name="selected_rate_surender_value" type="decimal">
+            </column>
+
+            <column name="committed_rate_base_value" type="decimal">
+            </column>
+
+            <column name="committed_rate_topup_value" type="decimal">
+            </column>
+
+            <column name="committed_rate_account_value" type="decimal">
+            </column>
+
+            <column name="committed_rate_surender_value" type="decimal">
+            </column>
+
+            <column name="low_rate_death_benefit" type="decimal">
+            </column>
+
+            <column name="low_rate_loyalty_bonus" type="decimal">
+            </column>
+
+            <column name="low_rate_account_value" type="decimal">
+            </column>
+
+            <column name="low_rate_surender_value" type="decimal">
+            </column>
+
+            <column name="high_rate_death_benefit" type="decimal">
+            </column>
+
+            <column name="high_rate_loyalty_bonus" type="decimal">
+            </column>
+
+            <column name="high_rate_account_value" type="decimal">
+            </column>
+
+            <column name="high_rate_surender_value" type="decimal">
+            </column>
+
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+
+        </createTable>
+
+        <addForeignKeyConstraint
+                constraintName="fk_quotation_detail"
+                referencedTableName="quotation_header"
+                baseColumnNames="quotation_header_id" baseTableName="quotation_detail"
+                referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>

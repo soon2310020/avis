@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <g id="Bar_icon" data-name="Bar icon" transform="translate(-2 -2)">
+    <path id="Path_1069" data-name="Path 1069" d="M57,58V39a1,1,0,0,0-1-1H48a1,1,0,0,0-1,1V58Z" fill="#4b4b4b"/>
+    <path id="Path_1070" data-name="Path 1070" d="M44,58V31a1,1,0,0,0-1-1H35a1,1,0,0,0-1,1V58Z" fill="#4b4b4b"/>
+    <path id="Path_1071" data-name="Path 1071" d="M61,60H4V3A1,1,0,0,0,2,3V61a1,1,0,0,0,1,1H61a1,1,0,0,0,0-2Z" fill="#4b4b4b"/>
+    <path id="Path_1072" data-name="Path 1072" d="M18,58V15a1,1,0,0,0-1-1H9a1,1,0,0,0-1,1V58Z" fill="#4b4b4b"/>
+    <path id="Path_1073" data-name="Path 1073" d="M31,58V23a1,1,0,0,0-1-1H22a1,1,0,0,0-1,1V58Z" fill="#4b4b4b"/>
+  </g>
+</svg>

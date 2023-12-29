@@ -1,0 +1,10 @@
+{
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": false,
+  "notiPriority": "LOW",
+  "description": "Someone is mentioned in a note",
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "${menuUrl}#${pageType}?popup=NOTE_MENTIONED&objectFunctionId=${objectFunctionId}&noteId=${noteId}"
+}

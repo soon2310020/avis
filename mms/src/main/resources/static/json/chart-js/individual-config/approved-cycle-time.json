@@ -1,0 +1,13 @@
+{
+    "type": "line",
+    "label": "Approved CT (sec)",
+    "backgroundColor": "transparent",
+    "fill": false,
+    "pointRadius": 0,
+    "pointHoverBackgroundColor": "#fff",
+    "borderWidth": 2,
+    "borderColor": "",
+    "data": [],
+    "yAxisID": "second-y-axis",
+    "stack": "approvedCycleTime"
+}

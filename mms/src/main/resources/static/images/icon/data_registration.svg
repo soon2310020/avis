@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-Data_registration);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-Data_registration">
+      <rect width="134" height="134"/>
+    </clipPath>
+  </defs>
+  <g id="Data_registration" data-name="Data registration" class="cls-1">
+    <g id="Group_76" data-name="Group 76" transform="translate(-6.803 -7.268)">
+      <path id="Path_63" data-name="Path 63" class="cls-2" d="M98.547,41.493v77.04H98.52l6.142,7,4.29,4.893a2.463,2.463,0,0,0,3.7,0l4.29-4.893,6.141-7h-.026V41.493Z"/>
+      <path id="Path_64" data-name="Path 64" class="cls-2" d="M120.6,18.268H101.009a2.462,2.462,0,0,0-2.462,2.462V33.15H123.06V20.73A2.462,2.462,0,0,0,120.6,18.268Z"/>
+      <path id="Path_65" data-name="Path 65" class="cls-2" d="M98.4,128.68l-6.6-7.524h.029V52.268H91.8v-24h.029V20.344a2.629,2.629,0,0,1,1.024-2.076h-64.8a2.25,2.25,0,0,0-2.251,2.25v108.5a2.251,2.251,0,0,0,2.251,2.251H100.67ZM83.8,56.489a.779.779,0,0,1-.779.779H34.582a.779.779,0,0,1-.779-.779V53.046a.778.778,0,0,1,.779-.778H83.024a.778.778,0,0,1,.779.778Zm0-19.87a.778.778,0,0,1-.779.778H34.582a.778.778,0,0,1-.779-.778V33.176a.779.779,0,0,1,.779-.779H83.024a.779.779,0,0,1,.779.779Z"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+<style type="text/css">
+   .op-user-list .form-group {
+       margin-right: 10px;
+   }
+   .op-user-list .form-group label {
+       margin-right: 5px;
+   }
+
+    .pagination {
+        display:none;
+    }
+    .depth-2 {
+        padding-left: 20px;
+    }
+   .depth-3 {
+           padding-left: 40px;
+       }
+   .depth-4 {
+       padding-left: 60px;
+   }
+
+
+</style>
+
+
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Tooling</strong>
+
+                        <div class="card-header-actions">
+                            <span class="card-header-action">
+                                <small class="text-muted">Total: {{total}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" v-model="requestParam.sort" />
+
+                        <div class="form-row">
+                            <div class="col-md-9 mb-3 mb-md-0 col-12 ">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-search"></i></div>
+                                    </div>
+                                    <input type="text" @input="requestParam.query = $event.target.value" @keyup="search" class="form-control" placeholder="Search by tool ID, company name, location name or location code">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-auto">
+                                <div>
+                                    <button class="btn btn-success mr-5px" type="button" @click="search">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="display:none">
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> Submit</button>
+                        <button class="btn btn-sm btn-danger" type="reset">
+                            <i class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header" style="display:none">
+                        <i class="fa fa-align-justify"></i> Striped Table
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{active: requestParam.status == 'all'}" href="#" @click.prevent="tab('all')">All
+                                    <span class="badge badge-light badge-pill" v-if="requestParam.status == 'all'">{{ total }}</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown" v-for="code in codes.CompanyType" v-if="code.enabled">
+                                <a class="nav-link" :class="{active: requestParam.status == code.code}" href="#"@click.prevent="tab(code.code)">{{code.title}}
+                                    <span class="badge badge-light badge-pill" v-if="requestParam.status == code.code">{{ total }}</span>
+                                </a>
+                            </li>
+                        </ul>
+
+
+                        <table class="table table-responsive-sm table-striped">
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col style="width:130px"/>
+
+                            </colgroup>
+                            <thead>
+                            <tr class="tr-sort">
+                                <th class="text-left __sort" v-bind:class="[ {'active': currentSortType === sortType.TOOLING_ID}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.TOOLING_ID)">Tooling ID<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.COUNTER_ID}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.COUNTER_ID)">Counter<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.LOCATION}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.LOCATION)">Location<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.STATUS}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.STATUS)">Status<span class="__icon-sort"></span></th>
+                                <th class="__sort" v-bind:class="[ {'active': currentSortType === sortType.UPDATED_AT}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.UPDATED_AT)">Updated At<span class="__icon-sort"></span></th>
+                            </tr>
+                            </thead>
+                            <tbody class="op-list" style="display:none">
+                                <tr v-for="(result, index, id) in results" :id="result.id" >
+                                    <td class="text-left">
+                                        <div>
+                                            <a href="#" @click.prevent="showMoldDetails(result)">
+                                                {{result.equipmentCode}}
+                                            </a>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <span v-if="result.counterCode">{{result.counterCode}}</span>
+                                    </td>
+                                    <td>
+                                        <div v-if="result.locationCode">
+                                            <div class="small text-muted">{{result.locationCode}}</div>
+                                            <div v-html="locationName(result.locationName, result.locationEnabled)"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{result.equipmentStatus}}
+                                    </td>
+                                    <td>
+                                        <!--{{result.updatedDateTime}}-->
+                                        {{formatToDateTime(result.updatedAt)}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="no-results d-none">
+                            No results.
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <ul class="pagination">
+                                    <li v-for="(data, index) in pagination" class="page-item" :class="{active: data.isActive}">
+                                        <a class="page-link"   @click="paging(data.pageNumber)">{{data.text}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-auto ml-auto">
+                                <a href="/admin/molds/new" class="btn btn-primary"><i class="fa fa-plus"></i> New Tooling</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <mold-details :resources="resources"></mold-details>
+        <location-history :resources="resources"></location-history>
+        <corrective-form :resources="resources"></corrective-form>
+    </div>
+
+
+
+
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/alerts/tooling.js?'+${noCacheVer}"></script>
+</th:block>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div class="sidebar wave_sidebar" th:fragment="op-sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav pb-4">
+            <div class="side-content side-content-active" th:if="${salesonContext.menu.id == 1000}">
+            <li class="nav-item">
+                <a class="nav-link" href="/front/tabbed-overview" th:if="${salesonContext.oveview!=null}" style="position: relative;">
+                    <img style="height: 22px;" class="nav-icon" src="/images/icon/tabbed-overview/tabbed-overview.svg" alt="">
+                    <span th:text="#{overview}"></span>
+                    <span class="badge badge-primary d-none"></span>
+                    <div class="beta-tag" style="position: absolute;
+                    right: 10px;
+                    top: 0;
+                    transform: scale(.7);">
+                        BETA
+                      </div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <img style="height: 22px;" class="nav-icon" src="/images/icon/dashboard.svg" alt=""> <span th:text="#{dashboard}"></span>
+                    <span class="badge badge-primary d-none">NEW</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/front/alert-center" th:if="${salesonContext.alertMenu!=null}">
+                    <!-- <img style="height: 22px;" class="nav-icon" src="/images/icon/icon-open-bell.svg" alt="">  -->
+                    <img style="height: 22px;" class="nav-icon" src="/images/icon/alert-icon.svg" alt="">
+                    <span th:text="#{alert_center}"></span>
+                    <span class="badge badge-primary d-none"></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/front/oee-center" th:if="${salesonContext.oeeMenu!=null}">
+                    <!-- <img style="height: 22px;" class="nav-icon" src="/images/icon/icon-open-bell.svg" alt="">  -->
+                    <img style="height: 22px;" class="nav-icon" src="/images/icon/oee-icon.svg" alt="">
+                    <span th:text="#{oee_center}"></span>
+                    <span class="badge badge-primary d-none"></span>
+                </a>
+            </li>
+            </div>
+
+            <th:block th:each="menu1 : ${salesonContext.menu.children}" th:if="${menu1.id!=1200 && menu1.id!=1500 && menu1.id!=1130}" >
+                <div class="nav-title custom-title" th:switch="${menu1.menuName}">
+
+                    <div th:case="Overview" th:text="#{overview}"></div>
+                    <div th:case="Alert" th:text="#{alerts}"></div>
+                    <div th:case="Alerts" th:text="#{alerts}"></div>
+                    <div th:case="Reports" th:text="#{reports}"></div>
+                    <div th:case="'Data Management'" th:text="#{master_data}"></div>
+                    <div th:case="'Base'+' Data'" th:text="#{Data_Family}"></div>
+                    <div th:case="'User'+' Settings'" th:text="#{general_setting}"></div>
+                    <div th:case="'General'+' Setting'" th:text="#{general_setting}"></div>
+                    <div th:case="Equipment" th:text="#{devices}"></div>
+                    <div th:case="Maintenance" th:text="#{maintenance}"></div>
+                    <div th:case="Search" th:text="#{search}"></div>
+                    <div th:case="Communication" th:text="#{communication}"></div>
+                    <div th:case="COMMUNICATION" th:text="#{communication}"></div>
+                    <div th:case="Insights" th:text="#{insights}"></div>
+                    <div th:case="INSIGHTS" th:text="#{insights}"></div>
+                    <div th:case="Reporting" th:text="#{operation_data}"></div>
+                    <div th:case="*" th:text="${menu1.menuName}"></div>
+
+                    <!-- <div style="display: flex;">
+                        <span style=" align-items: center;" class="badge badge-primary badge-alert"
+                              th:classappend="${menu1.menuName}">1</span>
+                        <img class="plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                             width="9" height="9" />
+                    </div> -->
+
+                </div>
+
+                <div class="side-content">
+                    <th:block th:each="menu2 : ${menu1.children}">
+                        <li class="nav-item" th:switch="${menu2.icon}">
+                            <a th:case="'person-add-icon'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/person-add-icon.svg" alt="">
+                                <span >Role Configuration</span>
+                                <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span>
+                            </a>
+                            <!-- ${#strings.startsWith(requestContext.requestUri, menu2.menuKey)}-->
+                            <a th:case="'icon-configuration'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/Configuration.svg" alt="">
+                                <span th:text="#{configuration}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-pie-chart'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/part.svg" alt="">
+                                <span th:text="#{parts}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-puzzle'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/part.svg" alt="">
+                                <span th:text="#{parts}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-chart'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/tooling.svg" alt="">
+                                <span th:text="#{tooling}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-location-pin'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/Relocation.svg" alt="">
+                                <span th:text="#{relocation}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-share'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/disconnection.svg" alt="">
+                                <span th:text="#{disconnection}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-clock'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/cycle_time.svg" alt="">
+                                <span th:text="#{cycle_time}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-wrench'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/Maintenance.svg" alt="">
+                                <span th:text="#{maintenance}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-graph'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/uptime.svg" alt="">
+                                <span th:text="#{uptime}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-misconfigure-custom'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/reset.svg" alt="">
+                                <span th:text="#{reset}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-submission'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/upload.svg" alt="">
+                                <span th:text="#{data_approval}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-shuffle'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/refurbishment.svg" alt="">
+                                <span th:text="#{refurbishment}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-detachment'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/detachment.svg" alt="">
+                                <span th:text="#{detachment}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-magnifier'" th:href="${menu2.menuUrl}" class="nav-link ">
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/search.svg" alt="">
+                                <span th:text="#{advance_search}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-people'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/User.svg" alt="">
+                                <span th:text="#{user}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-organization'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/access_control.svg" alt="">
+                                <span th:text="#{access_control}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-user'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <i class="nav-icon icon-user"></i>
+                                <span th:text="#{account}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-globe'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/Company.svg" alt="">
+                                <span th:text="#{company}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-pin'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/Location.svg" alt="">
+                                <span th:text="#{location}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-list'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/Category.svg" alt="">
+                                <span th:text="#{category}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-pie-chart'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/part.svg" alt="">
+                                <span th:text="#{part}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-drawer'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/terminal.svg" alt="">
+                                <span th:text="#{terminals}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-grid'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/tooling.svg" alt="">
+                                <span th:text="#{tooling}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-machine'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/machine.svg" alt="">
+                                <span th:text="#{machine}"></span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-bag'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/counter.svg" alt="">
+                                <span th:text="#{counter}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-reload'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/reset.svg" alt="">
+                                <span th:text="#{reset}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-time-language'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 25px;" class="nav-icon" src="/images/icon/time_language.svg" alt="">
+                                <span th:text="#{time_language}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-currency'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/Currency.svg" alt="">
+                                <span th:text="#{currency}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-customer-support'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/customer-support.svg" alt="">
+                                <span th:text="#{support_center}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-tutorial'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/tutorials.svg" alt="">
+                                <span th:text="#{tutorials}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-version'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/version.svg" alt="">
+                                <span>Version History</span>
+                                <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span>
+                            </a>
+                            <a th:case="'icon-life-cycle'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/end_of_life_cycle.svg" alt="">
+                                <span th:text="#{end_of_life_cycle}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+
+                            <a th:case="'icon-predictive-maintenance'" style="background-color:transparent !important;" class="nav-link" th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|">
+                                <img style="width: 16px; opacity: 0.5; transform: translateX(-1px);" class="nav-icon" src="/images/icon/predictive_maintenance.svg" alt="">
+                                <span th:text="${menu2.menuName}" style="opacity: 0.5">Base</span>
+                                <span class="popup argen" style="margin-left: 30%;">Upcoming</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-delivery-forecast'"  style="background-color:transparent !important;" class="nav-link" th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|">
+                                <img style="width: 17px;opacity: 0.5; transform: translateX(-1px);" class="nav-icon" src="/images/icon/delivery-forecast.svg" alt="">
+                                <span th:text="${menu2.menuName}" style="opacity: 0.5">Base</span>
+                                <span class="popup" style="margin-left: 30%;">Upcoming</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-quality-management'"  style="background-color:transparent !important; height: 56px;" class="nav-link" th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|">
+                                <img style="width: 18px; opacity: 0.5; transform: translateX(-3px);" class="nav-icon" src="/images/icon/quality_management.svg" alt="">
+                                <span th:text="${menu2.menuName}" style="opacity: 0.5">Base</span>
+                                <span class="popup" style="margin-left: 30%;">Upcoming</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+
+                            <a th:case="'icon-supplier'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 15px;" class="nav-icon" src="/images/icon/icon-supplier.svg" alt="">
+                                <span th:text="#{supplier}">Base</span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-toolmaker'" th:href="${menu2.menuUrl}" class="nav-link " style="pointer-events: none;" th:classappend="|${#lists.size(menu2.children) == 0 ?  'parent' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 15px;" class="nav-icon" src="/images/icon/icon-toolmaker.svg" alt="">
+                                <span th:text="#{toolmaker}">Base</span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-detachment'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  'parent' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 15px;" class="nav-icon" src="/images/icon/detachment.svg" alt="">
+                                <span th:text="#{detachment}">Base</span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-cycle'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  'parent' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/cycle_time.svg" alt="">
+                                <span th:text="#{cycle_time}">Base</span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-production-efficiency'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/production-efficiency.svg" alt="">
+                                <span th:text="#{production_efficiency}">Base</span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-capacity-utilization'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/capacity-utilization.svg" alt="">
+                                <span th:text="#{capacity_utilization}">Base</span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-reject-rate'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/reject_rate.svg" alt="">
+                                <span th:text="#{reject_rate}">Base</span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-spanner'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/maintenance_checklist.svg" alt="">
+                                <span th:text="#{maintenance_checklist}"></span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-checklist-center'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/maintenance_checklist.svg" alt="">
+                                <span th:text="#{checklist_center}"></span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-codelist-center'" th:href="${menu2.menuUrl}" class="nav-link "  th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/codelist-center.svg" alt="">
+                                <span th:text="#{codelist_center}"></span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="9" height="9" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-data-registration'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/data_registration.svg" alt="">
+                                <span th:text="#{Data_Registration}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}"></span> -->
+                            </a>
+                            <a th:case="'icon-data-completion'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 22px;" class="nav-icon" src="/images/icon/data_completion.svg" alt="">
+                                <span th:text="#{Data_Completion}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}"></span> -->
+                            </a>
+                            <a th:case="'icon-downtime'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/downtime.svg" alt="">
+                                <span th:text="#{downtime}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-machine-availability'" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 20px;" class="nav-icon" src="/images/icon/machine-availability.svg" alt="">
+                                <span th:text="#{machine_availability}">Base</span>
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <a th:case="'icon-common-component'" style="display: none;"></a>
+                            <a th:case="*" th:href="${menu2.menuUrl}" class="nav-link " th:classappend="|${#lists.size(menu2.children) == 0 ?  '' :  'nav-dropdown-toggle'}|" >
+                                <img style="height: 15px;" th:class="${menu2.icon == 'icon-misconfigure-custom' || menu2.menuName == 'Data Approval' ? 'nav-icon' :'sidebar-img-none'}" th:src="${menu2.icon == 'icon-misconfigure-custom' ? '/images/icon/warning.svg' : (menu2.menuName == 'Data Approval' ? '/images/icon/upload.svg' : '')}" alt="">
+                                <i th:class="${menu2.icon == 'icon-misconfigure-custom' || menu2.menuName == 'Data Approval'  ? 'sidebar-img-none' :'nav-icon '}" th:classappend="${menu2.icon}"></i>
+                                <span th:text="${menu2.menuName == 'Disconnected' ? 'Disconnection' : menu2.menuName}">Base</span>
+                                <img class="sub-plus-icon" style="margin-left: 4px;" src="/images/icon/angle-arrow-down.svg"
+                                     width="10" height="10" />
+                                <!-- <span class="badge badge-primary badge-alert" th:classappend="${'badge-alert-' + menu2.id}">1</span> -->
+                            </a>
+                            <ul class="nav-level-3" th:if="${#lists.size(menu2.children) > 0}">
+                                <li class="nav-item-level-3" th:each="menu3 : ${menu2.children}">
+                                    <a class="nav-link-level-3" th:href="${menu3.menuUrl}" th:switch="${menu3.menuName}">
+                                        <span th:case="Productivity"  th:text="#{productivity}" ></span>
+                                        <span th:case="Utilization"  th:text="#{utilization}" ></span>
+                                        <span th:case="'Cycle Time'"  th:text="#{cycle_time}" ></span>
+                                        <span th:case="*"  th:text="${menu3.menuName}">Breadcrumb</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </th:block>
+                </div>
+
+            </th:block>
+
+            </ul>
+        </nav>
+        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+    </div>
+</html>

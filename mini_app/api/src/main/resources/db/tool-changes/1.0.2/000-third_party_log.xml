@@ -1,0 +1,56 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <changeSet id="2023-08-03:create-third_party_log-table" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="third_party_log"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="third_party_log">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="path" type="VARCHAR(200)"/>
+            <column name="host_party" type="VARCHAR(50)"/>
+            <column name="method" type="VARCHAR(10)"/>
+            <column name="action" type="VARCHAR(100)"/>
+
+            <column name="code" type="int4" />
+            <column name="error_message" type="VARCHAR(1000)" />
+            <column name="error_stack" type="jsonb"/>
+
+            <column name="payload" type="jsonb"/>
+            <column name="response" type="jsonb"/>
+
+            <column name="send_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="received_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="request_time" type="int4"/>
+
+            <column name="request_id" type="VARCHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="x_request_id" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-08-29-alter-third_party_log" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="third_party_log" columnName="request_time"/>
+        </preConditions>
+
+        <renameColumn tableName="third_party_log" oldColumnName="request_time" newColumnName="total_time"/>
+    </changeSet>
+
+</databaseChangeLog>

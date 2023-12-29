@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName} disapproved",
+  "content": "${senderName} (${senderCompanyName}) disapproved your ${orderTypeName} request."
+}

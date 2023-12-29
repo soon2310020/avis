@@ -1,0 +1,6 @@
+BEGIN;
+INSERT INTO `MENU` (`ID`, `CREATED_AT`, `UPDATED_AT`, `ADMIN_MENU`, `ENABLED`, `ICON`, `LEVEL`, `MENU_KEY`, `MENU_NAME`, `MENU_URL`, `PARENT_ID`, `POSITION`) VALUES ((select max(m.ID)+1 from MENU m), now(), now(), 'Y', 'N', NULL, 2, '/mms/data/rawdata', '/mms/data/rawdata', '/mms/data/rawdata', 1000, 0);
+INSERT INTO `MENU` (`ID`, `CREATED_AT`, `UPDATED_AT`, `ADMIN_MENU`, `ENABLED`, `ICON`, `LEVEL`, `MENU_KEY`, `MENU_NAME`, `MENU_URL`, `PARENT_ID`, `POSITION`) VALUES ((select max(m.ID)+1 from MENU m), now(), now(), 'Y', 'N', NULL, 2, '/mms/data/cdata', '/mms/data/cdata', '/mms/data/cdata', 1000, 1);
+INSERT INTO `MENU` (`ID`, `CREATED_AT`, `UPDATED_AT`, `ADMIN_MENU`, `ENABLED`, `ICON`, `LEVEL`, `MENU_KEY`, `MENU_NAME`, `MENU_URL`, `PARENT_ID`, `POSITION`) VALUES ((select max(m.ID)+1 from MENU m), now(), now(), 'Y', 'N', NULL, 2, '/mms/data/adata', '/mms/data/adata', '/mms/data/adata', 1000, 2);
+INSERT INTO `MENU` (`ID`, `CREATED_AT`, `UPDATED_AT`, `ADMIN_MENU`, `ENABLED`, `ICON`, `LEVEL`, `MENU_KEY`, `MENU_NAME`, `MENU_URL`, `PARENT_ID`, `POSITION`) VALUES ((select max(m.ID)+1 from MENU m), now(), now(), 'Y', 'N', NULL, 2, '/mms/data/terminal', '/mms/data/terminal', '/mms/data/terminal', 1000, 3);
+COMMIT;

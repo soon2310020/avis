@@ -1,0 +1,10 @@
+{
+  "notiPriority": "MEDIUM",
+  "description": "OEM approve Work Order request",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/admin/work-order?popup=WO_APPROVED&id=${id}"
+}

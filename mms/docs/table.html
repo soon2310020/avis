@@ -1,0 +1,3884 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>테이블 정의서(HTML)</title>
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+        body {
+            font-family:"Nanum Gothic"
+        }
+        <!--
+        .entity{
+            width: 1024px;
+            margin-bottom: 50px;
+            page-break-before: always;
+        }
+        .entity-header tr td, .entity-header tr th{
+            text-align: left;
+            padding-left: 5px;
+            padding-right: 5px;
+            vertical-align: top;
+        }
+        .entity-header{
+            border-spacing: 0px;
+            border-top: solid 2px black;
+            margin:0px;
+        }
+        .column-list{
+            width: 100%;
+            border-spacing: 0px;
+            margin: 0px;
+            border-bottom: solid 2px black;
+        }
+        .column-list th{
+            border-bottom: solid 2px black;
+            border-top: solid 2px black;
+            text-align: left;
+        }
+        .column-list th, .column-list td{
+            padding-left: 5px;
+            padding-right: 5px;
+            vertical-align: top;
+        }
+        .under-line{
+            border-bottom: solid 1px gray;
+        }
+        .right-line{
+            border-right: solid 1px gray;
+        }
+        .left-line{
+            border-left: solid 1px gray;
+        }
+        th{
+            background-color: #eee;
+        }
+        -->
+    </style>
+</head>
+<body>
+<h1>테이블정의서</h1>
+
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">BATCH_MESSAGE</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>MAIL / SMS 발송 테이블 - 1분 마다 배치로 발송함.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MESSAGE_TYPE</td>
+                    <td class="right-line">MESSAGE_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드 (MessageType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">TITLE</td>
+                    <td class="right-line">TITLE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CONTENT</td>
+                    <td class="right-line">CONTENT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">RECEIVERS</td>
+                    <td class="right-line">RECEIVERS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">SENDER</td>
+                    <td class="right-line">SENDER</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">BATCH_STATUS</td>
+                    <td class="right-line">BATCH_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드 (BatchStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">START_TIME</td>
+                    <td class="right-line">START_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">END_TIME</td>
+                    <td class="right-line">END_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">BATCH_RESULT</td>
+                    <td class="right-line">BATCH_RESULT</td>
+                    <td class="right-line"></td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">CATEGORY</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>카테고리 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">DESCRIPTION</td>
+                    <td class="right-line">DESCRIPTION</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">LEVEL</td>
+                    <td class="right-line">LEVEL</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">PARENT_ID</td>
+                    <td class="right-line">PARENT_ID</td>
+                    <td class="right-line">CATEGORY(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">SORT_ORDER</td>
+                    <td class="right-line">SORT_ORDER</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">CDATA</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>터미널에서 전송되는 카운터 RAW DATA</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">금형PK</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">MOLD_CODE</td>
+                    <td class="right-line">금형코드</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">TI</td>
+                    <td class="right-line">터미널 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">CI</td>
+                    <td class="right-line">카운터 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">SC</td>
+                    <td class="right-line">최종 shot 수</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 최종 SHOT 수</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">LST</td>
+                    <td class="right-line">SHOT 시간</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 최종 SHOT 시간</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">RT</td>
+                    <td class="right-line">통신 수신 시간</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 카운터 정보를 수신한 시간</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CF</td>
+                    <td class="right-line">통신유형</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 카운터의 통신 유형 (정기통신, 수동통신, 금형투입, 금형교체)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CT</td>
+                    <td class="right-line">사이클타임</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 카운터의 금형 동작 시간</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">BS</td>
+                    <td class="right-line">배터리 상태</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 배터리 상태 (H/L/E)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">RC</td>
+                    <td class="right-line">라우터 수 </td>
+                    <td class="right-line"></td>
+                    <td>현재 사용하지 않음.</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">TV</td>
+                    <td class="right-line">터미널 버전</td>
+                    <td class="right-line"></td>
+                    <td>데이터를 전송한 터미널의 Program 버전</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">SN</td>
+                    <td class="right-line">통신 순차 번호 </td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 카운터의 통신 순차번호</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">18</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">데이터 수신 시간</td>
+                    <td class="right-line"></td>
+                    <td>터미널에서 데이터를 수신한 시간</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">19</td>
+                    <td class="right-line">DAY</td>
+                    <td class="right-line">데이터 수신 일</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">20</td>
+                    <td class="right-line">MONTH</td>
+                    <td class="right-line">데이터 수신 월</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">21</td>
+                    <td class="right-line">WEEK</td>
+                    <td class="right-line">데이터 수신 주</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">22</td>
+                    <td class="right-line">YEAR</td>
+                    <td class="right-line">데이터 수신 년도</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">COMPANY</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>회사정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">COMPANY_TYPE</td>
+                    <td class="right-line">COMPANY_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드 (CompanyType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">COMPANY_CODE</td>
+                    <td class="right-line">COMPANY_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">ADDRESS</td>
+                    <td class="right-line">ADDRESS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">EMAIL</td>
+                    <td class="right-line">EMAIL</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line"></td>
+                </tr>
+
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">MANAGER</td>
+                    <td class="right-line">MANAGER</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">PHONE</td>
+                    <td class="right-line">PHONE</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">COUNTER</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>카운터 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY ID</td>
+                    <td class="right-line">COMPANY(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATION ID</td>
+                    <td class="right-line">LOCATON(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">EQUIPMENT_CODE</td>
+                    <td class="right-line">카운터 코드</td>
+                    <td class="right-line"></td>
+
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">EQUIPMENT_STATUS</td>
+                    <td class="right-line">상태코드</td>
+                    <td class="right-line"></td>
+                    <td>공통코드 (EquipmentStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">BATTERY_STATUS</td>
+                    <td class="right-line">배터리 상태 코드</td>
+                    <td class="right-line"></td>
+                    <td>공통코드 (BatteryStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">PURCHASED_AT</td>
+                    <td class="right-line">PURCHASED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">SHOT_COUNT</td>
+                    <td class="right-line">SHOT_COUNT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">PRESET_COUNT</td>
+                    <td class="right-line">PRESET_COUNT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">OPERATING_STATUS</td>
+                    <td class="right-line">OPERATING_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드 (OperatingStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">OPERATED_AT</td>
+                    <td class="right-line">OPERATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">INSTALLED_AT</td>
+                    <td class="right-line">INSTALLED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">INSTALLED_BY</td>
+                    <td class="right-line">INSTALLED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+
+                <tr>
+                    <td class="right-line" style="text-align:right;">19</td>
+                    <td class="right-line">PRESET_STATUS</td>
+                    <td class="right-line">PRESET_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(PresetStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">20</td>
+                    <td class="right-line">LAST_SHOT_AT</td>
+                    <td class="right-line">LAST_SHOT_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">FILE_STORAGE</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>첨부 파일 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">STORAGE_TYPE</td>
+                    <td class="right-line">STORAGE_TYPE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">REF_ID</td>
+                    <td class="right-line">REF_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">REF_ID2</td>
+                    <td class="right-line">REF_ID2</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">FILE_NAME</td>
+                    <td class="right-line">FILE_NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">FILE_SIZE</td>
+                    <td class="right-line">FILE_SIZE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">SAVE_LOCATION</td>
+                    <td class="right-line">SAVE_LOCATION</td>
+                    <td class="right-line"></td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">LOCATION</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>위치정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">LOCATION_CODE</td>
+                    <td class="right-line">LOCATION_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">COUNTRY_CODE</td>
+                    <td class="right-line">COUNTRY_CODE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(CountryCode)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">CITY</td>
+                    <td class="right-line">CITY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">LOG_AUTHENTICATION</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>로그인 로그 데이터 </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">ACTION</td>
+                    <td class="right-line">ACTION</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">USERNAME</td>
+                    <td class="right-line">USERNAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">REASON</td>
+                    <td class="right-line">REASON</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">LOG_TRANSFER</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>터미널에서 전송되는 RAW DATA (암호화된 데이터)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">AT</td>
+                    <td class="right-line">데이터종류</td>
+                    <td class="right-line"></td>
+                    <td>터미널에서 전송하는 데이터를 구분 (TDATA, CDATA, PRESET, UPURL)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">TI</td>
+                    <td class="right-line">터미널 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CI</td>
+                    <td class="right-line">카운터 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">ES</td>
+                    <td class="right-line">ES</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">DS</td>
+                    <td class="right-line">DS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MENU</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>메뉴 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">PARENT_ID</td>
+                    <td class="right-line">PARENT_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">LEVEL</td>
+                    <td class="right-line">LEVEL</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">MENU_NAME</td>
+                    <td class="right-line">MENU_NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">MENU_기타</td>
+                    <td class="right-line">MENU_기타</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">MENU_URL</td>
+                    <td class="right-line">MENU_URL</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">ICON</td>
+                    <td class="right-line">ICON</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">ADMIN_MENU</td>
+                    <td class="right-line">ADMIN_MENU</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>금형 정보 </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">COUNTER_ID</td>
+                    <td class="right-line">COUNTER_ID</td>
+                    <td class="right-line">COUNTER(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATON(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">EQUIPMENT_CODE</td>
+                    <td class="right-line">EQUIPMENT_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">EQUIPMENT_STATUS</td>
+                    <td class="right-line">EQUIPMENT_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(EquipmentStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">INSTALLED_AT</td>
+                    <td class="right-line">INSTALLED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">INSTALLED_BY</td>
+                    <td class="right-line">INSTALLED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">PURCHASED_AT</td>
+                    <td class="right-line">PURCHASED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">CONTRACTED_CYCLE_TIME</td>
+                    <td class="right-line">Approved cycle time (100ms)</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">CYCLE_TIME_LIMIT1</td>
+                    <td class="right-line">Cycle Time Tolerance L1 (%)</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">CYCLE_TIME_LIMIT2</td>
+                    <td class="right-line">Cycle Time Tolerance L2 (%)</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">18</td>
+                    <td class="right-line">DESIGNED_CYCLE_TIME</td>
+                    <td class="right-line">DESIGNED_CYCLE_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">19</td>
+                    <td class="right-line">DESIGNED_SHOT</td>
+                    <td class="right-line">DESIGNED_SHOT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">20</td>
+                    <td class="right-line">LAST_SHOT</td>
+                    <td class="right-line">LAST_SHOT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">21</td>
+                    <td class="right-line">LAST_CYCLE_TIME</td>
+                    <td class="right-line">LAST_CYCLE_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">22</td>
+                    <td class="right-line">LAST_SHOT_AT</td>
+                    <td class="right-line">LAST_SHOT_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">23</td>
+                    <td class="right-line">WEIGHT</td>
+                    <td class="right-line">Tool Weight</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">24</td>
+                    <td class="right-line">SIZE</td>
+                    <td class="right-line">Tool Size (W x D x H)</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">25</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">26</td>
+                    <td class="right-line">PREVENT_CYCLE</td>
+                    <td class="right-line">Maintenance interval</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">27</td>
+                    <td class="right-line">PREVENT_UPCOMING</td>
+                    <td class="right-line">Maintenance tolerance</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">28</td>
+                    <td class="right-line">LOCATION_CHANGED</td>
+                    <td class="right-line">LOCATION_CHANGED</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">29</td>
+                    <td class="right-line">OPERATING_STATUS</td>
+                    <td class="right-line">OPERATING_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(OperatingStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">30</td>
+                    <td class="right-line">OPERATED_AT</td>
+                    <td class="right-line">OPERATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">31</td>
+                    <td class="right-line">MAINTENANCE_COUNT</td>
+                    <td class="right-line">MAINTENANCE_COUNT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">32</td>
+                    <td class="right-line">MAINTENANCED</td>
+                    <td class="right-line">MAINTENANCED</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">33</td>
+                    <td class="right-line">CYCLE_TIME_STATUS</td>
+                    <td class="right-line">CYCLE_TIME_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(CycleTimeStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">34</td>
+                    <td class="right-line">EFFICIENCY_STATUS</td>
+                    <td class="right-line">EFFICIENCY_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(EfficiencyStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">35</td>
+                    <td class="right-line">LIFE_YEARS</td>
+                    <td class="right-line">LIFE_YEARS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">36</td>
+                    <td class="right-line">MADE_YEAR</td>
+                    <td class="right-line">MADE_YEAR</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">37</td>
+                    <td class="right-line">RUNNER_TYPE</td>
+                    <td class="right-line">RUNNER_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(RunnerType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">38</td>
+                    <td class="right-line">SHOT_SIZE</td>
+                    <td class="right-line">SHOT_SIZE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">39</td>
+                    <td class="right-line">SIZE_UNIT</td>
+                    <td class="right-line">SIZE_UNIT</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(SizeUnit)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">40</td>
+                    <td class="right-line">WEIGHT_UNIT</td>
+                    <td class="right-line">WEIGHT_UNIT</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(WeightUnit)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">41</td>
+                    <td class="right-line">TOOLING_CONDITION</td>
+                    <td class="right-line">TOOLING_CONDITION</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">42</td>
+                    <td class="right-line">WARRANTED_SHOT</td>
+                    <td class="right-line">WARRANTED_SHOT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">43</td>
+                    <td class="right-line">TOOLING_TYPE</td>
+                    <td class="right-line">TOOLING_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(ToolingType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">44</td>
+                    <td class="right-line">COST</td>
+                    <td class="right-line">COST</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">45</td>
+                    <td class="right-line">FAMILY_TOOL</td>
+                    <td class="right-line">FAMILY_TOOL</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">46</td>
+                    <td class="right-line">RESIN</td>
+                    <td class="right-line">RESIN</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">47</td>
+                    <td class="right-line">UTILIZATION_RATE</td>
+                    <td class="right-line">UTILIZATION_RATE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">48</td>
+                    <td class="right-line">USEAGE_TYPE</td>
+                    <td class="right-line">USEAGE_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(UseageType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">49</td>
+                    <td class="right-line">TOTAL_CM_COSTS</td>
+                    <td class="right-line">TOTAL_CM_COSTS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">50</td>
+                    <td class="right-line">TOTAL_CM_COUNT</td>
+                    <td class="right-line">TOTAL_CM_COUNT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">51</td>
+                    <td class="right-line">UPPER_LIMIT_TEMPERATURE</td>
+                    <td class="right-line">UPPER_LIMIT_TEMPERATURE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">52</td>
+                    <td class="right-line">LOWER_LIMIT_TEMPERATURE</td>
+                    <td class="right-line">LOWER_LIMIT_TEMPERATURE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">53</td>
+                    <td class="right-line">LOWER_LIMIT_TEMPERATURE_UNIT</td>
+                    <td class="right-line">LOWER_LIMIT_TEMPERATURE_UNIT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">54</td>
+                    <td class="right-line">UPPER_LIMIT_TEMPERATURE_UNIT</td>
+                    <td class="right-line">UPPER_LIMIT_TEMPERATURE_UNIT</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(UpperLimitTemperatureUnit)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">55</td>
+                    <td class="right-line">ASSET_NUMBER</td>
+                    <td class="right-line">ASSET_NUMBER</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">56</td>
+                    <td class="right-line">HOUR_PER_SHIFT</td>
+                    <td class="right-line">HOUR_PER_SHIFT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">57</td>
+                    <td class="right-line">PRODUCTION_DAYS</td>
+                    <td class="right-line">PRODUCTION_DAYS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">58</td>
+                    <td class="right-line">PRODUCTION_WEEKS</td>
+                    <td class="right-line">PRODUCTION_WEEKS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">59</td>
+                    <td class="right-line">RUNNER_MAKER</td>
+                    <td class="right-line">RUNNER_MAKER</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">60</td>
+                    <td class="right-line">SCRAP_RATE</td>
+                    <td class="right-line">Scrap Rate (%)</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">61</td>
+                    <td class="right-line">SHIFTS_PER_DAY</td>
+                    <td class="right-line">SHIFTS_PER_DAY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">62</td>
+                    <td class="right-line">SUPPLIER_TAG_ID</td>
+                    <td class="right-line">SUPPLIER_TAG_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">63</td>
+                    <td class="right-line">UPTIME_LIMITL1</td>
+                    <td class="right-line">UPTIME_LIMITL1</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">64</td>
+                    <td class="right-line">UPTIME_LIMITL2</td>
+                    <td class="right-line">UPTIME_LIMITL2</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">65</td>
+                    <td class="right-line">UPTIME_TARGET</td>
+                    <td class="right-line">UPTIME_TARGET</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">66</td>
+                    <td class="right-line">SUPPLIER_COMPANY_ID</td>
+                    <td class="right-line">SUPPLIER_COMPANY_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">67</td>
+                    <td class="right-line">TOOL_MAKER_COMPANY_ID</td>
+                    <td class="right-line">TOOL_MAKER_COMPANY_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">68</td>
+                    <td class="right-line">ENGINEER</td>
+                    <td class="right-line">ENGINEER</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">69</td>
+                    <td class="right-line">ENGINEER_DATE</td>
+                    <td class="right-line">ENGINEER_DATE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">70</td>
+                    <td class="right-line">MISCONFIGURE_STATUS</td>
+                    <td class="right-line">MISCONFIGURE_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(MisconfigureStatus)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_AUTHORITY</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>금형 조회 권한</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">AUTHORITY</td>
+                    <td class="right-line">AUTHORITY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_CORRECTIVE</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>금형 고장 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATON(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">FAILURE_TIME</td>
+                    <td class="right-line">FAILURE_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">REPAIR_TIME</td>
+                    <td class="right-line">REPAIR_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">TIME_TO_REPAIR</td>
+                    <td class="right-line">TIME_TO_REPAIR</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">COST</td>
+                    <td class="right-line">COST</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CURRENCY_TYPE</td>
+                    <td class="right-line">CURRENCY_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(CurrencyType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CORRECTIVE_STATUS</td>
+                    <td class="right-line">CORRECTIVE_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(CorrectiveStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_CYCLE_TIME</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>Cycle Time (L1, L2) ALERT</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">DESIGNED_CYCLE_TIME</td>
+                    <td class="right-line">DESIGNED_CYCLE_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CONTRACTED_CYCLE_TIME</td>
+                    <td class="right-line">CONTRACTED_CYCLE_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">CYCLE_TIME</td>
+                    <td class="right-line">CYCLE_TIME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">CYCLE_TIME_LIMIT1</td>
+                    <td class="right-line">CYCLE_TIME_LIMIT1</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">CYCLE_TIME_LIMIT2</td>
+                    <td class="right-line">CYCLE_TIME_LIMIT2</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CYCLE_TIME_STATUS</td>
+                    <td class="right-line">CYCLE_TIME_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(CycleTimeStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">NOTIFICATION_STATUS</td>
+                    <td class="right-line">NOTIFICATION_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(NotificationStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">NOTIFICATION_AT</td>
+                    <td class="right-line">NOTIFICATION_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">CONFIRMED_AT</td>
+                    <td class="right-line">CONFIRMED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">CONFIRMED_BY</td>
+                    <td class="right-line">CONFIRMED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_DISCONNECT</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>금형 DISCONNECT 된 경우 ALERT</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">NOTIFICATION_AT</td>
+                    <td class="right-line">NOTIFICATION_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">NOTIFICATION_STATUS</td>
+                    <td class="right-line">NOTIFICATION_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(NotificationStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CONFIRMED_AT</td>
+                    <td class="right-line">CONFIRMED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CONFIRMED_BY</td>
+                    <td class="right-line">CONFIRMED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_EFFICIENCY</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>Efficiency (L1, L2) ALERT (80%)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">BASE_EFFICIENCY</td>
+                    <td class="right-line">BASE_EFFICIENCY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CONFIRMED_AT</td>
+                    <td class="right-line">CONFIRMED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CONFIRMED_BY</td>
+                    <td class="right-line">CONFIRMED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CURRENT_SECONDS</td>
+                    <td class="right-line">CURRENT_SECONDS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">UPTIME_SECONDS</td>
+                    <td class="right-line">UPTIME_SECONDS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">EFFICIENCY</td>
+                    <td class="right-line">EFFICIENCY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">EFFICIENCY_LIMIT1</td>
+                    <td class="right-line">EFFICIENCY_LIMIT1</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">EFFICIENCY_LIMIT2</td>
+                    <td class="right-line">EFFICIENCY_LIMIT2</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">EFFICIENCY_STATUS</td>
+                    <td class="right-line">EFFICIENCY_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(EfficiencyStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">NOTIFICATION_AT</td>
+                    <td class="right-line">NOTIFICATION_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">18</td>
+                    <td class="right-line">NOTIFICATION_STATUS</td>
+                    <td class="right-line">NOTIFICATION_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(NotificationStatus)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_LOCATION</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>위치 정보가 다른 경우 ALERT</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATON(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">MOLD_LOCATION_STATUS</td>
+                    <td class="right-line">MOLD_LOCATION_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(MoldLocationStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_MAINTENANCE</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>예방 정비 ALERT</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">PREVENT_CYCLE</td>
+                    <td class="right-line">PREVENT_CYCLE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">PREVENT_UPCOMING</td>
+                    <td class="right-line">PREVENT_UPCOMING</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">PERIOD_START</td>
+                    <td class="right-line">PERIOD_START</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">PERIOD_END</td>
+                    <td class="right-line">PERIOD_END</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">SHOT_COUNT</td>
+                    <td class="right-line">SHOT_COUNT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CHECKLIST</td>
+                    <td class="right-line">CHECKLIST</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">MAINTENANCE_STATUS</td>
+                    <td class="right-line">MAINTENANCE_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(MaintenanceStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">MAINTENANCED_AT</td>
+                    <td class="right-line">MAINTENANCED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">MAINTENANCE_BY</td>
+                    <td class="right-line">MAINTENANCE_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_MISCONFIGURE</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>시스템에 설정되지 않은 장비에 대한 데이터가 수신되는 경우 ALERT</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">LAST_PRESET_DATE</td>
+                    <td class="right-line">LAST_PRESET_DATE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line">MESSAGE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">MISCONFIGURE_STATUS</td>
+                    <td class="right-line">MISCONFIGURE_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(MisconfigureStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">NOTIFICATION_AT</td>
+                    <td class="right-line">NOTIFICATION_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">CONFIRMED_AT</td>
+                    <td class="right-line">CONFIRMED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CONFIRMED_BY</td>
+                    <td class="right-line">CONFIRMED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">COUNTER_CODE</td>
+                    <td class="right-line">COUNTER_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">COUNTER_ID</td>
+                    <td class="right-line">COUNTER_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">PRESET</td>
+                    <td class="right-line">PRESET</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">MOLD_PART</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>금형이 제작하는 부품 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">PART_ID</td>
+                    <td class="right-line">PART_ID</td>
+                    <td class="right-line">PART(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CAVITY</td>
+                    <td class="right-line">CAVITY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">PART</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>부품 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">PART_CODE</td>
+                    <td class="right-line">PART_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CATEGORY_ID</td>
+                    <td class="right-line">CATEGORY_ID</td>
+                    <td class="right-line">CATEGORY(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">RESIN_CODE</td>
+                    <td class="right-line">RESIN_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">DESIGN_REVISION</td>
+                    <td class="right-line">DESIGN_REVISION</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">SIZE</td>
+                    <td class="right-line">SIZE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">SIZE_UNIT</td>
+                    <td class="right-line">SIZE_UNIT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">WEIGHT</td>
+                    <td class="right-line">WEIGHT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">WEIGHT_UNIT</td>
+                    <td class="right-line">WEIGHT_UNIT</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(WeightUnit)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">PRICE</td>
+                    <td class="right-line">PRICE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">CURRENCY_TYPE</td>
+                    <td class="right-line">CURRENCY_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(CurrencyType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">DOWNSTREAM_SITE</td>
+                    <td class="right-line">DOWNSTREAM_SITE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">18</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">19</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">PRESET</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>카운터에 PRESET을 설정하기 위한 테이블</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">CI</td>
+                    <td class="right-line">카운터 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">PRESET</td>
+                    <td class="right-line">PRESET</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">PRESET_STATUS</td>
+                    <td class="right-line">PRESET_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(PresetStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">SHOT_COUNT</td>
+                    <td class="right-line">Preset 설정 시점의 Counter > shotCount 정보를 저장함.</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">APPLY_DESC</td>
+                    <td class="right-line">APPLY_DESC</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">APPLY_DATE</td>
+                    <td class="right-line">APPLY_DATE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">APPLY_YN</td>
+                    <td class="right-line">APPLY_YN</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">COMMENT</td>
+                    <td class="right-line">COMMENT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">ROLE</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>사용자 역할 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">AUTHORITY</td>
+                    <td class="right-line">AUTHORITY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">ROLE_TYPE</td>
+                    <td class="right-line">ROLE_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(RoleStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">DESCRIPTION</td>
+                    <td class="right-line">DESCRIPTION</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">ROLE_MENU</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>역할별 메뉴 접속 권한</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ROLE_ID</td>
+                    <td class="right-line">ROLE_ID</td>
+                    <td class="right-line">ROLE(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MENU_ID</td>
+                    <td class="right-line">MENU_ID</td>
+                    <td class="right-line">MENU(ID)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">STATISTICS</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>수신된 데이터 기준으로 통계 데이터를 저장함</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD_ID</td>
+                    <td class="right-line">MOLD(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">MOLD_CODE</td>
+                    <td class="right-line">MOLD_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">TI</td>
+                    <td class="right-line">터미널 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">CI</td>
+                    <td class="right-line">카운터 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">CT</td>
+                    <td class="right-line">사이클타임</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">FST</td>
+                    <td class="right-line">SHOT 시작 시간 (예상)</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 SHOT 시작 시간 (LST와 CT값으로 계산한 추정 시간)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">LST</td>
+                    <td class="right-line">마지막 SHOT 시간</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 최종 SHOT 시간</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">FSC</td>
+                    <td class="right-line">시작 SHOT 수</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 SHOT 시작 수 (계산된 추정 시작 SHOT 수)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">SC</td>
+                    <td class="right-line">최종 shot 수</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 최종 SHOT 수</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">SHOT_COUNT</td>
+                    <td class="right-line">SHOT_COUNT</td>
+                    <td class="right-line"></td>
+                    <td class="right-line">샷 수</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">UPTIME_SECONDS</td>
+                    <td class="right-line">UPTIME_SECONDS</td>
+                    <td class="right-line"></td>
+                    <td class="right-line">금형 동작 시간 (초)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">TP</td>
+                    <td class="right-line">TP</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">RA</td>
+                    <td class="right-line">RA</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">PW</td>
+                    <td class="right-line">PW</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">YEAR</td>
+                    <td class="right-line">YEAR</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">MONTH</td>
+                    <td class="right-line">MONTH</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">18</td>
+                    <td class="right-line">WEEK</td>
+                    <td class="right-line">WEEK</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">19</td>
+                    <td class="right-line">DAY</td>
+                    <td class="right-line">DAY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">20</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">21</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">STATISTICS_PART</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>수신된 데이터 기준으로 통계 데이터를 저장함 (부품 통계)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">STATISTICS_ID</td>
+                    <td class="right-line">STATISTICS_ID</td>
+                    <td class="right-line">STATISTICS(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">CAVITY</td>
+                    <td class="right-line">CAVITY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">PART_ID</td>
+                    <td class="right-line">PART_ID</td>
+                    <td class="right-line">PART(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">PART_CODE</td>
+                    <td class="right-line">PART_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">PROJECT_ID</td>
+                    <td class="right-line">PROJECT_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">PROJECT_NAME</td>
+                    <td class="right-line">PROJECT_NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CATEGORY_ID</td>
+                    <td class="right-line">CATEGORY_ID</td>
+                    <td class="right-line">CATEGORY(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CATEGORY_NAME</td>
+                    <td class="right-line">CATEGORY_NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">TDATA</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>터미널에서 전송되는 터미널 RAW DATA</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">TI</td>
+                    <td class="right-line">터미널 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">DH</td>
+                    <td class="right-line">DHCP사용</td>
+                    <td class="right-line"></td>
+                    <td>1: DHCP사용, 0: 고정IP사용</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">IP</td>
+                    <td class="right-line">IP</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">GW</td>
+                    <td class="right-line">Gateway</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">DN</td>
+                    <td class="right-line">DNS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">RC</td>
+                    <td class="right-line">라우터 수</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">TV</td>
+                    <td class="right-line">터미널 버전</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">데이터 수신일시</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">TERMINAL</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>터미널 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">EQUIPMENT_CODE</td>
+                    <td class="right-line">EQUIPMENT_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATION_ID</td>
+                    <td class="right-line">LOCATON(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">ACTIVE</td>
+                    <td class="right-line">ACTIVE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">EQUIPMENT_STATUS</td>
+                    <td class="right-line">EQUIPMENT_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(EquipmentStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">INSTALLED_AT</td>
+                    <td class="right-line">INSTALLED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">INSTALLED_BY</td>
+                    <td class="right-line">INSTALLED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">PURCHASED_AT</td>
+                    <td class="right-line">PURCHASED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">OPERATING_STATUS</td>
+                    <td class="right-line">OPERATING_STATUS</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(OperatingStatus)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">OPERATED_AT</td>
+                    <td class="right-line">OPERATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">INSTALLATION_AREA</td>
+                    <td class="right-line">INSTALLATION_AREA</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">18</td>
+                    <td class="right-line">IP_TYPE</td>
+                    <td class="right-line">IP_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(IpType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">19</td>
+                    <td class="right-line">DNS</td>
+                    <td class="right-line">DNS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">20</td>
+                    <td class="right-line">GATEWAY</td>
+                    <td class="right-line">GATEWAY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">21</td>
+                    <td class="right-line">IP_ADDRESS</td>
+                    <td class="right-line">IP_ADDRESS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">22</td>
+                    <td class="right-line">SUBNET_MASK</td>
+                    <td class="right-line">SUBNET_MASK</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">TRANSFER</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>터미널에서 전송되는 RAW DATA (복호화된 데이터)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">AT</td>
+                    <td class="right-line">데이터종류</td>
+                    <td class="right-line"></td>
+                    <td>터미널에서 전송하는 데이터를 구분 (TDATA, CDATA, PRESET, UPURL)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">TI</td>
+                    <td class="right-line">터미널 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CI</td>
+                    <td class="right-line">카운터 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">SC</td>
+                    <td class="right-line">최종 shot 수</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 최종 SHOT 수</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">LST</td>
+                    <td class="right-line">SHOT 시간</td>
+                    <td class="right-line"></td>
+                    <td>터미널이 수신한 최종 SHOT 시간</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">RT</td>
+                    <td class="right-line">RT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CF</td>
+                    <td class="right-line">CF</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CT</td>
+                    <td class="right-line">CT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">BS</td>
+                    <td class="right-line">BS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">RC</td>
+                    <td class="right-line">RC</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">TV</td>
+                    <td class="right-line">TV</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">DH</td>
+                    <td class="right-line">DH</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">IP</td>
+                    <td class="right-line">IP</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">GW</td>
+                    <td class="right-line">GW</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">DN</td>
+                    <td class="right-line">DN</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">SN</td>
+                    <td class="right-line">SN</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">18</td>
+                    <td class="right-line">ES</td>
+                    <td class="right-line">ES</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">19</td>
+                    <td class="right-line">DS</td>
+                    <td class="right-line">DS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">20</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">21</td>
+                    <td class="right-line">PW</td>
+                    <td class="right-line">PW</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">22</td>
+                    <td class="right-line">RA</td>
+                    <td class="right-line">RA</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">23</td>
+                    <td class="right-line">TP</td>
+                    <td class="right-line">TP</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">USER</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>사용자 정보</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY_ID</td>
+                    <td class="right-line">COMPANY(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line">NAME</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">LOGIN_ID</td>
+                    <td class="right-line">LOGIN_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">EMAIL</td>
+                    <td class="right-line">EMAIL</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">PASSWORD</td>
+                    <td class="right-line">PASSWORD</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">DEPARTMENT</td>
+                    <td class="right-line">DEPARTMENT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">POSITION</td>
+                    <td class="right-line">POSITION</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">CONTACT_DIALING_CODE</td>
+                    <td class="right-line">CONTACT_DIALING_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">10</td>
+                    <td class="right-line">CONTACT_NUMBER</td>
+                    <td class="right-line">CONTACT_NUMBER</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">11</td>
+                    <td class="right-line">MOBILE_DIALING_CODE</td>
+                    <td class="right-line">MOBILE_DIALING_CODE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">12</td>
+                    <td class="right-line">MOBILE_NUMBER</td>
+                    <td class="right-line">MOBILE_NUMBER</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">13</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line">MEMO</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">14</td>
+                    <td class="right-line">ADMIN</td>
+                    <td class="right-line">ADMIN</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">15</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line">ENABLED</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">16</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">17</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">USER_ALERT</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>금형 ALERT 메시지 수신 설</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">ALERT_TYPE</td>
+                    <td class="right-line">ALERT_TYPE</td>
+                    <td class="right-line"></td>
+                    <td>공통코드(AlertType)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">USER_ID</td>
+                    <td class="right-line">USER_ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">EMAIL</td>
+                    <td class="right-line">EMAIL</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">SMS</td>
+                    <td class="right-line">SMS</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line">UPDATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line">CREATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">9</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line">UPDATED_BY</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">USER_ROLE</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>사용자 권한</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">USER_ID</td>
+                    <td class="right-line">USER_ID</td>
+                    <td class="right-line">USER(ID)</td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">ROLE_ID</td>
+                    <td class="right-line">ROLE_ID</td>
+                    <td class="right-line">ROLE(ID)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" class="entity-header">
+                <colgroup>
+                    <col style="width: 150px" />
+                    <col style="" />
+                </colgroup>
+                <tr>
+                    <th class="under-line right-line">테이블명</th>
+                    <td class="under-line">VERSION</td>
+                </tr>
+                <tr>
+                    <th class="right-line">테이블 설명</th>
+                    <td>터미널에 업그레이드 URL 전송</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="column-list">
+                <tr>
+                    <th class="right-line" width="40px">번호</th>
+                    <th class="right-line">컬럼명</th>
+                    <th class="right-line">설명</th>
+                    <th class="right-line">조인테이블</th>
+                    <th>기타</th>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">1</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line">ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">2</td>
+                    <td class="right-line">APPLY_DATE</td>
+                    <td class="right-line">APPLY_DATE</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">3</td>
+                    <td class="right-line">APPLY_YN</td>
+                    <td class="right-line">APPLY_YN</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">4</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line">CREATED_AT</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">5</td>
+                    <td class="right-line">DESCRIPTION</td>
+                    <td class="right-line">DESCRIPTION</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">6</td>
+                    <td class="right-line">TI</td>
+                    <td class="right-line">터미널 ID</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">7</td>
+                    <td class="right-line">TV</td>
+                    <td class="right-line">TV</td>
+                    <td class="right-line"></td>
+                </tr>
+                <tr>
+                    <td class="right-line" style="text-align:right;">8</td>
+                    <td class="right-line">UPURL</td>
+                    <td class="right-line">UPURL</td>
+                    <td class="right-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

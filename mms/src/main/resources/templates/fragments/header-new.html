@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <header class="app-header navbar" th:fragment="op-header">
+    <div class="wave-header" id="wave-header"></div>
+    <button
+      class="custom navbar-toggler sidebar-toggler d-lg-none mr-auto mobile"
+      type="button"
+      data-toggle="sidebar-show"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="header-brand">
+      <a class="navbar-brand" href="/">
+        <img
+          v-if="logoImageSrc"
+          class="navbar-brand-full"
+          :src="logoImageSrc"
+          alt="logo"
+        />
+      </a>
+      <div id="user-type" ref="user-type" style="min-height: 16px"></div>
+    </div>
+    <div class="header-tabs" id="header-tabs" ref="header-tabs">
+      <div class="tabbed">
+        <ul>
+          <th:block th:each="menu : ${salesonContext.menuTree.content}">
+            <th:block th:if="${#strings.equals(menu.type, 'CATEGORY')}">
+              <li
+                class="header-tab tab-user wave_header"
+                th:classappend="${menu.active ? 'active' : ''}"
+              >
+                <a
+                  class="tab-link"
+                  th:href="${url}"
+                  th:with="url = ${menu.children[0].children == null || menu.children[0].children.empty || menu.children[0].children[0].type == 'SUBFUNCTION'} ? ${menu.children[0].url} : ${menu.children[0].children[0].url}"
+                >
+                  <div class="tab-title" th:text="${menu.name}"></div>
+                  <div class="tab-notification">
+                    <div
+                      class="count-notification-new"
+                      id="tab-user-notification-new"
+                    ></div>
+                  </div>
+                </a>
+              </li>
+            </th:block>
+            <th:block th:if="${#strings.equals(menu.type, 'FUNCTION')}">
+              <li
+                class="header-tab tab-user wave_header"
+                th:classappend="${menu.active ? 'active' : ''}"
+              >
+                <a class="tab-link" th:href="${menu.url}">
+                  <div class="tab-title" th:text="${menu.name}"></div>
+                  <div class="tab-notification">
+                    <div
+                      class="count-notification-new"
+                      id="tab-user-notification-new"
+                    ></div>
+                  </div>
+                </a>
+              </li>
+            </th:block>
+          </th:block>
+        </ul>
+      </div>
+    </div>
+    <div class="header-account">
+      <div class="account">
+        <th:block th:each="menu : ${salesonContext.menuTree.content}">
+          <th:block th:if="${#strings.equals(menu.type, 'UTILITY')}">
+            <a
+              class="account-link"
+              th:href="${url}"
+              th:with="url = ${menu.children[0].children == null || menu.children[0].children.empty} ? ${menu.children[0].url} : ${menu.children[0].children[0].url}"
+              role="button"
+              aria-haspopup="true"
+              th:title="${menu.name}"
+              style="font-size: 16px"
+            >
+              <img
+                class="account-icon wave_img"
+                height="18"
+                th:src="${menu.icon}"
+                alt="${menu.name}"
+              />
+            </a>
+          </th:block>
+        </th:block>
+        <div>
+          <notification-wrapper />
+        </div>
+        <a
+          href="#"
+          class="account-link"
+          data-toggle="dropdown"
+          role="button"
+          aria-haspopup="true"
+          title="Account"
+          aria-expanded="false"
+          style="font-size: 16px"
+        >
+          <img
+            class="account-icon wave_img"
+            src="/images/icon/account.svg"
+            alt="account"
+          />
+        </a>
+        <div class="dropdown-menu dropdown-menu-right header-dropdown">
+          <div class="dropdown-header text-center">
+            <strong th:text="#{account}"></strong>
+          </div>
+          <div
+            class="dropdown-item"
+            style="
+              pointer-events: none;
+              cursor: default;
+              text-decoration: none;
+              color: black;
+            "
+          >
+            <p
+              th:text="${salesonContext.user.name}"
+              class="mb-0 user-id"
+              th:id="${salesonContext.user.id}"
+            ></p>
+            <p th:text="${salesonContext.user.email}" class="mb-0"></p>
+          </div>
+          <div class="divider"></div>
+          <a class="dropdown-item" href="/profile/account">
+            <i class="fa fa-user"></i> <span th:text="'	' + #{profile}"></span>
+          </a>
+          <a class="dropdown-item" href="javascript:;" id="op-logout">
+            <i class="fa fa-lock"></i> <span th:text="'	' + #{logout}"></span>
+          </a>
+          <a
+            class="dropdown-item"
+            th:if="${salesonContext.ssoLogin == true}"
+            th:href="@{/saml/logout}"
+          >
+            <i class="fa fa-lock"></i> Global Logout
+          </a>
+        </div>
+      </div>
+      <order-modal
+        v-if="clickFromPinLocal"
+        key="header-page"
+        :show-complete-data-header="showCompleteData2"
+        :parent-name="'Header'"
+        :change-open-order-modal="changeOpenOrderModal"
+        :resources="resourcesFake"
+      ></order-modal>
+      <company-details-form
+        v-if="clickFromPinLocal"
+        :updated="resetAfterUpdate"
+        :resources="resourcesFake"
+      ></company-details-form>
+      <part-details-form
+        v-if="clickFromPinLocal"
+        :updated="resetAfterUpdate"
+        :resources="resourcesFake"
+      ></part-details-form>
+      <mold-details-form
+        v-if="clickFromPinLocal"
+        :updated="resetAfterUpdate"
+        :show-file-previewer="showFilePreviewer"
+        :resources="resourcesFake"
+      ></mold-details-form>
+      <location-form
+        v-if="clickFromPinLocal"
+        :updated="resetAfterUpdate"
+        :resources="resourcesFake"
+      ></location-form>
+      <category-form
+        v-if="clickFromPinLocal"
+        :updated="resetAfterUpdate"
+        :resources="resourcesFake"
+      ></category-form>
+      <machine-details-form
+        v-if="clickFromPinLocal"
+        :updated="resetAfterUpdate"
+        :resources="resourcesFake"
+      ></machine-details-form>
+
+      <my-work-order-dialog
+        :resources="resourcesFake"
+        :is-show="showWorkOrdersModal"
+        :my-order-key="myOrderKey"
+        :show-detail="showDetail"
+        @close="handleCloseWorkOrderModal"
+      ></my-work-order-dialog>
+      <cm-approval-dialog
+        ref="cm-approval-dialog"
+        :resources="resourcesFake"
+        :is-show="isVisibleCm"
+        @close="handleCloseCmView"
+        :work-order-id="workOrderId"
+      ></cm-approval-dialog>
+      <reason-dialog
+        :resources="resourcesFake"
+        mode="view"
+        :visible="visibleForReason"
+        :item="workOrderReason"
+        :reason-type="reasonType"
+        @close="closeReasonView"
+        @re-submit="handleResubmitWorkOrder"
+      ></reason-dialog>
+      <request-change-work-order-dialog
+        :resources="resourcesFake"
+        :mode="reviewMode"
+        :visible="isVisibleRequestChange"
+        :selected="workOrderDetail"
+        @close="handleCloseRequestChange"
+        @accept="handleAcceptRequestChange"
+        @decline="handleDeclineRequestChange"
+        @show-toast="showToast"
+      ></request-change-work-order-dialog>
+      <reported-work-order-dialog
+        :resources="resourcesFake"
+        :visible="showCompleteDialog"
+        :selected="workOrderReported"
+        :notification="snackbar"
+        :handle-submit="handleSubmitComplete"
+        :view-only="isCompleteViewOnly"
+        @close="handleCloseCompleteDialog"
+        @close-notification="handleCloseNotification"
+      ></reported-work-order-dialog>
+      <created-work-order-dialog
+        ref="created-work-order-dialog"
+        :resources="resourcesFake"
+        :visible="showDetailModal"
+        :selected="selectedDetail"
+        :tab="'ASSIGNED'"
+        @close="handleCloseDetail"
+        @reload="handleReloadMyOrderTable"
+        @open-edit="openEditWorkOrder"
+        @show-toast="handleShowToast"
+      ></created-work-order-dialog>
+      <toast-alert
+        ref="toastAlertGlobalRef"
+        :show="snackbar.show"
+        :title="snackbar.title"
+        :content="snackbar.content"
+        :status="snackbar.status"
+        @close-toast="handleCloseNotification"
+      ></toast-alert>
+      <creator-work-order-dialog
+        :resources="resourcesFake"
+        :is-show="workorderModalVisible"
+        :selected-item="chooseWorkOrder"
+        :asset-selected="chooseWorkOrderAssets"
+        :modal-type="'EDIT'"
+        @close="closeEditWorkOrder"
+        :notification="snackbar"
+      ></creator-work-order-dialog>
+      <!-- DATA REQUEST -->
+      <my-requests
+        :resources="resourcesFake"
+        :visible="isShowMyRequests"
+        @close="handleCloseMyRequests"
+        @show-detail="handleShowDetailFromMyRequests"
+      ></my-requests>
+      <request-detail-modal
+        :resources="resourcesFake"
+        :visible="showDataRequestDetail"
+        :selected-data-request="selectedDataRequest"
+        @close="handleCloseDetailModal"
+        @show-toast="handleShowToast"
+        @on-declined="handleShowMyRequests"
+        @on-accept="handleOpenRequestListModal"
+        @on-edit="handleOpenEditRequest"
+      >
+      </request-detail-modal>
+      <request-list-modal
+        :resources="resourcesFake"
+        :visible="isShowRequestListModal"
+        :reload-key="reloadListModalKey"
+        :selected-data-request="selectedDataRequest"
+        @close="handleCloseRequestListModal"
+        @complete-data="handleShowMultipleCompletion"
+      >
+      </request-list-modal>
+      <data-entry-modal
+        :resources="resourcesFake"
+        :visible="visibleDataEntry"
+        :type="dataEntryType"
+        :modal-type="dataEntryModalType"
+        :selected-data-request="selectedDataRequest"
+        @close="handleCloseDataEntryModal"
+        @reload-detail="handleReloadDetail"
+      ></data-entry-modal>
+      <creator-data-registration-modal
+        :resources="resourcesFake"
+        :visible="isShowCreateDataRegistration"
+        :modal-type="registrationModalType"
+        @close="handleCloseRegistrationCreator"
+        @show-toast="handleShowToast"
+        :selected-data-request="selectedDataRequest"
+      >
+      </creator-data-registration-modal>
+
+		<creator-data-completion-modal :resources="resourcesFake" :visible="isShowCreateDataCompletion"
+			:modal-type="completionModalType" @close="handleCloseCompletionCreator"
+			@show-toast="handleShowToast" :selected-data-request="selectedDataRequest">
+		</creator-data-completion-modal>
+		<view-reason :resources="resourcesFake" :visible="showDataRequestReason" :request="selectedDataRequestReason" @close="handleCloseViewDataReason"></view-reason>
+		<!-- END DATA REQUEST -->
+	</div>
+	<!-- <ul class="nav navbar-nav d-md-down-none">
+	</ul> -->
+</header>
+
+</html>

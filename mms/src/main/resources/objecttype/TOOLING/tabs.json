@@ -1,0 +1,42 @@
+{
+  "All": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "PENDING": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "APPROVED": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "DISAPPROVED": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "DIGITAL": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "NON_DIGITAL": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "DISPOSED": {
+    "input": {
+      "enabled": true
+    }
+  },
+  "DISABLED": {
+    "input": {
+      "enabled": false
+    }
+  }
+}

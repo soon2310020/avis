@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-search);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-search">
+      <rect width="134" height="134"/>
+    </clipPath>
+  </defs>
+  <g id="search" class="cls-1">
+    <g id="Group_55" data-name="Group 55" transform="translate(-4.071 -3.035)">
+      <path id="Path_41" data-name="Path 41" class="cls-2" d="M131.071,123.05,99.53,91.509a51,51,0,1,0-8.9,8.072l31.954,31.954a6,6,0,0,0,8.485-8.485Zm-108-65.015a38,38,0,1,1,38,38A38,38,0,0,1,23.071,58.035Z"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <link rel="stylesheet" th:href="'/css/reject-rate/style.css?'+${noCacheVer}" />
+    <style type="text/css">
+        .modal-title .switch-zone span {
+            font-weight: normal;
+        }
+
+        .card.wave div,
+        .card.wave1 div {
+            display: none;
+        }
+        .reject-rate-date-picker{
+            margin-top: 6px;
+        }
+        .reject-rate-date-picker .dropdown_button-custom {
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #3491FF;
+            transition: 200ms;
+            line-height: 1.499;
+            position: relative;
+            font-weight: 400;
+            white-space: nowrap;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            touch-action: manipulation;
+            height: 28px !important;
+            padding: 0 8px 0px 8px;
+            font-size: 14px;
+            border-radius: 3px;
+            border: 1px solid transparent;
+            background-color: #FFFFFF;
+            outline: 1px solid #3491FB;
+            text-decoration: none !important;
+        }
+
+        .reject-rate-date-picker .dropdown_button-custom:hover {
+            color: #0E65C7 !important;
+            background-color: #DEEDFF;
+            outline: 1px solid transparent;
+            border: 1px solid transparent;
+        }
+
+        .dropdown_button-animation {
+            animation: dropdown_button-animation-primary 0.7s;
+            animation-iteration-count: 1;
+            animation-direction: alternate;
+            animation-timing-function: ease-in-out;
+            border: 1px solid transparent;
+            outline: 1px solid #3491FF;
+        }
+
+        .ant-btn-link {
+            color: #595959
+        }
+
+        .ant-btn-link:hover,
+        .ant-btn-link:active,
+        .ant-btn-link:focus {
+            color: initial
+        }
+
+        .ant-btn-link span {
+            padding-right: 8px;
+        }
+        #op-reject-rate-modal .modal-content {
+            height: 760px;
+        }
+
+        #op-reject-rate-modal .modal-body__pagination {
+            bottom: 54px;
+            position: absolute;
+            right: 55px;
+        }
+
+        #op-reject-rate-modal .modal-body__action {
+            bottom: 20px;
+            position: absolute;
+            right: 52px;
+        }
+        }
+
+
+        @keyframes dropdown_button-animation-primary {
+            0% {}
+
+            33% {
+                color: #0279ff;
+                outline: 3px solid #DEEDFF;
+            }
+
+            66% {
+                color: #0279ff;
+                outline: 3px solid #DEEDFF;
+            }
+
+            100% {
+                outline: 1px solid #3491FF;
+            }
+        }
+
+        .disable-click {
+            pointer-events: none;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-reject-rate-list">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave">
+                    <div class="card-header">
+                        <strong th:text="#{reject_rate}"></strong>
+
+                        <div class="card-header-actions">
+                            <span class="card-header-action">
+                                <small class="text-muted" th:text="#{total}"> {{total}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" v-model="requestParam.sort" />
+                        <div class="form-row">
+                            <div class="col-md-12 col-12">
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <!-- <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fa fa-search"></i></div>
+                                            </div>
+                                            <input type="text" v-model="requestParam.query"
+                                                   @input="requestParam.query = $event.target.value" @keyup="search"
+                                                   class="form-control"
+                                                   th:placeholder="#{search_by_columns_shown}">
+                                        </div> -->
+                                        <common-searchbar :placeholder="resources['search_by_columns_shown']"
+                                            :request-param="requestParam" :on-search="search"></common-searchbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="display:none">
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> Submit</button>
+                        <button class="btn btn-sm btn-danger" type="reset">
+                            <i class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave1">
+                    <div class="card-header" style="display:none">
+                        <i class="fa fa-align-justify"></i> Striped Table
+                    </div>
+                    <div class="card-body card-overflow-reset">
+                        <div class="mb-3 direction-wrapper">
+                            <div class="direction-title" th:text="#{change_direction}"></div>
+                            <div class="direction-description">
+                                <div class="direction-item">
+                                    <i class="fa fa-caret-down success"></i>
+                                    <span th:text="#{lower_than_yest_rate}"></span>
+                                </div>
+                                <div class="direction-item">
+                                    <i class="fa fa-caret-up danger"></i>
+                                    <span th:text="#{higher_than_yest_rate}"></span>
+                                </div>
+                                <div class="direction-item">
+                                    <span th:text="#{no_indicator}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-tool">
+                            <ul class="nav nav-tabs" style="margin-bottom: -1px">
+                                <li style="width: 90px" class="nav-item">
+                                    <a class="nav-link"
+                                        :class="{active: requestParam.rejectedRateStatus === statusType.ALL}" href="#"
+                                        @click.prevent="tab(null)"><span th:text="#{all}"></span>
+                                        <span class="badge badge-light badge-pill"
+                                            v-if="requestParam.rejectedRateStatus === statusType.ALL">{{ total }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        :class="{active: requestParam.rejectedRateStatus === statusType.COMPLETED}"
+                                        href="#" @click.prevent="tab(statusType.COMPLETED)"><span
+                                            th:text="#{completed}"></span>
+                                        <span class="badge badge-light badge-pill"
+                                            v-if="requestParam.rejectedRateStatus === statusType.COMPLETED">{{ total
+                                            }}</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        :class="{active: requestParam.rejectedRateStatus === statusType.UNCOMPLETED}"
+                                        href="#" @click.prevent="tab(statusType.UNCOMPLETED)"><span
+                                            th:text="#{uncompleted}"></span>
+                                        <span class="badge badge-light badge-pill"
+                                            v-if="requestParam.rejectedRateStatus === statusType.UNCOMPLETED">{{ total
+                                            }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="">
+                                <div class="reject-rate-date-picker">
+                                    <!-- <date-picker-button :date="tempDateData" @click="openDatePickerModal1"
+                                        :is-range="false" :prefix="'/images/icon/date-picker-before.svg'"
+                                        :hover-prefix="'/images/icon/date-picker-before-hover.svg'"
+                                        :prefix-position="'left'" :custom-style="{ height: '31px' }"
+                                        :default-class="'btn-custom btn-outline-custom-primary customize-btn'"
+                                        :active-class="'outline-animation-2'" :frequency="requestParam.frequent"
+                                        :parent="'list'"></date-picker-button> -->
+                                    <date-picker-popup @on-close="handlePickDate" :current-date="tempDateData"
+                                        :button-type="'primary'" :date-range="timeRange" :hour="hour"
+                                        :current-frequency="requestParam.frequent"></date-picker-popup>
+                                </div>
+                            </div>
+                            <customization-modal
+                                    style="margin-top: 5px; margin-left: 8px"
+                                    :all-columns-list="allColumnList"
+                                    @save="saveSelectedList"
+                                    :resources="resources"
+                            />
+                        </div>
+
+
+                        <table class="table table-responsive-sm rejected-table">
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <col />
+                                <!-- <col style="width:130px" /> -->
+
+                            </colgroup>
+                            <thead id="thead-actionbar" class="custom-header-table">
+                                <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px"
+                                    class="tr-sort">
+                                    <!--                                <th class="text-left">-->
+                                    <!--                                    <input type="checkbox" v-model="isAll" @change="select" />-->
+                                    <!--                                </th>-->
+                                    <th class="custom-td">
+                                        <div class="custom-td_header">
+                                            <input id="checkbox-all" class="checkbox" type="checkbox" v-model="isAll"
+                                                @change="select" />
+                                        </div>
+                                    </th>
+                                    <template
+                                            v-for="(column, index) in allColumnList"
+                                            v-if="column.enabled && !column.hiddenInToggle"
+                                    >
+                                        <th class="text-left __sort"
+                                            v-if="column.field === sortType.DAILY_REJECT_RATE"
+                                            :class="[ {'active': currentSortType === sortType.DAILY_REJECT_RATE}, isDesc ? 'desc': 'asc']"
+                                            @click="sortBy(sortType.DAILY_REJECT_RATE)">
+                                        <span v-if="requestParam.frequent == 'HOURLY'"
+                                              th:text="#{hourly_reject_rate}"></span>
+                                            <span v-else-if="requestParam.frequent == 'DAILY'"
+                                                  th:text="#{daily_reject_rate}"></span>
+                                            <span v-else-if="requestParam.frequent == 'WEEKLY'"
+                                                  th:text="#{week_reject_rate}"></span>
+                                            <span v-else-if="requestParam.frequent == 'MONTHLY'"
+                                                  th:text="#{monthly_reject_rate}"></span>
+                                            <span class="__icon-sort"></span>
+                                        </th>
+                                        <th
+                                                :key="index"
+                                                :class="[{__sort: column.sortable,active: currentSortType === column.sortField,},isDesc ? 'desc' : 'asc', column.label === 'OP' || column.label === 'Status'? '': 'text-left',]"
+                                                @click="sortBy(column.sortField)"
+                                                v-else
+                                        >
+                                            <span>{{ column.label }}</span>
+                                            <span
+                                                    v-if="column.sortable"
+                                                    class="__icon-sort"
+                                            ></span>
+                                        </th>
+
+                                    </template>
+                                    <!--<th><span th:text="#{action}"></span></th>-->
+                                </tr>
+
+                                <tr :class="{'d-none zindexNegative': listChecked.length == 0}" id="action-bar"
+                                    class="tr-sort empty-tr">
+                                    <th class="empty-th">
+                                        <div class="first-checkbox-zone2">
+                                            <div class="first-checkbox2"
+                                                style="display: flex;align-items: center;padding-left: 0;width: 110px;">
+                                                <div>
+                                                    <input id="checkbox-all-2" class="checkbox" type="checkbox"
+                                                        v-model="isAll" @change="select" />
+                                                </div>
+                                            </div>
+                                            <div class="action-bar">
+                                                <!-- <div v-if="listChecked.length > 1 && requestParam.status != 'DELETED'">
+                                                No batch action is available
+                                            </div> -->
+                                                <!-- <div v-if="listChecked.length == 1 && requestParam.status != 'DELETED'" @click="goToEdit" class="action-item">
+                                                <span>Edit</span>
+                                                <i class="icon-action edit-icon"></i>
+                                            </div> -->
+                                                <div class="action-item note" @click="openRejectRateModal">
+                                                    <span>Input reject rate</span>
+                                                    <div class="icon-action icon-edit"></div>
+                                                </div>
+                                                <div v-if="listChecked.length == 1 && requestParam.status != 'DELETED'"
+                                                    @click="showRejectDetail2(listCheckedFull[0])"
+                                                    class="action-item note">
+                                                    <span>View Reject Rate</span>
+                                                    <div class="icon-action icon-view"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="op-list" style="display:none">
+                                <tr v-for="(result, index, id) in results" :id="result.id"
+                                    :class="[result.identifiedClass, result.positionClass]">
+                                    <td class="custom-td">
+                                        <template v-if="listChecked.length >= 0">
+                                            <input @click="(e) => check(e, result)" :checked="checkSelect(result.id)"
+                                                class="checkbox" type="checkbox" :id="result.id + 'checkbox'"
+                                                :value="result.id">
+                                        </template>
+                                    </td>
+                                    <template
+                                            v-for="(column, columnIndex) in allColumnList"
+                                            v-if="column.enabled && !column.hiddenInToggle"
+                                    >
+                                        <td style="text-align: left;" v-if="column.field === sortType.TOOLING_ID">
+                                            <a href="#" @click.prevent="showMoldDetailsById(result.miniMold.id)">
+                                                {{ result.miniMold.equipmentCode }}
+                                            </a>
+                                            <div class="small text-muted font-size-11-2">
+                                                <span th:text="#{updated_on}"></span>
+                                                {{formatToDate(result.miniMold.lastShotAt)}}
+                                            </div>
+                                        </td>
+                                        <td class="text-left" v-else-if="column.field === sortType.PART_ID">
+                                            <div v-if="result.part">
+                                                <mold-parts-dropdown-view
+                                                        :parts="[{...result.part,partId:result.part.id,partName:result.part.name}]"
+                                                        :mold="result.mold" :index="index" :show-part-chart="showPartChart">
+                                                </mold-parts-dropdown-view>
+                                            </div>
+                                        </td>
+                                        <td class="text-left" v-else-if="column.field === sortType.COMPANY_NAME">
+                                            {{ result.mold && result.mold.companyName }}
+                                            <div>
+                                                <span class='font-size-11-2'>{{ result.mold && 'shots' }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-left" v-else-if="column.field === sortType.PRODUCED_AMOUNT">
+                                            {{ result.totalProducedAmount }}
+                                            <div>
+                                            <span class='font-size-11-2'>{{ result.totalProducedAmount && 'parts'
+                                                }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-left" v-else-if="column.field === sortType.DAILY_REJECT_RATE">
+                                        <span
+                                                v-if="isToday(result.day) || result.rejectedRateStatus === statusType.UNCOMPLETED">-</span>
+                                            <div class="trend" v-else>
+                                                {{ result.rejectedRate }}
+                                                <span v-if="result.comparison === comparisonTrend.UP">
+                                                <i class="fa fa-caret-up danger"></i>
+                                            </span>
+                                                <span v-else-if="result.comparison === comparisonTrend.DOWN">
+                                                <i class="fa fa-caret-down success"></i>
+                                            </span>
+                                                <div>
+                                                    <span class='font-size-11-2'>{{ result.rejectedRate && '%' }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-left" v-else-if="column.field === sortType.AVG_REJECT_RATE">
+                                            {{ Math.round(result.avgRejectedRate) }}
+                                            <div>
+                                                <span class='font-size-11-2'>{{ result.avgRejectedRate && '%' }}</span>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle!important;" class="text-center op-status-td" v-else-if="column.field === sortType.STATUS">
+                                        <span v-if="result.rejectedRateStatus === statusType.COMPLETED"
+                                              class="label label-success" th:text="#{completed}"></span>
+                                            <span v-if="result.rejectedRateStatus === statusType.UNCOMPLETED"
+                                                  class="label label-danger" th:text="#{uncompleted}"></span>
+                                        </td>
+                                        <td style="vertical-align: middle!important;" class="text-center op-status-td" v-else-if="column.field === sortType.MACHINE_ID">
+                                            <base-drop-count v-if="result.machineList" :is-hyper-link="true" :data-list="result.machineList"
+                                                             :title="result.machineList[0] ? result.machineList[0].machineCode : ''" @click="showMachineDetails(result.machineList[0])">
+                                                <div style="padding: 6px 8px;">
+                                                    <div v-for="item in result.machineList" :key="item.machineCode"
+                                                         @click="showMachineDetails(item)"
+                                                         style="display: inline-flex; width: fit-content; white-space: nowrap; cursor: pointer;">
+                                                        <span class="custom-hyper-link">{{item.machineCode}}</span>
+                                                    </div>
+                                                </div>
+                                            </base-drop-count>
+                                            <span></span>
+                                        </td>
+                                    </template>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="no-results d-none">
+                            No results.
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-sm-10 col-xs-10">
+                                <ul class="pagination">
+                                    <li v-for="(data, index) in pagination" class="page-item"
+                                        :class="{active: data.isActive}">
+                                        <a class="page-link" @click="paging(data.pageNumber)">{{data.text}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <chart-part :resources="resources"></chart-part>
+        <chart-mold :show-file-previewer="showFilePreviewer" :resources="resources"></chart-mold>
+        <!--        <mold-details :resources="resources"></mold-details>-->
+        <file-previewer :back="backToMoldDetail"></file-previewer>
+
+        <reject-detail v-if="Object.entries(resources).length" :resources="resources"></reject-detail>
+        <reject-edit @update-done="updateDataDone" :fixed-reject-reasons="fixedRejectReasons"></reject-edit>
+        <reject-edit-multiple v-if="Object.entries(resources).length" :resources="resources"
+            @update-done="updateDataDone" :fixed-reject-reasons="fixedRejectReasons">
+        </reject-edit-multiple>
+        <action-bar-feature feature="ACTION_BAR"></action-bar-feature>
+
+        <location-history :resources="resources"></location-history>
+
+        <reject-rate-modal type="tooling" :is-visible="showRejectRateModal" :resources="resources" :on-paging="paging"
+            :current-date="tempDateData" :frequency="requestParam.frequent" @update-done="updateDataDone" :hour="hour">
+        </reject-rate-modal>
+
+        <!-- <date-picker :resources="resources" @date-change="handleChangeDate"></date-picker> -->
+        <!-- <date-picker-modal :resources="resources" :select-option="timeOption" @change-date="handlePickDate">
+        </date-picker-modal> -->
+        <view-modal :resources="resources" :time-options="timeOption"></view-modal>
+        <machine-details ref="machineDetails" :resources="resources"></machine-details>
+    </div>
+
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/chart-mold/container.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/point.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/shape.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/graph-element.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/cycle-time-hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/temperature-hourly-chart.js?'+${noCacheVer}"></script>
+
+    <script defer th:src="'/js/cdn/pdf.min.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"></script>
+
+    <script defer th:src="'/js/scripts/admin/reject-rate/list.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

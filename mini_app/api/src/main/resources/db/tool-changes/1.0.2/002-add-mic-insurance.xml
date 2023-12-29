@@ -1,0 +1,191 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--CREATE::mic_package -->
+    <changeSet id="2023-08-17:create-table-mic_package" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="mic_package"/>
+            </not>
+        </preConditions>
+        <createTable tableName="mic_package">
+
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="main_one" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_two" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_one" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_two" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_three" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_four" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_five" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_six" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="main_three_seven" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_one" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_one_one" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_one_two" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_two" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_three" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sub_four" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <!--addUniqueConstraint-mic_package-->
+        <addUniqueConstraint tableName="mic_package" columnNames="name"/>
+    </changeSet>
+
+    <!--CREATE::mic_addition_product -->
+    <changeSet id="2023-08-21:::create-mic_addition_product" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="mic_addition_product"/>
+            </not>
+        </preConditions>
+        <createTable tableName="mic_addition_product">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="ma_sp" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nhom" type="INTEGER" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bs1" type="VARCHAR(5)" defaultValue="K"/>
+            <column name="bs2" type="VARCHAR(5)" defaultValue="K"/>
+            <column name="bs3" type="VARCHAR(5)" defaultValue="K"/>
+            <column name="bs4" type="VARCHAR(5)" defaultValue="K"/>
+
+            <!--*-->
+            <column name="created_date" type="timestamp"
+                    defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <!--add-constraints-->
+        <addForeignKeyConstraint
+                constraintName="fk_mic_addition_product_mic_package"
+                baseTableName="mic_addition_product" baseColumnNames="nhom"
+                referencedTableName="mic_package" referencedColumnNames="id" />
+
+        <createIndex indexName="index_mic_addition_product_nhom" tableName="mic_addition_product">
+            <column name="nhom"/>
+        </createIndex>
+    </changeSet>
+
+    <!--CREATE::mic_insurance_contract -->
+    <changeSet id="2023-08-21:create:mic_insurance_contract" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="mic_insurance_contract"/>
+            </not>
+        </preConditions>
+        <createTable tableName="mic_insurance_contract">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="transaction_id" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="status" type="VARCHAR(200)"/>
+
+            <column name="gcn" type="VARCHAR(50)"/>
+            <column name="so_id" type="VARCHAR(50)"/>
+            <column name="phi" type="decimal"/>
+            <column name="sum_benefit" type="decimal"/>
+            <column name="file" type="VARCHAR(255)"/>
+
+            <column name="mic_addition_product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <!--*-->
+            <column name="created_date" type="timestamp"
+                    defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <!--add-constraints-->
+        <addForeignKeyConstraint
+                constraintName="fk_mic_insurance_contract_mic_addition_product"
+                baseTableName="mic_insurance_contract" baseColumnNames="mic_addition_product_id"
+                referencedTableName="mic_addition_product" referencedColumnNames="id" />
+
+        <createIndex indexName="index_mic_insurance_contract_mic_product_id" tableName="mic_insurance_contract">
+            <column name="mic_addition_product_id"/>
+        </createIndex>
+    </changeSet>
+
+    <!--CREATE::mic_insurance_contract-quotation_customer -->
+    <changeSet id="2023-08-21:::add-mic_insurance_contract-quotation_customer" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="quotation_customer" columnName="mic_insurance_contract_id"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="quotation_customer">
+            <column name="mic_insurance_contract_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint
+                constraintName="fk_quotation_customer_mic_insurance_contract"
+                baseTableName="quotation_customer" baseColumnNames="mic_insurance_contract_id"
+                referencedTableName="mic_insurance_contract" referencedColumnNames="id" />
+
+        <createIndex indexName="index_quotation_customer_mic_insurance_contract_id" tableName="quotation_customer">
+            <column name="mic_insurance_contract_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

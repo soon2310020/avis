@@ -1,0 +1,106 @@
+{
+    "content": [
+        {
+            "code": "40",
+            "title": "40 CAPACITACION",
+            "description": null,
+            "group1Code": "PLANNED",
+            "group1Title": "Planned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "42",
+            "title": "42 FUERA DE PROGRAMA",
+            "description": null,
+            "group1Code": "PLANNED",
+            "group1Title": "Planned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "43",
+            "title": "43 PARO POR PRIORIDAD DE CRITICO",
+            "description": null,
+            "group1Code": "PLANNED",
+            "group1Title": "Planned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "44",
+            "title": "44 SESION DE EDP'S",
+            "description": null,
+            "group1Code": "PLANNED",
+            "group1Title": "Planned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "47",
+            "title": "47 COMIDA",
+            "description": null,
+            "group1Code": "PLANNED",
+            "group1Title": "Planned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "49",
+            "title": "49 PRUEBAS",
+            "description": null,
+            "group1Code": "PLANNED",
+            "group1Title": "Planned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        },
+        {
+            "code": "56",
+            "title": "56 MTTO AUTONOMO",
+            "description": null,
+            "group1Code": "PLANNED",
+            "group1Title": "Planned Downtime",
+            "group2Code": "PRODUCTION",
+            "group2Title": "Production Downtime"
+        }
+    ],
+    "pageable": {
+        "sort": {
+            "sorted": true,
+            "unsorted": false,
+            "empty": false
+        },
+        "offset": 0,
+        "pageNumber": 0,
+        "pageSize": 500,
+        "unpaged": false,
+        "paged": true
+    },
+    "codeType": {
+        "codeType": "MACHINE_DOWNTIME_REASON",
+        "name": "machine_downtime_reason",
+        "group1Field": {
+            "dataType": "CODE_DATA",
+            "codeType": "MACHINE_DOWNTIME_REASON_GROUP1",
+            "name": "machine_downtime_reason.group1"
+        },
+        "group2Field": {
+            "dataType": "CODE_DATA",
+            "codeType": "MACHINE_DOWNTIME_REASON_GROUP2",
+            "name": "machine_downtime_reason.group2"
+        }
+    },
+    "totalPages": 1,
+    "totalElements": 7,
+    "last": true,
+    "size": 500,
+    "number": 0,
+    "sort": {
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
+    },
+    "numberOfElements": 7,
+    "first": true,
+    "empty": false
+}

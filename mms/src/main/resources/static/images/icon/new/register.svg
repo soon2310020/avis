@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="11.291" height="9.98" viewBox="0 0 11.291 9.98">
+  <g id="Group_9384" data-name="Group 9384" transform="translate(-555.082 -388.606)">
+    <g id="Icon_feather-check-square" data-name="Icon feather-check-square" transform="translate(555.582 389.402)">
+      <path id="Path_2206" data-name="Path 2206" d="M13.546,8.842v3.377a.986.986,0,0,1-1.005.965H5.505A.986.986,0,0,1,4.5,12.219V5.465A.986.986,0,0,1,5.505,4.5h5.528" transform="translate(-4.5 -4.5)" fill="none" stroke="#595959" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    </g>
+    <path id="Icon_open-pencil" data-name="Icon open-pencil" d="M3.95,0,3.292.658,4.608,1.975l.658-.658ZM2.633,1.317,0,3.95V5.267H1.317L3.95,2.633Z" transform="translate(561.106 388.606)" fill="#595959"/>
+  </g>
+</svg>

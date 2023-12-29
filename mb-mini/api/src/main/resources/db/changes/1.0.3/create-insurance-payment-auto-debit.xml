@@ -1,0 +1,93 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="2023-09-06:create-insurance-payment_auto_debit" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="auto_debit_payment"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="auto_debit_payment">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="source_id" type="VARCHAR(50)"/>
+            <column name="source_type" type="VARCHAR(20)"/>
+            <column name="source_number" type="VARCHAR(50)"/>
+            <column name="source_name" type="VARCHAR(100)"/>
+
+            <column name="registered" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="status_code" type="VARCHAR(50)"/>
+            <column name="status_message" type="VARCHAR(255)"/>
+
+            <column name="version" type="INTEGER" defaultValue="0"/>
+
+            <!---->
+            <column name="created_date" type="timestamp"
+                    defaultValueDate="current_timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-09-06::add-ForeignKey-insurance-payment_auto_debit" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk__insurance_payment_auto_debit_payment" foreignKeyTableName="insurance_payment"/>
+            </not>
+        </preConditions>
+
+        <!-- ADD COLUMN FOR "insurance_payment"-->
+        <addColumn tableName="insurance_payment">
+            <column name="auto_debit_payment_id" type="BIGINT"/>
+        </addColumn>
+
+        <!-- ADD INDEXES-->
+        <createIndex indexName="index_insurance_payment_auto_debit_payment_id" tableName="insurance_payment">
+            <column name="auto_debit_payment_id"/>
+        </createIndex>
+        <createIndex indexName="index_auto_debit_payment_identify_source" tableName="auto_debit_payment" unique="true">
+            <column name="source_type"/>
+            <column name="source_number"/>
+        </createIndex>
+
+        <!-- ADD ForeignKeyConstraint-->
+        <addForeignKeyConstraint
+                constraintName="fk__insurance_payment_auto_debit_payment"
+                baseTableName="insurance_payment" baseColumnNames="auto_debit_payment_id"
+                referencedTableName="auto_debit_payment" referencedColumnNames="id"
+        />
+    </changeSet>
+
+    <!--UPDATE-->
+    <changeSet id="2023-09-06:alter-insurance-payment_auto_debit" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="auto_debit_payment"/>
+        </preConditions>
+
+        <addColumn tableName="auto_debit_payment">
+            <column name="customer_id" type="bigint">
+                <!--<constraints nullable="false"/>--> <!--TODO...-->
+            </column>
+        </addColumn>
+
+        <!-- ADD INDEXES-->
+        <createIndex indexName="index_auto_debit_payment_customer_id" tableName="auto_debit_payment">
+            <column name="customer_id"/>
+        </createIndex>
+
+        <!-- ADD ForeignKeyConstraint-->
+        <addForeignKeyConstraint
+                constraintName="fk__auto_debit_payment_customer"
+                baseTableName="auto_debit_payment" baseColumnNames="customer_id"
+                referencedTableName="customer" referencedColumnNames="id"
+        />
+    </changeSet>
+
+</databaseChangeLog>

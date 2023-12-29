@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="134" height="134" viewBox="0 0 134 134">
+    <defs>
+      <style>
+        .cls-1 {
+          clip-path: url(#clip-machine);
+        }
+  
+        .cls-2 {
+          fill: #fff;
+        }
+      </style>
+      <clipPath id="clip-machine">
+        <rect width="134" height="134"/>
+      </clipPath>
+    </defs>
+    <g id="machine" class="cls-1">
+      <g id="Group_88" data-name="Group 88" transform="translate(1.496 -0.752)">
+        <rect id="Rectangle_18" data-name="Rectangle 18" class="cls-2" width="74.363" height="12.933" rx="1.417" transform="translate(33.203 118.603)"/>
+        <path id="Path_80" data-name="Path 80" class="cls-2" d="M52.176,78.055A16.151,16.151,0,0,1,37.229,90.542l13.828,23.75H88.413Z"/>
+        <circle id="Ellipse_7" data-name="Ellipse 7" class="cls-2" cx="12.933" cy="12.933" r="12.933" transform="translate(23.504 61.483)"/>
+        <path id="Path_81" data-name="Path 81" class="cls-2" d="M63.822,37.237,38.921,58.46a16.156,16.156,0,0,1,13.6,14.417L74.157,46.4l-.138-.139A12.387,12.387,0,0,1,63.822,37.237Z"/>
+        <g id="Group_87" data-name="Group 87">
+          <circle id="Ellipse_8" data-name="Ellipse 8" class="cls-2" cx="8.622" cy="8.622" r="8.622" transform="translate(66.535 25.995)"/>
+          <path id="Path_82" data-name="Path 82" class="cls-2" d="M80.234,24.938l-.353-7.461a1.528,1.528,0,0,1,.445-1.153L89.856,6.8a.611.611,0,0,0-.432-1.043H80.25a1.528,1.528,0,0,0-1.08.447l-8.917,8.917a1.528,1.528,0,0,0-.447,1.08V25.22A11.325,11.325,0,0,1,80.234,24.938Z"/>
+          <path id="Path_83" data-name="Path 83" class="cls-2" d="M103.606,20.546l-9.529,9.529a1.526,1.526,0,0,1-1.152.446l-7.462-.354A11.327,11.327,0,0,1,85.182,40.6h9.024a1.527,1.527,0,0,0,1.08-.448l8.916-8.916a1.527,1.527,0,0,0,.448-1.08V20.978A.612.612,0,0,0,103.606,20.546Z"/>
+        </g>
+      </g>
+    </g>
+  </svg>

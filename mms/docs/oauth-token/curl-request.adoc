@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ curl 'http://api.emoldino.com/oauth/token' -i -u 'saleson-manager:password' -X POST \
+    -d 'username=admin&password=password&grant_type=password'
+----

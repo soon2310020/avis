@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "Work Order creation approval approved",
+  "content": "${senderName} (${senderCompanyName}) has approved your ${orderTypeName} request.",
+  "emailTitle": "${senderName} (${senderCompanyName}) has approved your ${orderTypeName} request.",
+  "emailContent": "${senderName} (${senderCompanyName}) has approved your ${orderTypeName} request."
+}

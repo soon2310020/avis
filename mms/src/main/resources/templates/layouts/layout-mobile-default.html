@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:insert="fragments/head :: op-head-common">
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+<div style="z-index: 1041;" id="headersId">
+    <th:block th:replace="fragments/header-mobile :: op-header"></th:block>
+<!--    <completion-order :resources="{}"></completion-order>-->
+</div>
+    <div class="app-body" style="margin-top: 60.87px;">
+        <main id="main" class="main">
+
+            <div class="container-fluid">
+                <th:block layout:fragment="op-content"></th:block>
+            </div>
+        </main>
+    </div>
+    <div th:replace="fragments/footer-mobile :: op-footer"></div>
+    <th:block th:replace="fragments/script :: op-script-common"></th:block>
+</body>
+</html>

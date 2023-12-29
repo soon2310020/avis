@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<footer style="display: flex; justify-content: space-between; flex: none; min-height: 46px; align-items: flex-end; padding-bottom: 9.4px" class="app-footer"
+        th:fragment="op-footer">
+    <div th:if="${@environment.getProperty('customer.server.name') != 'production'}" style="display: flex; align-items: flex-end;">
+        <span style="color: #8B8B8B; height: 17px; margin-right: 4px;">&copy; 2023</span>
+        <a style="color: #2faad7; height: 17px; margin-right: 4px;" href="https://www.emoldino.com" target="_blank">eMoldino.com</a>
+        <span style=" height: 17px;"><a style="color: #8B8B8B" href="https://archer-questions.s3.eu-central-1.amazonaws.com/web+PP.pdf">Privacy Policy</a></span>
+    </div>
+    <div id="qr-footer" class="scan-qr-code">
+        <img height="30" width="30" src="/images/common/qr-code.png" />
+        <div style="font-size: 9px; text-align: center;">Install device</div>
+    </div>
+    <div class="ml-auto" style="display:none">
+        <span>Powered by</span>
+        <a href="https://www.eshotlink.org" target="_blank">MoldTracer</a>
+    </div>
+    <div  id="components-demo" class="pull-right footer-version" style="margin-right: 3.5%; display: flex; align-items: flex-end">
+        <span style="font-size: 14px; color: #4B4B4B; height: 17px; margin-right: 4.64px;" @click.prevent="showPopup"> Ver. {{ currentVersion }}</span>
+        <version-history-modal ref="version-history-modal"></version-history-modal>
+        <div th:if="${@environment.getProperty('customer.server.name') != 'production'}" class="company-logo">
+            <span class="company-logo__txt">Powered by</span>
+            <img class="company-logo__img" src="/images/common/main_logo_black_x4.svg" alt="emodino">
+        </div>
+    </div>
+</footer>
+</html>

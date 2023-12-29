@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "Work Order completion approval approved",
+  "content": "${senderName} (${senderCompanyName}) has approved the ${orderTypeLowercase} reporting.",
+  "emailTitle": "Approved request to carry out ${orderTypeLowercase} work order.",
+  "emailContent": "Approved request to carry out ${orderTypeLowercase} work order."
+}

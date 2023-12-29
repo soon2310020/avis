@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="28" viewBox="0 0 28 28">
+    <defs>
+        <filter id="Path_2234" x="0" y="0" width="28" height="28" filterUnits="userSpaceOnUse">
+            <feOffset dy="1" input="SourceAlpha"/>
+            <feGaussianBlur stdDeviation="0.5" result="blur"/>
+            <feFlood flood-opacity="0.161"/>
+            <feComposite operator="in" in2="blur"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g id="Component_328" data-name="Component 328" transform="translate(1.5 0.5)">
+        <g id="edit_icon" data-name="edit icon">
+            <g transform="matrix(1, 0, 0, 1, -1.5, -0.5)" filter="url(#Path_2234)">
+                <path id="Path_2234-2" data-name="Path 2234" d="M3,0H22a3,3,0,0,1,3,3V22a3,3,0,0,1-3,3H3a3,3,0,0,1-3-3V3A3,3,0,0,1,3,0Z" transform="translate(1.5 0.5)" fill="#daeeff" opacity="0"/>
+            </g>
+            <path id="Icon_awesome-trash" data-name="Icon awesome-trash" d="M9.556.708H6.9L6.694.294A.531.531,0,0,0,6.218,0H3.69a.525.525,0,0,0-.473.294L3.008.708H.354A.354.354,0,0,0,0,1.062V1.77a.354.354,0,0,0,.354.354h9.2A.354.354,0,0,0,9.91,1.77V1.062A.354.354,0,0,0,9.556.708ZM1.177,10.33a1.062,1.062,0,0,0,1.06,1H7.674a1.062,1.062,0,0,0,1.06-1l.469-7.5H.708Z" transform="translate(7.545 6.837)" fill="#595959"/>
+        </g>
+    </g>
+</svg>

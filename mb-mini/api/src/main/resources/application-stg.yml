@@ -1,0 +1,264 @@
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.stg: DEBUG
+  file:
+    name: /home/mb-miniapp/log/api-server.log
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL:jdbc:postgresql://gts-postgresql.cp81cbp19ki6.ap-southeast-1.rds.amazonaws.com/mb_miniapp_test?currentSchema=miniapp_dev&reWriteBatchedInserts=true}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:GTSVN2023}
+    hikari:
+      idle-timeout: ${HIKARY_IDLE_TIMEOUT:2400000}
+      maximum-pool-size: ${HIKARY_POOL_SIZE:100}
+      minimum-idle: ${HIKARY_MIN_IDLE:10}
+      max-lifetime: ${HIKARY_MAX_LIFETIME:2400000}
+      connection-timeout: ${HIKARY_CONNECTION_TIMEOUT:2400000}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL82Dialect
+        show_sql: false
+        hbm2ddl:
+          auto: validate
+        default_schema: miniapp_dev
+        jdbc:
+          batch_size: 3500
+          #batch_versioned_data: true
+        #order_inserts: true
+        #order_updates: true
+        #generate_statistics: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/master.xml
+
+  oauth:
+    trustStorePath: /home/mb-miniapp/api_deploy/miniTruststore.jks
+    trustStorePassword: miniapp!321
+    certificateAlias: miniapp
+    keyStorePath: /home/mb-miniapp/api_deploy/miniKeyStore.jks
+    keyStorePassword: miniapp@123
+    keyStoreAlias: miniapp
+
+  mail:
+    username: ${MAIL_USERNAME:hotro.gtsvietnam@gmail.com}
+    password: ${MAIL_PASSWORD:monvsfztauyysymv}
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    ssl:
+      protocols: TLSv1.2
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+  redis:
+    host: ${REDIS_HOST:dev-brood.redis.cache.windows.net}
+    port: ${REDIS_PORT:6380}
+    password: ${REDIS_PASSWORD:rTbMmizFVaHGmVkLZIyCPDRxU6aKNdCNijWcuaQgtTo=}
+    ssl: ${REDIS_SSL:true}
+    database: ${REDIS_DATABASE:7}
+    cache:
+      default:
+        expire-time: 10 # Minutes
+      common-service:
+        process-data-expire-time: 1800 # Seconds
+        process-email-expire-time: 7200 # Seconds
+      external-v2api-service:
+        mbal-process-expire-time: 3600 # Seconds
+        mbal-create-quote-expire-time: 3600 # Seconds
+        mbal-policy-detail-expire-time: 1800 #Seconds
+        mbal-send-mail-expire-time: 30000 # Seconds
+      illustration-table-service:
+        create-illustration-table-expire-time: 3600 # Seconds
+      flex-quote-service:
+        default-expire-time: 10800 #Seconds
+  memory-cache:
+    expire-time: 10 #Minutes
+  executor:
+    schedule:
+      core-pool-size: 5
+    normal:
+      core-pool-size: 8
+      #max-pool-size: 10
+    takes-time-high-cpu:
+      core-pool-size: 4
+      #max-pool-size: 8
+    takes-time-low-cpu:
+      core-pool-size: 20
+      #max-pool-size: 25
+
+server:
+  port: 8080
+  domain: ${BANCAS-DOMAIN:http://miniapp.gts-vietnam.com/bancas/reset-password/}
+
+web:
+  cors:
+    enabled: true
+  origin:
+    admin: ${BANCAS_ORIGIN_ADMIN:http://miniapp.gts-vietnam.com}
+    app: ${BANCAS_ORIGIN_APP:http://web-miniapp.gts-vietnam.com}
+
+jwt:
+  clientId: benhost
+  client-secret: secret
+  accessTokenValiditySeconds: 3600
+  refreshTokenValiditySeconds: 43200
+
+apache-components:
+  http-client:
+    socket-timeout: 600000 # 10 minutes
+    connection-request-timeout: 2000
+    connection-timeout: 20000 # 20s
+  connection-pool:
+    max-connection-per-route: 20
+    max-connection: 10
+    time-to-live-in-seconds: 60
+
+# api3rd #
+api3rd:
+  tool-crm:
+    host: ${CRM_HOST:https://api-toolbmh.gtsvn.com.vn}
+    secret_key: tool-crm_x-auth-token_secret
+#    host: ${CRM_HOST:http://localhost:8088}
+#    secret_key: tool-crm_x-auth-token_secret
+  mbal:
+    #DEV
+#    host: ${MBAL_HOST:https://api-dev.mbageas.org}
+#    client_id: ${MBAL_CLIENT_ID_UL3:mwcsXt9yKhm4ksgX}
+#    client_secret: ${MBAL_CLIENT_SECRET_UL3:4xKJG%%SB*z$btTLakZ(QgnLzrIaEq8L}
+    #UAT
+    host: ${MBAL_HOST:https://api-uat.mbageas.org}
+#    client_id: ${MBAL_CLIENT_ID_UL3:9Ldjne6MwOM6hDLx}
+#    client_secret: ${MBAL_CLIENT_SECRET_UL3:kR$EN57x?c!4LmkYcisxDC36HrJ??Mk@}
+    client_id: ${MBAL_CLIENT_ID_UL3:uXg5UuAhC7nXlNqj} #tool
+    client_secret: ${MBAL_CLIENT_SECRET_UL3:KsC5A3Ey@fBAHHJDBb@h$BkAgeSGE9NX}
+  baas:
+    #host: ${MB-HOST:https://api-sandbox.mbbank.com.vn}
+    auto-debit:
+      host: ${AUTO_DEBIT-HOST:https://api-sandbox.mbbank.com.vn/private}
+      client_id: ${AUTO_DEBIT_CLIENT_ID:LBxcXtqeQhhXLOkA0ufBj3MgCs7VAP3t}
+      client_secret: ${AUTO_DEBIT_CLIENT_SECRET:u9qzAtfAPQ5WmNW1}
+  hcm:
+    auth:
+      host : https://api-sandbox.mbbank.com.vn
+      client_id: partner1
+      client_secret: 1hD8W74SxYuvtyA4DFlETbSYlnsuMuab
+      scope: openid
+    host: https://api-sandbox.mbbank.com.vn
+    system: HCM_DIGITAL_BANCAS
+    mb-unit-code: MB
+#  mb-card:
+#    host: ${MB_CARD-HOST:https://mbcardtest.mbbank.com.vn:8446}
+#    merchant: ${MB_CARD_MERCHANT:ABH}
+#    merchant-secret: ${MB_CARD_MERCHANT_SECRET:MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCLehB4DpHH3BB6fIC/tlqsTOhA26+cy74ZTO41dCQK4dkN/CYDS3foOdB1wVdj1Na53Yq+ZS3qFDlBZ/+Ks0diYM4Exx8R9KaFx5/VW73YaJJAUScFxhVpZdK2oJcSxyyLNiZwnO/0Vb+fXHS+9tJsv2II2I7PmQ3IYjjwcV68MwIDAQAB}
+
+  mbal_v2:
+    host: ${MBAL_V2_HOST:https://dev-po.mbageas.life:5557}
+    client_id: ${MBAL_V2_CLIENT_ID:MBAPP01}
+    client_secret: ${MBAL_V2_CLIENT_SECRET:123456a@}
+    endpoint_prefix: ${MBAL_V2_ENDPOINT_PREFIX:/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_legancy_mb&receiverParty=&receiverService=&interfaceNamespace=urn:mbageas:erp:fs-pm}
+
+import:
+  rm-refresh: false
+
+external:
+  host:
+    # PAYMENTHUB
+    mb-host: ${MB_HOST:https://api-test.paymenthub.mbinnolab.com}
+    # MBAL
+    mbal-host: ${MBAL-HOST:https://ul2020-api.mbageas.org}
+    mbal-portal-host: ${MBAL-PORT_HOST:https://mbal-portal-api.mbageas.org}
+    # MIC
+    mic-host: ${MIC-HOST:https://test-dly-api.mic.vn}
+    mic-host-sandbox: ${MIC-HOST-SANDBOX:https://api-sandbox-external.mic.vn}
+    # APIGEE
+    baas-host: ${BAAS-HOST:https://api-sandbox.mbbank.com.vn}
+    # MBAL (UL 3.0)
+    mbal_ul_3: ${MBAL_HOST_UL3:https://api-dev.mbageas.org}
+#    mbal_ul_3: ${MBAL_HOST_UL3:https://api-uat.mbageas.org}
+    crm_host: ${CRM_HOST:https://api-sandbox.mbbank.com.vn}
+    installment_host: ${INSTALLMENT_HOST:https://api-sandbox.mbbank.com.vn}
+  mic-key:
+    merchant-secret: ${MIC_MERCHANT_SECRET:bWljdm4yMDIxIw==}
+    dvi-code: ${MIC_DVI_CODE:MB_SO_2}
+    nsd: ${MIC_NSD:MB_SO_MBAL}
+    pas: ${MIC_PAS:MICVN2022#}
+    bank_account: ${MIC_BANK_ACCOUNT:8330433240935}
+    account_name: ${MIC_ACCOUNT_NAME:TRAN THANH CHUC}
+    username: MB_SO_MBAL
+    password: MICVN2022#
+    client_id: api_portal_client
+    client_secret: fEQ0K5fA9Mg1nNFBTEP0EkZonQ3XmQMw
+    # PAYMENTHUB
+  mb-key:
+    merchant-code: ${MB_MERCHANT_CODE:PHZBNCS}
+    merchant-secret: ${MB_MERCHANT_SECRET:ZmZjMTEzZTYtNTliMi00YjdjLTgzYTktYmJjY2U2N2RlZjJj}
+    checksum-secret: ${MB_CALLBACK_CHECKSUM_SECRET:oW/8d2SnuWRjsowxV/JSvQ==}
+    transaction-type: ${MB_TRANSACTION_TYPE:BANCAS}
+    # APIGEE - BAAS
+  baas-key:
+    client_id: ${BAAS_CLIENT_ID:LBxcXtqeQhhXLOkA0ufBj3MgCs7VAP3t}
+    client_secret: ${BAAS_CLIENT_SECRET:u9qzAtfAPQ5WmNW1}
+    # DEVOP GEN
+    private_key_signature_path: ${PRIVATE_KEY_SIGNATURE_PATH:/home/mb-miniapp/api_deploy/privatekey.der}
+    bank_account: ${BAAS_BANK_ACCOUNT:5046006202346}
+    account_name: ${BAAS_ACCOUNT_NAME:NGUYEN XUAN SANG}
+    channel: ${CHANNEL:IU}
+    business_code: ${BUSINESS_CODE:CH}
+    crm_client_id: ${CRM_CLIENT_ID:crm_bancas_service}
+    crm_client_secret: ${CRM_CLIENT_SECRET:XYUl8CYVV9TpmbsC90f8xTpoTLP1OtUP}
+    crm_basic_value: ${CRM_BASIC_VALUE:bFBvanFQMUNROVlPV0RLMkdRV2ZwbG5uZ0RzT0JNSFo6eHZUQjk3R0pMdVJEc2FWVg==}
+  mbal-key:
+    bank_account: ${MBAL_BANK_ACCOUNT:8330433240935}
+    account_name: ${MBAL_ACCOUNT_NAME:TRAN THANH CHUC}
+    merchant_code: ${MBAL_MERCHANT_CODE:MBAL}
+#    DEV
+    client_id_ul3: ${MBAL_CLIENT_ID_UL3:mwcsXt9yKhm4ksgX}
+    client_secret_ul3: ${MBAL_CLIENT_SECRET_UL3:4xKJG%%SB*z$btTLakZ(QgnLzrIaEq8L}
+#     UAT
+#    client_id_ul3: ${MBAL_CLIENT_ID_UL3:9Ldjne6MwOM6hDLx}
+#    client_secret_ul3: ${MBAL_CLIENT_SECRET_UL3:kR$EN57x?c!4LmkYcisxDC36HrJ??Mk@}
+    checksum_secret: ${MBAL_CHECKSUM_SECRET:TMtZDk2My00N2QzLThkMGItZjY4}
+    payment_hub_key: ${MBAL_PAYMENT_HUB_KEY:PAYMENT_HUB}
+    payment_hub_secrtet: ${MBAL_PAYMENT_HUB_SECRET:YSOGASB0B8OHBIBTAEG7HW4GZOG7I2NOIENVDMLKLTE5}
+    client_id_ul3_policy: ${MBAL_CLIENT_ID_UL3_POLICY:pvHLBKCL5eX&JIzj}
+    client_secret_ul3_policy: ${MBAL_CLIENT_SECRET_UL3_POLICY:UdSyvrrQ5+L6HSTSmjnWnHwdZsJkw)vX}
+  installment-key:
+    client_id: ${INSTALLMENT_CLIENT_ID:9fWioG58uNX7KivLTPO9mMNFcn4NkGjA}
+    client_secret: ${INSTALLMENT_CLIENT_SECRET:hBaFhYKoyUkzQ1ce}
+    merchant: ${INSTALLMENT_MERCHANT:PHZBNCS}
+    max_attempt: ${MAX_ATTEMPT:6}
+    delay: ${DELAY:300000}
+    multiplier: ${MULTIPLIER:2}
+    max_delay: ${MAX_DELAY:10000000}
+azure:
+  storage:
+    account-name: ${AZURE_ACCOUNT_NAME:bancasblob}
+    account-key: ${AZURE_ACCOUNT_KEY:z++BkkuX8cHCHxLMK3asWeeHDyJXeH/L6/q5KaFlrctDXqMCF6G7n8E1SobiA+58lz9J+7S7dedB+AStoL3X2A==}
+    blob-endpoint: ${AZURE_BLOCK_ENDPOINT:https://bancasblob.blob.core.windows.net}
+    private_container: doisoat
+    public_container: public
+    private_document_container: ${PRIVATE_DOCUMENT_CONTAINER:private}
+
+cron:
+  daily_scan_transaction: "0 0 05 * * *" # every day at 5.AM
+  num_day_before: 1 # Scan 30 days in the pass
+
+api3rd_endpoint:
+  baas:
+    list_card: https://api-sandbox.mbbank.com.vn/private/ms/card-partner/new/v1.0/get-card-list #UAT
+    #https://api-private.mbbank.com.vn:8448/private/ms/card-partner/canary/v1.0/get-card-list  #LIVE
+    client_id: ${INSTALLMENT_CLIENT_ID:9fWioG58uNX7KivLTPO9mMNFcn4NkGjA}
+    client_secret: ${INSTALLMENT_CLIENT_SECRET:hBaFhYKoyUkzQ1ce}

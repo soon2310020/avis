@@ -1,0 +1,104 @@
+server:
+  port: ${WEB_API_PORT:8080}
+# SPRING --------------------------------------------------------------------------------------
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  # DATASOURCE
+  datasource:
+    url: ${DB_URL}?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari.connection-test-query: SELECT 1 FROM DUAL
+    hikari.connection-timeout: 120000
+    hikari.maximum-pool-size: 500
+    hikari.max-lifetime: 1800000
+    hikari.minimum-idle: 20
+    hikari.validation-timeout: 3000
+    hikari.idle-timeout: 60000
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  # REDIS
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    database: ${REDIS_DATABASE}
+    timeout: ${REDIS_TIMEOUT}
+  # RABBITMQ
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    port: ${RABBIT_PORT}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+  # MAIL
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+  # MAX FILE SIZE
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  # JACKSON
+  jackson:
+    time-zone: UTC
+    serialization:
+      write-dates-as-timestamps: true
+# OK_HTTP --------------------------------------------------------------------------------------
+okhttp.timeout:
+  connection: 120
+  read: 120
+  write: 120
+# LOGGING --------------------------------------------------------------------------------------
+logging:
+  level:
+    org.springframework.web: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
+    org.springframework.cloud: 'OFF'
+# JWT --------------------------------------------------------------------------------------
+authen.jwt:
+  secretKey: ${JWT_SECRET_KEY}
+  expiredTime: ${TOKEN_EXPIRED_TIME}
+# NOTIFICATION --------------------------------------------------------------------------------------
+notification:
+  onesignal:
+    url: ${ONESIGNAL_URL}
+    app-id: ${ONESIGNAL_APP_ID}
+    api-key: ${ONESIGNAL_API_KEY}
+# FTP --------------------------------------------------------------------------------------
+ftp.client:
+  host: ${FTP_HOST}
+  port: ${FTP_PORT}
+  username: ${FTP_USERNAME}
+  password: ${FTP_PASSWORD}
+  pool-size: ${FTP_POOL_SIZE:5}
+# TRACKING --------------------------------------------------------------------------------------
+tracking:
+  gps:
+    base-url: ${TRACKING_GPS_URL}
+    customer-code: ${TRACKING_GPS_CUSTOMER_CODE}
+    key: ${TRACKING_GPS_KEY}
+
+account:
+  default-password:
+    customer: ${CUSTOMER_DEFAULT_PASSWORD}
+    driver: ${DRIVER_DEFAULT_PASSWORD}
+    admin: ${ADMIN_DEFAULT_PASSWORD}
+    signature: ${SIGNATURE_DEFAULT_PASSWORD}
+# APP --------------------------------------------------------------------------------------
+app:
+  base-url: ${APP_BASE_URL}
+
+forgot-password:
+  otp:
+    expiration-date: ${EXPIRATION_DATE_OTP:86400000}
+  reply-to: ${REPLY_TO:avis@info.vn}

@@ -1,0 +1,103 @@
+DROP TABLE IF EXISTS `ERROR_LOG`;
+
+CREATE TABLE ERROR_LOG (
+	ID bigint not null auto_increment,
+	
+	ERROR_TYPE varchar(50),
+	ERROR_CODE varchar(70),
+	ERROR_STATUS varchar(100),
+	ERROR_MESSAGE varchar(2000),
+	ERROR_POINT_PATH varchar(2000),
+	ERROR_CAUSE varchar(255),
+	DETAILED_LOG longtext,
+	
+	API_NAME varchar(160),
+	SERVER_NAME varchar(100),
+	CALLER_INFO varchar(1000),
+	TARGET_INFO varchar(1000),
+	HEADERS varchar(4000),
+	PARAMS varchar(4000),
+	BODY longtext,
+	
+	START_TIME datetime,
+	END_TIME datetime,
+	ELAPSED_TIME_MILLIS bigint not null,
+	
+	CREATED_BY bigint,
+	CREATED_AT datetime,
+	UPDATED_BY bigint,
+	UPDATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS `ERROR_SUMMARY_LOG`;
+
+CREATE TABLE ERROR_SUMMARY_LOG (
+	ID bigint not null auto_increment,
+	
+	ERROR_TYPE varchar(50),
+	ERROR_CODE varchar(70),
+	ERROR_STATUS varchar(100),
+	ERROR_MESSAGE varchar(2000),
+	ERROR_POINT_PATH varchar(2000),
+	ERROR_CAUSE varchar(255),
+	ERROR_COUNT integer,
+	DETAILED_LOG longtext,
+	
+	API_NAME varchar(160),
+	SERVER_NAME varchar(100),
+	CALLER_INFO varchar(1000),
+	TARGET_INFO varchar(1000),
+	HEADERS varchar(4000),
+	PARAMS varchar(4000),
+	
+	FIRST_OCCURRED_TIME datetime,
+	LAST_OCCURRED_TIME datetime,
+	
+	CREATED_AT datetime,
+	UPDATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+);
+
+CREATE INDEX IX_ERROR_SUMMARY_LOG ON ERROR_SUMMARY_LOG (
+	API_NAME,
+	ERROR_CODE
+);
+
+DROP TABLE IF EXISTS `ACCESS_SUMMARY_LOG`;
+
+CREATE TABLE ACCESS_SUMMARY_LOG (
+	ID bigint not null auto_increment,
+	
+	COMPANY_TYPE varchar(15),
+	COMPANY_ID bigint,
+	API_NAME varchar(110),
+	SERVER_NAME varchar(100),
+	CALLER_INFO varchar(1000),
+	TARGET_INFO varchar(1000),
+	PARAM_NAMES varchar(2000),
+	CALL_MONTH integer,
+	CALL_DATE integer,
+	CALL_HOUR integer,
+	
+	SUCCESS_COUNT integer,
+	FAIL_COUNT integer,
+	AVG_ELAPSED_TIME_MILLIS bigint,
+	MIN_ELAPSED_TIME_MILLIS bigint,
+	MAX_ELAPSED_TIME_MILLIS bigint,
+	TOTAL_ELAPSED_TIME_MILLIS bigint,
+	
+	CREATED_AT datetime,
+	UPDATED_AT datetime,
+	
+	PRIMARY KEY (ID)
+);
+
+CREATE INDEX IX_ACCESS_SUMMARY_LOG ON ACCESS_SUMMARY_LOG (
+	CALL_MONTH,
+	COMPANY_ID,
+	COMPANY_TYPE,
+	API_NAME
+);

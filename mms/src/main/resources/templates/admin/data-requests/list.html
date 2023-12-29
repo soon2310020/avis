@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+    <link rel="stylesheet" th:href="'/css/table-dropdown.css?'+${noCacheVer}" />
+    <style type="text/css">
+        .wave1 {
+            height: 850px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation:wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+            border:none;
+        }
+
+        .wave {
+            height: 121px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation:wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+            border: none;
+        }
+        .wave1 .registration-category__item-text-zone {
+            display: none;
+        }
+        .wave1 div, .wave1 ul, .wave1 table{
+            display: none;
+        }
+        .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{
+            visibility:hidden;
+        }
+        .card.wave div, .card.wave1 div{
+            display: none;
+        }
+        .loading{
+            height: 1000px !important;
+            width: 100%;
+            border: none !important;
+        }.ant-drawer-content-wrapper{
+            transition-property: opacity, left, right;
+            transition-duration: 0.5s, 1.5s, 0.5s;
+            transition-timing-function: ease-in-out;
+            right: -384px !important;
+        }
+        .drawer-show{
+            right: 0 !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list wave1" style="padding-top: 20px">
+        <data-requests :resources="resources"></data-requests>
+    </div>
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"></script>
+    <script th:src="'/js/cdn/chartjs-plugin-labels.js?'+${noCacheVer}"></script>
+    <script th:src="'/js/cdn/npm-apexcharts.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/container.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/point.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/shape.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/graph-element.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/cycle-time-hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/chart-mold/temperature-hourly-chart.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/ui/node_modules/chart.js/dist/Chart.min.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/cdn/pdf.min.js?'+${noCacheVer}"></script>
+
+    <script defer th:src="'/js/scripts/admin/data-requests/index.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

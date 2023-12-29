@@ -1,0 +1,1 @@
+update WORK_ORDER set COMPLETED_ON = null where STATUS = 'ACCEPTED';

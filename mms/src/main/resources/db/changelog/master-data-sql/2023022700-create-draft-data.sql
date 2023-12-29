@@ -1,0 +1,21 @@
+DROP TABLE IF EXISTS `DRAFT_DATA`;
+
+CREATE TABLE `DRAFT_DATA` (
+	`ID` BIGINT not null auto_increment,
+	
+	`RESOURCE_TYPE` varchar(50),
+	`RESOURCE_ID` varchar(100),
+	`USER_ID` bigint,
+	
+	`CONTENT` longtext,
+	
+	`CREATED_BY` bigint,
+	`CREATED_AT` datetime,
+	`UPDATED_BY` bigint,
+	`UPDATED_AT` datetime,
+	
+	PRIMARY KEY (ID)
+);
+
+ALTER TABLE `DRAFT_DATA`
+   ADD CONSTRAINT `UX_DRAFT_DATA` UNIQUE (`RESOURCE_TYPE`, `RESOURCE_ID`, `USER_ID`);

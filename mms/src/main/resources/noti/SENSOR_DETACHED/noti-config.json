@@ -1,0 +1,16 @@
+{
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "notiPriority": "HIGH",
+  "description": "",
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "recipients": [
+    {
+      "type": "ROLE",
+      "value": "SUPPLIER_INSTALLATION"
+    }
+  ],
+  "linkTo": "/common/alr#DETACHMENT?id=${id}"
+}

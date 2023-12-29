@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "Tooling Refurbishment Alert",
+  "content": "${additionalContent} reaching the end of the life cycle.",
+  "emailTitle": "${additionalContent} reaching the end of the life cycle.",
+  "emailContent": "${additionalContent} reaching the end of the life cycle."
+}

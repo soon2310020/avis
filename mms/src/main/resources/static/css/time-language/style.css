@@ -1,0 +1,81 @@
+.time-language-config {
+    padding: 30px 20px;
+}
+
+.time-language-config .time-config {
+}
+
+.time-language-config .time-config .time-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+.time-language-config .time-config .time-body {
+    display: flex;
+    padding: 20px 0;
+    min-height: 128px;
+}
+
+.time-language-config .time-config .time-body .option-item {
+    display: flex;
+}
+.time-language-config .time-config .time-body .browser-time {
+    min-width: 350px;
+}
+
+.time-language-config .time-config .time-body .factory-time {
+    margin-left: 50px;
+}
+
+.time-language-config .time-config .time-body .option-item .radio-wrapper {
+    padding: 10px 10px 0 0 ;
+}
+
+.time-language-config .time-config .time-body .option-item .radio-wrapper input {
+    border: 0px;
+    width: 20px;
+    height: 20px;
+}
+.time-language-config .time-config .time-body .option-item .description-wrapper .item-title {
+    font-size: 20px;
+}
+
+.time-language-config .time-config .time-body .option-item .description-wrapper .time-description {
+}
+
+.time-language-config .time-config .time-body .option-item .description-wrapper .time-value {
+    padding-top: 10px;
+    color: #AAA;
+}
+
+
+.time-language-config .language-config {
+    padding: 10px 0;
+}
+
+.time-language-config .language-config .language-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.time-language-config .language-config .language-body {
+    padding: 10px 0;
+}
+
+.time-language-config .language-config .language-body .select-title {
+    padding-bottom: 10px;
+
+}
+
+@media (max-width: 767px) {
+    .time-language-config .time-config .time-body {
+        flex-direction: column;
+        min-width: 100%;
+    }
+
+    .time-language-config .time-config .time-body .factory-time {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}

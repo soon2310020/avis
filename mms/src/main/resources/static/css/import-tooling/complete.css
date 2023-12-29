@@ -1,0 +1,36 @@
+.complete-wrapper {
+    margin: auto;
+    padding: 50px 75px 25px 75px;
+    min-height: 567px;
+}
+
+.complete-wrapper .complete-content {
+    padding: 0 35px;
+    border: dashed 2px #463DA5;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 25px);
+    margin: auto;
+    background: #FBFBFB;
+}
+
+
+.complete-wrapper .complete-content .complete-center {
+    padding: 5px;
+}
+
+.complete-wrapper .complete-content .icon {
+    height: 50px;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.complete-wrapper .complete-content .icon img {
+    height: 100%;
+}
+
+.complete-wrapper .complete-content .complete-center .description a {
+    color: #463DA5;
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html
+    lang="ko"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="~{layouts/layout-login-ver2}"
+>
+    <th:block layout:fragment="op-head">
+        <script defer th:src="'/js/cdn/fontawesome.js?'+${noCacheVer}" crossorigin="anonymous"></script>
+        <style type="text/css">
+            .pwd {
+                position: relative;
+            }
+            .p-viewer {
+                z-index: 3;
+                position: absolute;
+                top: 25%;
+                right: 10px;
+            }
+
+            .modal {
+                z-index: 9999 !important;
+            }
+        </style>
+    </th:block>
+    <th:block layout:fragment="op-content">
+        <div class="wave-register" id="wave-register"></div>
+        <div class="login-container">
+            <div class="row justify-content-center">
+                <div
+                    class="card-group login-card-group"
+                    th:classappend="${#strings.equals('production', @environment.getProperty('customer.server.name'))} ? 'production' : ''"
+                >
+                    <div class="card p-4 login-card login-card__login-form">
+                        <div class="card-body login-card-body">
+                            <h1>Login</h1>
+                            <form name="f" th:action="@{login}" class="needs-validation" method="post">
+                                <p class="text-muted">Sign in to your account</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <img width="16.21" height="16.21" src="/images/icon/material-person.svg" alt="person" />
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="email"
+                                        id="username"
+                                        name="username"
+                                        class="form-control"
+                                        placeholder="Email Address"
+                                        required
+                                    />
+                                </div>
+                                <div class="input-group mb-4 pwd">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <img width="14.38" height="18.88" src="/images/icon/material-lock.svg" alt="lock" />
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        class="form-control"
+                                        placeholder="Password"
+                                        required
+                                    />
+                                    <div class="p-viewer" style="border-radius: 0.25rem">
+                                        <i class="fa fa-eye-slash" id="show-icon" aria-hidden="true" style="cursor: pointer"></i>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 20px">
+                                    <!--<div>Remember Me: <input type="checkbox" name="remember-me" /> </div>-->
+                                    <div class="col-6">
+                                        <button class="btn-custom btn-custom-primary px-4" outline-animation type="submit">Login</button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <a class="btn login-btn__forget-password px-0" th:href="@{'/api/users/fpassword'}"
+                                            >Forgot Password?</a
+                                        >
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form
+                                th:if="${@environment.getProperty('saml.idp') != null && @environment.getProperty('saml.idp') != ''&& @environment.getProperty('customer.server.name') == 'dyson'}"
+                                action="/saml/login?disco=true"
+                                method="get"
+                            >
+                                <input type="hidden" name="idp" th:value="${@environment.getProperty('saml.idp')}" />
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-block" style="background: #a1a3a8; border: 1px solid #a1a3a8">
+                                            <strong>Dyson SSO</strong>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <a
+                                th:if="${@environment.getProperty('saml.idp') == 'https://fedauth.pg.com'}"
+                                href="https://fedauth.pg.com/idp/startSSO.ping?PartnerSpId=https%3A%2F%2Fps0611.emoldino.com"
+                            >
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <button
+                                            type="submit"
+                                            class="btn btn-block btn-primary"
+                                            style="background: #a1a3a8; border: 1px solid #a1a3a8"
+                                        >
+                                            <strong>P&G SSO</strong>
+                                        </button>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <form
+                                th:if="${@environment.getProperty('saml.idp') != null && @environment.getProperty('customer.server.name') == 'ns0407'}"
+                                action="/saml/login?disco=true"
+                                method="get"
+                            >
+                                <input type="hidden" name="idp" th:value="${@environment.getProperty('saml.idp')}" />
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-block" style="background: #a1a3a8; border: 1px solid #a1a3a8">
+                                            <strong>Nestle SSO</strong>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form
+                                    th:if="${@environment.getProperty('saml.idp') != null && @environment.getProperty('customer.server.name') == 'eb0702'}"
+                                    action="/saml/login?disco=true"
+                                    method="get"
+                            >
+                                <input type="hidden" name="idp" th:value="${@environment.getProperty('saml.idp')}" />
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-block" style="background: #a1a3a8; border: 1px solid #a1a3a8">
+                                            <strong>Electrolux SSO</strong>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="text-white py-5 d-md-down-none login-card login-card__request-access">
+                        <div class="login-card-body card-body text-center">
+                            <div>
+                                <h2 style="color: #fff; margin-bottom: 34px">Request Access</h2>
+                                <p style="margin-bottom: 32px">Request access from the administrator to log into the system</p>
+                                <a href="/register" class="btn-custom btn-outline-custom-primary" animation-secondary>Request Access</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block layout:fragment="op-script">
+        <script defer th:src="'/js/scripts/login/index.js?'+${noCacheVer}" type="text/javascript"></script>
+
+        <!-- <script type="text/javascript" th:inline="javascript">
+            window.onload = function () {
+                document.title = 'Login' + ' | eMoldino';
+            };
+
+            $(function () {
+                var error;
+
+                if (error != null) {
+                    if (error == '1') {
+                        Common.alert('Your account has been locked. Please check your email to reset your password.');
+                    } else if (error == 'sso') {
+                        Common.alert('SSO not working. ');
+                    } else if (error == '2') {
+                        Common.alert('Your password has been expired . Please check your email to update with a new password.');
+                    } else {
+                        Common.alert('Invalid username and password.');
+                    }
+                }
+            });
+
+            $(document).ready(() => {
+                Common.removeWave(500);
+                $('#show-icon').click(() => {
+                    console.log('Click Here');
+                    const currentElement = $('#show-icon');
+                    const inputElement = $('#password');
+                    if (inputElement.attr('type') == 'password') {
+                        inputElement.attr('type', 'text');
+                        currentElement.removeClass('fa-eye-slash');
+                        currentElement.addClass('fa-eye');
+                    } else {
+                        inputElement.attr('type', 'password');
+                        currentElement.removeClass('fa-eye');
+                        currentElement.addClass('fa-eye-slash');
+                    }
+                });
+            });
+        </script> -->
+    </th:block>
+</html>

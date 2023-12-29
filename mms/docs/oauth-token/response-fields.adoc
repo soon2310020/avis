@@ -1,0 +1,28 @@
+|===
+|Path|Type|Description
+
+|`+access_token+`
+|`+String+`
+|Access Token
+
+|`+token_type+`
+|`+String+`
+|'bearer'
+
+|`+refresh_token+`
+|`+String+`
+|A refresh token is valid for longer than an access token, and allows you to trade in the refresh token for a new access token and a new refresh token.
+
+|`+expires_in+`
+|`+Number+`
+|the number of seconds before the token expires
+
+|`+scope+`
+|`+String+`
+|scope
+
+|`+jti+`
+|`+String+`
+|Json Web Token ID
+
+|===

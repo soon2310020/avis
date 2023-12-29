@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <th:block th:fragment="op-head-common">
+    <base href="./" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <meta name="description" content="emoldino" />
+    <meta name="author" content="dbclose@gmail.com" />
+    <meta name="keyword" content="emoldino" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="google" content="notranslate" />
+    <title>eMoldino</title>
+
+    <!-- Icons-->
+    <link rel="shortcut icon" href="/images/icon/e-icon.ico" />
+    <link rel="stylesheet" href="/js/cdn/pretty-checkbox.min.css" />
+    <link
+      href="/ui/node_modules/@coreui/icons/css/coreui-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/ui/node_modules/flag-icon-css/css/flag-icon.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/ui/node_modules/font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/ui/node_modules/simple-line-icons/css/simple-line-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/ui/node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/modules/amcharts4/examples/javascript/bubble-chart/index.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="/ui/node_modules/vue-tel-input/dist/vue-tel-input.css"
+    />
+    <!-- Main styles for this application-->
+    <link th:href="'/ui/css/style.css?'+${noCacheVer}" rel="stylesheet" />
+    <link href="/ui/vendors/pace-progress/css/pace.min.css" rel="stylesheet" />
+    <link th:href="'/css/icon.css?'+${noCacheVer}" rel="stylesheet" />
+    <link th:href="'/css/mms.css?'+${noCacheVer}" rel="stylesheet" />
+    <link th:href="'/css/header.css?'+${noCacheVer}" rel="stylesheet" />
+    <link th:href="'/css/sidebar.css?'+${noCacheVer}" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/cdn/antd.min.css" />
+    <link rel="stylesheet" th:href="'/css/mold/detail.css?'+${noCacheVer}" />
+    <th:block layout:fragment="op-head"></th:block>
+  </th:block>
+</html>

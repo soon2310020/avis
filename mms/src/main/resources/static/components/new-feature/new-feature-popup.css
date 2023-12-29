@@ -1,0 +1,22 @@
+/* Modal Content/Box */
+.new-feature-content .bottom-content{
+    border-radius: 4px;
+}
+.left-footer .btn-skip {
+    color: #CDCDCD;
+    cursor: pointer;
+}
+.right-footer a.btn-done {
+    border: 2px solid #EFEFEF;
+    padding: 7.5px 25.5px;
+    border-radius: 6px;
+    color: #FFF;
+    font-weight: 400;
+    cursor: pointer;
+    background-color: #3C2F93;
+}
+.right-footer a.btn-done:hover,
+.right-footer a.btn-done:active {
+    text-decoration: none;
+    background-color: #221B52;
+}

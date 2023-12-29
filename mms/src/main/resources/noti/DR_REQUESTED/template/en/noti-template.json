@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${requestType} is assigned to someone",
+  "content": "${senderName} (${senderCompanyName}) has assigned a ${requestType} request to you."
+}

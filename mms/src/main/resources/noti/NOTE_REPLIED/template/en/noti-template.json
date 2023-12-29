@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${senderName} replied to your note.",
+  "content": "${senderName} (${senderCompanyName}) replied to your note in ${pageTypeName}."
+}

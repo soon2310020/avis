@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "Tooling Disconnection Alert",
+  "content": "${additionalContent} currently disconnected",
+  "emailTitle": "${additionalContent} currently disconnected",
+  "emailContent": "${additionalContent} currently disconnected"
+}

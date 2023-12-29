@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head th:insert="fragments/login-head :: op-head-login"> </head>
+  <body class="app flex-row align-items-center page login-page">
+    <!-- REMOVE IN AFTER CHATBOT APPLY -->
+    <th:block layout:fragment="op-content"></th:block>
+    <th:block th:replace="fragments/login-script :: op-script-login"></th:block>
+  </body>
+</html>

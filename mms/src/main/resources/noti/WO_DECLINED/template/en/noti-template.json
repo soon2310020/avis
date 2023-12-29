@@ -1,0 +1,7 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName} declined",
+  "content": "${senderName} (${senderCompanyName}) has declined your Work Order request.",
+  "emailTitle": "${senderName} (${senderCompanyName}) has declined your Work Order request.",
+  "emailContent": "${senderName} (${senderCompanyName}) has declined your Work Order request."
+}

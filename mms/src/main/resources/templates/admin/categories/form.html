@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <style type="text/css">
+        .op-menus {}
+
+        .op-menus li {
+            list-style: none;
+        }
+
+        .op-menus>ul {
+            padding-left: 10px;
+            -webkit-padding-start: 10px;
+
+        }
+        .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{
+            visibility:hidden !important;
+        }
+        .hide_account{
+            display: none !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+
+        <div class="hide_account alert alert-dark" role="alert">
+            <h5 class="alert-heading mb-0"><i class="fa fa-user"></i>
+                <span v-if="New === 'New'" th:text="#{new}"></span>
+                <span v-else th:text="#{edit}"></span>
+                <span th:text="#{category}"></span>
+            </h5>
+        </div>
+
+        <form class="needs-validation" @submit.prevent="submit">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave" id="remove_profile"> </div>
+                    <div class="card wave_category">
+                        <div class="card-header">
+                            <strong th:text="#{category}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="name" th:text="#{name}"> <span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10">
+                                    <input type="text" id="name" v-model="category.name" class="form-control"
+                                           th:placeholder="#{name}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="description" th:text="#{description}"> <span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10">
+                                    <input type="text" id="description" v-model="category.description"
+                                        class="form-control" th:placeholder="#{description}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" for="name"><span th:text="#{parent_category}"></span> <span
+                                        class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-10">
+                                    <select class="form-control" v-model="category.parentId">
+                                        <option value="" :checked="category.level == 1"><span th:text="#{uncategorized}"></span></option>
+
+                                        <template v-for="category1 in parentCategories">
+                                            <option :value="category1.id"
+                                                :disabled="category.id == category1.id || category.children.length > 0">
+                                                &nbsp;  {{ category1.name }}
+                                            </option>
+
+                                            <template v-for="category2 in category1.children">
+                                                <option :value="category2.id" :disabled="true">
+                                                    &nbsp; | &nbsp; &nbsp; ㄴ {{ category2.name }}
+                                                </option>
+                                                <!--<option :value="category2.id" :disabled="category.id == category2.id || (category.level==2 && category.children.length > 0)">
+                                                    &nbsp; | &nbsp; &nbsp; ㄴ {{ category2.name }}  {{category.id}}- {{category2.id}}
+                                                </option>
+
+                                                <template v-for="category3 in category2.children">
+                                                    <option :value="category3.id" disabled="true">
+                                                        &nbsp; | &nbsp; &nbsp; | &nbsp; &nbsp; ㄴ {{ category3.name }}
+                                                    </option>
+
+
+                                                </template>-->
+                                            </template>
+
+                                        </template>
+
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" th:text="#{enable}"></label>
+                                <div class="col-md-10 col-form-label">
+                                    <div class="form-check form-check-inline mr-3">
+                                        <label class="form-check-label">
+                                            <input type="radio" v-model="category.enabled" class="form-check-input"
+                                                value="true" name="enabled">
+                                            <span th:text="#{enable}"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" v-model="category.enabled" class="form-check-input"
+                                                value="false" name="disabled">
+                                            <span th:text="#{disable}"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card wave_save">
+                        <div class="card-body text-center">
+                            <button type="submit" class="btn btn-primary"><span th:text="#{save_changes}"></span></button>
+                            <button type="button" class="btn btn-default" onclick="history.back()"><span th:text="#{cancel}"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/categories/form.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

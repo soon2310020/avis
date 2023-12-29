@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <style type="text/css">
+        .op-menus {}
+
+        @media screen and (max-width: 2000px) {
+            .custom-class{
+                min-width: unset!important;
+                width:92%!important;
+            }
+            .tooling-dropdown{
+                width:97.2% !important;
+            }
+        }
+
+        @media screen and (max-width: 1300px) {
+            .custom-class{
+                min-width: unset!important;
+                width:89%!important;
+            }
+            .tooling-dropdown{
+                width:96.2% !important;
+            }
+        }
+       .dropdown-wrap{
+           width: 100% !important;
+       }
+        li > label > .badge-require{
+            width: unset;
+            background-color: transparent ;
+
+        }
+        .op-menus li {
+            list-style: none;
+        }
+
+        .op-menus>ul {
+            padding-left: 10px;
+            -webkit-padding-start: 10px;
+
+        }
+
+        option:first {
+            color: red;
+        }
+
+        .sidebar.wave_sidebar div,
+        .tab-support.wave_header div,
+        .tab-insight.wave_header div,
+        .tab-reports.wave_header div,
+        .tab-user.wave_header div {
+            visibility: hidden !important;
+        }
+
+        .hide_account {
+            display: none !important;
+        }
+        .document-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .document-wrapper {
+            background: #FFC68D;
+            border-radius: 3px;
+            width: auto;
+            padding: 4px 8px;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+        .date-picker-icon {
+            content: url(/images/icon/blue-calendar.svg);
+            margin-left: 5px;
+        }
+        .date-picker-icon:hover{
+            content: url(/images/icon/blue-calendar-hover.svg);
+        }
+        .errorForm {
+            border: 1px solid #E34537;
+            color: #E34537;
+        }
+        .errorForm::placeholder{
+            color: #e34537;
+        }
+        .modal-dialog-centered {
+            min-height: 100vh;
+        }
+        .mold-warning-modal-position {
+            transform: translate(0, 160%) !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+
+        <div class="hide_account alert alert-dark" role="alert">
+            <h5 class="alert-heading mb-0"><i class="fa fa-user"></i>
+                <span v-if="isCreate" th:text="#{new}"></span>
+                <span v-else th:text="#{edit}"></span>
+                <span th:text="#{tooling}"></span>
+            </h5>
+        </div>
+
+        <form class="needs-validation" @submit.prevent="submit">
+            <!-- Basic Information-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card profile_wave" id="remove_profile"> </div>
+                    <div class="card wave_mold1">
+                        <div class="card-header">
+                            <strong th:text="#{basic_info_static}"></strong>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="mold-id">
+                                    <span>{{resources['tooling_id']}}</span>
+                                    <span class="badge-require" v-if="isRequiredField('equipmentCode')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" id="mold-id" v-model="mold.equipmentCode" class="form-control"
+                                           th:placeholder="#{tooling_id}" required>
+                                    <!-- :readonly="readonly"  - 12/12 수정 간능하도록 -->
+                                    <input type="hidden" v-model="mold.equipmentStatus">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="mold-id"><span
+                                        th:text="#{supplier_tooling_id}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('supplierMoldCode')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" v-model="mold.supplierMoldCode" class="form-control"
+                                           th:placeholder="#{supplier_tooling_id}" :required="isRequiredField('supplierMoldCode')">
+                                    <input type="hidden" v-model="mold.supplierMoldCode">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="location"><span
+                                        th:text="#{counter_id}"></span>
+                                    <span class="avatar-status badge-danger"></span></label>
+                                <div class="col-md-5">
+
+                                    <input type="hidden" v-model="mold.counterId">
+                                    <input th:placeholder="#{counter_id}" type="text" id="counter"
+                                           v-model="mold.counterCode" readonly="readonly" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                            data-target="#op-counter-search" @click="findCounter()"
+                                            th:text="#{counter_search}">
+
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['accumulatedShots']">
+                                <label class="col-md-3 col-form-label" for="mold-id"><span
+                                        th:text="#{accumulated_shots}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('accumulatedShots')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" v-model="mold.accumulatedShots" class="form-control"
+                                           th:placeholder="#{accumulated_shots}" :required="isRequiredField('accumulatedShots')">
+                                    <input type="hidden" v-model="mold.accumulatedShots">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['toolingLetter']">
+                                <label class="col-md-3 col-form-label" for="mold-id"><span
+                                        th:text="#{tooling_letter}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('toolingLetter')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" v-model="mold.toolingLetter" class="form-control"
+                                           th:placeholder="#{tooling_letter}" :required="isRequiredField('toolingLetter')">
+                                    <!-- :readonly="readonly"  - 12/12 수정 간능하도록 -->
+                                    <input type="hidden" v-model="mold.toolingLetter">
+                                </div>
+                            </div>
+
+                <div
+                  class="form-group row"
+                  v-if="!checkDeleteTooling['toolingType']"
+                >
+                  <label class="col-md-3 col-form-label" for="toolingType"
+                    ><span th:text="#{tooling_type}"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('toolingType')"
+                    ></span>
+                  </label>
+                  <div class="col-md-9">
+                    <input
+                      type="text"
+                      id="toolingType"
+                      v-model="mold.toolingType"
+                      class="form-control"
+                      th:placeholder="#{tooling_type}"
+                      :required="isRequiredField('toolingType')"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="form-group row"
+                  v-if="!checkDeleteTooling['toolingType']"
+                >
+                  <label
+                    class="col-md-3 col-form-label d-flex align-center"
+                    for="toolingType"
+                  >
+                    <span
+                      th:text="#{backup_tooling}"
+                      style="margin-right: 4px"
+                    ></span>
+                    <a-tooltip placement="bottom">
+                      <template slot="title">
+                        <span
+                          >{{resources['use_this_to_label_a_tooling_as_a_backip_tooling']}}.</span
+                        >
+                      </template>
+                      <a-icon type="info-circle"></a-icon>
+                    </a-tooltip>
+                  </label>
+                  <div class="col-md-9">
+                    <div style="display: inline-block">
+                      <custom-dropdown
+                        :list-item="backUpListItem"
+                        :title-field="'title'"
+                        :default-item="selectedBackUpItem"
+                        @change="handleChangeBackUpItem"
+                      ></custom-dropdown>
+                    </div>
+                  </div>
+                </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['toolingComplexity']">
+                                <label class="col-md-3 col-form-label" for="weight"><span
+                                        th:text="#{tooling_complexity}"></span>
+                                    <!--<span class="badge-require"></span>-->
+                                    <span class="badge-require" v-if="isRequiredField('toolingComplexity')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <div v-if="!isToolingComplexityEnabled">
+                                        <input type="text" v-model="mold.toolingComplexity" class='form-control'
+                                               th:placeholder="#{tooling_complexity}"
+                                               :required="isRequiredField('toolingComplexity')">
+                                    </div>
+                                    <div v-else>
+<!--                                        <select :required="isRequiredField('toolingComplexity')" style="color: #9ca5af;"-->
+<!--                                                class="form-control" v-model="mold.toolingComplexity">-->
+<!--                                            <option class="first-option" value="" disabled selected hidden-->
+<!--                                                    th:text="#{tooling_complexity}"></option>-->
+<!--                                            <template v-for="code in ['A+', 'A', 'B', 'C']">-->
+<!--                                                <option :value="code">{{ code }}</option>-->
+<!--                                            </template>-->
+<!--                                        </select>-->
+                                        <common-button
+                                                :title="mold.toolingComplexity"
+                                                @click="handleTogleToolingComplexity"
+                                                :is-show="showToolingComplexity"
+
+                                        >
+                                        </common-button>
+                                        <common-select-popover
+                                                :is-visible="showToolingComplexity"
+                                                @close="closeToolingComplexity"
+                                                class="w-95 tooling-dropdown">
+
+                                            <common-select-dropdown
+                                                    id="weight-unit"
+                                                    :searchbox="false"
+                                                    :class="{show:showToolingComplexity}"
+                                                    :style="{position:'static'}"
+                                                    :items="toolingComplexityList"
+                                                    :checkbox="false"
+                                                    :click-handler="selectToolingComplexity"
+                                            ></common-select-dropdown>
+
+                                        </common-select-popover>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['designedShot']">
+                                <label class="col-md-3 col-form-label" for="designed-shot">
+                                    <span>{{resources['forecasted_max_shot']}}</span>
+                                    <span class="badge-require" v-if="isRequiredField('designedShot')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="designed-shot" min="1" max="99999999"
+                                           oninput="Common.maxLength(this, 8)" v-model="mold.designedShot"
+                                           class="form-control" th:placeholder="#{forecasted_max_shot}" required>
+
+                                </div>
+                            </div>
+
+                            <div v-if="isLifeYearsEnabled && !checkDeleteTooling['lifeYears']"
+                                class="form-group row">
+                                <label class="col-md-3 col-form-label" for="lifeYears">
+                                    <span th:text="#{forecasted_tool_life}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('lifeYears')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="lifeYears" min="1" max="99"
+                                           oninput="Common.maxLength(this, 2)" v-model="mold.lifeYears"
+                                           class="form-control" th:placeholder="#{forecasted_tool_life}"
+                                           :required="isRequiredField('lifeYears')">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['madeYear']">
+                                <label class="col-md-3 col-form-label" for="madeYear"><span
+                                        th:text="#{year_of_tool_made}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('madeYear')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="madeYear" min="1900" oninput="Common.maxLength(this, 4)"
+                                           v-model="mold.madeYear" class="form-control"
+                                           th:placeholder="#{year_of_tool_made}" :required="isRequiredField('madeYear')">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="location"><span
+                                        th:text="#{location}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('locationName')"></span>
+                                </label>
+                                <div class="col-md-5">
+
+                                    <input type="hidden" v-model="mold.locationId" required>
+                                    <input th:placeholder="#{location}" type="text" id="location"
+                                           v-model="mold.locationName" readonly="readonly" class="form-control" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-outline-success" data-toggle="modal"
+                                            data-target="#op-location-search" @click="findLocation()"
+                                            th:text="#{location_search}">
+
+                                    </button>
+                                </div>
+                            </div>
+
+                <div
+                  v-if="engineers.length > 0 && !checkDeleteTooling['engineers']"
+                  class="form-group row"
+                >
+                  <label class="col-md-3 col-form-label"
+                    ><span th:text="#{oem_engineer_in_charge}"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('engineers')"
+                    ></span>
+                  </label>
+                  <div class="col-md-9" th:placeholder="#{oem_engineer_in_charge}">
+                    <engineer-charge-dropdown
+                      id="engineering-charge"
+                      :resources="resources"
+                      :items="engineers"
+                      v-model="mold.engineerIds"
+                      :required="isRequiredField('engineers')"
+                      :placeholder="resources['oem_engineer_in_charge']"
+                    >
+                    </engineer-charge-dropdown>
+                  </div>
+                </div>
+                <div
+                  v-if="engineers.length > 0 && !checkDeleteTooling['plantEngineers']"
+                  class="form-group row"
+                >
+                  <label class="col-md-3 col-form-label"
+                    ><span th:text="#{plant_engineer_in_charge}"></span>
+                    <span
+                      class="badge-require"
+                      v-if="isRequiredField('plantEngineers')"
+                    ></span>
+                  </label>
+                  <div
+                    class="col-md-9"
+                    th:placeholder="#{plant_engineer_in_charge}"
+                  >
+                    <engineer-charge-dropdown
+                      id="plant-engineering-charge"
+                      :resources="resources"
+                      :items="engineers"
+                      :required="isRequiredField('plantEngineers')"
+                      :placeholder="resources['plant_engineer_in_charge']"
+                      v-model="mold.plantEngineerIds"
+                    >
+                    </engineer-charge-dropdown>
+                  </div>
+                </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['toolDescription']">
+                                <label class="col-md-3 col-form-label" for="toolDescription">
+                                    <span th:text="#{tool_description}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('toolDescription')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <textarea th:placeholder="#{tool_description}" type="text" id="toolDescription"
+                                              v-model="mold.toolDescription" rows="4" class="form-control"
+                                              :required="isRequiredField('toolDescription')"></textarea>
+                                </div>
+                            </div>
+                            <div v-for="(item, index) in mappingListConfigCustomField('BASIC')" :key="index"
+                                 class="form-group row">
+                                <label class="col-md-3 col-form-label" :for="'customFieldList' + item.id">
+                                    {{ item.fieldName }}
+                                    <span class="avatar-status"></span>
+                                    <span class="badge-require" v-if="item.required"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input :id="'customFieldList' + item.id" type="text"
+                                           v-model="item.defaultInputValue" class="form-control"
+                                           :placeholder="item.fieldName" :required="item.required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Physical Information -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card wave_mold2">
+                        <div class="card-header">
+                            <strong th:text="#{physical_info}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row" v-if="!checkDeleteTooling['size']">
+                                <label class="col-md-3 col-form-label" for="size"><span th:text="#{tool_size}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('size')"></span>
+                                </label>
+                                <div style="display: flex; justify-content: space-between; align-items: center;"
+                                     class="col-md-6">
+                                    <input type="number" style="width: 30%;" id="size" v-model="mold.sizeWidth" min="0"
+                                           step="any" class="form-control" th:placeholder="#{width}"
+                                           :required="isRequiredField('size')">
+                                    <div>x</div>
+                                    <input type="number" style="width: 30%;" id="size" v-model="mold.sizeDepth" min="0"
+                                           step="any" class="form-control" th:placeholder="#{length}"
+                                           :required="isRequiredField('size')">
+                                    <div>x</div>
+                                    <input type="number" style="width: 30%;" id="size" v-model="mold.sizeHeight" min="0"
+                                           step="any" class="form-control" th:placeholder="#{height}"
+                                           :required="isRequiredField('size')">
+
+                                    <!-- <input id="size" v-model="mold.WLH" class="form-control" placeholder="Tool Size (WxLxH)"> -->
+                                </div>
+                                <div class="col-md-3">
+<!--                                    <select style="color: #9ca5af;" class="form-control" v-model="mold.sizeUnit">-->
+<!--                                        <option disabled selected hidden :value="null" th:text="#{unit}"></option>-->
+<!--                                        <template v-for="code in codes.SizeUnit">-->
+<!--                                            <option :value="code.code">{{ code.title }}</option>-->
+<!--                                        </template>-->
+<!--                                    </select>-->
+                                    <common-button
+                                            :title="tool_size"
+                                            @click="handleTogleToolSize"
+                                            :is-show="showToolSize"
+
+                                    >
+                                    </common-button>
+                                    <common-select-popover
+                                            :is-visible="showToolSize"
+                                            @close="closeToolSize"
+                                            class="custom-class">
+
+                                        <common-select-dropdown
+                                                id="tool-size"
+                                                :searchbox="true"
+                                                :class="{show:showToolSize}"
+                                                :style="{position:'static'}"
+                                                :items="codes.SizeUnit"
+                                                :checkbox="false"
+                                                :click-handler="selectToolSize"
+                                        ></common-select-dropdown>
+
+                                    </common-select-popover>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['weight']">
+                                <label class="col-md-3 col-form-label" for="weight"><span
+                                        th:text="#{tool_weight}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('weight')"></span>
+                                </label>
+                                <div class="col-md-6">
+                                    <input type="number" id="weight" v-model="mold.weight" class="form-control"
+                                           step="any" th:placeholder="#{tool_weight}"
+                                           :required="isRequiredField('weight')">
+                                </div>
+                                <div class="col-md-3">
+<!--                                    <select style="color: #9ca5af;" class="form-control" v-model="mold.weightUnit">-->
+<!--                                        <option disabled selected hidden :value="null" th:text="#{unit}"></option>-->
+
+<!--                                        <template v-for="code in codes.WeightUnit">-->
+<!--                                            <option :value="code.code">{{ code.title }}</option>-->
+<!--                                        </template>-->
+<!--                                    </select>-->
+                                    <common-button
+                                            :title="weight_unit"
+                                            @click="handleTogleWeightUnit"
+                                            :is-show="showWeightUnit"
+
+                                    >
+                                    </common-button>
+                                    <common-select-popover
+                                            :is-visible="showWeightUnit"
+                                            @close="closeWeightUnit"
+                                            class="custom-class">
+
+                                        <common-select-dropdown
+                                                id="weight-unit"
+                                                :searchbox="false"
+                                                :class="{show:showWeightUnit}"
+                                                :style="{position:'static'}"
+                                                :items="codes.WeightUnit"
+                                                :checkbox="false"
+                                                :click-handler="selectWeightUnit"
+                                        ></common-select-dropdown>
+
+                                    </common-select-popover>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['shotSize']">
+                                <label class="col-md-3 col-form-label" for="shotSize"><span
+                                        th:text="#{shot_weight}+'(gram)'"></span>
+                                    <span class="badge-require" v-if="isRequiredField('shotSize')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input disabled type="number" v-model="mold.shotSize" class="form-control"
+                                           step="any" th:placeholder="#{shot_weight}+'(gram)'" readonly
+                                           :required="isRequiredField('shotSize')">
+                                </div>
+                            </div>
+                            <!--<div class="form-group row">-->
+                            <!--<label class="col-md-3 col-form-label" for="resin">Part Resin Code</label>-->
+                            <!--<div class="col-md-9">-->
+                            <!--<input type="text" id="resin" v-model="mold.resin" class="form-control" placeholder="Resin">-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="form-group row" v-if="!checkDeleteTooling['toolMakerCompanyName']">
+                                <label class="col-md-3 col-form-label" for="toolMaker"><span
+                                        th:text="#{toolmaker}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('toolMakerCompanyName')"></span>
+                                </label>
+                                <div class="col-md-5">
+                                    <input th:placeholder="#{toolmaker}" type="text" id="toolMaker"
+                                           v-model="mold.toolMakerCompanyName" readonly="readonly" class="form-control"
+                                           :required="isRequiredField('toolMakerCompanyName')">
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-outline-success"
+                                            @click.prevent="findCompany('','TOOL_MAKER')"
+                                            th:text="#{toolmaker_search}"></button>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['injectionMachineId']">
+                                <label class="col-md-3 col-form-label" for="injectionMolding"><span
+                                        th:text="#{injection_molding_machine_id}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('injectionMachineId')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" v-model="mold.injectionMachineId" class="form-control"
+                                           th:placeholder="#{injection_molding_machine_id}"
+                                           :required="isRequiredField('injectionMachineId')">
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['totalCavities']">
+                                <label class="col-md-3 col-form-label" for="injectionMolding"><span
+                                        th:text="#{total_number_of_cavities}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('totalCavities')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" v-model="mold.totalCavities" class="form-control"
+                                           th:placeholder="#{total_number_of_cavities}" min="0"
+                                           :required="isRequiredField('totalCavities')">
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['quotedMachineTonnage']">
+                                <label class="col-md-3 col-form-label" for="machineTonnageQuote"><span
+                                        th:text="#{machine_tonnage}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('quotedMachineTonnage')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" v-model="mold.quotedMachineTonnage" class="form-control"
+                                           step="any" th:placeholder="#{machine_tonnage}"
+                                           :required="isRequiredField('quotedMachineTonnage')">
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['toolingPictureFile']">
+                                <label class="col-md-3 col-form-label"><span th:text="#{tooling_picture}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('toolingPictureFile')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <div class="op-upload-button-wrap">
+                                        <button class="btn btn-outline-success" th:text="#{upload_photo}"></button>
+                                        <input type="file" id="files1" @change="selectedThirdFiles" accept=".gif, .jpg, .jpeg, .png, .doc, .zip, .pdf, .docx, .xls, .xlsx, .ppt, .pptx" :required="isRequiredField('toolingPictureFile') && toolingConditionFiles.length == 0" />
+                                    </div>
+                                    <preview-images-system
+                                            :is-viewing="false"
+                                            @delete-uploaded-img="deleteFileStorage"
+                                            @delete-img="deleteThirdFiles"
+                                            :images="thirdFiles"
+                                            :images-uploaded="toolingConditionFiles"
+                                            :file-types="fileTypes.MOLD_CONDITION"
+                                    ></preview-images-system>
+                                </div>
+                            </div>
+                            <div v-for="(item, index) in mappingListConfigCustomField('PHYSICAL')" :key="index"
+                                 class="form-group row">
+                                <label class="col-md-3 col-form-label" :for="'customFieldList' + item.id">
+                                    {{ item.fieldName }}
+                                    <span class="avatar-status"></span>
+                                    <span class="badge-require" v-if="item.required"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input :id="'customFieldList' + item.id" type="text"
+                                           v-model="item.defaultInputValue" class="form-control"
+                                           :placeholder="item.fieldName" :required="item.required">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Runner -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong th:text="#{runner_system_info}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row" v-if="!checkDeleteTooling['runnerType']">
+                                <label class="col-md-3 col-form-label" for="runnerType"><span
+                                        th:text="#{type_of_runner_system}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('runnerType')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" id="runnerType" v-model="mold.runnerType" class="form-control"
+                                           th:placeholder="#{type_of_runner_system}"
+                                           :required="isRequiredField('runnerType')">
+
+                                    <!--
+                                    <select id="runnerType" class="form-control" v-model="mold.runnerType" :required="isRequiredField('runnerType')">
+                                        <option :value="null" disabled selected hidden  th:text="#{type_of_runner_system}"></option>
+
+                                        <template v-for="code in codes.RunnerType">
+                                            <option :value="code.code">{{ code.title }}</option>
+                                        </template>
+
+                                    </select>
+-->
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['runnerMaker']">
+                                <label class="col-md-3 col-form-label" for="runnerMaker"><span
+                                        th:text="#{maker_of_runner_system}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('runnerMaker')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" id="runnerMaker" v-model="mold.runnerMaker" class="form-control"
+                                           th:placeholder="#{maker_of_runner_system}"
+                                           :required="isRequiredField('runnerMaker')">
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['weightRunner']">
+                                <label class="col-md-3 col-form-label" for="weightRunner"><span
+                                        th:text="#{weight_of_runner_system_g}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('weightRunner')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="weightRunner" v-model="mold.weightRunner"
+                                           class="form-control" th:placeholder="#{weight_of_runner_system_g}" step="any"
+                                           :required="isRequiredField('weightRunner')">
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['hotRunnerDrop']">
+                                <label class="col-md-3 col-form-label" for="weightRunner"><span
+                                        th:text="#{hot_runner_number_of_drop}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('hotRunnerDrop')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" id="hotRunnerDrop" v-model="mold.hotRunnerDrop"
+                                           class="form-control" th:placeholder="#{hot_runner_number_of_drop}" step="any"
+                                           :required="isRequiredField('hotRunnerDrop')">
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['hotRunnerZone']">
+                                <label class="col-md-3 col-form-label" for="weightRunner"><span
+                                        th:text="#{hot_runner_zone}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('hotRunnerZone')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="hotRunnerZone" v-model="mold.hotRunnerZone"
+                                           class="form-control" th:placeholder="#{hot_runner_zone}" step="any"
+                                           :required="isRequiredField('hotRunnerZone')">
+                                </div>
+                            </div>
+                            <div v-for="(item, index) in mappingListConfigCustomField('RUNNER_SYSTEM')" :key="index"
+                                 class="form-group row">
+                                <label class="col-md-3 col-form-label" :for="'customFieldList' + item.id">
+                                    {{ item.fieldName }}
+                                    <span class="avatar-status"></span>
+                                    <span class="badge-require" v-if="item.required"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input :id="'customFieldList' + item.id" type="text"
+                                           v-model="item.defaultInputValue" class="form-control"
+                                           :placeholder="item.fieldName" :required="item.required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Cost -->
+            <div class='row'>
+                <div class='col-md-12'>
+                    <div class="card">
+                        <div class='card-header'>
+                            <strong th:text="#{cost_info}"></strong>
+                        </div>
+                        <div class='card-body'>
+                            <div class='form-group row' v-if="!checkDeleteTooling['cost']">
+                                <label class='col-md-3 col-form-label' for="cost">
+                                    <span th:text="#{acquisition_cost}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('cost')"></span>
+                                </label>
+                                <div class='col-md-6'>
+                                    <input id="cost" type="text" v-model='mold.cost' class="form-control"
+                                           th:placeholder="#{acquisition_cost}" :required="isRequiredField('cost')">
+                                </div>
+                                <div class="col-md-3">
+<!--                                    <select class="form-control" v-model="mold.costCurrencyType"-->
+<!--                                            :required="isRequiredField('cost')">-->
+<!--                                        <option value="" th:text="#{currency}" disabled selected hidden></option>-->
+
+<!--                                        <template v-for="code in codes.CurrencyType">-->
+<!--                                            <option :value="code.code">{{ code.code }}</option>-->
+<!--                                        </template>-->
+<!--                                    </select>-->
+                                    <common-button
+                                            :title="cost_currency"
+                                            @click="handleTogleCostCurrency"
+                                            :is-show="showCostCurrency"
+
+                                    >
+                                    </common-button>
+                                    <common-select-popover
+                                            :is-visible="showCostCurrency"
+                                            @close="closeCostCurrency"
+                                            class="custom-class">
+
+                                        <common-select-dropdown
+                                                id="cost-currency"
+                                                :searchbox="true"
+                                                :class="{show:showCostCurrency}"
+                                                :style="{position:'static'}"
+                                                :items="costCurrencyList"
+                                                :checkbox="false"
+                                                :click-handler="selectCostCurrency"
+                                        ></common-select-dropdown>
+                                    </common-select-popover>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['accumulatedMaintenanceCost']">
+                                <label class="col-md-3 col-form-label">
+                                    <span th:text="#{accumulated_maintenance_cost}"></span>
+                                    <span class="badge-require"
+                                          v-if="isRequiredField('accumulatedMaintenanceCost')"></span>
+                                </label>
+                                <div class="col-md-6">
+                                    <input disabled type="text" v-model="mold.accumulatedMaintenanceCost"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="serverName !== 'dyson' &&  !checkDeleteTooling['lifeYears']">
+                                <label class="col-md-3 col-form-label">
+                                    <span th:text="#{depreciation_term}"></span>
+                                </label>
+                                <div class="col-md-9" style="display: flex; align-items: center;">
+                                    <input disabled type="text"
+                                           class="form-control" style="width: 72px" :value="(mold.lifeYears || 0) + ' years'">
+                                    <a-tooltip placement="bottom">
+                                        <template slot="title">
+                                            <div
+                                                style="padding: 6px;font-size: 13px;"
+                                                v-text="'This field information comes from the Tooling Basic Detail of ‘Forecasted Tool Life’'"
+                                            >
+                                            </div>
+                                        </template>
+                                        <div style="margin-left: 10px">
+                                            <img src="/images/icon/tooltip_info.svg" width="15" height="15"/>
+                                        </div>
+                                    </a-tooltip>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">
+                                    <span th:text="#{depreciation_term_shots}"></span>
+                                </label>
+                                <div class="col-md-9" style="display: flex; align-items: center;">
+                                    <span class="form-control" style="background-color: #e4e7ea; width: auto">
+                                        {{Intl.NumberFormat().format(mold.designedShot || 0)}} {{mold.designedShot > 1 ? 'shots' : 'shot'}}
+                                    </span>
+                                    <a-tooltip placement="bottom">
+                                        <template slot="title">
+                                            <div
+                                                style="padding: 6px;font-size: 13px;"
+                                                v-text="'This field information comes from the Tooling Basic Detail of ‘Forecasted Max Shots’'"
+                                            >
+                                            </div>
+                                        </template>
+                                        <div style="margin-left: 10px">
+                                            <img src="/images/icon/tooltip_info.svg" width="15" height="15"/>
+                                        </div>
+                                    </a-tooltip>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">
+                                    <span th:text="#{salvage_value}"></span>
+                                </label>
+                                <div class="col-md-9" style="display: flex; align-items: flex-start; flex-direction: column">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            style="width: auto"
+                                            v-model="mold.salvageValue"
+                                            placeholder="Input Salvage Value"
+                                            :class="{'errorForm' : isErrorSalvageValue}"
+                                    >
+                                    <span v-if="isErrorSalvageValue" style="color: #E34537; font-size: 11.25px; margin-top: 3px">Salvage value can not exceed 'Cost of Tooling' value</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">
+                                    <span th:text="#{po_number}"></span>
+                                </label>
+                                <div class="col-md-9" style="display: flex; align-items: center;">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            style="width: auto"
+                                            v-model="mold.poNumber"
+                                            placeholder="Input PO Number"
+                                    >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">
+                                    <span th:text="#{po_date}"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <base-button
+                                            :size="'medium'"
+                                            :type="'normal'"
+                                            :level="'secondary'"
+                                            @click="onOpenDatePicker"
+                                    >
+                                        {{poDateDisplay}}
+                                        <span class="date-picker-icon"></span>
+                                    </base-button>
+                                    <a-date-picker
+                                            ref="datePickerRef"
+                                            :allow-clear="false"
+                                            class="custom-date-picker-base"
+                                            :default-value="mold.poDate"
+                                            format="MMM Do, YYYY"
+                                            v-model="mold.poDate"
+                                            style="opacity: 0; margin-left: -114px; z-index: -1"
+                                    ></a-date-picker>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">
+                                    <span th:text="#{po_document}"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <base-button
+                                            @click="toggleUploadDocument"
+                                            :size="'medium'"
+                                            :type="'normal'"
+                                            :level="'secondary'"
+                                    >
+                                        Upload Document
+                                        <img
+                                                style="margin-left: 3px"
+                                                src="/images/icon/category/upload-active.svg"
+                                                alt=""
+                                        />
+                                    </base-button>
+                                    <input type="file" id="uploadDocumentRef" rerf="uploadDocumentRef" style="display: none;" @change="onUploadFile"/>
+                                    <div class="document-container">
+                                        <span v-for="doc in forthFiles.concat(costDocumentFiles)" class="document-wrapper">
+                                            {{doc.name || doc.fileName}}
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                           <div class='form-group row' v-if="!checkDeleteTooling['memo']">
+                               <label class='col-md-3 col-form-label'>
+                                   <span th:text="#{memo}"></span>
+                                   <span class="badge-require" v-if="isRequiredField('memo')"></span>
+                               </label>
+                               <div class='col-md-9'>
+                                   <textarea v-model='mold.memo' class='form-control' rows="4" th:placeholder="#{memo}"
+                                       :required="isRequiredField('memo')"></textarea>
+                               </div>
+                           </div>
+                            <div v-for="(item, index) in mappingListConfigCustomField('COST')" :key="index"
+                                 class="form-group row">
+                                <label class="col-md-3 col-form-label" :for="'customFieldList' + item.id">
+                                    {{ item.fieldName }}
+                                    <span class="avatar-status"></span>
+                                    <span class="badge-require" v-if="item.required"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input :id="'customFieldList' + item.id" type="text"
+                                           v-model="item.defaultInputValue" class="form-control"
+                                           :placeholder="item.fieldName" :required="item.required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Suppilier information -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong><span th:text="#{supplier_info}"></span></strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row" v-if="!checkDeleteTooling['supplierCompanyName']">
+                                <label class="col-md-3 col-form-label" for="supplier">
+                                    <span th:text="#{supplier}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('supplierCompanyName')"></span>
+                                </label>
+                                <div class="col-md-9" v-if="isToolMaker">
+                                    <input th:placeholder="#{supplier}" type="text" id="supplier"
+                                           v-model="mold.supplierForToolMaker" class="form-control"
+                                           :required="isRequiredField('supplierCompanyName')">
+                                </div>
+                                <div v-if="!isToolMaker" class="col-md-5">
+                                    <input type="text" id="supplier" v-model="mold.supplierCompanyName"
+                                           th:placeholder="#{supplier}" readonly="readonly" class="form-control"
+                                           :required="isRequiredField('supplierCompanyName')">
+                                </div>
+                                <div v-if="!isToolMaker" class="col-md-4">
+                                    <button type="button" class="btn btn-outline-success"
+                                            @click.prevent="findCompany('','SUPPLIER')"
+                                            th:text="#{supplier_search}"></button>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['labour']">
+                                <label class="col-md-3 col-form-label" for="labour">
+                                    <span th:text="#{required_labor}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('labour')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" step="1" id="labour" v-model="mold.labour" class="form-control"
+                                           th:placeholder="#{required_labor}" :required="isRequiredField('labour')">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['shiftsPerDay']">
+                                <label class="col-md-3 col-form-label" for="shiftsPerDay">
+                                    <span th:text="#{production_hour_per_day}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('shiftsPerDay')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="shiftsPerDay" v-model="mold.shiftsPerDay" step="any"
+                                           min="1" max="24" class="form-control"
+                                           th:placeholder="#{production_hour_per_day}"
+                                           :required="isRequiredField('shiftsPerDay')">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['productionDays']">
+                                <label class="col-md-3 col-form-label" for="productionDays">
+                                    <span th:text="#{production_day_per_week}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('productionDays')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="productionDays" min="1" max="7"
+                                           v-model="mold.productionDays" class="form-control"
+                                           th:placeholder="#{production_day_per_week}"
+                                           :required="isRequiredField('productionDays')">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['maxCapacityPerWeek']">
+                                <label class="col-md-3 col-form-label" for="productionDays">
+                                    <span th:text="#{maximum_capacity_per_week}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('maxCapacityPerWeek')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input disabled type="text" v-model="mold.maxCapacityPerWeek" class="form-control"
+                                           th:placeholder="#{maximum_capacity_per_week}"
+                                           :required="isRequiredField('maxCapacityPerWeek')">
+                                </div>
+                            </div>
+                            <div v-for="(item, index) in mappingListConfigCustomField('SUPPLIER')" :key="index"
+                                 class="form-group row">
+                                <label class="col-md-3 col-form-label" :for="'customFieldList' + item.id">
+                                    {{ item.fieldName }}
+                                    <span class="avatar-status"></span>
+                                    <span class="badge-require" v-if="item.required"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input :id="'customFieldList' + item.id" type="text"
+                                           v-model="item.defaultInputValue" class="form-control"
+                                           :placeholder="item.fieldName" :required="item.required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Information -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong><span th:text="#{production_information}"></span></strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row" v-if="!checkDeleteTooling['approvedCycleTime']">
+                                <label class="col-md-3 col-form-label">
+                                    {{ resources['approved_cycle_time_form_second'] }}
+                                    <span class="badge-require"></span>
+                                </label>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <label for="toolmaker-contracted-cycle-time" class="col-md-5 col-form-label" th:text="#{toolmaker_approved_cycle_time}"></label>
+                                        <div class="col-md-7">
+                                            <input
+                                                type="number"
+                                                id="toolmaker-contracted-cycle-time"
+                                                oninvalid="this.setCustomValidity('Value must be greater than 0')"
+                                                min="0.1"
+                                                max="99999999"
+                                                oninput="Common.maxLength(this, 8); this.setCustomValidity('')"
+                                                v-model="mold.toolmakerApprovedCycleTime"
+                                                step="any"
+                                                class="form-control"
+                                                th:placeholder="#{approved_cycle_time_form_second}"
+                                            >
+                                        </div>
+                                    </div>
+<!--                                    <input type="number" id="contracted-cycle-time" min="1" max="99999999" oninput="Common.maxLength(this, 8)" v-model="mold.approvedCycleTime" step="any" class="form-control" th:placeholder="#{approved_cycle_time_form_second}" required>-->
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <label for="contracted-cycle-time" class="col-md-5 col-form-label" th:text="#{supplier_approved_cycle_time}"></label>
+                                        <div class="col-md-7">
+                                            <input
+                                                type="number"
+                                                id="contracted-cycle-time"
+                                                oninvalid="this.setCustomValidity('Value must be greater than 0')"
+                                                min="0.1"
+                                                max="99999999"
+                                                oninput="Common.maxLength(this, 8); this.setCustomValidity('')"
+                                                v-model="mold.approvedCycleTime"
+                                                step="any"
+                                                class="form-control"
+                                                th:placeholder="#{approved_cycle_time_form_second}"
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row" v-if="!checkDeleteTooling['cycleTimeLimit1']">
+                                <label class="col-md-3 col-form-label" for="cycle-time-tolerance-l1">
+                                    <span th:text="#{cycle_time_tolerance_l1}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('cycleTimeLimit1')"></span>
+                                </label>
+                                <div class="col-md-6">
+                                    <input type="number" id="cycle-time-tolerance-l1" min="1" max="99" step="any"
+                                           oninput="Common.maxLength(this, 2)" v-model="mold.cycleTimeLimit1"
+                                           class="form-control" th:placeholder="#{cycle_time_tolerance_l1}" required>
+                                </div>
+                                <div class="col-md-3">
+<!--                                    <select class="form-control" v-model="mold.cycleTimeLimit1Unit">-->
+<!--                                        <option disabled selected hidden :value="null">-->
+<!--                                            <span th:text="#{unit}"></span>-->
+<!--                                        </option>-->
+
+<!--                                        <template v-for="code in codes.OutsideUnit">-->
+<!--                                            <option :value="code.code">{{ code.title === 's' ? 'second' : code.title }}-->
+<!--                                            </option>-->
+<!--                                        </template>-->
+<!--                                    </select>-->
+                                    <common-button
+                                            :title="cycle_time"
+                                            @click="handleTogleCycleTime"
+                                            :is-show="showCycleTime"
+
+                                    >
+                                    </common-button>
+                                    <common-select-popover
+                                            :is-visible="showCycleTime"
+                                            @close="closeCycleTime"
+                                            class="custom-class">
+
+                                        <common-select-dropdown
+                                                id="cycle-time"
+                                                :searchbox="false"
+                                                :class="{show:showCycleTime}"
+                                                :style="{position:'static'}"
+                                                :items="cycleTimeList"
+                                                :checkbox="false"
+                                                :click-handler="selectCycleTime"
+                                        ></common-select-dropdown>
+
+                                    </common-select-popover>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['cycleTimeLimit2']">
+                                <label class="col-md-3 col-form-label" for="cycle-time-tolerance-l2">
+                                    <span th:text="#{cycle_time_tolerance_l2}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('cycleTimeLimit2')"></span>
+                                </label>
+                                <div class="col-md-6">
+                                    <input type="number" id="cycle-time-tolerance-l2" min="1" max="99" step="any"
+                                           oninput="Common.maxLength(this, 2)" v-model="mold.cycleTimeLimit2"
+                                           class="form-control" th:placeholder="#{cycle_time_tolerance_l2}" required>
+                                </div>
+                                <div class="col-md-3">
+<!--                                    <select class="form-control" v-model="mold.cycleTimeLimit2Unit">-->
+<!--                                        <option disabled selected hidden :value="null">-->
+<!--                                            <span th:text="#{unit}"></span>-->
+<!--                                        </option>-->
+
+<!--                                        <template v-for="code in codes.OutsideUnit">-->
+<!--                                            <option :value="code.code">{{ code.title === 's' ? 'second' : code.title }}-->
+<!--                                            </option>-->
+<!--                                        </template>-->
+<!--                                    </select>-->
+                                    <common-button
+                                            :title="cycle_time2"
+                                            @click="handleTogleCycleTime2"
+                                            :is-show="showCycleTime2"
+
+                                    >
+                                    </common-button>
+                                    <common-select-popover
+                                            :is-visible="showCycleTime2"
+                                            @close="closeCycleTime2"
+                                            class="custom-class">
+
+                                        <common-select-dropdown
+                                                id="cycle-time2"
+                                                :searchbox="false"
+                                                :class="{show:showCycleTime2}"
+                                                :style="{position:'static'}"
+                                                :items="cycleTimeList"
+                                                :checkbox="false"
+                                                :click-handler="selectCycleTime2"
+                                        ></common-select-dropdown>
+
+                                    </common-select-popover>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['uptimeTarget']">
+                                <label class="col-md-3 col-form-label" for="uptimeTarget">
+                                    <span th:text="#{uptime_target} + ' (%)'"></span>
+                                    <span class="badge-require" v-if="isRequiredField('uptimeTarget')"></span>
+                                </label>
+                                <div class="col-md-9">
+<!--                                    <input v-if="isUptimeTargetRequired" disabled type="number" id="uptimeTarget" min="1"-->
+<!--                                        max="99" oninput="Common.maxLength(this, 2)" v-model="mold.uptimeTarget"-->
+<!--                                        class="form-control" placeholder="Uptime Target (%)" required>-->
+                                    <input type="number" id="uptimeTarget" min="1"
+                                        max="99" oninput="Common.maxLength(this, 2)" v-model="mold.uptimeTarget"
+                                        class="form-control" placeholder="Uptime Target (%)"
+                                        :required="isRequiredField('uptimeTarget')">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['uptimeLimitL1']">
+                                <label class="col-md-3 col-form-label" for="uptimeLimitL1">
+                                    <span th:text="#{uptime_tolerance1}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('uptimeLimitL1')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="uptimeLimitL1" min="1" max="99" step="any"
+                                           oninput="Common.maxLength(this, 2)" v-model="mold.uptimeLimitL1"
+                                           class="form-control" th:placeholder="#{uptime_tolerance1}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['uptimeLimitL2']">
+                                <label class="col-md-3 col-form-label" for="uptimeLimitL2">
+                                    <span th:text="#{uptime_tolerance2}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('uptimeLimitL2')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="uptimeLimitL2" min="1" max="99" step="any"
+                                           oninput="Common.maxLength(this, 2)" v-model="mold.uptimeLimitL2"
+                                           class="form-control" th:placeholder="#{uptime_tolerance2}" required>
+                                </div>
+                            </div>
+                            <div v-for="(item, index) in mappingListConfigCustomField('PRODUCTION')" :key="index"
+                                 class="form-group row">
+                                <label class="col-md-3 col-form-label" :for="'customFieldList' + item.id">
+                                    {{ item.fieldName }}
+                                    <span class="avatar-status"></span>
+                                    <span class="badge-require" v-if="item.required"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input :id="'customFieldList' + item.id" type="text"
+                                           v-model="item.defaultInputValue" class="form-control"
+                                           :placeholder="item.fieldName" :required="item.required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Maintenance Information -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong th:text="#{maintenance_info}"></strong>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-form-label" for="prevent-cycle">
+                                       <span>{{resources['maintenance_interval']}}</span>
+                                       <span class="badge-require"></span>
+                                </label>
+                                <div class="d-flex col-md-3 justify-space-between" style="margin: 10px 30px;">
+                                    <!-- <input type="number" id="prevent-cycle" min="1" max="99999999"
+                                           oninput="Common.maxLength(this, 8)" v-model="mold.preventCycle"
+                                           class="form-control" th:placeholder="#{maintenance_interval}" required> -->
+                                    <div class="d-flex align-center">
+                                        <input :id="'maintenanceIntervalType' + 1" type="radio" v-model="selectedMaintenanceIntervalType" value="SHOT_BASED">
+                                        <label style="margin: 1px 6px 0 6px;" :for="'maintenanceIntervalType' + 1">{{resources['shot_based']}}</label>
+                                    </div>
+                                    <div class="d-flex align-center">
+                                        <input :id="'maintenanceIntervalType' + 2" type="radio" v-model="selectedMaintenanceIntervalType" value="TIME_BASED">
+                                        <label style="margin: 1px 6px 0 6px;" :for="'maintenanceIntervalType' + 2">{{resources['time_based']}}</label>
+                                    </div>
+                                </div>
+                                <template v-if="selectedMaintenanceIntervalType === 'TIME_BASED'">
+                                    <div class="d-flex" style="margin: 10px 0">
+                                        <label class="col-md-3 col-form-label" for="maintenance-frequency">
+                                            <span style="margin: 0 40px;" th:text="#{frequency}"></span>
+                                        </label>
+                                        <div class="col-md-9" style="padding: 0 8px; display: inline-block;">
+                                            <custom-dropdown
+                                                :list-item="maintenanceFrequencies"
+                                                :title-field="'title'"
+                                                :default-title="'Frequency'"
+                                                :default-item="maintenanceFrequency"
+                                                style="display: inline-block;"
+                                                @change="handleChangeFrequency"
+                                            ></custom-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex" style="margin: 10px 0;">
+                                        <label class="col-md-3 col-form-label" for="prevent-cycle">
+                                            <span style="margin: 0 40px;">{{resources['schedule_every']}}</span>
+                                        </label>
+                                        <div class="col-md-9" style="padding: 0 8px;">
+                                            <template v-if="maintenanceFrequency.frequency === 'WEEKLY'">
+                                                <weekly-field :default-item="scheduleDay" :default-number="numberOfSchedule" @change="handleChangeMaintainanceWeek"></weekly-field>
+                                            </template>
+                                            <template v-else-if="maintenanceFrequency.frequency === 'MONTHLY'">
+                                                <monthly-field :default-item="scheduleDay" :default-number="numberOfSchedule" :schedule-at="scheduleAt" @change="handleChangeMaintainanceMonth"></monthly-field>
+                                            </template>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex" style="margin: 10px 0;">
+                                        <label class="col-md-3 col-form-label" for="schedule-every">
+                                            <span style="margin: 0 40px;">{{resources['first_schedule_starts_on']}}</span>
+                                        </label>
+                                        <div class="col-md-9" style="padding: 0 8px;">
+                                            <base-button
+                                                level="secondary"
+                                                icon="calendar"
+                                                @click="handleShowDueDatePicker"
+                                            >
+                                                {{ currentDate.fromTitle }}
+                                            </base-button>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex" style="margin: 10px 0;">
+                                        <label class="col-md-3 col-form-label" for="prevent-cycle">
+                                            <span style="margin: 0 40px;">{{resources['continue']}}</span>
+                                        </label>
+                                        <div class="col-md-9 d-flex align-center" style="padding: 0 8px;">
+                                            <div style="display: inline-block;">
+                                                <custom-dropdown
+                                                    :list-item="continueFrequencies"
+                                                    :title-field="'title'"
+                                                    :default-title="'Frequency'"
+                                                    :default-item="continueFrequency"
+                                                    @change="handleChangeContinueFrequency"
+                                                ></custom-dropdown>
+                                            </div>
+                                            <div v-if="continueFrequency.value === 'FOR'" class="d-flex align-center" style="margin-left: 8px">
+                                                <input  type="number" v-model="continueTime" class="form-control"> <span style="margin-left: 8px;">{{resources['time_s']}}</span>
+                                            </div>
+                                            <div v-else-if="continueFrequency.value === 'UNTIL'" style="margin-left: 8px;">
+                                                <base-button
+                                                level="secondary"
+                                                icon="calendar"
+                                                @click="handleContinueDatePicker"
+                                            >
+                                                {{ continueDate.fromTitle }}
+                                            </base-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template v-else-if="selectedMaintenanceIntervalType === 'SHOT_BASED'">
+                                    <div class="d-flex" style="margin: 10px 0;">
+                                        <label class="col-md-3 col-form-label" for="schedule-every">
+                                            <span style="margin: 0 40px;">{{resources['schedule_every']}}</span>
+                                        </label>
+                                        <div class="col-md-2 d-flex align-center" style="padding: 0 8px;">
+                                            <input type="number" id="schedule-every" min="1" max="99999999"
+                                           oninput="Common.maxLength(this, 8)" v-model="mold.preventCycle"
+                                           class="form-control" th:placeholder="#{schedule_every}"
+                                           required>
+                                           <span style="margin-left: 8px;">{{resources['shots']}}</span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <!-- <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="prevent-upcoming"
+                                       th:text="#{upcoming_maintenance_tolerance}">
+                                    <span :th:text="#{upcoming_maintenance_tolerance}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('upcomingMaintenanceTolerance')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input v-if="selectedMaintenanceIntervalType === 'SHOT_BASED'" type="number" id="prevent-upcoming" min="1" max="99999999"
+                                           oninput="Common.maxLength(this, 8)" v-model="mold.preventUpcoming"
+                                           class="form-control" th:placeholder="#{upcoming_maintenance_tolerance}" -->
+                            <div v-if="selectedMaintenanceIntervalType === 'SHOT_BASED'" class="form-group row">
+                                <label class="col-md-3 col-form-label" for="prevent-upcoming">
+                                    <span>{{resources['upcoming_maintenance_tolerance']}}</span>
+                                    <span class="badge-require"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" id="prevent-upcoming" min="1" max="99999999"
+                                           v-model="mold.preventUpcoming"
+                                           class="form-control" :placeholder="resources['upcoming_maintenance_tolerance']"
+                                           required>
+                                    <input v-else-if="selectedMaintenanceIntervalType === 'TIME_BASED'" type="number" id="prevent-upcoming" min="1" max="99999999"
+                                           oninput="Common.maxLength(this, 8)" v-model="schedUpcomingTolerance"
+                                           class="form-control" th:placeholder="#{upcoming_maintenance_tolerance}"
+                                           required>
+                                </div>
+                            </div>
+                            <div v-else-if="selectedMaintenanceIntervalType === 'TIME_BASED'" class="form-group row">
+                                <label class="col-md-3 col-form-label" for="prevent-upcoming">
+                                    <span>{{resources['upcoming_maintenance_tolerance']}}</span>
+                                    <span class="badge-require"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input  type="number" id="prevent-upcoming" min="1" max="99999999"
+                                            v-model="schedUpcomingTolerance"
+                                            class="form-control" :placeholder="resources['upcoming_maintenance_tolerance']"
+                                            required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['documentFiles']">
+                                <label class="col-md-3 col-form-label"><span th:text="#{maintenance_document}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('documentFiles')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <div class="op-upload-button-wrap">
+                                        <!-- <button class="btn btn-outline-success" th:text="#{upload_file}"></button> -->
+                                        <base-button level="secondary">
+                                            {{ resources["upload_document"] }}
+                                            <img class="ml-1" src="/images/icon/upload-blue.svg" alt="" />
+                                        </base-button>
+                                        <input type="file" id="file" @change="selectedFile" multiple
+                                               :required="isRequiredField('documentFiles')" />
+                                    </div>
+
+
+                                    <div>
+                                        <button v-for="(file, index) in files" class="btn btn-outline-dark btn-sm mr-1"
+                                                @click.prevent="deleteFile(file, index)">
+                                            {{file.name}}
+                                        </button>
+                                    </div>
+
+                                    <div class="mt-1">
+                                        <button v-for="file in documentFiles" class="btn btn-outline-dark btn-sm mr-1"
+                                                @click.prevent="deleteFileStorage(file, fileTypes.MOLD_MAINTENANCE_DOCUMENT)">
+                                            {{file.fileName}}
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" v-if="!checkDeleteTooling['instructionVideo']">
+                                <label class="col-md-3 col-form-label"><span th:text="#{instruction_video}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('instructionVideo')"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <div class="op-upload-button-wrap">
+                                        <!-- <button class="btn btn-outline-success" th:text="#{upload_video}"></button> -->
+                                        <base-button level="secondary">
+                                            {{ resources["upload_video"] }}
+                                            <img class="ml-1" src="/images/icon/upload-blue.svg" alt="" />
+                                        </base-button>
+                                        <input type="file" id="files2" @change="selectedSecondFiles" multiple
+                                               accept="video/*"
+                                               :required="isRequiredField('instructionVideo')" />
+                                    </div>
+
+
+                                    <div>
+                                        <button v-for="(file, index) in secondFiles"
+                                                class="btn btn-outline-dark btn-sm mr-1"
+                                                @click.prevent="deleteSecondFiles(index)">
+                                            {{file.name}}
+                                        </button>
+                                    </div>
+
+                                    <div class="mt-1">
+                                        <button v-for="file in toolingPictureFile"
+                                                class="btn btn-outline-dark btn-sm mr-1"
+                                                @click.prevent="deleteFileStorage(file, fileTypes.MOLD_INSTRUCTION_VIDEO)">
+                                            {{file.fileName}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-for="(item, index) in mappingListConfigCustomField('MAINTENANCE')" :key="index"
+                                 class="form-group row">
+                                <label class="col-md-3 col-form-label" :for="'customFieldList' + item.id">
+                                    {{ item.fieldName }}
+                                    <span class="avatar-status"></span>
+                                    <span class="badge-require" v-if="item.required"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input :id="'customFieldList' + item.id" type="text"
+                                           v-model="item.defaultInputValue" class="form-control"
+                                           :placeholder="item.fieldName" :required="item.required">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Part -->
+            <div class="row" v-for="(part, index, id) in mold.parts" :id="part.id">
+                <div class="col-md-12">
+                    <div class="card card-accent-warning">
+                        <div class="card-header">
+                            <strong th:text="#{parts}"></strong> <strong>{{index + 1}}</strong>
+
+
+                            <div class="card-header-actions">
+                                <a href="#" class="card-header-action btn-setting" @click.prevent="addPart()">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                                <a href="#" class="card-header-action btn-setting" @click.prevent="removePart(index)">
+                                    <i class="fa fa-minus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="part">
+                                    <span th:text="#{part_id}"></span>
+                                    <span class="badge-require"></span></label>
+                                <div class="col-md-7">
+
+                                    <input type="hidden" v-model="part.partId">
+                                    <input type="text" id="part" v-model="part.nameShow" readonly="readonly"
+                                           class="form-control" th:placeholder="#{part_id_form}" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-outline-success btn-block"
+                                            @click.prevent="findPart(index)" th:text="#{part_search}"></button>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="cavity">
+                                    <span th:text="#{working_cavities}"></span>
+                                    / <span th:text="#{total_number_of_cavities}"></span>
+                                    <span class="badge-require"></span></label>
+                                <div class="col-md-5" style="padding-right:0px;">
+                                    <div class="row">
+                                        <div class="col-md-11" style="padding-right:0px;">
+
+                                            <input type="number" id="cavity" min="0"
+                                                   v-on:input="autoMaxCapacityPerWeek"
+                                                   v-model="part.cavity" class="form-control"
+                                                   th:placeholder="#{working_cavities}" required>
+                                        </div>
+                                        <div class="col-md-1" style="padding-right:0px;">
+                                            <span
+                                                    style="font-size: 2.1rem; line-height: 0.9; font-weight: 300;">/</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="number" id="totalCavities" :min="part.cavity"
+                                            v-model="part.totalCavities"
+                                           class="form-control" th:placeholder="#{total_cavities}" readonly required>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div v-if="(mold.dataSubmission === 'DISAPPROVED' || mold.dataSubmission === 'APPROVED') && isDisapprovedReasonRequired" class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong v-if="mold.dataSubmission === 'APPROVED'" th:text="#{latest_reason_for_approval}"></strong>
+                            <strong v-else th:text="#{latest_reason_for_disapproval}"></strong>
+                        </div>
+                        <div class="card-body">
+
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="designed-shot"><span
+                                        th:text="#{engineer_in_charge}"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" id="approved-by" v-model="reasonData.approvedBy" readonly="readonly"
+                                        class="form-control" th:placeholder="#{engineer_in_charge}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="designed-shot">
+                                    <span th:text="#{date_time}"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" id="approve-at" v-model="reasonData.approvedAt" readonly="readonly"
+                                        class="form-control" th:placeholder="#{date_time}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="designed-shot">
+                                    <span v-if="mold.dataSubmission === 'APPROVED'" th:text="#{reason_for_approval}"></span>
+                                    <span v-else th:text="#{reason_for_disapproval}"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input v-if="mold.dataSubmission === 'APPROVED'" type="text" id="reason-id" v-model="reasonData.reason" readonly="readonly"
+                                        class="form-control" th:placeholder="#{reason_for_approval}">
+                                    <input v-else type="text" id="reason-id" v-model="reasonData.reason" readonly="readonly"
+                                        class="form-control" th:placeholder="#{reason_for_disapproval}">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="!isNew && mold.equipmentStatus !== 'INSTALLED'" class="row">
+                <div class="col-md-12">
+                    <div class="card card-accent-warning">
+                        <div class="card-header">
+                            <strong th:text="#{manual_update}"></strong>
+                            <span th:text="#{non_digital_tooling_only}"></span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="weight">
+                                    <span th:text="#{accumulated_shots}"></span>
+                                    <span class="badge-require" v-if="isRequiredField('accumulatedShots')"></span>
+                                </label>
+                                <div class="col-md-6">
+                                    <input type="number" id="weight" v-model="mold.accumulatedShots" class="form-control"
+                                        step="any" th:placeholder="#{input_number}"
+                                        :required="isRequiredField('accumulatedShots')">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Access</strong>
+                        </div>
+                        <div class="card-body">
+
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="designed-shot">Access group
+                                    <span class="badge-require"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <template v-for="(r, index, id) in roles" :id="result.id" v-if="r.roleType=='ROLE_GROUP'">
+                                        <div class="form-check checkbox pl-0">
+                                            <label><input type="checkbox" name="authorities" :value="r.authority"
+                                                    v-model="mold.authorities"> {{r.name}} ({{r.description}})</label>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card wave_save">
+                        <div class="card-body text-center">
+                            <button type="submit" class="btn btn-primary" th:text="#{save_changes}"></button>
+                            <button type="button" class="btn btn-default" @click="cancel()"
+                                    th:text="#{cancel}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        <!-- Modal -->
+        <part-search :resources="resources"></part-search>
+        <location-search :resources="resources"></location-search>
+
+        <!-- Modal -->
+        <company-search :resources="resources"></company-search>
+
+        <counter-search-tooling :resources="resources"></counter-search-tooling>
+        <date-picker-modal ref="datePickerModalRef" :select-option="timeOptions" :resources="resources"
+            :date-range="timeRange" @change-date="handleChangeMaintenanceDate">
+        </date-picker-modal>
+        <date-picker-modal ref="datePickerModalContinueRef" :select-option="timeOptions" :resources="resources"
+            :date-range="timeRange" @change-date="handleChangeMaintenanceContinueDate">
+        </date-picker-modal>
+        <warning-modal :visible="showConfirm" dialog-classes="dialog-sm mold-warning-modal-position"
+            @close="showConfirm = false">
+            <div class="d-flex align-center">
+                <div class="red-warning-icon" style="height: 18px; width: 18px; margin-right: 4px;">
+                </div>
+                <strong> {{resources['cancel_outstanding_p_m_work_order']}}? </strong>
+            </div>
+            <div style="margin: 15px 0;">
+                <span>{{resources['you_have']}} {{existedWorkOrder}} </span>
+                <span v-if="defaultMaintenanceIntervalType === 'SHOT_BASED'"> {{resources['outstanding_p_m_work_order_s_based_on_shot']}}.</span>
+                <span v-if="defaultMaintenanceIntervalType === 'TIME_BASED'"> {{resources['outstanding_p_m_work_order_s_based_on_time']}}.</span>
+            </div>
+            <div>{{resources['do_you_want_to_cancel_them']}}?</div>
+            <div class="d-flex justify-end" style="margin-top: 20px;">
+                <base-button level="secondary" type="cancel" @click="showConfirm = false" style="margin-right: 8px;">{{
+                    resources['no_go_back']
+                }}</base-button>
+                <base-button level="primary" type="reject" @click="handleConfirm(true)">{{
+                    resources['yes_cancel_the_order']
+                }} </base-button>
+            </div>
+        </warning-modal>
+    </div>
+
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/molds/form.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

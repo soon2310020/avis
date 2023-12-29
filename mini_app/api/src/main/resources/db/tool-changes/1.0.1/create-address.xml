@@ -1,0 +1,110 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <!-- address_province -->
+    <changeSet id="2023-08-26::create-address_province" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="address_province"/>
+            </not>
+        </preConditions>
+        <createTable tableName="address_province">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="code" type="VARCHAR(10)"/>
+            <column name="name" type="VARCHAR(255)"/>
+
+            <!---->
+            <column name="created_date" type="timestamp"
+                    defaultValueDate="current_timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <!-- address_district -->
+    <changeSet id="2023-08-26::create-address_district" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="address_district"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="address_district">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="province_code" type="VARCHAR(10)"/>
+            <column name="code" type="VARCHAR(10)"/>
+            <column name="name" type="VARCHAR(255)"/>
+
+            <!---->
+            <column name="created_date" type="timestamp"
+                    defaultValueDate="current_timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <!-- address_ward -->
+    <changeSet id="2023-08-26::create-address_ward" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="address_ward"/>
+            </not>
+        </preConditions>
+        <createTable tableName="address_ward">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="district_code" type="VARCHAR(10)"/>
+            <column name="code" type="VARCHAR(10)"/>
+            <column name="name" type="VARCHAR(255)"/>
+
+            <!---->
+            <column name="created_date" type="timestamp"
+                    defaultValueDate="current_timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2023-08-26::create-address_constraint" author="VinhCv">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="address_province"/>
+            <tableExists tableName="address_district"/>
+            <tableExists tableName="address_ward"/>
+        </preConditions>
+
+        <addUniqueConstraint tableName="address_province" columnNames="code"/>
+        <addUniqueConstraint tableName="address_district" columnNames="code"/>
+        <addUniqueConstraint tableName="address_ward" columnNames="code"/>
+
+        <addForeignKeyConstraint
+                constraintName="FK_address_district_address_province"
+                baseTableName="address_district" baseColumnNames="province_code"
+                referencedTableName="address_province" referencedColumnNames="code"/>
+        <addForeignKeyConstraint
+                constraintName="FK_address_ward_address_district"
+                baseTableName="address_ward" baseColumnNames="district_code"
+                referencedTableName="address_district" referencedColumnNames="code"/>
+
+        <!-- INDEX -->
+        <createIndex indexName="index_address_ward_address_district_code" tableName="address_ward">
+            <column name="district_code"/>
+        </createIndex>
+        <createIndex indexName="index_address_district_address_province_code" tableName="address_district">
+            <column name="province_code"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

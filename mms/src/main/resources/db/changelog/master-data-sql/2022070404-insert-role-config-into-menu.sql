@@ -1,0 +1,1 @@
+INSERT INTO `MENU` (`ID`, `ADMIN_MENU`, `ENABLED`, `ICON`, `LEVEL`, `MENU_KEY`, `MENU_NAME`, `MENU_URL`, `PARENT_ID`, `POSITION`) VALUES ('2180', 'Y', 'Y', 'person-add-icon', '3', '/admin/role-config', 'Role Configuration', '/admin/role-config', '2100', '0');

@@ -1,0 +1,2 @@
+﻿-- update định kỳ đóng phí gói bảo hiểm sống trọn ước mơ
+update insurance_package set mbal_periodic_fee_payment = N'Hằng năm/nửa năm/quý', category = 'FLEXIBLE', mbal_fee_payment_time = '' where id = 23;

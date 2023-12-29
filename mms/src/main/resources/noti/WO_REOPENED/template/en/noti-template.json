@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${orderTypeName}",
+  "content": "${senderName} (${senderCompanyName}) has assigned ${orderTypeDesc} to you."
+}

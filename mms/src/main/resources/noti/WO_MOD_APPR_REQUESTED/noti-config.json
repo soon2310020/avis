@@ -1,0 +1,10 @@
+{
+  "notiPriority": "MEDIUM",
+  "description": "A Work Order is requested for changing details",
+  "webEnabled": true,
+  "mobileEnabled": true,
+  "emailEnabled": true,
+  "taskStatusEnabled": false,
+  "procStatusEnabled": false,
+  "linkTo": "/admin/work-order?popup=WO_MOD_APPR_REQUESTED&id=${id}"
+}

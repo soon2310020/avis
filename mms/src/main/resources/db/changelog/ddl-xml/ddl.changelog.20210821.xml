@@ -1,0 +1,58 @@
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="truongnc" id="1629562866823-01">
+        <createTable tableName="machine">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="MACHINE_CODE" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="COMPANY_ID" type="BIGINT" />
+            <column name="LOCATION_ID" type="BIGINT" />
+            <column name="ENABLED" type="VARCHAR(5)" />
+            <column name="LINE" type="VARCHAR(255)" />
+            <column name="MACHINE_MAKER" type="VARCHAR(255)" />
+            <column name="MACHINE_TYPE" type="VARCHAR(255)" />
+            <column name="MACHINE_MODEL" type="VARCHAR(255)" />
+            <column name="MACHINE_TONNAGE" type="VARCHAR(255)" />
+            <column name="CREATED_AT" type="datetime" />
+            <column name="UPDATED_AT" type="datetime" />
+            <column name="CREATED_BY" type="BIGINT" />
+            <column name="UPDATED_BY" type="BIGINT" />
+        </createTable>
+	</changeSet>
+    <changeSet author="truongnc" id="1629562866823-02">
+        <createTable tableName="machine_version">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="MACHINE_ID" type="VARCHAR(20)" />
+            <column name="ORIGIN_ID" type="BIGINT" />
+            <column name="COMPANY_ID" type="BIGINT" />
+            <column name="LOCATION_ID" type="BIGINT" />
+            <column name="ENABLED" type="VARCHAR(5)" />
+            <column name="LINE" type="VARCHAR(255)" />
+            <column name="MACHINE_MAKER" type="VARCHAR(255)" />
+            <column name="MACHINE_TYPE" type="VARCHAR(255)" />
+            <column name="MACHINE_MODEL" type="VARCHAR(255)" />
+            <column name="MACHINE_TONNAGE" type="VARCHAR(255)" />
+            <column name="CREATED_AT" type="datetime" />
+            <column name="UPDATED_AT" type="datetime" />
+        </createTable>
+    </changeSet>
+    <changeSet author="truongnc" id="1629562866823-03">
+        <addColumn tableName="mold">
+            <column name="MACHINE_ID" type="BIGINT" afterColumn="COUNTER_ID" />
+        </addColumn>
+    </changeSet>
+    <changeSet author="truongnc" id="1629562866823-04">
+        <addForeignKeyConstraint baseColumnNames="MACHINE_ID"
+                                 baseTableName="mold"
+                                 constraintName="fk_mold_to_machine"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="machine" />
+    </changeSet>
+</databaseChangeLog>

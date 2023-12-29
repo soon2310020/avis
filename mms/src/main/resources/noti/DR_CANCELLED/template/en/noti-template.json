@@ -1,0 +1,5 @@
+{
+  "contentByUser": false,
+  "title": "${requestType} is cancelled by requester",
+  "content": "${senderName} (${senderCompanyName}) has cancelled the ${requestType} request assigned to you."
+}

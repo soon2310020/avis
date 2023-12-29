@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div class="sidebar wave_sidebar" th:fragment="op-sidebar">
+	<nav class="sidebar-nav">
+		<ul class="nav pb-4">
+			<!--
+			<div class="side-content side-content-active">
+				<li class="nav-item">
+					<a class="nav-link" href="/">
+						<img style="height: 22px;" class="nav-icon" src="/images/icon/dashboard.svg" alt=""> <span th:text="#{dashboard}"></span>
+						<span class="badge badge-primary d-none">NEW</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/front/alert-center" th:if="${salesonContext.alertMenu!=null}">
+						<img style="height: 22px;" class="nav-icon" src="/images/icon/icon-open-bell.svg" alt="">
+						<img style="height: 22px;" class="nav-icon" src="/images/icon/alert-icon.svg" alt="">
+						<span th:text="#{alert_center}"></span>
+						<span class="badge badge-primary d-none"></span>
+					</a>
+				</li>
+			</div>
+			-->
+
+			<th:block th:if="${salesonContext.currentCategoryMenu != null}">
+				<th:block th:each="menu1 : ${salesonContext.currentCategoryMenu.children}">
+					<th:block th:if="${#strings.equals(menu1.type, 'CATEGORY')}">
+						<div class="nav-title custom-title">
+							<div th:text="${menu1.name}"></div>
+						</div>
+						<div class="side-content">
+							<th:block th:each="menu2 : ${menu1.children}">
+								<th:block th:if="${#strings.equals(menu2.type, 'FUNCTION')}">
+									<li class="nav-item">
+										<th:block th:if="${menu2.enabled}">
+											<a th:href="${menu2.url}" class="nav-link">
+												<img style="height: 20px;" class="nav-icon" th:src="${menu2.icon}" alt="">
+												<span th:text="${menu2.name}">Base</span>
+												<th:block th:if="${menu2.beta != null && menu2.beta}">
+													<div class="beta-tag" style="position: absolute; right: 10px; top: 0; transform: scale(.7);">BETA</div>
+												</th:block>
+											</a>
+										</th:block>
+										<th:block th:if="${!menu2.enabled}">
+											<a style="background-color:transparent !important;" class="nav-link ">
+												<img style="height: 20px; opacity: 0.5; transform: translateX(-3px);" class="nav-icon" th:src="${menu2.icon}" alt="">
+												<span th:text="${menu2.name}" style="opacity: 0.5">Base</span>
+												<span class="popup" style="margin-left: 30%;">Upcoming</span>
+											</a>
+										</th:block>
+									</li>
+								</th:block>
+							</th:block>
+						</div>
+					</th:block>
+					<th:block th:if="${#strings.equals(menu1.type, 'FUNCTION')}">
+						<div class="side-content side-content-active">
+							<li class="nav-item">
+								<th:block th:if="${menu1.enabled}">
+									<a th:href="${menu1.url}" class="nav-link">
+										<img style="height: 20px;" class="nav-icon" th:src="${menu1.icon}" alt="">
+										<span th:text="${menu1.name}">Base</span>
+										<th:block th:if="${menu1.beta != null && menu1.beta}">
+											<div class="beta-tag" style="position: absolute; right: 10px; top: 0; transform: scale(.7);">BETA</div>
+										</th:block>
+									</a>
+								</th:block>
+								<th:block th:if="${!menu1.enabled}">
+									<a style="background-color:transparent !important;" class="nav-link">
+										<img style="height: 20px; opacity: 0.5; transform: translateX(-3px);" class="nav-icon" th:src="${menu1.icon}" alt="">
+										<span th:text="${menu1.name}" style="opacity: 0.5">Base</span>
+										<span class="popup" style="margin-left: 30%;">Upcoming</span>
+									</a>
+								</th:block>
+							</li>
+						</div>
+					</th:block>
+				</th:block>
+			</th:block>
+		</ul>
+	</nav>
+	<button class="sidebar-minimizer brand-minimizer" type="button"></button>
+</div>
+</html>

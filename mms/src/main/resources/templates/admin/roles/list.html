@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-default}">
+
+<th:block layout:fragment="op-head">
+    <link rel="stylesheet" th:href="'/css/access-group/access-group.css?'+${noCacheVer}" />
+    <style type="text/css">
+        .op-user-list .form-group {
+            margin-right: 10px;
+        }
+
+        .op-user-list .form-group label {
+            margin-right: 5px;
+        }
+
+        .pagination {
+            display: none;
+        }
+
+        .container {
+        display: block;
+        position: relative;
+        /* padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none; */
+        margin: 0;
+        }
+
+        .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+        }
+
+        .checkmark-custom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 13px;
+            width: 13px;
+            background-color: #eee;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+        }
+
+        .checkmark-custom-2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 13px;
+            width: 13px;
+            background-color: #eee;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+        }
+
+        /* .container:hover input ~ .checkmark-custom {
+        background-color: #ccc;
+        }
+
+
+        .container:hover input ~ .checkmark-custom-2 {
+        background-color: #ccc;
+        } */
+
+        .checkmark-custom:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        .checkmark-custom-2:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        .container input:checked ~ .checkmark-custom:after {
+        display: block;
+        }
+
+        .container input:checked ~ .checkmark-custom-2:after {
+        display: block;
+        }
+
+        .container .checkmark-custom:after {
+            left: 3px;
+            top: 1px;
+            width: 5px;
+            height: 8px;
+            border: solid red;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+        .container .checkmark-custom-2:after {
+            left: 2px;
+            top: 4px;
+            width: 5px;
+            height: 3px;
+            border: solid red;
+            border-width: 0 7px 0px 0;
+        }
+
+        /*
+        --------------
+         Wave effect animation
+        --------------
+        */
+        .wave1 {
+            height: 500px;
+            animation: wave 4s infinite linear forwards;
+             -webkit-animation:wave 4s infinite linear forwards;
+             background: linear-gradient(to right, #fcfcfc 8%, #ededed 18%, #fcfcfc 33%);
+             border:none;
+        }
+
+        .wave {
+            height: 121px;
+            animation: wave 4s infinite linear forwards;
+            -webkit-animation:wave 4s infinite linear forwards;
+            background: linear-gradient(to right, #fcfcfc 8%, #ededed 28%, #fcfcfc 33%);
+            border: none;
+        }
+        .sidebar.wave_sidebar div, .tab-support.wave_header div, .tab-insight.wave_header div, .tab-reports.wave_header div, .tab-user.wave_header div{
+            visibility:hidden;
+        }
+        .card.wave div,.card.wave1 div{
+            display: none;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="op-content">
+
+    <div id="app" class="op-user-list">
+        <div class="row" :style="{display: requestParam.status == 'hierarchy' ? 'inline' : 'none'}">
+        </div>
+        <div class="row">
+            <div class="col-lg-12" v-click-outside="hideCalendarPicker" :style="{display: requestParam.status != 'hierarchy' ? 'inline' : 'none'}">
+                <div class="card wave">
+                    <div class="card-header">
+                        <strong v-if="requestParam.status == 'menu'" th:text="#{access_feature}"></strong>
+                        <strong v-if="requestParam.status == 'group'" th:text="#{access_group}"></strong>
+
+                        <div class="card-header-actions">
+                            <span class="card-header-action">
+                                <small class="text-muted"><span  th:text="#{total}+':'"></span> {{total}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" v-model="requestParam.sort" />
+
+                        <div class="form-row">
+                            <!--<div class="col-md-2 mb-3 mb-md-0">
+                                    <select class="form-control">
+                                        <option value="">사용자 구분</option>
+                                        <option value="NAME">Name</option>
+                                        <option value="EMAIL">Email</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 mb-3 mb-md-0">
+                                    <select class="form-control">
+                                        <option value="">상태구분</option>
+                                        <option value="NAME">Name</option>
+                                        <option value="EMAIL">Email</option>
+                                    </select>
+                                </div>-->
+
+                            <!--<div class="col-md-2 ml-md-auto mb-3 mb-md-0 col-5">
+                                    <select class="form-control">
+                                        <option value="NAME">Name</option>
+                                        <option value="EMAIL">Email</option>
+                                    </select>
+                                </div>-->
+                            <div class="col-md-12 mb-3 mb-md-0 col-12 ">
+                                <!-- <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-search"></i></div>
+                                    </div>
+                                    <input type="text" @input="requestParam.query = $event.target.value" @keyup="search"
+                                        class="form-control" th:placeholder="#{search_by_name_or_description}">
+                                </div> -->
+                                <common-searchbar
+                                    :request-param="requestParam"
+                                    :on-search="search"
+                                    :placeholder="resources['search_by_name_or_description']"
+                                ></common-searchbar>
+                            </div>
+
+<!--                            <div class="col-md-auto">-->
+<!--                                <div>-->
+<!--                                    <button class="btn btn-success mr-5px" type="button" @click="search">-->
+<!--                                        <i class="fa fa-search"></i> Search-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="display:none">
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa fa-dot-circle-o"></i> <span th:text="#{submit}"></span></button>
+                        <button class="btn btn-sm btn-danger" type="reset">
+                            <i class="fa fa-ban"></i> <span th:text="#{reset}"></span></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card wave1">
+                    <div class="card-header" style="display:none">
+                        <i class="fa fa-align-justify"></i> <span th:text="#{striped_tbl}"></span>
+                    </div>
+                    <div class="card-body card-overflow-reset">
+                        <div class="card-tool">
+                            <ul class="nav nav-tabs" style="margin-bottom: -1px">
+
+                                <li style="width: 170px" class="nav-item">
+                                    <a class="nav-link" :class="{active: requestParam.status === 'menu'}" href="#"
+                                       @click.prevent="tab('menu')">
+                                        <span th:text="#{access_feature}"> </span>
+                                        <span class="badge badge-light badge-pill" v-if="requestParam.status == 'menu'">{{ total }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" :class="{active: requestParam.status === 'group'}" href="#"
+                                       @click.prevent="tab('group')">
+                                        <span th:text="#{access_group}"> </span>
+                                        <span class="badge badge-light badge-pill" v-if="requestParam.status == 'group'">{{ total }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" :class="{active: requestParam.status === 'hierarchy'}" href="#"
+                                       @click.prevent="tab('hierarchy')">
+                                        <span th:text="#{user_hierarchy}"> </span>
+                                        <span class="badge badge-light badge-pill" v-if="requestParam.status == 'hierarchy'">{{ total + 1 }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" :class="{active: requestParam.status === 'disabled'}" href="#"
+                                       @click.prevent="tab('disabled')">
+                                        <span th:text="#{disabled}"> </span>
+                                        <span class="badge badge-light badge-pill" v-if="requestParam.status == 'disabled'">{{ total }}</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="btn-group btn-group-select-column btn-group-select-column-last-child">
+                                <div>
+                                    <a @click="onCreateNewRole" href="javascript:void(0)"
+                                       class="btn-custom btn-custom-primary animationPrimary all-time-filters btn-custom-focus">
+                                        <span v-if="accFeature" th:text="#{create_access_feature}"></span>
+                                        <span v-else th:text="#{create_access_group}"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <template v-if="['menu', 'group','disabled'].includes(requestParam.status)">
+                            <table class="table table-responsive-sm table-striped">
+                                <colgroup>
+                                    <col />
+                                    <col />
+                                    <col />
+                                    <col />
+                                    <col style="width:130px" />
+
+                                </colgroup>
+                                <thead id="thead-actionbar" class="custom-header-table">
+                                    <tr :class="{'invisible': listChecked.length != 0}" style="height: 57px" class="tr-sort">
+                                    <th class="custom-td">
+                                        <div class="custom-td_header">
+                                            <input id="checkbox-all" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                        </div>
+                                    </th>
+                                    <th class="text-left __sort" :class="[ {'active': currentSortType === sortType.NAME}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.NAME)"><span th:text="#{name}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-left __sort" :class="[ {'active': currentSortType === sortType.DESCRIPTION}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.DESCRIPTION)"><span th:text="#{id}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-left __sort" :class="[ {'active': currentSortType === sortType.DESCRIPTION}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.DESCRIPTION)"><span th:text="#{description}"></span><span class="__icon-sort"></span></th>
+                                    <th class="text-left __sort" :class="[ {'active': currentSortType === sortType.TYPE}, isDesc ? 'desc': 'asc']"  @click="sortBy(sortType.TYPE)"><span th:text="#{type}"></span><span class="__icon-sort"></span></th>
+<!--                                    <th><span th:text="#{action}"></span></th>-->
+                                </tr>
+
+                                <tr :class="{'d-none zindexNegative': listChecked.length == 0}" id="action-bar" class="tr-sort empty-tr">
+                                    <th class="empty-th">
+                                      <div class="first-checkbox-zone2">
+                                        <div class="first-checkbox2" style="display: flex;align-items: center;padding-left: 0;width: 110px;">
+                                          <div>
+                                            <input id="checkbox-all-2" class="checkbox" type="checkbox" v-model="isAll" @change="select" />
+                                          </div>
+                                        </div>
+                                        <div class="action-bar">
+                                            <div v-if="listChecked.length == 1 " @click="goToEdit" class="action-item">
+                                                <span>Edit</span>
+                                                <i class="icon-action edit-icon"></i>
+                                            </div>
+                                            
+                                            <div v-if="listChecked.length == 1 " @click="showRevisionHistory(listChecked[0])" class="action-item">
+                                                <span>View Edit History</span>
+                                                <i class="icon-action view-edit-history-icon"></i>
+                                            </div>
+                                            <div v-if="listChecked.length == 1 " class="action-item" @click="showSystemNoteModal(listChecked[0])">
+                                                <span>Memo</span>
+                                                <i class="icon-action memo-icon"></i>
+                                            </div>
+                                            <!--                                    <div v-if="requestParam.status != 'DELETED'" @click="showDeletePopup" class="action-item">-->
+                                            <!--                                        <span>Delete</span>-->
+                                            <!--                                        <svg xmlns="http://www.w3.org/2000/svg" width="6.949" height="8.611" viewBox="0 0 6.949 8.611">-->
+                                            <!--                                            <g id="Icon__delete" data-name="Icon_ delete" transform="translate(0.25 0.25)">-->
+                                            <!--                                                <path id="Icon_material-delete" data-name="Icon material-delete" d="M7.961,11.71a.914.914,0,0,0,.921.9h3.685a.914.914,0,0,0,.921-.9V6.3H7.961Zm5.988-6.759H12.337L11.876,4.5h-2.3l-.461.451H7.5v.9h6.449Z" transform="translate(-7.5 -4.5)" fill="none" stroke="#4b4b4b" stroke-width="0.5"/>-->
+                                            <!--                                            </g>-->
+                                            <!--                                        </svg>-->
+                                            <!--                                    </div>-->
+                                            <!--                                    <div v-if="requestParam.status == 'DELETED' && listChecked.length == 1" class="action-item">-->
+                                            <!--                                        <span @click.prevent="restoreItem()">Restore</span>-->
+                                            <!--                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 68.137 58.403">-->
+                                            <!--                                            <path id="Icon_material-settings-backup-restore" data-name="Icon material-settings-backup-restore" d="M45.425,33.7a6.489,6.489,0,1,0-6.489,6.489A6.508,6.508,0,0,0,45.425,33.7ZM38.935,4.5a29.2,29.2,0,0,0-29.2,29.2H0L12.978,46.68,25.957,33.7H16.223A22.728,22.728,0,1,1,25.762,52.2l-4.607,4.672A29.2,29.2,0,1,0,38.935,4.5Z" transform="translate(0 -4.5)" fill="#4b4b4b"/>-->
+                                            <!--                                        </svg>-->
+                                            <!--                                    </div>-->
+                                            <div v-if="requestParam.status != 'disabled'" class="action-item" @click.prevent="disable(listCheckedFull)">
+                                                <span>Disable</span>
+                                                <div class="icon-action disable-icon"></div>
+                                            </div>
+                                            <div v-if="requestParam.status == 'disabled' " class="action-item" @click.prevent="enable(listCheckedFull)">
+                                                <span>Enable</span>
+                                                <div class="icon-action enable-icon"></div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="op-list" style="display:none">
+                                <tr v-for="(result, index, id) in results" :id="result.id">
+                                    <td class="custom-td">
+                                        <template v-if="listChecked.length >= 0">
+                                            <input @click="(e) => check(e, result)" :checked="checkSelect(result.id)" class="checkbox"
+                                                   type="checkbox" :id="result.id + 'checkbox'" :value="result.id">
+<!--                                            <label class="custom-control-labelx" :for="result.id + 'checkbox'"></label>-->
+                                        </template>
+                                    </td>
+                                    <td class="text-left">
+                                        <div>
+                                            {{result.name}}
+                                        </div>
+
+                                        <div class="small text-muted font-size-11-2">
+                                            <span th:text="#{registered}+':'"></span>
+                                            <!--{{result.createdDate}}-->
+                                            {{formatToDate(result.createdAt)}}
+
+                                        </div>
+                                    </td>
+                                    <td class="text-left">{{removeSub(result)}}</td>
+                                    <td class="text-left">{{result.description}}</td>
+                                    <td class="text-left">{{result.roleTypeName}}</td>
+<!--                                    <td>-->
+<!--                                        <a :href="'/admin/roles/' + result.id + '#' + requestParam.status+'&status='+accFeature" class="table-action-link edit" title="Edit"-->
+<!--                                           @click="search(result.id)">-->
+<!--                                            <img src="/images/icon/edit.svg" alt="edit" />-->
+<!--                                        </a>-->
+<!--                                        <div class="drowdown d-inline">-->
+<!--                                            <a href="javascript:void(0)" title="Change status" class="table-action-link change-status"-->
+<!--                                               @click="changeShow(result.id)"-->
+<!--                                               data-toggle="dropdown" role="button"-->
+<!--                                               aria-haspopup="true" aria-expanded="false">-->
+<!--                                                <img src="/images/icon/change-status.svg" alt="Change status" />-->
+<!--                                            </a>-->
+<!--                                            <ul class="dropdown-menu" :class="[(parseInt(result.id) === parseInt(showDrowdown)) ? 'show' : '']">-->
+<!--                                                <li class="dropdown-header"><span class="op-change-status" th:text="#{change_status}"></span></li>-->
+<!--                                                <li>-->
+<!--                                                    <div class="dropdown-item" @click.prevent="deleteRole(result)"  th:text="#{delete}"></div>-->
+<!--                                                </li>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                        <a href="javascript:void(0)"-->
+<!--                                           @click.prevent="showRevisionHistory(result.id, result.roleType)"-->
+<!--                                           title="View edit history"-->
+<!--                                           class="table-action-link revision-history">-->
+<!--                                            <img src="/images/icon/revision-history.svg" alt="View edit history" />-->
+<!--                                        </a>-->
+<!--                                        <a href="javascript:void(0)" @click="showSystemNoteModal(result)" title="Add note" class="table-action-link note"-->
+<!--                                        >-->
+<!--                                            <img src="/images/icon/note.svg" alt="Add note" />-->
+<!--                                        </a>-->
+
+<!--                                        <div class="drowdown d-inline" v-if="false">-->
+<!--                                            <a class="btn btn-default" data-toggle="dropdown" href="#" role="button"-->
+<!--                                               aria-haspopup="true" aria-expanded="false">-->
+<!--                                                <i class="fa fa-cog"></i>-->
+<!--                                                <i class="fa fa-caret-down"></i>-->
+<!--                                            </a>-->
+<!--                                            <ul class="dropdown-menu">-->
+<!--                                                <li class="dropdown-header"><span class="op-change-status">Setting</span></li>-->
+<!--                                                &lt;!&ndash; <li><a href="#" class="dropdown-item"-->
+<!--                                                        @click.prevent="deleteRole(result)">DELETE</a></li> &ndash;&gt;-->
+<!--                                                <li>-->
+<!--                                                <div class="dropdown-item dropdown-submenu">-->
+<!--                                                        <span th:text="#{change_status}">-->
+<!--                                                            <i class="fa fa-caret-right color-default" style="margin-left: 3px"></i>-->
+<!--                                                        </span>-->
+<!--                                                    <div class='dropdown-menu'>-->
+<!--                                                        <div class="dropdown-item"-->
+<!--                                                             @click.prevent="deleteRole(result)" th:text="#{delete}"></div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                </li>-->
+<!--                                                <li><a href="#" class="dropdown-item"-->
+<!--                                                       @click.prevent="showRevisionHistory(result.id, result.roleType)" th:text="#{revision_history}"></a>-->
+<!--                                                </li>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                    </td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="no-results d-none" th:text="#{no_results}"></div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <ul class="pagination">
+                                        <li v-for="(data, index) in pagination" class="page-item"
+                                            :class="{active: data.isActive}">
+                                            <a class="page-link" @click="paging(data.pageNumber)">{{data.text}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+<!--                                <div class="col-auto ml-auto">-->
+<!--                                    <a :href="`/admin/roles/new?=status=${this.accFeature}`" class="btn btn-primary"><i class="fa fa-plus"></i>-->
+<!--                                        <span v-if="accFeature" th:text="#{create_access_feature}"></span>-->
+<!--                                        <span v-else th:text="#{create_access_group}"></span>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+                            </div>
+                        </template>
+                        <template v-else>
+                            <h1 class="text-center">
+                                <user-hierarchy :resources="resources"></user-hierarchy>
+                            </h1>
+                        </template>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <revision-history :resources="resources"></revision-history>
+        <system-note system-note-function="ACCESS_GROUP" :resources="resources"></system-note>
+        <action-bar-feature feature="ACTION_BAR" ></action-bar-feature>
+
+    </div>
+
+
+</th:block>
+
+
+<th:block layout:fragment="op-script">
+    <script defer th:src="'/js/scripts/admin/roles/list.js?'+${noCacheVer}"></script>
+</th:block>
+
+</html>

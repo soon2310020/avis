@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:insert="fragments/head :: op-head-common">
+</head>
+<body class="app flex-row align-items-center page login-page">
+<th:block layout:fragment="op-content"></th:block>
+<th:block th:replace="fragments/script :: op-script-common"></th:block>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <th:block th:fragment="op-script-common">
+    <div
+      id="op-alert"
+      aria-hidden="true"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      style="z-index: 9000"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Notification</h5>
+            <button
+              type="button"
+              class="close custom-close-btn"
+              data-dismiss="modal"
+              aria-label="Close"
+              onclick="Common.alertCallbackClose()"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary op-modal-ok"
+              data-dismiss="modal"
+              onclick="Common.alertCallback()"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form
+      id="op-logout-form"
+      th:action="@{/logout}"
+      method="post"
+      style="display: none"
+    >
+      <button type="submit" class="btn btn-success">Logout</button>
+    </form>
+    <div style="display: none" th:value="${noCacheVer}" id="noCacheVerId"></div>
+    <style scoped>
+      #op-alert .modal-content {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+
+      .config-area {
+        padding-top: 44px;
+      }
+
+      .right-header {
+        display: flex;
+        align-items: center;
+        width: 80px;
+        justify-content: space-between;
+      }
+
+      /*start switch button*/
+      .toggleWrapper1 {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .toggleWrapper1 input.mobileToggle {
+        opacity: 0;
+        position: absolute;
+      }
+
+      .toggleWrapper1 .change-checkout-status {
+        margin-bottom: 0;
+        cursor: pointer;
+      }
+
+      .toggleWrapper1 input.mobileToggle + .change-checkout-status {
+        position: relative;
+        display: inline-block;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: 0.7s ease;
+        transition: 0.7s ease;
+        height: 18px;
+        width: 36px;
+        border-radius: 60px;
+        background: #fff;
+        border: 1px solid #000;
+      }
+
+      .toggleWrapper1 input.mobileToggle:checked + .change-checkout-status {
+        border: none;
+      }
+
+      .toggleWrapper1 input.mobileToggle + .change-checkout-status:before {
+        content: "";
+        position: absolute;
+        display: block;
+        -webkit-transition: 0.5s cubic-bezier(0.24, 0, 0.5, 1);
+        transition: 0.5s cubic-bezier(0.24, 0, 0.5, 1);
+        height: 18px;
+        width: 36px;
+        border-radius: 18px;
+      }
+
+      .toggleWrapper1 input.mobileToggle + .change-checkout-status:after {
+        content: "";
+        position: absolute;
+        display: block;
+        -webkit-transition: 0.3s cubic-bezier(0.54, 1.6, 0.5, 1);
+        transition: 0.3s cubic-bezier(0.54, 1.6, 0.5, 1);
+        height: 16px;
+        width: 16px;
+        top: 0;
+        border-radius: 50px;
+        background: whitesmoke;
+        left: 1px;
+      }
+
+      .toggleWrapper1 input.mobileToggle + .change-checkout-status:after {
+        background: black;
+      }
+
+      .toggleWrapper1
+        input.mobileToggle:checked
+        + .change-checkout-status:before {
+        background: #694df9;
+        -webkit-transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
+        transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
+      }
+
+      .toggleWrapper1
+        input.mobileToggle:checked
+        + .change-checkout-status:after {
+        left: 18px;
+        top: 1px;
+        background: whitesmoke;
+      }
+
+      /*end switch button*/
+
+      .first-check {
+        min-width: 150px;
+      }
+
+      .disable-checked {
+        color: #aaa;
+      }
+
+      .group-input-type {
+        height: 50px;
+        align-items: center;
+      }
+
+      .default-value {
+        flex: 1;
+      }
+
+      .btn-claer:hover {
+        color: #007bff !important;
+      }
+
+      ::-webkit-scrollbar {
+        width: 7px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #c8ced3;
+      }
+
+      /*.ant-popover-content {*/
+      /*  margin-right: 20px !important;*/
+      /*}*/
+      /*.ant-tooltip-placement-bottom .ant-tooltip-arrow, .ant-tooltip-placement-bottomLeft .ant-tooltip-arrow, .ant-tooltip-placement-bottomRight .ant-tooltip-arrow {*/
+      /*  border-bottom-color: #DEDEDE;*/
+      /*}*/
+      /*.ant-tooltip-inner {*/
+      /*  background-color: #DEDEDE!important;*/
+      /*  color: rgba(0,0,0,.65);*/
+      /*  border-radius: 0;*/
+      /*  box-shadow: none;*/
+      /*}*/
+      .ant-popover-arrow {
+        display: none !important;
+      }
+
+      /* .notification-name:hover {
+      color: #C4C4C4;
+    } */
+      .notifications {
+        position: absolute;
+        height: 1rem;
+        width: 95.4%;
+        top: 3rem;
+        right: 1.23rem;
+        border-bottom: 1px solid #c4c4c4;
+      }
+
+      .ant-popover-inner {
+        border-radius: 2%;
+      }
+
+      .account-notifications {
+        margin-left: -1rem;
+        margin-right: -1.11rem;
+      }
+    </style>
+    <style>
+      .tab-admin.wave_header div,
+      .tab-support.wave_header div,
+      .tab-insight.wave_header div,
+      .tab-reports.wave_header div,
+      .tab-user.wave_header div {
+        visibility: hidden;
+      }
+
+      .count-notification-number {
+        height: 18px;
+        width: 18px;
+        background-color: #bd0060;
+        color: #ffffff;
+        /*border-radius: 16px;*/
+        font-size: 10px;
+        border-radius: 50%;
+        padding: 0 4px;
+        top: 7px;
+      }
+
+      #tab-communication-notification.count-notification-number {
+        position: absolute;
+        top: -8px;
+        right: -9px;
+      }
+    </style>
+
+    <script
+      defer
+      th:src="'/js/scripts/fragments/loadGoogleMap.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/ui/node_modules/jquery/dist/jquery.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/popper.js/dist/umd/popper.min.js?'+${noCacheVer}"
+    ></script>
+    <!-- <script
+      defer
+      th:src="'/ui/node_modules/bootstrap/dist/js/bootstrap.min.js?'+${noCacheVer}"
+    ></script> -->
+    <script
+      defer
+      th:src="'/ui/node_modules/bootstrap/dist/js/bootstrap.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/pace-progress/pace.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/@coreui/coreui/dist/js/coreui.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/uri-js/dist/es5/uri.all.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/cdn/Sortable.min.js?'+${noCacheVer}"></script>
+
+    <script
+      defer
+      th:if="${@environment.getProperty('spring.profiles.active') == 'developer'}"
+      th:src="'/js/cdn/vue-2.6.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:if="${@environment.getProperty('spring.profiles.active') != 'developer'}"
+      th:src="'/js/cdn/vue-prod.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/cdn/vuedraggable.umd.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/vue-tel-input/dist/vue-tel-input.min.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/cdn/fuse.min.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/cdn/pretty-checkbox-vue.min.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/axios/dist/axios.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/qrcode-render/dist/vue-qrcode-reader.browser.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/op.common.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/common/chatbot.js'"></script>
+    <script defer th:src="'/js/httpVueLoader.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/cdn/vue-slider-component.umd.min.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/ui/node_modules/tempusdominus-bootstrap-4/node_modules/moment/min/moment.min.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/ui/node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/cdn/antd.min.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/file-saver/dist/FileSaver.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/cdn/lodash.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/ui/node_modules/vue-trend-chart/dist/vue-trend-chart.js?'+${noCacheVer}"
+    ></script>
+
+    <!-- TODO(ducnm2010): Remove this in the future since we will not use it -->
+    <script defer th:src="'/js/cdn/es-module-shims.js?'+${noCacheVer}"></script>
+
+    <script
+      defer
+      th:src="'/js/scripts/fragments/axiosTokenHeader.js?'+${noCacheVer}"
+    ></script>
+
+    <!-- amcharts5 -->
+    <script defer src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script defer src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script defer src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script defer src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+    <!-- common.js -->
+    <!-- <script defer th:src="'/js/op.common.js?'+${noCacheVer}"></script> -->
+    <script defer th:src="'/js/common/permission.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/common/date-picker.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/js/common/remove-skeleton.js?'+${noCacheVer}"
+    ></script>
+    <script defer th:src="'/js/new-feature/script.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/op.vue.js?'+${noCacheVer}"></script>
+    <script defer th:src="'/js/cdn/v-calendar.js?'+${noCacheVer}"></script>
+    <script
+      defer
+      th:src="'/components/chart-mold/detail-graph/chart-mold.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/chart-mold/hourly-chart.js?'+${noCacheVer}"
+    ></script>
+
+    <!-- packages/ui -->
+    <script
+      defer
+      th:src="'/dist/0.4.1/@emoldino/components.umd.js?'+${noCacheVer}"
+    ></script>
+    <link rel="stylesheet" th:href="'/dist/0.4.1/style.css?'+${noCacheVer}" />
+
+    <!-- rxjs -->
+    <script defer th:src="'/js/cdn/rxjs.umd.min.js?'+${noCacheVer}"></script>
+
+    <!-- notification cubit using `rxjs` -->
+    <script
+      defer
+      th:src="'/js/scripts/fragments/notificationCubit.js?'+${noCacheVer}"
+    ></script>
+
+    <!-- packages/mms-notification -->
+    <script
+      defer
+      th:src="'/dist/mms-notification.umd.js?'+${noCacheVer}"
+    ></script>
+
+    <!-- firebase using `mms-notification` -->
+    <script
+      defer
+      th:src="'/js/scripts/fragments/firebase.js?'+${noCacheVer}"
+    ></script>
+
+    <script
+      defer
+      th:src="'/js/scripts/fragments/vueCompositionAPI.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/scripts/hooks/useSystem.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/composables/usePicker.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/scripts/fragments/cssStyle.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/scripts/hooks/useSubscribe.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/scripts/fragments/headerSettings.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/scripts/fragments/componentsDemoVue.js?'+${noCacheVer}"
+    ></script>
+    <script
+      defer
+      th:src="'/js/common/axios-interceptor.js?'+${noCacheVer}"
+    ></script>
+
+    <th:block layout:fragment="op-script"></th:block>
+  </th:block>
+</html>

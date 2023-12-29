@@ -1,0 +1,28 @@
+DROP TABLE IF EXISTS `CODE_DATA`;
+
+CREATE TABLE CODE_DATA (
+	ID bigint not null,
+	
+	COMPANY_ID bigint,
+	CODE_TYPE varchar(100),
+	CODE varchar(100),
+	
+	TITLE varchar(200),
+	DESCRIPTION varchar(1000),
+	POSITION integer not null,
+	
+	DELETED varchar(1),
+	ENABLED varchar(1),
+	CREATED_BY bigint,
+	CREATED_AT datetime,
+	UPDATED_BY bigint,
+	UPDATED_AT datetime,
+	
+	GROUP1CODE varchar(100),
+	GROUP2CODE varchar(100),
+	
+	PRIMARY KEY (ID)
+);
+
+ALTER TABLE CODE_DATA
+   ADD CONSTRAINT UX_CODE_DATA UNIQUE (COMPANY_ID, CODE_TYPE, CODE);
